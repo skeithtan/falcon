@@ -1,0 +1,19 @@
+{
+  "name": "falcon",
+  "version": "1.0.0",
+  "description": "An innovation project for Philippine Normal University's Faculty of Arts and Languages that schedules faculty, stores profiles, and visualize tracer study results ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skeithtan/falcon.git"
+  },
+  "author": "Keith Tan, Hidey Arguelles",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/skeithtan/falcon/issues"
+  },
+  "homepage": "https://github.com/skeithtan/falcon#readme"
+}
