@@ -1,7 +1,7 @@
 {
   "name": "falcon",
   "version": "1.0.0",
-  "description": "An innovation project for Philippine Normal University's Faculty of Arts and Languages that schedules faculty, stores profiles, and visualize tracer study results ",
+  "description": "An innovation project for Philippine Normal University's Faculty of Arts and Languages that schedules faculty, stores profiles, and visualize tracer study results",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
