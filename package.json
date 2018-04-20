@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/skeithtan/falcon/issues"
   },
-  "homepage": "https://github.com/skeithtan/falcon#readme"
+  "homepage": "https://github.com/skeithtan/falcon#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.2",
+    "mongoose": "^5.0.15"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
 }
