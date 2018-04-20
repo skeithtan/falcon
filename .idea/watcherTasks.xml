@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectTasksOptions">
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="$FilePathRelativeToProjectRoot$/server --out-dir dist --source-maps --presets env" />
+      <option name="arguments" value="$FilePathRelativeToProjectRoot$ --out-dir dist" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />
       <option name="exitCodeBehavior" value="ERROR" />
@@ -16,7 +16,7 @@
       <option name="outputFromStdout" value="false" />
       <option name="program" value="$PROJECT_DIR$/../../faculty-profile/node_modules/.bin/babel" />
       <option name="runOnExternalChanges" value="true" />
-      <option name="scopeName" value="Project Files" />
+      <option name="scopeName" value="Server" />
       <option name="trackOnlyRoot" value="false" />
       <option name="workingDir" value="$ContentRoot$" />
       <envs />
