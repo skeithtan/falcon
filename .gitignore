@@ -108,3 +108,9 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+
+#Client create-react-app .gitignore
+.DS_Store
+/client/build
+/client/coverage
+/client/node_modules
