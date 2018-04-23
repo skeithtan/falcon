@@ -1,17 +1,28 @@
-#app-bar-title > * {
-    line-height: 20px;
-}
+/*#app-bar-title > * {*/
+    /*line-height: 20px;*/
+/*}*/
 
-#falcon-logo {
-    margin-top: auto;
-}
+/*#falcon-logo {*/
+    /*margin-top: auto;*/
+/*}*/
 
-#falcon-app-bar {
-    display: none;
-}
+/*#page-title {*/
+    /*font-weight: 200;*/
+    /*font-size: 20px;*/
+/*}*/
 
+/*#falcon-logo {*/
+    /*font-weight: 800;*/
+/*}*/
+
+/*#module-menu {*/
+    /*display: flex;*/
+    /*align-items: center;*/
+/*}*/
+
+#falcon-logo,
 #page-title {
-    font-weight: 200;
+    display: inline-block;
     font-size: 20px;
 }
 
@@ -19,7 +30,11 @@
     font-weight: 800;
 }
 
-#module-menu {
-    display: flex;
-    align-items: center;
+#page-title {
+    margin-left: 4px;
+    font-weight: 400;
+}
+
+#app-bar-hamburger {
+    margin-left: -20px;
 }

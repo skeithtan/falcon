@@ -1,12 +1,19 @@
-import React, { Component } from "react";
-import { AppBar, FlatButton } from "material-ui";
+import React, {Component} from "react";
+import AppBar from "material-ui/AppBar"
+import IconButton from 'material-ui/IconButton';
+import Toolbar from 'material-ui/Toolbar';
+import MenuIcon from '@material-ui/icons/Menu';
+import Typography from 'material-ui/Typography';
+
+
 import "./FalconAppBar.css";
 
 class PageTitle extends Component {
     render() {
         return (
-            <div id="page-title">
-                <span id="falcon-logo">Falcon</span> {this.props.children}
+            <div>
+                <Typography color="inherit" id="falcon-logo">Falcon</Typography>
+                <Typography color="inherit" id="page-title">{this.props.children}</Typography>
             </div>
         )
     }
@@ -14,17 +21,15 @@ class PageTitle extends Component {
 
 export default class FalconAppBar extends Component {
     render() {
-        const title = (
-            <PageTitle>Faculty Schedules</PageTitle>
-        );
-
         return (
-            <AppBar title={title} id="falcon-app-bar">
-                <div id="user-menu">
-
-                </div>
+            <AppBar position="static" id="falcon-app-bar">
+                <Toolbar>
+                    <IconButton color="inherit" aria-label="Menu" id="app-bar-hamburger">
+                        <MenuIcon/>
+                    </IconButton>
+                    <PageTitle>Faculty Schedules</PageTitle>
+                </Toolbar>
             </AppBar>
-        )
-            ;
+        );
     }
 }
