@@ -1,3 +1,8 @@
+#Hides database username and pass
+server/config.js
+dist/server/config.js
+
+
 # Logs
 logs
 *.log
@@ -114,3 +119,4 @@ fabric.properties
 /client/build
 /client/coverage
 /client/node_modules
+
