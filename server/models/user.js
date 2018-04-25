@@ -30,7 +30,8 @@ const UserSchema = new Schema({
     },
 );
 
-UserSchema.pre("save", next => {
+//Do not replace function(next) with arrow functions - JavaScript `this` only works on old anonymous functions
+UserSchema.pre("save", function(next) {
     const user = this;
 
     bcrypt.hash(user.secret, SALT_ROUNDS, (err, hash) => {
