@@ -1,0 +1,41 @@
+#background {
+    height: 100vh;
+    width: 100vw;
+    background: #ECEFF1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sign-in-box {
+    padding: 48px;
+    width: 360px;
+}
+
+#sign-in-pnu-logo {
+    width: 80px;
+}
+
+#sign-in-welcome-message {
+    margin-top: 16px;
+}
+
+#sign-in-form {
+    padding-top: 25px;
+}
+
+/*A little spacing between the two*/
+#sign-in-form > div {
+    width: 100%;
+    margin-top: 24px;
+}
+
+#sign-in-button {
+    margin-top: 48px;
+    margin-left: auto;
+}
+
+#sign-in-button-container {
+    display: flex;
+}
