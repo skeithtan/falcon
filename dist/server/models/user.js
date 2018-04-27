@@ -14,22 +14,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var SALT_ROUNDS = 10;
 
-var UserSchema = new _mongoose.Schema({
+var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
         required: true,
         trim: true
     },
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
+    name: {
+        first: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        last: {
+            type: String,
+            required: true,
+            trim: true
+        }
     },
     secret: {
         type: String,
