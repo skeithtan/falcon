@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import FalconAppBar from "./components/FalconAppBar";
+import SignInPage from "./pages/SignIn";
 import "./App.css";
 
 
@@ -8,7 +8,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <FalconAppBar/>
+                <SignInPage/>
             </div>
         );
     }
