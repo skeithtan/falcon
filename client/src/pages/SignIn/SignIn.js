@@ -53,7 +53,7 @@ export default class SignInPage extends Component {
                             <Button id="sign-in-button"
                                     variant="raised"
                                     color="primary"
-                                    disabled={!formIsFilled}>
+                                    disabled={!formIsFilled && !this.state.loading}>
                                 Sign In
                             </Button>
                         </div>
