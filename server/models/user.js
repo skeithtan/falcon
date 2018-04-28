@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 
@@ -49,5 +49,5 @@ UserSchema.methods.comparePassword = function (password) {
     return bcrypt.compareSync(password, this.secret);
 };
 
-const User = model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
 export default User;
