@@ -53,5 +53,9 @@ UserSchema.pre("save", function (next) {
     });
 });
 
+UserSchema.methods.comparePassword = function (password) {
+    return _bcrypt2.default.compareSync(password, this.secret);
+};
+
 var User = (0, _mongoose.model)("User", UserSchema);
 exports.default = User;

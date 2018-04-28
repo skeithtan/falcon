@@ -45,5 +45,9 @@ UserSchema.pre("save", function(next) {
 
 });
 
+UserSchema.methods.comparePassword = function (password) {
+    return bcrypt.compareSync(password, this.secret);
+};
+
 const User = model("User", UserSchema);
 export default User;
