@@ -1,6 +1,6 @@
 #Hides database username and pass
 server/config.js
-dist/server/config.js
+dist/
 
 
 # Logs
