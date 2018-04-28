@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 const SALT_ROUNDS = 10;
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
         email: {
             type: String,
             unique: true,
