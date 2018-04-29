@@ -32,6 +32,13 @@ const UserSchema = new Schema({
 
 //Do not replace function(next) with arrow functions - JavaScript `this` only works on old anonymous functions
 UserSchema.pre("save", function(next) {
+
+    //Calculate hash and salt only when password has been modified or object is newly created
+    if (!this.isModified("secret") || !this.isNew) {
+        next();
+        return;
+    }
+
     const user = this;
 
     bcrypt.hash(user.secret, SALT_ROUNDS, (err, hash) => {
