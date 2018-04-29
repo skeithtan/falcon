@@ -1,12 +1,13 @@
 import signInResolver from "./resolvers/signin";
 
+const helloWorldResolver = () => "World";
 
 export default {
     Query: {
-        hello: () => {
-            return "World";
-        },
-
-        ...signInResolver,
+        hello: helloWorldResolver,
     },
+    Mutation: {
+        hello: helloWorldResolver,
+        ...signInResolver,
+    }
 };

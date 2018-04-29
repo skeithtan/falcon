@@ -1,5 +1,5 @@
 export default `
-    extend type Query {
+    extend type Mutation {
         signIn(email:String!, password: String!): String!
     }
 `;
