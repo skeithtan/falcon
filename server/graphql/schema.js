@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from "graphql-tools";
 
-import signInType from "./types/signin";
+import userType from "./types/user";
 import resolvers from "./resolvers";
 
 /*
@@ -20,6 +20,6 @@ const rootQuery = `
 `;
 
 export default makeExecutableSchema({
-    typeDefs: [rootQuery, signInType],
+    typeDefs: [rootQuery, userType],
     resolvers: resolvers,
 });
