@@ -1,8 +1,8 @@
+import "babel-polyfill"; //Needed for async/await operations
 import express from "express";
 import bodyParser from "body-parser";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 import mongoose from "mongoose";
-import "babel-polyfill"; //Needed for async/await operations
 
 import config from "./config";
 import schema from "./graphql/schema";
