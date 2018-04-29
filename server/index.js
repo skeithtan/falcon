@@ -6,6 +6,8 @@ import "babel-polyfill"; //Needed for async/await operations
 
 import config from "./config";
 import schema from "./graphql/schema";
+import getUserFromToken from "./utils/user_from_token";
+
 
 mongoose.connect(config.database.url)
     .then(onDatabaseConnect)
@@ -16,7 +18,15 @@ function onDatabaseConnect() {
 
     const app = express();
 
-    app.use("/graphql", bodyParser.json(), graphqlExpress({schema}));
+    app.use("/graphql", bodyParser.json(), graphqlExpress(request => {
+        return {
+            schema: schema,
+            context: {
+                user: getUserFromToken(request.get("authorization")),
+            },
+        };
+    }));
+
     app.use("/graphiql", graphiqlExpress({endpointURL: "/graphql"}));
 
     app.listen(config.server.port, () => {
