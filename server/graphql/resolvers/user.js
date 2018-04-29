@@ -14,8 +14,7 @@ const queryResolvers = {
 };
 
 const mutationResolvers = {
-    async signIn(object, args) {
-        const {email, password} = args;
+    async signIn(object, {email, password}) {
         const user = await User.findOne({email: email}).exec();
 
         if (!user) {
