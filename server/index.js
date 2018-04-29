@@ -22,6 +22,7 @@ function onDatabaseConnect() {
         return {
             schema: schema,
             context: {
+                //In every contexts in every resolvers, the current user should be there
                 user: getUserFromToken(request.get("authorization")),
             },
         };
