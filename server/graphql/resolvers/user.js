@@ -1,15 +1,12 @@
 import User from "../../models/user";
 import AuthenticationError from "../errors/authentication_error";
-import { GraphQLError } from "graphql";
+import jwt from "jsonwebtoken";
+import config from "../../config";
 
 
 const queryResolvers = {
-    async currentUser(object, args, context, info) {
-        //TODO: This
-
-        console.log(context, info);
-
-        return null;
+    async currentUser(object, args, context) {
+        return context.user;
     },
 };
 
@@ -27,11 +24,9 @@ const mutationResolvers = {
             throw new AuthenticationError();
         }
 
-        //TODO: MakeJWT
+        const token = jwt.sign({_id: user._id}, config.server.jwtSecret);
 
-        //TODO: Return JWT
-        return `Welcome, ${email}`;
-
+        return token;
     },
 };
 
