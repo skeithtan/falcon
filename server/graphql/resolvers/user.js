@@ -24,7 +24,11 @@ const mutationResolvers = {
             throw new AuthenticationError();
         }
 
-        const token = jwt.sign({_id: user._id}, config.server.jwtSecret);
+        const token = jwt.sign({
+            _id: user._id,
+            email: user.email,
+            name: user.name
+        }, config.server.jwtSecret);
 
         return token;
     },
