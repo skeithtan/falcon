@@ -24,5 +24,6 @@
   },
   "devDependencies": {
     "create-react-component-folder": "^0.1.17"
-  }
+  },
+  "proxy": "http://localhost:8000/"
 }
