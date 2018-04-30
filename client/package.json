@@ -7,6 +7,7 @@
     "apollo-boost": "^0.1.4",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.1",
+    "jwt-decode": "^2.2.0",
     "material-ui": "^1.0.0-beta.43",
     "react": "^16.3.2",
     "react-apollo": "^2.1.3",
