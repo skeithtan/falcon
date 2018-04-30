@@ -4,7 +4,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.43",
-    "apollo-boost": "^0.1.4",
+    "apollo-cache-inmemory": "^1.1.12",
+    "apollo-client": "^2.2.8",
+    "apollo-link": "^1.2.2",
+    "apollo-link-error": "^1.0.9",
+    "apollo-link-http": "^1.5.4",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.1",
     "jwt-decode": "^2.2.0",
