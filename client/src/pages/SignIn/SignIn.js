@@ -35,13 +35,36 @@ export default class SignInPage extends Component {
         userService.signIn(this.state.email, this.state.password)
             .then(user => {
                 this.props.onSignInSuccess(user);
+                //TODO: Exit sign in page
             })
             .catch(error => {
                 console.log(error);
+
+                if (error.networkError) {
+                    this.setState({
+                        error: "A network error has occurred",
+                        loading: false,
+                    });
+
+                    return;
+                }
+
+                //The only error the server could possibly throw is if the credentials are invalid
+                if (error.graphQLErrors.length > 0) {
+                    this.setState({
+                        error: "Invalid credentials",
+                        loading: false,
+                    });
+
+                    return;
+                }
+
+
                 this.setState({
-                    error: "Invalid credentials",
+                    error: "An unknown error occurred",
                     loading: false,
                 });
+
             });
     };
 
