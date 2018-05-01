@@ -68,13 +68,18 @@ export default class SignInPage extends Component {
             });
     };
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        //If authenticated, just redirect to home
+        if (nextProps.isAuthenticated) {
+            nextProps.history.push("/");
+        }
+
+        return null;
+    }
+
     render() {
         const formIsFilled = this.state.email.length > 0 &&
             this.state.password.length > 0;
-
-        if (this.props.isAuthenticated) {
-            return <Redirect to="/"/>
-        }
 
         return (
             <div id="background">
