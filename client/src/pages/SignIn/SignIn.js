@@ -4,7 +4,6 @@ import Typography from "material-ui/Typography";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import { LinearProgress } from "material-ui/Progress";
-import { Redirect } from "react-router-dom";
 
 import userService from "../../services/user.service";
 import "./SignIn.css";
@@ -67,15 +66,6 @@ export default class SignInPage extends Component {
 
             });
     };
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        //If authenticated, just redirect to home
-        if (nextProps.isAuthenticated) {
-            nextProps.history.push("/");
-        }
-
-        return null;
-    }
 
     render() {
         const formIsFilled = this.state.email.length > 0 &&
