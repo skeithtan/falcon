@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
@@ -10,7 +11,9 @@ import store from "./store";
 
 const app = (
     <Provider store={store}>
-        <App/>
+        <Router>
+            <App/>
+        </Router>
     </Provider>
 );
 
