@@ -7,15 +7,15 @@ import Typography from "material-ui/Typography";
 
 
 import { getPageFromIdentifier } from "../../pages/pages";
-import "./FalconAppBar.css";
+import style from "./FalconAppBar.css";
 
 
 class PageTitle extends Component {
     render() {
         return (
             <div>
-                <Typography color="inherit" id="falcon-logo">Falcon</Typography>
-                <Typography color="inherit" id="page-title">{this.props.children}</Typography>
+                <Typography color="inherit" id={style.falconLogo}>Falcon</Typography>
+                <Typography color="inherit" id={style.pageTitle}>{this.props.children}</Typography>
             </div>
         );
     }
@@ -31,9 +31,9 @@ export default class FalconAppBar extends Component {
         console.log(this.pageTitle());
 
         return (
-            <AppBar position="static" id="falcon-app-bar">
+            <AppBar position="static">
                 <Toolbar>
-                    <IconButton color="inherit" aria-label="Menu" id="app-bar-hamburger">
+                    <IconButton color="inherit" aria-label="Menu" id={style.hamburger}>
                         <MenuIcon/>
                     </IconButton>
                     <PageTitle>{this.pageTitle()}</PageTitle>

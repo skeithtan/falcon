@@ -1,19 +1,19 @@
-#falcon-logo,
-#page-title {
+#falconLogo,
+#pageTitle {
     display: inline-block;
     font-size: 20px;
 }
 
-#falcon-logo {
+#falconLogo {
     font-weight: 600;
     font-family: "Raleway", serif;
 }
 
-#page-title {
+#pageTitle {
     margin-left: 4px;
     font-weight: 300;
 }
 
-#app-bar-hamburger {
+#hamburger {
     margin-left: -20px;
 }
