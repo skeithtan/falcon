@@ -5,7 +5,6 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import { LinearProgress } from "material-ui/Progress";
 
-import userService from "../../services/user.service";
 import "./SignIn.css";
 import pnuLogo from "../../images/pnu-logo.png";
 
@@ -14,8 +13,6 @@ export default class SignInPage extends Component {
     state = {
         email: "",
         password: "",
-        loading: false,
-        error: null,
     };
 
     handleChange = name => event => {
@@ -26,57 +23,21 @@ export default class SignInPage extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-
-        this.setState({
-            loading: true,
-            error: null,
-        });
-
-        userService.signIn(this.state.email, this.state.password)
-            .then(user => {
-                this.props.onSignInSuccess(user);
-            })
-            .catch(error => {
-                console.log(error);
-
-                if (error.networkError) {
-                    this.setState({
-                        error: "A network error has occurred",
-                        loading: false,
-                    });
-
-                    return;
-                }
-
-                //The only error the server could possibly throw is if the credentials are invalid
-                if (error.graphQLErrors.length > 0) {
-                    this.setState({
-                        error: "Invalid credentials",
-                        loading: false,
-                    });
-
-                    return;
-                }
-
-
-                this.setState({
-                    error: "An unknown error occurred",
-                    loading: false,
-                });
-
-            });
+        this.props.attemptSignIn(this.state.email, this.state.password);
     };
 
     render() {
         const formIsFilled = this.state.email.length > 0 &&
             this.state.password.length > 0;
 
+        const {attemptingSignIn, signInError} = this.props;
+
         return (
             <div id="background">
                 <Card>
-                    {this.state.loading && <LinearProgress/>}
+                    {attemptingSignIn && <LinearProgress />}
                     <div id="sign-in-box">
-                        <img src={pnuLogo} id="sign-in-pnu-logo" alt="PNU Logo"/>
+                        <img src={pnuLogo} id="sign-in-pnu-logo" alt="PNU Logo" />
                         <Typography id="sign-in-welcome-message" variant="headline" component="h1">
                             Sign in to Falcon
                         </Typography>
@@ -85,19 +46,19 @@ export default class SignInPage extends Component {
                         <form onSubmit={this.onSubmit}>
 
                             <div id="sign-in-form">
-                                {this.state.error !== null &&
-                                <Typography color="error">{this.state.error}</Typography>
+                                {signInError !== null &&
+                                <Typography color="error">{signInError}</Typography>
                                 }
 
                                 <TextField id="email-input"
                                            label="Email Address"
                                            value={this.state.email}
-                                           onChange={this.handleChange("email")}/>
+                                           onChange={this.handleChange("email")} />
                                 <TextField id="password-input"
                                            label="Password"
                                            type="password"
                                            value={this.state.password}
-                                           onChange={this.handleChange("password")}/>
+                                           onChange={this.handleChange("password")} />
                             </div>
 
                             <div id="sign-in-button-container">
@@ -105,7 +66,7 @@ export default class SignInPage extends Component {
                                         type="submit"
                                         variant="raised"
                                         color="primary"
-                                        disabled={!formIsFilled || this.state.loading}>
+                                        disabled={!formIsFilled || this.props.attemptingSignIn}>
                                     Sign In
                                 </Button>
                             </div>
