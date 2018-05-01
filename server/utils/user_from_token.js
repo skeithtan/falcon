@@ -14,6 +14,11 @@ export default async function getUserFromToken(authorization) {
     // Remove bearer from authorization header to retrieve token
     const token = authorization.replace("Bearer ", "");
 
-    const {_id} = jwt.verify(token, jwtSecret);
-    return await User.findById(_id).exec();
+    try {
+        const {_id} = jwt.verify(token, jwtSecret);
+        return await User.findById(_id).exec();
+    } catch (error) {
+        console.log(`An error occurred verifying JWT Token: ${error.message}`);
+        return null;
+    }
 }
