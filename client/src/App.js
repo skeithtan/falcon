@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 
 import SignInPage from "./pages/SignIn";
+import HomePage from "./pages/Home";
+import FacultyProfilesPage from "./pages/FacultyProfiles";
 import "./App.css";
 
 
@@ -10,9 +12,11 @@ class App extends Component {
         return (
             <div className="App">
                 <Route path="/sign-in" component={SignInPage}/>
+                <Route exact path="/" component={HomePage}/>
+                <Route path="/faculty-profiles" component={FacultyProfilesPage}/>
             </div>
         );
     }
 }
 
-export default App;
+export default withRouter(App);
