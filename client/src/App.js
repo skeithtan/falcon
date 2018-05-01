@@ -14,9 +14,10 @@ class App extends Component {
 
     static getDerivedStateFromProps(nextProps) {
         const {isAuthenticated, location, history} = nextProps;
+        const currentRoute = location.pathname;
 
         //Is the user in the sign in page or any of its descendants?
-        const userIsSigningIn = location.pathname.startsWith(SIGN_IN_PAGE.route);
+        const userIsSigningIn = currentRoute.startsWith(SIGN_IN_PAGE.route);
 
         //If user is not signed in and trying to access any other page
         if (!isAuthenticated && !userIsSigningIn) {
@@ -30,7 +31,7 @@ class App extends Component {
         }
 
         //Our homepage is in /home, redirect anyone authenticated to it
-        if (location.pathname === "/") {
+        if (currentRoute === "/") {
             history.replace(HOME_PAGE.route);
         }
 
@@ -42,13 +43,13 @@ class App extends Component {
         const {isAuthenticated} = this.props;
 
         const routes = PAGES.map(({identifier, route, component}) =>
-            <Route key={identifier} path={route} component={component}/>,
+            <Route key={identifier} path={route} component={component} />,
         );
 
 
         return (
             <div className="App">
-                {isAuthenticated && <FalconAppBar/>}
+                {isAuthenticated && <FalconAppBar />}
                 {routes}
             </div>
         );
