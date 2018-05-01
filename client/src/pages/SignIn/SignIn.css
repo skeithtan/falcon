@@ -28,14 +28,15 @@
 /*A little spacing between the two*/
 .formInput {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 24px !important;
 }
 
 .button {
     margin-top: 48px;
-    margin-left: auto;
+    margin-left: auto !important;
 }
 
 .buttonContainer {
+    margin-top: 40px;
     display: flex;
 }
