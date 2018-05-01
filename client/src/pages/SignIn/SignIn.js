@@ -5,7 +5,7 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import { LinearProgress } from "material-ui/Progress";
 
-import "./SignIn.css";
+import style from "./SignIn.css";
 import pnuLogo from "../../images/pnu-logo.png";
 
 
@@ -32,37 +32,39 @@ export default class SignInPage extends Component {
 
         const {attemptingSignIn, signInError} = this.props;
 
+        console.log(style);
+
         return (
-            <div id="background">
+            <div className={style.background}>
                 <Card>
                     {attemptingSignIn && <LinearProgress />}
-                    <div id="sign-in-box">
-                        <img src={pnuLogo} id="sign-in-pnu-logo" alt="PNU Logo" />
-                        <Typography id="sign-in-welcome-message" variant="headline" component="h1">
+                    <div className={style.signInBox}>
+                        <img src={pnuLogo} className={style.pnuLogo} alt="PNU Logo" />
+                        <Typography className={style.welcomeMessage} variant="headline" component="h1">
                             Sign in to Falcon
                         </Typography>
                         <Typography component="h2" color="textSecondary">Faculty of Arts and Languages</Typography>
 
                         <form onSubmit={this.onSubmit}>
 
-                            <div id="sign-in-form">
+                            <div className={style.form}>
                                 {signInError !== null &&
                                 <Typography color="error">{signInError}</Typography>
                                 }
 
-                                <TextField id="email-input"
+                                <TextField className={style.formInput}
                                            label="Email Address"
                                            value={this.state.email}
                                            onChange={this.handleChange("email")} />
-                                <TextField id="password-input"
+                                <TextField className={style.formInput}
                                            label="Password"
                                            type="password"
                                            value={this.state.password}
                                            onChange={this.handleChange("password")} />
                             </div>
 
-                            <div id="sign-in-button-container">
-                                <Button id="sign-in-button"
+                            <div className={style.buttonContainer}>
+                                <Button className={style.button}
                                         type="submit"
                                         variant="raised"
                                         color="primary"
