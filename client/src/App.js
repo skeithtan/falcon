@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { PAGES, HOME_PAGE, SIGN_IN_PAGE } from "./pages/pages";
 import { setActivePage as makeSetActivePageAction } from "./actions/pages.actions";
+import FalconAppBar from "./components/FalconAppBar";
 import "./App.css";
 
 
@@ -38,6 +39,8 @@ class App extends Component {
 
 
     render() {
+        const {isAuthenticated} = this.props;
+
         const routes = PAGES.map(({identifier, route, component}) =>
             <Route key={identifier} path={route} component={component}/>,
         );
@@ -45,6 +48,7 @@ class App extends Component {
 
         return (
             <div className="App">
+                {isAuthenticated && <FalconAppBar/>}
                 {routes}
             </div>
         );
