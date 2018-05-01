@@ -4,6 +4,7 @@ import Typography from "material-ui/Typography";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import { LinearProgress } from "material-ui/Progress";
+import { Redirect } from "react-router-dom";
 
 import userService from "../../services/user.service";
 import "./SignIn.css";
@@ -35,7 +36,6 @@ export default class SignInPage extends Component {
         userService.signIn(this.state.email, this.state.password)
             .then(user => {
                 this.props.onSignInSuccess(user);
-                //TODO: Exit sign in page
             })
             .catch(error => {
                 console.log(error);
@@ -71,6 +71,10 @@ export default class SignInPage extends Component {
     render() {
         const formIsFilled = this.state.email.length > 0 &&
             this.state.password.length > 0;
+
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/"/>
+        }
 
         return (
             <div id="background">
