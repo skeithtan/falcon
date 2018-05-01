@@ -27,12 +27,13 @@
 }
 
 #falcon-logo {
-    font-weight: 800;
+    font-weight: 600;
+    font-family: "Raleway", serif;
 }
 
 #page-title {
     margin-left: 4px;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 #app-bar-hamburger {
