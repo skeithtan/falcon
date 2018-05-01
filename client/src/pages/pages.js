@@ -13,27 +13,32 @@ export const FACULTY_PROFILES_PAGE = {
     identifier: "FACULTY_PROFILES_PAGE",
     route: "/faculty-profiles",
     component: FacultyProfilesPage,
+    name: "Faculty Profiles",
 };
 
 export const HOME_PAGE = {
     identifier: "HOME_PAGE",
     route: "/home",
     component: HomePage,
+    name: "Home",
 };
 
 export const FACULTY_LOADING_PAGE = {
     identifier: "FACULTY_LOADING_PAGE",
     route: "/faculty-loading",
+    name: "Faculty Loading",
 };
 
 export const TRACER_STUDY_PAGE = {
     identifier: "TRACER_STUDY_PAGE",
     route: "/tracer-study",
+    name: "Tracer Study",
 };
 
 export const USER_SETTINGS_PAGE = {
     identifier: "USER_SETTINGS_PAGE",
     route: "/users",
+    name: "Users",
 };
 
 export const NOT_FOUND_PAGE = {
