@@ -1,0 +1,104 @@
+enum PresentationCategory {
+    INSTITUTIONAL,
+    REGIONAL,
+    NATIONAL,
+    INTERNATIONAL
+}
+
+enum PresentationMedium {
+    PAPER,
+    POSTER,
+    RESEARCH
+}
+
+type Presentation {
+    title: String!
+    category: PresentationCategory!
+    date: MonthYearDate!
+    sponsor: String!
+    venue: String!
+    conference: String!
+    medium: PresentationMedium!
+    daysDuration: Int!
+}
+
+enum RecognitionBasis {
+    RESEARCH,
+    SCHOLARSHIP,
+    EXTENSION_WORK,
+    CIVIC
+}
+
+type Recognition {
+    title: String!
+    basis: RecognitionBasis!
+    date: MonthYearDate!
+    sponsor: String!
+}
+
+enum InstructionalMaterialMedium {
+    PRINT,
+    NON_PRINT
+}
+
+enum InstructionalMaterialClassification {
+    STUDENT,
+    TEACHER
+}
+
+enum InstructionalMaterialNonPrintType {
+    MODULE,
+    VIDEO,
+    SLIDE,
+    DIGITAL_FILE,
+    AUDIO
+}
+
+type InstructionalMaterial {
+    title: String!
+    medium: InstructionalMaterialMedium!
+    classification: InstructionalMaterialClassification!
+    usageYear: Int!
+    level: String
+    nonPrintType: InstructionalMaterialNonPrintType
+}
+
+type ExtensionWorkRole {
+    lecturer: Boolean
+    trainer: Boolean
+    resourceSpeaker: Boolean
+    facilitator: Boolean
+    coach: Boolean
+    materialWriter: Boolean
+}
+
+type ExtensionWork {
+    title: String,
+    roles: ExtensionWorkRole
+    venue: String
+}
+
+enum Sex {
+    M,
+    F
+}
+
+enum Employment {
+    FULL_TIME_PERMANENT,
+    FULL_TIME_TEMPORARY,
+    PART_TIME
+}
+
+type Faculty {
+    _id: String!
+    user: User!
+    sex: Sex!
+    age: Int!
+    employment: Employment
+    birthDate: String!
+    presentations: [Presentation]!
+    recognitions: [Recognition]!
+    instructionalMaterials: [InstructionalMaterial]!
+    extensionWorks: [ExtensionWork]!
+    teachingSubjects: [Subject]!
+}
