@@ -1,25 +1,30 @@
+import requireText from "require-text";
 import { makeExecutableSchema } from "graphql-tools";
 
-import userType from "./types/user";
 import resolvers from "./resolvers";
 
-/*
-    Parsing fails when these types do not have at least one field
-    See https://github.com/apollographql/graphql-tools/issues/293
-    Field hello is kept as the test field - it does not modify database in any way
-    Querying this field will always return the string "World"
- */
-const rootQuery = `
-    type Query {
-        hello: String
-    }
-    
-    type Mutation {
-        hello: String
-    }
-`;
+
+const rootQuery = requireText("./schema.graphql", require);
+const types = ["date", "faculty", "schedule", "user"];
+const queryExtensionTypes = ["user"];
+const mutationExtensionTypes = ["user"];
+
+const typeDefinitions = types
+    .map(type => `${type}.type.graphql`) // Transform type to fileName
+    .map(fileName => `./types/${fileName}`) //Transform fileName to path
+    .map(path => requireText(path, require));
+
+const queryExtensions = queryExtensionTypes
+    .map(type => `${type}.query.graphql`)
+    .map(fileName => `./query_extensions/${fileName}`)
+    .map(path => requireText(path, require));
+
+const mutationExtensions = mutationExtensionTypes
+    .map(type => `${type}.mutation.graphql`)
+    .map(fileName => `./mutation_extensions/${fileName}`)
+    .map(path => requireText(path, require));
 
 export default makeExecutableSchema({
-    typeDefs: [rootQuery, userType],
+    typeDefs: [rootQuery, ...typeDefinitions, ...queryExtensions, ...mutationExtensions],
     resolvers: resolvers,
 });
