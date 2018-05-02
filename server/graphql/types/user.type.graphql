@@ -1,0 +1,19 @@
+type Name {
+    first: String!
+    last: String!
+}
+
+enum Authorization {
+    DEAN,
+    ASSOCIATE_DEAN,
+    FACULTY,
+    CLERK
+}
+
+type User {
+    _id: String!
+    email: String!
+    name: Name!
+    photo: String
+    authorization: Authorization!
+}
