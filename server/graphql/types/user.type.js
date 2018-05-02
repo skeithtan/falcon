@@ -8,6 +8,8 @@ export default `
         _id: String!
         email: String!
         name: Name!
+        photo: String
+        authorization: String!
     }
     
     extend type Mutation {

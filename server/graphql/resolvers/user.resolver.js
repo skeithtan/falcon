@@ -1,5 +1,5 @@
-import User from "../../models/user";
-import AuthenticationError from "../errors/authentication_error";
+import User from "../../models/user.model";
+import AuthenticationError from "../errors/authentication.error";
 import jwt from "jsonwebtoken";
 import config from "../../config";
 
@@ -27,7 +27,9 @@ const mutationResolvers = {
         const token = jwt.sign({
             _id: user._id,
             email: user.email,
-            name: user.name
+            name: user.name,
+            photo: user.photo,
+            authorization: user.authorization,
         }, config.server.jwtSecret);
 
         return token;

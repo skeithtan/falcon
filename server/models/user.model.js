@@ -27,11 +27,21 @@ const UserSchema = new Schema({
             type: String,
             required: true,
         },
+        photo: {
+            type: String,
+            required: false,
+        },
+        authorization: {
+            type: String,
+            enum: ["DEAN", "ASSOCIATE_DEAN", "FACULTY", "CLERK"],
+            required: true,
+        },
+
     },
 );
 
 //Do not replace function(next) with arrow functions - JavaScript `this` only works on old anonymous functions
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", function (next) {
 
     //Calculate hash and salt only when password has been modified or object is newly created
     if (!this.isModified("secret") || !this.isNew) {
