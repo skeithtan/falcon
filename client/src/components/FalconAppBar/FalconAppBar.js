@@ -28,8 +28,6 @@ export default class FalconAppBar extends Component {
     };
 
     render() {
-        console.log(this.pageTitle());
-
         return (
             <AppBar position="static">
                 <Toolbar>
