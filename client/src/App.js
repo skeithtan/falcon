@@ -6,7 +6,6 @@ import { MuiThemeProvider } from "material-ui/styles";
 import { PAGES, HOME_PAGE, SIGN_IN_PAGE, getPageFromIdentifier, getPageFromRoute } from "./pages/pages";
 import { setActivePage as makeSetActivePageAction } from "./actions/pages.actions";
 import FalconAppBar from "./components/FalconAppBar";
-import "./App.css";
 
 
 class App extends Component {
