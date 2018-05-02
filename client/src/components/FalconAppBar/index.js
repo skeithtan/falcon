@@ -1,4 +1,6 @@
 import { connect } from "react-redux";
+import { withTheme } from "material-ui/styles";
+
 import FalconAppBar from "./FalconAppBar";
 
 
@@ -8,4 +10,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, null)(FalconAppBar);
+export default connect(mapStateToProps, null)(withTheme()(FalconAppBar));
