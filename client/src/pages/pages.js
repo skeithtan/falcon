@@ -60,14 +60,18 @@ export const NOT_FOUND_PAGE = {
     theme: PINK_THEME,
 };
 
-export const PAGES = [
-    SIGN_IN_PAGE,
-    FACULTY_PROFILES_PAGE,
+export const MODULE_PAGES = [
     HOME_PAGE,
+    FACULTY_PROFILES_PAGE,
     FACULTY_LOADING_PAGE,
     TRACER_STUDY_PAGE,
     USER_SETTINGS_PAGE,
+];
+
+export const PAGES = [
+    SIGN_IN_PAGE,
     NOT_FOUND_PAGE,
+    ...MODULE_PAGES,
 ];
 
 export function getPageFromRoute(candidateRoute) {
