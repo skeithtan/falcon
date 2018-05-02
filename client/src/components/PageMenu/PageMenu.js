@@ -6,7 +6,7 @@ import { MODULE_PAGES } from "../../pages/pages";
 export default class PageMenu extends Component {
     switchToPage = page => {
         this.props.history.push(page.route);
-        this.props.toggle();
+        this.props.onClose();
     };
 
     //TODO: Add user permissions
@@ -15,8 +15,10 @@ export default class PageMenu extends Component {
     );
 
     render() {
+        const {open, onClose, anchorEl} = this.props;
+
         return (
-            <Menu open={this.props.open} onClose={this.props.toggle}>
+            <Menu open={open} onClose={onClose} anchorEl={anchorEl}>
                 {this.menuItems}
             </Menu>
         );

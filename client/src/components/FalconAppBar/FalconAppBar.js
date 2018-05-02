@@ -7,6 +7,7 @@ import Typography from "material-ui/Typography";
 
 
 import PageMenu from "../PageMenu";
+import UserMenu from "../UserButton";
 import { getPageFromIdentifier } from "../../pages/pages";
 import style from "./FalconAppBar.css";
 
@@ -14,9 +15,9 @@ import style from "./FalconAppBar.css";
 class PageTitle extends Component {
     render() {
         return (
-            <div>
+            <div id={style.pageTitle}>
                 <Typography color="inherit" id={style.falconLogo}>Falcon</Typography>
-                <Typography color="inherit" id={style.pageTitle}>{this.props.children}</Typography>
+                <Typography color="inherit" id={style.pageName}>{this.props.children}</Typography>
             </div>
         );
     }
@@ -24,11 +25,13 @@ class PageTitle extends Component {
 
 export default class FalconAppBar extends Component {
     state = {
-        menuOpen: false,
+        anchor: null,
     };
 
-    toggleMenu = () => {
-        this.setState({menuOpen: !this.state.menuOpen});
+    toggleMenu = (event) => {
+        this.setState({
+            anchor: event === null ? null : event.currentTarget,
+        });
     };
 
     pageTitle = () => {
@@ -37,9 +40,11 @@ export default class FalconAppBar extends Component {
     };
 
     render() {
+        const {anchor} = this.state;
+
         return (
             <AppBar position="static" id={style.appBar}>
-                <Toolbar>
+                <Toolbar id={style.toolbar}>
                     <IconButton color="inherit"
                                 aria-label="Menu"
                                 id={style.hamburger}
@@ -47,9 +52,12 @@ export default class FalconAppBar extends Component {
                         <MenuIcon />
                     </IconButton>
                     <PageTitle>{this.pageTitle()}</PageTitle>
+                    <UserMenu />
                 </Toolbar>
 
-                <PageMenu open={this.state.menuOpen} toggle={this.toggleMenu} />
+                <PageMenu open={Boolean(anchor)}
+                          anchorEl={anchor}
+                          onClose={() => this.toggleMenu(null)} />
             </AppBar>
         );
     }
