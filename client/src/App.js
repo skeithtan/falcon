@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { MuiThemeProvider } from "material-ui/styles";
 
-import { PAGES, HOME_PAGE, SIGN_IN_PAGE } from "./pages/pages";
+import { PAGES, HOME_PAGE, SIGN_IN_PAGE, getPageFromIdentifier, getPageFromRoute } from "./pages/pages";
 import { setActivePage as makeSetActivePageAction } from "./actions/pages.actions";
 import FalconAppBar from "./components/FalconAppBar";
 import "./App.css";
@@ -11,6 +12,15 @@ import "./App.css";
 class App extends Component {
     //Useless line but gets rid of annoying error
     state = {};
+
+    static reflectRouteToActivePage({currentRoute, activePage, setActivePage}) {
+        const currentRouteIsActivePage = currentRoute.startsWith(activePage.route);
+
+        if (!currentRouteIsActivePage) {
+            const currentPage = getPageFromRoute(currentRoute);
+            setActivePage(currentPage);
+        }
+    }
 
     static getDerivedStateFromProps(nextProps) {
         const {isAuthenticated, location, history} = nextProps;
@@ -35,23 +45,25 @@ class App extends Component {
             history.replace(HOME_PAGE.route);
         }
 
-        return null;
+        const {activePage, setActivePage} = nextProps;
+        App.reflectRouteToActivePage({currentRoute, activePage, setActivePage});
+
+        return {};
     }
 
 
     render() {
-        const {isAuthenticated} = this.props;
+        const {isAuthenticated, activePage} = this.props;
 
         const routes = PAGES.map(({identifier, route, component}) =>
             <Route key={identifier} path={route} component={component} />,
         );
 
-
         return (
-            <div className="App">
+            <MuiThemeProvider theme={activePage.theme}>
                 {isAuthenticated && <FalconAppBar />}
                 {routes}
-            </div>
+            </MuiThemeProvider>
         );
     }
 }
@@ -59,6 +71,7 @@ class App extends Component {
 function mapStateToProps(state) {
     return {
         isAuthenticated: state.authentication.isAuthenticated,
+        activePage: getPageFromIdentifier(state.pages.activePageIdentifier),
     };
 }
 
