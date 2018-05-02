@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-
+import { withTheme } from "material-ui/styles";
 
 import SignInPage from "./SignIn";
 import userService from "../../services/user.service";
@@ -44,4 +44,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withTheme()(SignInPage));
