@@ -1,0 +1,25 @@
+type Subject {
+    subjectCode: String!
+    subjectName: String!
+    major: String!
+}
+
+enum MeetingDay {
+    M_TH,
+    T_F
+}
+
+type Schedule {
+    subject: Subject!
+    meetingDays: String!
+    meetingHours: String!
+    room: String!
+    enrollment: Int! #FIXME: Replace with more descriptive name
+    faculty: Faculty
+}
+
+type Term {
+    term: String!
+    yearStart: Int
+    schedules: [Schedule]
+}
