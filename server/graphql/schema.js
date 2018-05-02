@@ -11,8 +11,8 @@ const mutationExtensionTypes = ["user"];
 
 const typeDefinitions = types
     .map(type => `${type}.type.graphql`) // Transform type to fileName
-    .map(fileName => `./types/${fileName}`) //Transform fileName to path
-    .map(path => requireText(path, require));
+    .map(fileName => `./types/${fileName}`) // Transform fileName to path
+    .map(path => requireText(path, require)); // Get file contents as string
 
 const queryExtensions = queryExtensionTypes
     .map(type => `${type}.query.graphql`)
