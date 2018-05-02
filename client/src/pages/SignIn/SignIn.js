@@ -32,8 +32,6 @@ export default class SignInPage extends Component {
 
         const {attemptingSignIn, signInError} = this.props;
 
-        console.log(style);
-
         return (
             <div className={style.background}>
                 <Card>
