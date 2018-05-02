@@ -1,5 +1,9 @@
-#falconLogo,
 #pageTitle {
+    margin-right: auto;
+}
+
+#falconLogo,
+#pageName {
     display: inline-block;
     font-size: 20px;
 }
@@ -9,7 +13,7 @@
     font-family: "Raleway", serif;
 }
 
-#pageTitle {
+#pageName {
     margin-left: 4px;
     font-weight: 300;
 }
@@ -20,4 +24,8 @@
 
 #appBar {
     transition: 200ms;
+}
+
+#toolbar {
+    display: flex;
 }
