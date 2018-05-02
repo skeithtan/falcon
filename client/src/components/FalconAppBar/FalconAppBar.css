@@ -17,3 +17,7 @@
 #hamburger {
     margin-left: -20px;
 }
+
+#appBar {
+    transition: 200ms;
+}

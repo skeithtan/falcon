@@ -6,6 +6,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "material-ui/Typography";
 
 
+import PageMenu from "../PageMenu";
 import { getPageFromIdentifier } from "../../pages/pages";
 import style from "./FalconAppBar.css";
 
@@ -22,6 +23,14 @@ class PageTitle extends Component {
 }
 
 export default class FalconAppBar extends Component {
+    state = {
+        menuOpen: false,
+    };
+
+    toggleMenu = () => {
+        this.setState({menuOpen: !this.state.menuOpen});
+    };
+
     pageTitle = () => {
         const activePage = getPageFromIdentifier(this.props.activePageIdentifier);
         return activePage.name;
@@ -29,13 +38,18 @@ export default class FalconAppBar extends Component {
 
     render() {
         return (
-            <AppBar position="static">
+            <AppBar position="static" id={style.appBar}>
                 <Toolbar>
-                    <IconButton color="inherit" aria-label="Menu" id={style.hamburger}>
-                        <MenuIcon/>
+                    <IconButton color="inherit"
+                                aria-label="Menu"
+                                id={style.hamburger}
+                                onClick={this.toggleMenu}>
+                        <MenuIcon />
                     </IconButton>
                     <PageTitle>{this.pageTitle()}</PageTitle>
                 </Toolbar>
+
+                <PageMenu open={this.state.menuOpen} toggle={this.toggleMenu} />
             </AppBar>
         );
     }
