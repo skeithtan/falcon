@@ -1,4 +1,4 @@
-import User from "../models/user";
+import User from "../models/user.model";
 import jwt from "jsonwebtoken";
 import config from "../config";
 
@@ -19,6 +19,6 @@ export default async function getUserFromToken(authorization) {
         return await User.findById(_id).exec();
     } catch (error) {
         console.log(`An error occurred verifying JWT Token: ${error.message}`);
-        return null;
+        throw error;
     }
 }
