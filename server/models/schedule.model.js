@@ -2,8 +2,8 @@ import mongoose, { Schema } from "mongoose";
 
 
 const SubjectSchema = new Schema({
-    subjectCode: String,
-    subjectName: String,
+    code: String,
+    name: String,
     major: String,
 });
 

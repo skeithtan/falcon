@@ -1,6 +1,7 @@
 type Subject {
-    subjectCode: String!
-    subjectName: String!
+    _id: String!
+    code: String!
+    name: String!
     major: String!
 }
 
@@ -19,6 +20,7 @@ type Schedule {
 }
 
 type Term {
+    _id: String!
     term: String!
     yearStart: Int
     schedules: [Schedule]
