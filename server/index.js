@@ -6,12 +6,11 @@ import mongoose from "mongoose";
 
 import config from "./config";
 import schema from "./graphql/schema";
-import getUserFromToken from "./utils/user_from_token";
 
 
 mongoose.connect(config.database.url)
-    .then(onDatabaseConnect)
-    .catch(err => console.log(`Could not connect to mongodb: ${err}`));
+        .then(onDatabaseConnect)
+        .catch(err => console.log(`Could not connect to mongodb: ${err}`));
 
 function onDatabaseConnect() {
     console.log("Connected to database");
@@ -22,8 +21,7 @@ function onDatabaseConnect() {
         return {
             schema: schema,
             context: {
-                //In every contexts in every resolvers, the current user should be there
-                user: getUserFromToken(request.get("authorization")),
+                authorization: request.get("authorization"),
             },
         };
     }));
