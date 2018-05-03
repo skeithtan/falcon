@@ -2,6 +2,13 @@ import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 
+export const DEAN = "DEAN";
+export const ASSOCIATE_DEAN = "ASSOCIATE_DEAN";
+export const FACULTY = "FACULTY";
+export const CLERK = "CLERK";
+
+export const USER_TYPES = [DEAN, ASSOCIATE_DEAN, FACULTY, CLERK];
+
 const SALT_ROUNDS = 10;
 
 const UserSchema = new Schema({
@@ -33,7 +40,7 @@ const UserSchema = new Schema({
         },
         authorization: {
             type: String,
-            enum: ["DEAN", "ASSOCIATE_DEAN", "FACULTY", "CLERK"],
+            enum: USER_TYPES,
             required: true,
         },
 
