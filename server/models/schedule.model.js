@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const SubjectSchema = new Schema({
     subjectCode: String,
     subjectName: String,
@@ -8,7 +9,7 @@ const SubjectSchema = new Schema({
 
 const Schedule = {
     subject: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Subject",
         required: true,
     },
@@ -25,7 +26,7 @@ const Schedule = {
     room: String,
     enrollment: Number, //FIXME: Replace with more descriptive name upon clarification
     faculty: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Faculty",
     },
 };
@@ -42,6 +43,6 @@ const TermSchema = new Schema({
 
 
 const Subject = mongoose.model("Subject", SubjectSchema);
-const Term = mongoose.Schema("Term", TermSchema);
+const Term = mongoose.model("Term", TermSchema);
 
 export { Subject, Term };

@@ -84,7 +84,7 @@ const ExtensionWork = {
 
 const FacultySchema = new Schema({
     user: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
@@ -104,7 +104,7 @@ const FacultySchema = new Schema({
     instructionalMaterials: [InstructionalMaterial],
     extensionWorks: [ExtensionWork],
     teachingSubjects: [{
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Subject",
         required: true,
     }],
