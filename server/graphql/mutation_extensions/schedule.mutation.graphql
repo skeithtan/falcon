@@ -1,3 +1,4 @@
 extend type Mutation {
     createSubject(code: String!, name: String!, major: String!): Subject!
+    modifySubject(_id: String!, code: String, name: String, major: String): Subject!
 }

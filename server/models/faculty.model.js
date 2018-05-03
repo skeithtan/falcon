@@ -5,7 +5,6 @@ const MonthYearDate = {
     year: Number,
 };
 
-
 const Presentation = {
     title: String,
     category: {
