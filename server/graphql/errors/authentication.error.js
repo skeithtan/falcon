@@ -1,8 +1,8 @@
-import { GraphQLError } from "graphql";
+import { GraphQLError } from "graphql/error";
 
 
 export default class AuthenticationError extends GraphQLError {
     constructor() {
-        super("Unable to authenticate user with given credentials");
+        super("AuthenticationError: Unable to authenticate user with given credentials");
     }
 }

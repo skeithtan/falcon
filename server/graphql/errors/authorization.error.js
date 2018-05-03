@@ -1,4 +1,4 @@
-import { GraphQLError } from "graphql";
+import { GraphQLError } from "graphql/error";
 
 
 export default class AuthorizationError extends GraphQLError {
