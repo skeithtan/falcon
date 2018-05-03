@@ -1,7 +1,12 @@
 import {
-    queryResolvers as userQueryResolvers,
-    mutationResolvers as userMutationResolvers,
+    queryResolvers as userQueries,
+    mutationResolvers as userMutations,
 } from "./user.resolver";
+
+import {
+    queryResolvers as scheduleQueries,
+    mutationResolvers as scheduleMutations,
+} from "./schedule.resolver";
 
 
 const helloWorldResolver = () => "World";
@@ -9,10 +14,12 @@ const helloWorldResolver = () => "World";
 export default {
     Query: {
         hello: helloWorldResolver,
-        ...userQueryResolvers,
+        ...userQueries,
+        ...scheduleQueries,
     },
     Mutation: {
         hello: helloWorldResolver,
-        ...userMutationResolvers,
+        ...userMutations,
+        ...scheduleMutations,
     },
 };

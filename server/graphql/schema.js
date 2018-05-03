@@ -6,8 +6,8 @@ import resolvers from "./resolvers";
 
 const rootQuery = requireText("./schema.graphql", require);
 const types = ["date", "faculty", "schedule", "user"];
-const queryExtensionTypes = ["user"];
-const mutationExtensionTypes = ["user"];
+const queryExtensionTypes = ["user", "schedule"];
+const mutationExtensionTypes = ["user", "schedule"];
 
 const typeDefinitions = types
     .map(type => `${type}.type.graphql`) // Transform type to fileName
