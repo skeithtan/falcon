@@ -5,7 +5,7 @@ import { AuthorizationError } from "../graphql/errors";
 export function requireSignIn(resolver) {
     function protectResolver(object, args, context) {
         return getUserFromContext(context)
-            .then(resolver(object, args, context));
+            .then(() => resolver(object, args, context));
     }
 
     return protectResolver;
@@ -20,7 +20,7 @@ export function limitAccess(resolver, {allowed, action}) {
                     throw AuthorizationError(authorization, action);
                 }
             })
-            .then(resolver(object, args, context));
+            .then(() => resolver(object, args, context));
     }
 
     return protectResolver;
