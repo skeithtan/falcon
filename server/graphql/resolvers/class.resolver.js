@@ -25,7 +25,7 @@ function createSubject(object, args) {
     return Subject.create(args.subject);
 }
 
-function modifySubject(object, args) {
+function updateSubject(object, args) {
     const {_id, newSubject} = args;
     // new: true specifies that the updated version is returned
     return Subject.findByIdAndUpdate(_id, newSubject, {new: true});
@@ -62,7 +62,7 @@ export const queryResolvers = {
 
 export const mutationResolvers = {
     createSubject: limitAccess(createSubject, {allowed: NO_FACULTY, action: "Create subject"}),
-    modifySubject: limitAccess(modifySubject, {allowed: NO_FACULTY, action: "Modify subject"}),
+    updateSubject: limitAccess(updateSubject, {allowed: NO_FACULTY, action: "Update subject"}),
 
     createAcademicYear: limitAccess(createAcademicYear, {allowed: NO_FACULTY, action: "Create academic year"}),
     createClass: limitAccess(createClass, {allowed: NO_FACULTY, action: "Create class"}),

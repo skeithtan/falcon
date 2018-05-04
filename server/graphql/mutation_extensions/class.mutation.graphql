@@ -14,7 +14,7 @@ input ClassInput {
 
 extend type Mutation {
     createSubject(subject: SubjectInput): Subject!
-    modifySubject(_id: String!, newSubject: SubjectInput): Subject!
+    updateSubject(_id: String!, newSubject: SubjectInput): Subject!
 
     createAcademicYear(startYear: Int!): AcademicYear!
     createClass(academicYearStart: Int!, term: String!, class: ClassInput!): Class!
