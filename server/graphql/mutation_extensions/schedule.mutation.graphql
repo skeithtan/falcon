@@ -1,4 +1,10 @@
+input SubjectInput {
+    code: String
+    name: String
+    major: String
+}
+
 extend type Mutation {
-    createSubject(code: String!, name: String!, major: String!): Subject!
-    modifySubject(_id: String!, code: String, name: String, major: String): Subject!
+    createSubject(subject: SubjectInput): Subject!
+    modifySubject(_id: String!, newSubject: SubjectInput): Subject!
 }

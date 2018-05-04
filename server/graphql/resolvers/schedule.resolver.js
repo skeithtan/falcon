@@ -9,11 +9,11 @@ function subjects() {
 }
 
 function createSubject(object, args) {
-    return Subject.create(args);
+    return Subject.create(args.subject);
 }
 
 function modifySubject(object, args) {
-    const {_id, ...newSubject} = args;
+    const {_id, newSubject} = args;
     // new: true specifies that the updated version is returned
     return Subject.findByIdAndUpdate(_id, newSubject, {new: true});
 }
