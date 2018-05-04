@@ -68,7 +68,7 @@ type InstructionalMaterial {
 
 type ExtensionWork {
     _id: String!
-    title: String,
+    title: String
     roles: [String]!
     venue: String
 }
