@@ -21,11 +21,7 @@ function academicYears() {
                        .populate(makePopulateObject("_1"))
                        .populate(makePopulateObject("_2"))
                        .populate(makePopulateObject("_3"))
-                       .exec()
-                       .then(academicYear => {
-                           console.log(academicYear[0].termsClasses._2);
-                           return academicYear;
-                       });
+                       .exec();
 }
 
 function createSubject(object, args) {
