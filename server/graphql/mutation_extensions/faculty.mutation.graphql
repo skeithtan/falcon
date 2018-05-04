@@ -51,4 +51,9 @@ input PresentationInput {
 
 extend type Mutation {
     createFaculty(faculty: FacultyInput!, user: UserInput!): Faculty!
+
+    createPresentation(presentation: PresentationInput!, facultyId: String!): Presentation!
+    createRecognition(recognition: RecognitionInput!, facultyId: String!): Recognition!
+    createInstructionalMaterial(instructionalMaterial: InstructionalMaterialInput!, facultyId: String!): InstructionalMaterial!
+    createExtensionWork(extensionWork: ExtensionWorkInput!, facultyId: String!): ExtensionWork!
 }

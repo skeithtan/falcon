@@ -1,4 +1,4 @@
-import { Faculty } from "../../models/faculty.model";
+import { Faculty, Presentation } from "../../models/faculty.model";
 import { User } from "../../models/user.model";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { FACULTY } from "../../models/user.model";
@@ -30,6 +30,17 @@ async function createFaculty(object, args) {
     }
 }
 
+async function createPresentation(object, args) {
+    const presentationInput = args.presentation;
+    const facultyId = args.facultyId;
+
+    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    faculty.presentations.push({...presentationInput});
+    faculty.save();
+
+    return faculty.presentations[faculty.presentations.length - 1];
+}
+
 
 export const queryResolvers = {
     faculties: limitAccess(faculties, {allowed: NO_FACULTY, action: "Get all faculties"}),
@@ -37,4 +48,5 @@ export const queryResolvers = {
 
 export const mutationResolvers = {
     createFaculty: limitAccess(createFaculty, {allowed: NO_FACULTY, action: "Create faculty"}),
+    createPresentation: limitAccess(createPresentation, {allowed: NO_FACULTY, action: "Create presentation"}),
 };
