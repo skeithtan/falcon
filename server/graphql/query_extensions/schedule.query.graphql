@@ -1,5 +1,0 @@
-extend type Query {
-    subjects: [Subject]
-    academicYears: [AcademicYear]
-    schedules(term: Int!, year: Int!): [Schedule]!
-}

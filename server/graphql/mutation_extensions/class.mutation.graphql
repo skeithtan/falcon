@@ -1,0 +1,21 @@
+input SubjectInput {
+    code: String
+    name: String
+    major: String
+}
+
+input ClassInput {
+    subject: String
+    meetingDays: MeetingDay
+    meetingHours: String
+    room: String
+    enrollmentCap: Int
+}
+
+extend type Mutation {
+    createSubject(subject: SubjectInput): Subject!
+    modifySubject(_id: String!, newSubject: SubjectInput): Subject!
+
+    createAcademicYear(startYear: Int!): AcademicYear!
+    createClass(academicYearStart: Int!, term: String!, class: ClassInput!): Class!
+}

@@ -7,7 +7,7 @@ const SubjectSchema = new Schema({
     major: String,
 });
 
-const Schedule = {
+const ClassSchema = new Schema({
     subject: {
         type: Schema.Types.ObjectId,
         ref: "Subject",
@@ -30,7 +30,7 @@ const Schedule = {
         ref: "Faculty",
         required: false,
     },
-};
+});
 
 const AcademicYearSchema = new Schema({
     startYear: {
@@ -38,15 +38,15 @@ const AcademicYearSchema = new Schema({
         required: true,
         unique: true,
     },
-    terms: {
-        _id: false, // No ID for this sub object
-        _1: [Schedule],
-        _2: [Schedule],
-        _3: [Schedule],
+    termsClasses: {
+        _1: [ClassSchema],
+        _2: [ClassSchema],
+        _3: [ClassSchema],
     },
 });
 
 const Subject = mongoose.model("Subject", SubjectSchema);
 const AcademicYear = mongoose.model("AcademicYear", AcademicYearSchema);
+const Class = mongoose.model("Class", ClassSchema);
 
-export { Subject, AcademicYear };
+export { Subject, AcademicYear, Class };

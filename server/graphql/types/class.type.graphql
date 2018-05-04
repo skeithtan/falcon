@@ -10,10 +10,10 @@ enum MeetingDay {
     T_F
 }
 
-type Schedule {
+type Class {
     _id: String!
     subject: Subject!
-    meetingDays: String!
+    meetingDays: MeetingDay!
     meetingHours: String!
     room: String!
     enrollmentCap: Int!
@@ -21,13 +21,13 @@ type Schedule {
 }
 
 type Term {
-    _1: [Schedule]!
-    _2: [Schedule]!
-    _3: [Schedule]!
+    _1: [Class]!
+    _2: [Class]!
+    _3: [Class]!
 }
 
 type AcademicYear {
     _id: String!
     startYear: Int!
-    terms: Term!
+    termsClasses: Term!
 }

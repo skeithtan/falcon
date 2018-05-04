@@ -4,9 +4,9 @@ import {
 } from "./user.resolver";
 
 import {
-    queryResolvers as scheduleQueries,
-    mutationResolvers as scheduleMutations,
-} from "./schedule.resolver";
+    queryResolvers as classQueries,
+    mutationResolvers as classMutations,
+} from "./class.resolver";
 
 
 const helloWorldResolver = () => "World";
@@ -15,11 +15,11 @@ export default {
     Query: {
         hello: helloWorldResolver,
         ...userQueries,
-        ...scheduleQueries,
+        ...classQueries,
     },
     Mutation: {
         hello: helloWorldResolver,
         ...userMutations,
-        ...scheduleMutations,
+        ...classMutations,
     },
 };
