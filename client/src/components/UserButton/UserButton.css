@@ -35,5 +35,5 @@
 }
 
 #userDetails {
-    padding-right: 40px;
+    min-width: 240px;
 }
