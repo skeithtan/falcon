@@ -58,17 +58,15 @@ async function createClass(object, args) {
     return newClass;
 }
 
-const queryResolvers = {
+export const queryResolvers = {
     subjects: limitAccess(subjects, {allowed: NO_FACULTY, action: "Get all subjects"}),
     academicYears: limitAccess(academicYears, {allowed: NO_FACULTY, action: "Get all terms"}),
 };
 
-const mutationResolvers = {
+export const mutationResolvers = {
     createSubject: limitAccess(createSubject, {allowed: NO_FACULTY, action: "Create subject"}),
     modifySubject: limitAccess(modifySubject, {allowed: NO_FACULTY, action: "Modify subject"}),
 
     createAcademicYear: limitAccess(createAcademicYear, {allowed: NO_FACULTY, action: "Create academic year"}),
     createClass: createClass,
 };
-
-export { queryResolvers, mutationResolvers };

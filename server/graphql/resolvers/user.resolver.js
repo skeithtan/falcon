@@ -34,12 +34,10 @@ async function signIn(object, {email, password}) {
     return token;
 }
 
-const queryResolvers = {
+export const queryResolvers = {
     currentUser: requireSignIn(currentUser),
 };
 
-const mutationResolvers = {
+export const mutationResolvers = {
     signIn,
 };
-
-export { queryResolvers, mutationResolvers };
