@@ -4,8 +4,6 @@ import config from "../config";
 
 
 export default async function getUserFromToken(authorization) {
-    const jwtSecret = config.server.jwtSecret;
-
     // If authorization header has absolutely nothing
     if (!authorization) {
         return null;
@@ -13,6 +11,7 @@ export default async function getUserFromToken(authorization) {
 
     // Remove bearer from authorization header to retrieve token
     const token = authorization.replace("Bearer ", "");
+    const jwtSecret = config.server.jwtSecret;
 
     try {
         const {_id} = jwt.verify(token, jwtSecret);
