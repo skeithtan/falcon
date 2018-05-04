@@ -1,7 +1,8 @@
-import { Faculty, Presentation } from "../../models/faculty.model";
+import { Faculty } from "../../models/faculty.model";
 import { User } from "../../models/user.model";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { FACULTY } from "../../models/user.model";
+import ValidationError from "../errors/validation.error";
 
 function faculties() {
     return Faculty.find({}).populate("user");
@@ -36,9 +37,42 @@ async function createPresentation(object, args) {
 
     const faculty = await Faculty.findById({_id: facultyId}).exec();
     faculty.presentations.push({...presentationInput});
-    faculty.save();
+    await faculty.save(); //This must be await so errors are thrown before returning
 
     return faculty.presentations[faculty.presentations.length - 1];
+}
+
+async function createRecognition(object, args) {
+    const recognitionInput = args.recognition;
+    const facultyId = args.facultyId;
+
+    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    faculty.recognitions.push({...recognitionInput});
+    await faculty.save();
+
+    return faculty.recognitions[faculty.recognitions.length - 1];
+}
+
+async function createInstructionalMaterial(object, args) {
+    const instructionalMaterialInput = args.instructionalMaterial;
+    const facultyId = args.facultyId;
+
+    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    faculty.instructionalMaterials.push({...instructionalMaterialInput});
+    await faculty.save();
+
+    return faculty.instructionalMaterials[faculty.instructionalMaterials.length - 1];
+}
+
+async function createExtensionWork(object, args) {
+    const extensionWorkInput = args.extensionWork;
+    const facultyId = args.facultyId;
+
+    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    faculty.extensionWorks.push({...extensionWorkInput});
+    await faculty.save();
+
+    return faculty.extensionWorks[faculty.extensionWorks.length - 1];
 }
 
 
@@ -49,4 +83,9 @@ export const queryResolvers = {
 export const mutationResolvers = {
     createFaculty: limitAccess(createFaculty, {allowed: NO_FACULTY, action: "Create faculty"}),
     createPresentation: limitAccess(createPresentation, {allowed: NO_FACULTY, action: "Create presentation"}),
+    createRecognition: limitAccess(createRecognition, {allowed: NO_FACULTY, action: "Create recognition"}),
+    createInstructionalMaterial: limitAccess(createInstructionalMaterial,
+        {allowed: NO_FACULTY, action: "Create instructional materials"}),
+    createExtensionWork: limitAccess(createExtensionWork,
+        {allowed: NO_FACULTY, action: "Create extension work"}),
 };
