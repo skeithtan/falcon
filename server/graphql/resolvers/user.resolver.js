@@ -2,12 +2,12 @@ import jwt from "jsonwebtoken";
 
 import User from "../../models/user.model";
 import { requireSignIn } from "../../utils/user_decorator";
-import getUserFromToken from "../../utils/user_from_token";
 import { AuthenticationError } from "../errors";
+import { getUserFromContext } from "../../utils/user_from_context";
 import config from "../../config";
 
 function currentUser(object, args, context) {
-    return getUserFromToken(context.authorization);
+    return getUserFromContext(context.authorization);
 }
 
 async function signIn(object, {email, password}) {
