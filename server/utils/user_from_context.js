@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "../config";
 import { GuestAccessError } from "../graphql/errors";
-import User from "../models/user.model";
+import { User } from "../models/user.model";
 
 function getAuthorizationFromContext(context) {
     return new Promise((resolve, reject) => {

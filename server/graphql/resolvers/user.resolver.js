@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import User from "../../models/user.model";
+import { User } from "../../models/user.model";
 import { requireSignIn } from "../../utils/user_decorator";
 import { AuthenticationError } from "../errors";
 import { getUserFromContext } from "../../utils/user_from_context";
