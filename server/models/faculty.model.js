@@ -5,7 +5,7 @@ const MonthYearDate = {
     year: Number,
 };
 
-const Presentation = {
+const PresentationSchema = new Schema({
     title: String,
     category: {
         type: String,
@@ -22,9 +22,9 @@ const Presentation = {
         required: true,
     },
     daysDuration: Number,
-};
+});
 
-const Recognition = {
+const RecognitionSchema = new Schema({
     title: String,
     basis: {
         type: String,
@@ -33,9 +33,9 @@ const Recognition = {
     },
     date: MonthYearDate,
     sponsor: String,
-};
+});
 
-const InstructionalMaterial = {
+const InstructionalMaterialSchema = new Schema({
     title: String,
     medium: {
         type: String,
@@ -66,9 +66,9 @@ const InstructionalMaterial = {
             return this.medium === "NON_PRINT";
         },
     },
-};
+});
 
-const ExtensionWork = {
+const ExtensionWorkSchema = new Schema({
     title: String,
     roles: {
         lecturer: Boolean,
@@ -79,7 +79,7 @@ const ExtensionWork = {
         materialWriter: Boolean,
     },
     venue: String,
-};
+});
 
 const FacultySchema = new Schema({
     user: {
@@ -98,10 +98,10 @@ const FacultySchema = new Schema({
         required: true,
     },
     birthDate: Date,
-    presentations: [Presentation],
-    recognitions: [Recognition],
-    instructionalMaterials: [InstructionalMaterial],
-    extensionWorks: [ExtensionWork],
+    presentations: [PresentationSchema],
+    recognitions: [RecognitionSchema],
+    instructionalMaterials: [InstructionalMaterialSchema],
+    extensionWorks: [ExtensionWorkSchema],
     teachingSubjects: [{
         type: Schema.Types.ObjectId,
         ref: "Subject",
@@ -110,4 +110,15 @@ const FacultySchema = new Schema({
 });
 
 const Faculty = mongoose.model("Faculty", FacultySchema);
-export default Faculty;
+const Presentation = mongoose.model("Presentation", PresentationSchema);
+const Recognition = mongoose.model("Recognition", RecognitionSchema);
+const InstructionalMaterial = mongoose.model("InstructionalMaterial", InstructionalMaterialSchema);
+const ExtensionWork = mongoose.model("ExtensionWork", ExtensionWorkSchema);
+
+export {
+    Faculty,
+    Presentation,
+    Recognition,
+    InstructionalMaterial,
+    ExtensionWork,
+};
