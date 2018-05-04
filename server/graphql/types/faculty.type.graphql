@@ -12,6 +12,7 @@ enum PresentationMedium {
 }
 
 type Presentation {
+    _id: String!
     title: String!
     category: PresentationCategory!
     date: MonthYearDate!
@@ -30,6 +31,7 @@ enum RecognitionBasis {
 }
 
 type Recognition {
+    _id: String!
     title: String!
     basis: RecognitionBasis!
     date: MonthYearDate!
@@ -55,6 +57,7 @@ enum InstructionalMaterialNonPrintType {
 }
 
 type InstructionalMaterial {
+    _id: String!
     title: String!
     medium: InstructionalMaterialMedium!
     classification: InstructionalMaterialClassification!
@@ -63,18 +66,10 @@ type InstructionalMaterial {
     nonPrintType: InstructionalMaterialNonPrintType
 }
 
-type ExtensionWorkRole {
-    lecturer: Boolean
-    trainer: Boolean
-    resourceSpeaker: Boolean
-    facilitator: Boolean
-    coach: Boolean
-    materialWriter: Boolean
-}
-
 type ExtensionWork {
+    _id: String!
     title: String,
-    roles: ExtensionWorkRole
+    roles: [String]!
     venue: String
 }
 
