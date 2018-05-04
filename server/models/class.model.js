@@ -2,9 +2,18 @@ import mongoose, { Schema } from "mongoose";
 
 
 const SubjectSchema = new Schema({
-    code: String,
-    name: String,
-    major: String,
+    code: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    major: {
+        type: String,
+        required: true
+    },
 });
 
 const ClassSchema = new Schema({
@@ -23,8 +32,14 @@ const ClassSchema = new Schema({
         enum: ["7-9", "9-11", "11-1", "1-3", "3-5"],
         required: true,
     },
-    room: String,
-    enrollmentCap: Number,
+    room: {
+        type: String,
+        required: true
+    },
+    enrollmentCap: {
+        type: Number,
+        required: true
+    },
     faculty: {
         type: Schema.Types.ObjectId,
         ref: "Faculty",
