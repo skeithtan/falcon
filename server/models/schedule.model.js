@@ -24,25 +24,29 @@ const Schedule = {
         required: true,
     },
     room: String,
-    enrollment: Number, //FIXME: Replace with more descriptive name upon clarification
+    enrollmentCap: Number,
     faculty: {
         type: Schema.Types.ObjectId,
         ref: "Faculty",
+        required: false,
     },
 };
 
-const TermSchema = new Schema({
-    term: {
-        type: String,
-        enum: ["1", "2", "3"],
+const AcademicYearSchema = new Schema({
+    startYear: {
+        type: Number,
         required: true,
+        unique: true,
     },
-    yearStart: Number,
-    schedules: [Schedule]
+    terms: {
+        _id: false, // No ID for this sub object
+        _1: [Schedule],
+        _2: [Schedule],
+        _3: [Schedule],
+    },
 });
 
-
 const Subject = mongoose.model("Subject", SubjectSchema);
-const Term = mongoose.model("Term", TermSchema);
+const AcademicYear = mongoose.model("AcademicYear", AcademicYearSchema);
 
-export { Subject, Term };
+export { Subject, AcademicYear };

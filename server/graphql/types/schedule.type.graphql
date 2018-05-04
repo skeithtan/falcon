@@ -11,17 +11,23 @@ enum MeetingDay {
 }
 
 type Schedule {
+    _id: String!
     subject: Subject!
     meetingDays: String!
     meetingHours: String!
     room: String!
-    enrollment: Int! #FIXME: Replace with more descriptive name
+    enrollmentCap: Int!
     faculty: Faculty
 }
 
 type Term {
+    _1: [Schedule]!
+    _2: [Schedule]!
+    _3: [Schedule]!
+}
+
+type AcademicYear {
     _id: String!
-    term: String!
-    yearStart: Int
-    schedules: [Schedule]
+    startYear: Int!
+    terms: Term!
 }
