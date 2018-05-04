@@ -1,5 +1,5 @@
 extend type Query {
     subjects: [Subject]
-    terms: [Term]
-    schedules(term: String, year: Int): [Schedule]
+    academicYears: [AcademicYear]
+    schedules(term: Int!, year: Int!): [Schedule]!
 }
