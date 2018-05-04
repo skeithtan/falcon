@@ -68,16 +68,21 @@ const InstructionalMaterialSchema = new Schema({
     },
 });
 
+export const EXTENSION_WORK_ROLES = [
+    "LECTURER",
+    "TRAINER",
+    "RESOURCE_SPEAKER",
+    "FACILITATOR",
+    "COACH",
+    "MATERIAL_WRITER",
+];
+
 const ExtensionWorkSchema = new Schema({
     title: String,
-    roles: {
-        lecturer: Boolean,
-        trainer: Boolean,
-        resourceSpeaker: Boolean,
-        facilitator: Boolean,
-        coach: Boolean,
-        materialWriter: Boolean,
-    },
+    roles: [{
+        type: String,
+        enum: EXTENSION_WORK_ROLES,
+    }],
     venue: String,
 });
 
