@@ -8,6 +8,11 @@ import {
     mutationResolvers as classMutations,
 } from "./class.resolver";
 
+import {
+    queryResolvers as facultyQueries,
+    mutationResolvers as facultyMutations,
+} from "./faculty.resolver";
+
 
 const helloWorldResolver = () => "World";
 
@@ -16,10 +21,12 @@ export default {
         hello: helloWorldResolver,
         ...userQueries,
         ...classQueries,
+        ...facultyQueries,
     },
     Mutation: {
         hello: helloWorldResolver,
         ...userMutations,
         ...classMutations,
+        ...facultyMutations,
     },
 };

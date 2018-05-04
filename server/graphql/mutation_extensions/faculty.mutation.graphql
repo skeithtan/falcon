@@ -1,0 +1,54 @@
+input NameInput {
+    first: String
+    last: String
+}
+
+input UserInput {
+    email: String
+    photo: String
+    name: NameInput
+    password: String
+}
+
+input FacultyInput {
+    sex: Sex
+    employment: Employment
+    birthDate: String
+}
+
+input ExtensionWorkInput {
+    title: String
+    roles: [String]
+    venue: String
+}
+
+input InstructionalMaterialInput {
+    title: String
+    medium: InstructionalMaterialMedium
+    classification: InstructionalMaterialClassification
+    usageYear: Int
+    level: String
+    nonPrintType: InstructionalMaterialNonPrintType
+}
+
+input RecognitionInput {
+    title: String
+    basis: RecognitionBasis
+    date: MonthYearDateInput
+    sponsor: String
+}
+
+input PresentationInput {
+    title: String
+    category: PresentationCategory
+    date: MonthYearDateInput
+    sponsor: String
+    venue: String
+    conference: String
+    medium: PresentationMedium
+    daysDuration: Int
+}
+
+extend type Mutation {
+    createFaculty(faculty: FacultyInput!, user: UserInput!): Faculty!
+}
