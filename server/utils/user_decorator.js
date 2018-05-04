@@ -1,6 +1,8 @@
 import { getUserFromContext } from "./user_from_context";
 import { AuthorizationError } from "../graphql/errors";
+import { DEAN, ASSOCIATE_DEAN, CLERK } from "../models/user.model";
 
+export const NO_FACULTY = [DEAN, ASSOCIATE_DEAN, CLERK];
 
 export function requireSignIn(resolver) {
     function protectResolver(object, args, context) {
