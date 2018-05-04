@@ -1,9 +1,6 @@
 import { Subject, AcademicYear, Class } from "../../models/class.model";
-import { limitAccess } from "../../utils/user_decorator";
-import { DEAN, ASSOCIATE_DEAN, CLERK } from "../../models/user.model";
+import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import ValidationError from "../errors/validation.error";
-
-const NO_FACULTY = [DEAN, ASSOCIATE_DEAN, CLERK];
 
 function subjects() {
     return Subject.find({});
@@ -68,5 +65,5 @@ export const mutationResolvers = {
     modifySubject: limitAccess(modifySubject, {allowed: NO_FACULTY, action: "Modify subject"}),
 
     createAcademicYear: limitAccess(createAcademicYear, {allowed: NO_FACULTY, action: "Create academic year"}),
-    createClass: createClass,
+    createClass: limitAccess(createClass, {allowed: NO_FACULTY, action: "Create class"}),
 };
