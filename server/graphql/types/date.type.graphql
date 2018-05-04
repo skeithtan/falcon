@@ -2,3 +2,8 @@ type MonthYearDate {
     month: Int!
     year: Int!
 }
+
+input MonthYearDateInput {
+    month: Int
+    year: Int
+}
