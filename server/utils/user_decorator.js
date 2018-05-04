@@ -5,7 +5,15 @@ export function requireSignIn(resolver) {
     function protectResolver(object, args, context) {
         // All resolvers have access to user because it's been placed in context at server/index.js
         return getUserFromToken(context.authorization)
-            .then(() => resolver(object, args, context))
+            .then(() => {
+                try {
+                    // Without try-catch, an exception thrown in the resolver returns a GuestAccessError
+                    return resolver(object, args, context);
+                } catch (error) {
+                    console.log("Error occurred in resolver", error.message);
+                    throw error;
+                }
+            })
             .catch(() => new GuestAccessError());
     }
 
@@ -21,7 +29,13 @@ export function limitAccess(resolver, {allowed, action}) {
                 if (!allowed.includes(authorization)) {
                     return new AuthorizationError(authorization, action);
                 }
-                return resolver(object, args, context);
+
+                try {
+                    return resolver(object, args, context);
+                } catch (error) {
+                    console.log("Error occurred in resolver", error.message);
+                    throw error;
+                }
             })
             .catch(() => new GuestAccessError());
     }
