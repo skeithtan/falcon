@@ -88,7 +88,6 @@ type Faculty {
     _id: String!
     user: User!
     sex: Sex!
-    age: Int!
     employment: Employment
     birthDate: String!
     presentations: [Presentation]!
