@@ -5,10 +5,10 @@ import { User } from "../models/user.model";
 
 function getAuthorizationFromContext(context) {
     return new Promise((resolve, reject) => {
-        try {
-            return resolve(context.authorization);
-        } catch (error) {
-            reject(error);
+        if (context.authorization) {
+            resolve(context.authorization);
+        } else {
+            reject(new GuestAccessError());
         }
     });
 }
@@ -22,7 +22,7 @@ function getUserIdFromAuthorization(authorization) {
             const {_id} = jwt.verify(token, jwtSecret);
             resolve(_id);
         } catch (error) {
-            reject(error);
+            reject(new Error(`JWTValidationError: ${error.message}`));
         }
     });
 }
@@ -30,19 +30,9 @@ function getUserIdFromAuthorization(authorization) {
 
 // Ensures authorization is in the header, else throws GuestAccessError
 // Ensures JWT is valid, else throws JWTValidationError
-// Ensures User is in database, else throws UserNotFoundError
 export function getUserFromContext(context) {
     return getAuthorizationFromContext(context)
-        .catch(() => {
-            throw GuestAccessError();
-        })
         .then(authorization => getUserIdFromAuthorization(authorization))
-        .catch(error => {
-            throw Error(`JWTValidationError: ${error.message}`);
-        })
-        .then(_id => User.findById({_id}).exec())
-        .catch(() => {
-            throw Error("UserNotFoundError: User with ID was not found in the database");
-        });
+        .then(_id => User.findById({_id}).exec());
 }
 
