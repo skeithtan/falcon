@@ -1,8 +1,14 @@
 import mongoose, { Schema } from "mongoose";
 
 const MonthYearDate = {
-    month: Number,
-    year: Number,
+    month: {
+        type: Number,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
+    },
 };
 
 const PresentationSchema = new Schema({
@@ -13,26 +19,44 @@ const PresentationSchema = new Schema({
         required: true,
     },
     date: MonthYearDate,
-    sponsor: String,
-    venue: String,
-    conference: String,
+    sponsor: {
+        type: String,
+        required: true
+    },
+    venue: {
+        type: String,
+        required: true
+    },
+    conference: {
+        type: String,
+        required: true
+    },
     medium: {
         type: String,
         enum: ["PAPER", "POSTER", "RESEARCH"],
         required: true,
     },
-    daysDuration: Number,
+    daysDuration: {
+        type: Number,
+        required: true
+    },
 });
 
 const RecognitionSchema = new Schema({
-    title: String,
+    title: {
+        type: String,
+        required: true
+    },
     basis: {
         type: String,
         enum: ["RESEARCH", "SCHOLARSHIP", "EXTENSION_WORK", "CIVIC"],
         required: true,
     },
     date: MonthYearDate,
-    sponsor: String,
+    sponsor: {
+        type: String,
+        required: true
+    },
 });
 
 const InstructionalMaterialSchema = new Schema({
@@ -47,7 +71,10 @@ const InstructionalMaterialSchema = new Schema({
         enum: ["STUDENT", "TEACHER"],
         required: true,
     },
-    usageYear: Number,
+    usageYear: {
+        type: Number,
+        required: true
+    },
 
     // Student only fields
     level: {
@@ -78,12 +105,18 @@ export const EXTENSION_WORK_ROLES = [
 ];
 
 const ExtensionWorkSchema = new Schema({
-    title: String,
+    title: {
+        type: String,
+        required: true
+    },
     roles: [{
         type: String,
         enum: EXTENSION_WORK_ROLES,
     }],
-    venue: String,
+    venue: {
+        type: String,
+        required: true
+    },
 });
 
 const FacultySchema = new Schema({
@@ -102,7 +135,10 @@ const FacultySchema = new Schema({
         enum: ["FULL_TIME_PERMANENT", "FULL_TIME_TEMPORARY", "PART_TIME"],
         required: true,
     },
-    birthDate: Date,
+    birthDate: {
+        type: Date,
+        required: true
+    },
     presentations: [PresentationSchema],
     recognitions: [RecognitionSchema],
     instructionalMaterials: [InstructionalMaterialSchema],
