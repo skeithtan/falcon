@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { FACULTY_PROFILES_PAGE } from "../pages";
-
+import FacultyProfilesHeader from "./components/FacultyProfilesHeader";
 
 export default class FacultyProfilesPage extends Component {
     state = {};
@@ -17,7 +17,12 @@ export default class FacultyProfilesPage extends Component {
     }
 
     render() {
-        //TODO: FacultyProfilesPage
-        return <h1>Faculty Profiles</h1>;
+        const {classes} = this.props;
+
+        return (
+            <div className={classes.facultyProfiles}>
+                <FacultyProfilesHeader classes={classes}/>
+            </div>
+        );
     }
 }

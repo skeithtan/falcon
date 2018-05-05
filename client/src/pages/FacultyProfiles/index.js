@@ -1,5 +1,8 @@
 import { connect } from "react-redux";
+import { withTheme, withStyles } from "material-ui/styles";
+import { compose } from "recompose";
 
+import style from "./styles";
 import FacultyProfilesPage from "./FacultyProfiles";
 import { setActivePage as makeSetActivePageAction } from "../../actions/pages.actions";
 
@@ -18,4 +21,8 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FacultyProfilesPage);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withTheme(),
+    withStyles(style),
+)(FacultyProfilesPage);
