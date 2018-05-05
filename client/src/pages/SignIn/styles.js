@@ -2,7 +2,7 @@ export default theme => ({
     background: {
         height: "100vh",
         width: "100vw",
-        background: "#eceff1",
+        background: theme.palette.grey["200"],
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

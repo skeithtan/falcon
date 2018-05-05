@@ -1,6 +1,6 @@
-export default {
+export default theme => ({
     avatar: {
-        background: "#37474f",
+        background: theme.palette.grey["800"],
     },
 
     userButton: {
@@ -19,8 +19,8 @@ export default {
         padding: 16,
         display: "flex",
         flexDirection: "row",
-        background: "#eeeeee",
-        marginTop: -8,
+        background: theme.palette.grey["200"],
+        marginTop: theme.spacing.unit * -1,
     },
 
     userFullName: {
@@ -28,7 +28,7 @@ export default {
     },
 
     userEmail: {
-        color: "#444",
+        color: theme.palette.grey["700"],
     },
 
     userDetails: {
@@ -36,4 +36,4 @@ export default {
         minWidth: 240
     }
 
-};
+});
