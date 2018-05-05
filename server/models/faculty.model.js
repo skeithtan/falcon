@@ -3,11 +3,11 @@ import mongoose, { Schema } from "mongoose";
 const MonthYearDate = {
     month: {
         type: Number,
-        required: true
+        required: true,
     },
     year: {
         type: Number,
-        required: true
+        required: true,
     },
 };
 
@@ -21,15 +21,15 @@ const PresentationSchema = new Schema({
     date: MonthYearDate,
     sponsor: {
         type: String,
-        required: true
+        required: true,
     },
     venue: {
         type: String,
-        required: true
+        required: true,
     },
     conference: {
         type: String,
-        required: true
+        required: true,
     },
     medium: {
         type: String,
@@ -38,14 +38,14 @@ const PresentationSchema = new Schema({
     },
     daysDuration: {
         type: Number,
-        required: true
+        required: true,
     },
 });
 
 const RecognitionSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
     },
     basis: {
         type: String,
@@ -55,7 +55,7 @@ const RecognitionSchema = new Schema({
     date: MonthYearDate,
     sponsor: {
         type: String,
-        required: true
+        required: true,
     },
 });
 
@@ -73,7 +73,7 @@ const InstructionalMaterialSchema = new Schema({
     },
     usageYear: {
         type: Number,
-        required: true
+        required: true,
     },
 
     // Student only fields
@@ -107,7 +107,7 @@ export const EXTENSION_WORK_ROLES = [
 const ExtensionWorkSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
     },
     roles: [{
         type: String,
@@ -115,7 +115,7 @@ const ExtensionWorkSchema = new Schema({
     }],
     venue: {
         type: String,
-        required: true
+        required: true,
     },
 });
 
@@ -137,7 +137,7 @@ const FacultySchema = new Schema({
     },
     birthDate: {
         type: Date,
-        required: true
+        required: true,
     },
     presentations: [PresentationSchema],
     recognitions: [RecognitionSchema],
@@ -150,16 +150,4 @@ const FacultySchema = new Schema({
     }],
 });
 
-const Faculty = mongoose.model("Faculty", FacultySchema);
-const Presentation = mongoose.model("Presentation", PresentationSchema);
-const Recognition = mongoose.model("Recognition", RecognitionSchema);
-const InstructionalMaterial = mongoose.model("InstructionalMaterial", InstructionalMaterialSchema);
-const ExtensionWork = mongoose.model("ExtensionWork", ExtensionWorkSchema);
-
-export {
-    Faculty,
-    Presentation,
-    Recognition,
-    InstructionalMaterial,
-    ExtensionWork,
-};
+export const Faculty = mongoose.model("Faculty", FacultySchema);
