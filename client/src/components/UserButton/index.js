@@ -1,9 +1,11 @@
 import { connect } from "react-redux";
-import { withTheme } from "material-ui/styles";
+import { withTheme, withStyles } from "material-ui/styles";
+import { compose } from "recompose";
 
 import userService from "../../services/user.service";
 import { setCurrentUser } from "../../actions/authentication.actions";
 import UserButton from "./UserButton";
+import styles from "./styles";
 
 function mapStateToProps(state) {
     return state.authentication;
@@ -18,4 +20,8 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme()(UserButton));
+export default compose(
+    withTheme(),
+    withStyles(styles),
+    connect(mapStateToProps, mapDispatchToProps),
+)(UserButton);
