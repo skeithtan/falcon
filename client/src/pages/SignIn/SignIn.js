@@ -5,7 +5,6 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import { LinearProgress } from "material-ui/Progress";
 
-import style from "./SignIn.css";
 import pnuLogo from "../../images/pnu-logo.png";
 
 
@@ -30,39 +29,41 @@ export default class SignInPage extends Component {
         const formIsFilled = this.state.email.length > 0 &&
             this.state.password.length > 0;
 
-        const {attemptingSignIn, signInError} = this.props;
+        const {attemptingSignIn, signInError, classes} = this.props;
 
         return (
-            <div className={style.background}>
+            <div className={classes.background}>
                 <Card>
                     {attemptingSignIn && <LinearProgress />}
-                    <div className={style.signInBox}>
-                        <img src={pnuLogo} className={style.pnuLogo} alt="PNU Logo" />
-                        <Typography className={style.welcomeMessage} variant="headline" component="h1">
+                    <div className={classes.signInBox}>
+                        <img src={pnuLogo} className={classes.pnuLogo} alt="PNU Logo" />
+                        <Typography className={classes.welcomeMessage} variant="headline" component="h1">
                             Sign in to Falcon
                         </Typography>
                         <Typography component="h2" color="textSecondary">Faculty of Arts and Languages</Typography>
 
                         <form onSubmit={this.onSubmit}>
 
-                            <div className={style.form}>
+                            <div className={classes.form}>
                                 {signInError !== null &&
                                 <Typography color="error">{signInError}</Typography>
                                 }
 
-                                <TextField className={style.formInput}
+                                <TextField className={classes.formInput}
                                            label="Email Address"
+                                           fullWidth={true}
                                            value={this.state.email}
                                            onChange={this.handleChange("email")} />
-                                <TextField className={style.formInput}
+                                <TextField className={classes.formInput}
                                            label="Password"
+                                           fullWidth={true}
                                            type="password"
                                            value={this.state.password}
                                            onChange={this.handleChange("password")} />
                             </div>
 
-                            <div className={style.buttonContainer}>
-                                <Button className={style.button}
+                            <div className={classes.buttonContainer}>
+                                <Button className={classes.button}
                                         type="submit"
                                         variant="raised"
                                         color="primary"

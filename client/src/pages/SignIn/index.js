@@ -1,6 +1,9 @@
 import { connect } from "react-redux";
-import { withTheme } from "material-ui/styles";
+import { withTheme, withStyles } from "material-ui/styles";
+import { compose } from "recompose";
 
+
+import styles from "./styles";
 import SignInPage from "./SignIn";
 import userService from "../../services/user.service";
 import {
@@ -43,5 +46,9 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withTheme(),
+    withStyles(styles),
+)(SignInPage);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme()(SignInPage));
