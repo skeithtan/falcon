@@ -20,6 +20,14 @@ export default theme => ({
         gridTemplateColumns: "minmax(240px, 320px) minmax(320px, 1fr)",
     },
 
+    searchPaper: {
+        opacity: 0.85,
+        transitionDuration: theme.transitions.duration.short,
+        "&:focus-within": {
+            opacity: 1
+        },
+    },
+
     searchWrapper: {
         paddingLeft: theme.spacing.unit * 2,
         paddingRight: theme.spacing.unit * 2,
@@ -31,6 +39,7 @@ export default theme => ({
     },
 
     tabs: {
+        color: "white",
         "&:focus": {
             color: "#fff",
         },
@@ -40,7 +49,4 @@ export default theme => ({
         background: "white",
     },
 
-    tabSelected: {
-        color: "white",
-    },
 })

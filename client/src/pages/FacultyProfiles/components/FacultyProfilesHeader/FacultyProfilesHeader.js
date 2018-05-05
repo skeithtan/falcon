@@ -11,7 +11,7 @@ class FacultyProfilesHeader extends Component {
         return (
             <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
                 <div className={classes.searchWrapper}>
-                    <Paper>
+                    <Paper className={classes.searchPaper}>
                         <Input className={classes.searchInput}
                                fullWidth
                                type="search"
@@ -19,24 +19,16 @@ class FacultyProfilesHeader extends Component {
                     </Paper>
                 </div>
 
-                <div>
-                    <Tabs value={0}
-                          classes={{indicator: classes.tabsIndicator}}
-                          scrollable>
-                        <Tab classes={{selected: classes.tabSelected}}
-                             label="Overview" />
-                        <Tab classes={{selected: classes.tabSelected}}
-                             label="Presentations" />
-                        <Tab classes={{selected: classes.tabSelected}}
-                             label="Recognitions" />
-                        <Tab classes={{selected: classes.tabSelected}}
-                             label="Instructional Materials" />
-                        <Tab classes={{selected: classes.tabSelected}}
-                             label="Extension Works" />
-                        <Tab classes={{selected: classes.tabSelected}}
-                             label="Teaching Subjects" />
-                    </Tabs>
-                </div>
+                <Tabs value={0}
+                      classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
+                      scrollable>
+                    <Tab label="Overview" />
+                    <Tab label="Presentations" />
+                    <Tab label="Recognitions" />
+                    <Tab label="Instructional Materials" />
+                    <Tab label="Extension Works" />
+                    <Tab label="Teaching Subjects" />
+                </Tabs>
             </div>
         );
     }
