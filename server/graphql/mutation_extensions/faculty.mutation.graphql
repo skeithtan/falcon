@@ -51,9 +51,17 @@ input PresentationInput {
 
 extend type Mutation {
     createFaculty(faculty: FacultyInput!, user: UserInput!): Faculty!
+    updateFaculty(_id: String!, newFaculty: FacultyInput!): Faculty!
 
     createPresentation(presentation: PresentationInput!, facultyId: String!): Presentation!
+    updatePresentation(_id: String!, newPresentation: PresentationInput!, facultyId: String!): Presentation!
+
     createRecognition(recognition: RecognitionInput!, facultyId: String!): Recognition!
+    updateRecognition(_id: String!, newRecognition: RecognitionInput!, facultyId: String!): Recognition!
+
     createInstructionalMaterial(instructionalMaterial: InstructionalMaterialInput!, facultyId: String!): InstructionalMaterial!
+    updateInstructionalMaterial(_id: String!, newInstructionalMaterial: InstructionalMaterialInput!, facultyId: String!): InstructionalMaterial!
+
     createExtensionWork(extensionWork: ExtensionWorkInput!, facultyId: String!): ExtensionWork!
+    updateExtensionWork(_id: String!, newExtensionWork: ExtensionWorkInput!, facultyId: String!): ExtensionWork!
 }
