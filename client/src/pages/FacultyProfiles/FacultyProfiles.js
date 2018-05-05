@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { FACULTY_PROFILES_PAGE } from "../pages";
-import "./FacultyProfiles.css";
 
 
 export default class FacultyProfilesPage extends Component {
