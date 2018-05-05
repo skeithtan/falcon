@@ -1,9 +1,8 @@
-export default {
+export default theme => ({
     appBar: {
-        transition: {
-            property: "background",
-            duration: "200ms",
-        },
+        transitionProperty: "background",
+        transitionDuration: theme.transitions.duration.shorter,
+        boxShadow: theme.shadows[0],
     },
     toolbar: {
         display: "flex",
@@ -18,11 +17,11 @@ export default {
         display: "inline-block",
         fontSize: 20,
         fontFamily: "Raleway",
-        marginRight: 4
+        marginRight: 4,
     },
     pageName: {
         display: "inline-block",
         fontSize: 20,
-        fontWeight: 300,
+        fontWeight: theme.typography.fontWeightLight,
     },
-};
+});
