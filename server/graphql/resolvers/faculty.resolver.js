@@ -149,30 +149,29 @@ async function mutateExtensionWork(object, {facultyId}) {
 
         return extensionWork;
     }
+
+    return {
+        async create({newExtensionWork}) {
+            faculty.extensionWorks.push(newExtensionWork);
+            await faculty.save();
+            return faculty.extensionWorks[faculty.extensionWorks.length - 1];
+        },
+
+        async update({_id, newExtensionWork}) {
+            const extensionWork = getExtensionWork(_id);
+            Object.assign(extensionWork, newExtensionWork);
+            await faculty.save();
+            return extensionWork;
+        },
+
+        async remove({_id}) {
+            const extensionWork = getExtensionWork(_id);
+            extensionWork.remove();
+            await faculty.save();
+            return faculty.extensionWorks.id(_id) === null;
+        },
+    };
 }
-
-async function createExtensionWork(object, args) {
-    const extensionWorkInput = args.extensionWork;
-    const facultyId = args.facultyId;
-
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
-    faculty.extensionWorks.push({...extensionWorkInput});
-    await faculty.save();
-
-    return faculty.extensionWorks[faculty.extensionWorks.length - 1];
-}
-
-async function updateExtensionWork(object, args) {
-    const {_id, newExtensionWork, facultyId} = args;
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
-    const extensionWork = faculty.extensionWorks.id(_id);
-
-    Object.assign(extensionWork, newExtensionWork);
-    await faculty.save();
-
-    return extensionWork;
-}
-
 
 export const queryResolvers = {
     faculties: limitAccess(faculties, {allowed: NO_FACULTY, action: "Get all faculties"}),
@@ -181,17 +180,8 @@ export const queryResolvers = {
 export const mutationResolvers = {
     faculty: limitAccess(mutateFaculty, {allowed: NO_FACULTY, action: "Mutate faculty"}),
     presentation: limitAccess(mutatePresentation, {allowed: NO_FACULTY, action: "Mutate presentation"}),
-
-    createRecognition: limitAccess(createRecognition, {allowed: NO_FACULTY, action: "Create recognition"}),
-    updateRecognition: limitAccess(updateRecognition, {allowed: NO_FACULTY, action: "Update recognition"}),
-
-    createInstructionalMaterial: limitAccess(createInstructionalMaterial,
-        {allowed: NO_FACULTY, action: "Create instructional materials"}),
-    updateInstructionalMaterial: limitAccess(updateInstructionalMaterial,
-        {allowed: NO_FACULTY, action: "Update instructional materials"}),
-
-    createExtensionWork: limitAccess(createExtensionWork,
-        {allowed: NO_FACULTY, action: "Create extension work"}),
-    updateExtensionWork: limitAccess(updateExtensionWork,
-        {allowed: NO_FACULTY, action: "Update extension work"}),
+    recognition: limitAccess(mutateRecognition, {allowed: NO_FACULTY, action: "Mutate recognition"}),
+    instructionalMaterial: limitAccess(mutateInstructionalMaterial,
+        {allowed: NO_FACULTY, action: "Mutate instructional materials"}),
+    extensionWork: limitAccess(mutateExtensionWork, {allowed: NO_FACULTY, action: "Mutate extension work"}),
 };
