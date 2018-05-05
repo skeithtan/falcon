@@ -30,7 +30,7 @@ export const PNU_THEME = makeTheme({
 
 export const TEAL_THEME = makeTheme({
     primary: teal,
-    secondary: deepPurple,
+    secondary: teal,
     primaryShade: 600,
 });
 

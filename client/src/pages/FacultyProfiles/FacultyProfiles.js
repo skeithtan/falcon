@@ -21,7 +21,11 @@ export default class FacultyProfilesPage extends Component {
 
         return (
             <div className={classes.facultyProfiles}>
-                <FacultyProfilesHeader classes={classes}/>
+                <FacultyProfilesHeader classes={classes} />
+
+                <div className={`${classes.facultyProfilesBody} ${classes.split}`}>
+
+                </div>
             </div>
         );
     }
