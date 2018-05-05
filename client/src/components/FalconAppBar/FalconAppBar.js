@@ -9,19 +9,7 @@ import Typography from "material-ui/Typography";
 import PageMenu from "../PageMenu";
 import UserMenu from "../UserButton";
 import { getPageFromIdentifier } from "../../pages/pages";
-import style from "./FalconAppBar.css";
 
-
-class PageTitle extends Component {
-    render() {
-        return (
-            <div id={style.pageTitle}>
-                <Typography color="inherit" id={style.falconLogo}>Falcon</Typography>
-                <Typography color="inherit" id={style.pageName}>{this.props.children}</Typography>
-            </div>
-        );
-    }
-}
 
 export default class FalconAppBar extends Component {
     state = {
@@ -41,17 +29,21 @@ export default class FalconAppBar extends Component {
 
     render() {
         const {anchor} = this.state;
+        const {classes} = this.props;
 
         return (
-            <AppBar position="static" id={style.appBar}>
-                <Toolbar id={style.toolbar}>
+            <AppBar position="static" className={classes.appBar}>
+                <Toolbar className={classes.toolbar}>
                     <IconButton color="inherit"
                                 aria-label="Menu"
-                                id={style.hamburger}
+                                className={classes.hamburger}
                                 onClick={this.toggleMenu}>
                         <MenuIcon />
                     </IconButton>
-                    <PageTitle>{this.pageTitle()}</PageTitle>
+                    <div className={classes.pageTitle}>
+                        <Typography color="inherit" className={classes.falconLogo}>Falcon</Typography>
+                        <Typography color="inherit" className={classes.pageName}>{this.pageTitle()}</Typography>
+                    </div>
                     <UserMenu />
                 </Toolbar>
 
