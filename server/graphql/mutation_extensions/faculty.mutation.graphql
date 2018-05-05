@@ -49,19 +49,39 @@ input PresentationInput {
     daysDuration: Int
 }
 
-extend type Mutation {
-    createFaculty(faculty: FacultyInput!, user: UserInput!): Faculty!
+type FacultyMutations {
+    createFaculty(newFaculty: FacultyInput!, newUser: UserInput!): Faculty!
     updateFaculty(_id: String!, newFaculty: FacultyInput!): Faculty!
+}
 
-    createPresentation(presentation: PresentationInput!, facultyId: String!): Presentation!
-    updatePresentation(_id: String!, newPresentation: PresentationInput!, facultyId: String!): Presentation!
+type PresentationMutations {
+    create(newPresentation: PresentationInput!): Presentation!
+    update(_id: String!, newPresentation: PresentationInput!): Presentation!
+    remove(_id: String!): Boolean!
+}
 
-    createRecognition(recognition: RecognitionInput!, facultyId: String!): Recognition!
-    updateRecognition(_id: String!, newRecognition: RecognitionInput!, facultyId: String!): Recognition!
+type RecognitionMutations {
+    create(newRecognition: RecognitionInput!): Recognition!
+    update(_id: String!, newRecognition: RecognitionInput!): Recognition!
+    remove(_id: String!): Boolean!
+}
 
-    createInstructionalMaterial(instructionalMaterial: InstructionalMaterialInput!, facultyId: String!): InstructionalMaterial!
-    updateInstructionalMaterial(_id: String!, newInstructionalMaterial: InstructionalMaterialInput!, facultyId: String!): InstructionalMaterial!
+type InstructionalMaterialMutations {
+    create(newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
+    update(_id: String!, newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
+    remove(_id: String!): Boolean!
+}
 
-    createExtensionWork(extensionWork: ExtensionWorkInput!, facultyId: String!): ExtensionWork!
-    updateExtensionWork(_id: String!, newExtensionWork: ExtensionWorkInput!, facultyId: String!): ExtensionWork!
+type ExtensionWorkMutations {
+    create(extensionWork: ExtensionWorkInput!): ExtensionWork!
+    update(_id: String!, newExtensionWork: ExtensionWorkInput!): ExtensionWork!
+    remove(_id: String!): Boolean!
+}
+
+extend type Mutation {
+    faculty: FacultyMutations!
+    presentation(facultyId: String!): PresentationMutations!
+    recognition(facultyId: String!): RecognitionMutations!
+    instructionalMaterial(facultyId: String!): InstructionalMaterialMutations!
+    extensionWork(facultyId: String!): ExtensionWorkMutations!
 }

@@ -7,97 +7,148 @@ function faculties() {
     return Faculty.find({}).populate("user");
 }
 
-async function createFaculty(object, args) {
-    const facultyInput = args.faculty;
-    const userInput = args.user;
+function mutateFaculty() {
+    return {
+        async createFaculty({newFaculty, newUser}) {
+            newUser.authorization = FACULTY;
+            newUser.secret = newUser.password;
 
-    userInput.authorization = FACULTY;
-    userInput.secret = userInput.password;
+            const user = await User.create(newUser);
+            newFaculty.user = user._id;
 
-    const user = await User.create({...userInput});
-    facultyInput.user = user._id;
+            try {
+                const faculty = await Faculty.create(newFaculty);
+                faculty.user = user;
+                return faculty;
+            } catch (error) {
+                console.log(`Error occurred while creating faculty object: ${error.message}`);
 
-    try {
-        const faculty = await Faculty.create({...facultyInput});
-        faculty.user = user;
-        return faculty;
-    } catch (error) {
-        console.log(`Error occurred while creating faculty object: ${error.message}`);
+                // We either keep both or none, but never just the user
+                await User.findByIdAndRemove({_id: user.id});
+                throw error;
+            }
+        },
 
-        // We either keep both or none, but never just the user
-        await User.findByIdAndRemove({_id: user.id});
-        throw error;
+        async updateFaculty({_id, newFaculty}) {
+            return Faculty.findByIdAndUpdate(_id, newFaculty, {new: true});
+        },
+    };
+}
+
+async function mutatePresentation(object, {facultyId}) {
+    const faculty = await Faculty.findById({_id: facultyId}).exec();
+
+    function getPresentation(_id) {
+        const presentation = faculty.presentations.id(_id);
+        if (presentation === null) {
+            throw new Error(`DoesNotExistError: Presentation of id ${_id} does not exist`);
+        }
+        return presentation;
     }
+
+    return {
+        async create({newPresentation}) {
+            faculty.presentations.push(newPresentation);
+            await faculty.save();
+            return faculty.presentations[faculty.presentations.length - 1];
+        },
+
+        async update({_id, newPresentation}) {
+            const presentation = getPresentation(_id);
+            Object.assign(presentation, newPresentation);
+            await faculty.save();
+            return presentation;
+        },
+
+        async remove({_id}) {
+            const presentation = getPresentation(_id);
+            presentation.remove();
+            await faculty.save();
+            return faculty.presentations.id(_id) === null;
+        },
+    };
 }
 
-function updateFaculty(object, {_id, newFaculty}) {
-    return Faculty.findByIdAndUpdate(_id, newFaculty, {new: true});
-}
-
-async function createPresentation(object, args) {
-    const presentationInput = args.presentation;
-    const facultyId = args.facultyId;
-
+async function mutateRecognition(object, {facultyId}) {
     const faculty = await Faculty.findById({_id: facultyId}).exec();
-    faculty.presentations.push({...presentationInput});
-    await faculty.save(); //This must be await so errors are thrown before returning
 
-    return faculty.presentations[faculty.presentations.length - 1];
+    function getRecognition(_id) {
+        const recognition = faculty.recognitions.id(_id);
+        if (recognition === null) {
+            throw new Error(`DoesNotExistError: Recognition of id ${_id} does not exist`);
+        }
+        return recognition;
+    }
+
+    return {
+        async create({newRecognition}) {
+            faculty.recognitions.push(newRecognition);
+            await faculty.save();
+            return faculty.recognitions[faculty.recognitions.length - 1];
+        },
+
+        async update({_id, newRecognition}) {
+            const recognition = getRecognition(_id);
+            Object.assign(recognition, newRecognition);
+            await faculty.save();
+            return recognition;
+        },
+
+        async remove({_id}) {
+            const recognition = getRecognition(_id);
+            recognition.remove();
+            await faculty.save();
+            return faculty.recognitions.id(_id) === null;
+        },
+    };
 }
 
-async function updatePresentation(object, args) {
-    const {_id, newPresentation, facultyId} = args;
+async function mutateInstructionalMaterial(object, {facultyId}) {
     const faculty = await Faculty.findById({_id: facultyId}).exec();
-    const presentation = faculty.presentations.id(_id);
 
-    Object.assign(presentation, newPresentation);
-    await faculty.save();
+    function getInstructionalMaterial(_id) {
+        const instructionalMaterial = faculty.instructionalMaterials.id(_id);
+        if (instructionalMaterial === null) {
+            throw new Error(`DoesNotExistError: Instructional material of id ${_id} does not exist`);
+        }
 
-    return presentation;
+        return instructionalMaterial;
+    }
+
+    return {
+        async create({newInstructionalMaterial}) {
+            faculty.instructionalMaterials.push(newInstructionalMaterial);
+            await faculty.save();
+            return faculty.instructionalMaterials[faculty.instructionalMaterials.length - 1];
+        },
+
+        async update({_id, newInstructionalMaterial}) {
+            const instructionalMaterial = getInstructionalMaterial(_id);
+            Object.assign(instructionalMaterial, newInstructionalMaterial);
+            await faculty.save();
+            return instructionalMaterial;
+        },
+
+        async remove({_id}) {
+            const instructionalMaterial = getInstructionalMaterial(_id);
+            instructionalMaterial.remove();
+            await faculty.save();
+            return faculty.instructionalMaterials.id(_id) === null;
+        },
+    };
 }
 
-async function createRecognition(object, args) {
-    const recognitionInput = args.recognition;
-    const facultyId = args.facultyId;
-
+async function mutateExtensionWork(object, {facultyId}) {
     const faculty = await Faculty.findById({_id: facultyId}).exec();
-    faculty.recognitions.push({...recognitionInput});
-    await faculty.save();
 
-    return faculty.recognitions[faculty.recognitions.length - 1];
-}
+    function getExtensionWork(_id) {
+        const extensionWork = faculty.extensionWorks.id(_id);
+        if (extensionWork === null) {
+            throw new Error(`DoesNotExistError: Extension work of id ${_id} does not exist`);
+        }
 
-async function updateRecognition(object, args) {
-    const {_id, newRecognition, facultyId} = args;
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
-    const recognition = faculty.recognitions.id(_id);
-
-    Object.assign(recognition, newRecognition);
-    await faculty.save();
-
-    return recognition;
-}
-
-async function createInstructionalMaterial(object, args) {
-    const instructionalMaterialInput = args.instructionalMaterial;
-    const facultyId = args.facultyId;
-
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
-    faculty.instructionalMaterials.push({...instructionalMaterialInput});
-    await faculty.save();
-
-    return faculty.instructionalMaterials[faculty.instructionalMaterials.length - 1];
-}
-
-async function updateInstructionalMaterial(object, args) {
-    const {_id, newInstructionalMaterial, facultyId} = args;
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
-    const instructionalMaterial = faculty.instructionalMaterials.id(_id);
-
-    Object.assign(instructionalMaterial, newInstructionalMaterial);
-    await faculty.save();
-
-    return instructionalMaterial;
+        return extensionWork;
+    }
 }
 
 async function createExtensionWork(object, args) {
@@ -128,11 +179,8 @@ export const queryResolvers = {
 };
 
 export const mutationResolvers = {
-    createFaculty: limitAccess(createFaculty, {allowed: NO_FACULTY, action: "Create faculty"}),
-    updateFaculty: limitAccess(updateFaculty, {allowed: NO_FACULTY, action: "Update faculty"}),
-
-    createPresentation: limitAccess(createPresentation, {allowed: NO_FACULTY, action: "Create presentation"}),
-    updatePresentation: limitAccess(updatePresentation, {allowed: NO_FACULTY, action: "Update presentation"}),
+    faculty: limitAccess(mutateFaculty, {allowed: NO_FACULTY, action: "Mutate faculty"}),
+    presentation: limitAccess(mutatePresentation, {allowed: NO_FACULTY, action: "Mutate presentation"}),
 
     createRecognition: limitAccess(createRecognition, {allowed: NO_FACULTY, action: "Create recognition"}),
     updateRecognition: limitAccess(updateRecognition, {allowed: NO_FACULTY, action: "Update recognition"}),
