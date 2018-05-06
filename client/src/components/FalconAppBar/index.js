@@ -6,7 +6,6 @@ import styles from "./styles";
 import FalconAppBar from "./FalconAppBar";
 
 function mapStateToProps(state) {
-    console.log(state);
     return {
         activePageIdentifier: state.pages.activePageIdentifier,
     };
