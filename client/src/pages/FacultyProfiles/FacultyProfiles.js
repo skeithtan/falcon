@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { FACULTY_PROFILES_PAGE } from "../pages";
 import FacultyProfilesHeader from "./components/FacultyProfilesHeader";
+import FacultyList from "./components/FacultyList";
+import FacultyDetail from "./components/FacultyDetail";
 
 export default class FacultyProfilesPage extends Component {
     state = {};
@@ -24,7 +26,8 @@ export default class FacultyProfilesPage extends Component {
                 <FacultyProfilesHeader classes={classes} />
 
                 <div className={`${classes.facultyProfilesBody} ${classes.split}`}>
-
+                    <FacultyList />
+                    <FacultyDetail />
                 </div>
             </div>
         );

@@ -13,6 +13,7 @@ export default theme => ({
 
     facultyProfilesBody: {
         flexGrow: 1,
+        height: "100%",
     },
 
     split: {
@@ -24,7 +25,7 @@ export default theme => ({
         opacity: 0.85,
         transitionDuration: theme.transitions.duration.short,
         "&:focus-within": {
-            opacity: 1
+            opacity: 1,
         },
     },
 
