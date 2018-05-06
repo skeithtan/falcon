@@ -73,6 +73,19 @@ type ExtensionWork {
     venue: String
 }
 
+enum DegreeLevel {
+    ASSOCIATE,
+    BACHELOR,
+    MASTER,
+    DOCTORATE
+}
+
+type Degree {
+    title: String!
+    level: DegreeLevels,
+    completionYear: Int!
+}
+
 enum Sex {
     M,
     F
@@ -90,6 +103,7 @@ type Faculty {
     sex: Sex!
     employment: Employment
     birthDate: String!
+    degrees: [Degree]!
     presentations: [Presentation]!
     recognitions: [Recognition]!
     instructionalMaterials: [InstructionalMaterial]!
