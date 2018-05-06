@@ -119,6 +119,22 @@ const ExtensionWorkSchema = new Schema({
     },
 });
 
+const DegreeSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    level: {
+        type: String,
+        required: true,
+        enum: ["ASSOCIATE", "BACHELOR", "MASTER", "DOCTORATE"],
+    },
+    completionYear: {
+        type: Number,
+        required: true,
+    },
+});
+
 const FacultySchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -139,6 +155,7 @@ const FacultySchema = new Schema({
         type: Date,
         required: true,
     },
+    degrees: [DegreeSchema],
     presentations: [PresentationSchema],
     recognitions: [RecognitionSchema],
     instructionalMaterials: [InstructionalMaterialSchema],
