@@ -12,7 +12,7 @@ export default theme => ({
         gridRowGap: `${theme.spacing.unit * 3}px`,
         padding: theme.spacing.unit * 3,
         justifyItems: "center",
-        textAlign: "center"
+        textAlign: "center",
     },
 
     messageColor: {
@@ -21,5 +21,16 @@ export default theme => ({
 
     icon: {
         fontSize: 100,
+    },
+
+    breakWord: {
+        wordWrap: "break-word",
+    },
+
+    wordWrapContainer: {
+        display: "table",
+        tableLayout: "fixed",
+        width: "100%",
+        wordWrap: "break-word",
     },
 });

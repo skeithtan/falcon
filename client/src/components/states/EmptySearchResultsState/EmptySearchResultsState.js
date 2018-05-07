@@ -13,9 +13,13 @@ class EmptySearchResultsState extends Component {
                     <Typography variant="headline" className={classes.messageColor}>
                         No Results Found
                     </Typography>
-                    <Typography variant="subheading" className={classes.messageColor}>
-                        Your search <b>{this.props.searchKeyword}</b> did not match any documents.
-                    </Typography>
+                    <div className={classes.wordWrapContainer}>
+                        <Typography variant="subheading" className={classes.messageColor}>
+                            Your search <b className={classes.breakWord}>{this.props.searchKeyword}</b> did not match
+                            any
+                            documents.
+                        </Typography>
+                    </div>
 
                 </div>
             </div>
