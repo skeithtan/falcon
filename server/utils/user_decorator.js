@@ -19,7 +19,7 @@ export function limitAccess(resolver, {allowed, action}) {
             .then(user => {
                 const authorization = user.authorization;
                 if (!allowed.includes(authorization)) {
-                    throw AuthorizationError(authorization, action);
+                    throw new AuthorizationError(authorization, action);
                 }
             })
             .then(() => resolver(object, args, context));
