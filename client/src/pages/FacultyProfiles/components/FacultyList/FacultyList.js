@@ -84,6 +84,10 @@ export default class FacultyList extends Component {
     getFaculties = () => {
         let {searchKeyword, faculties} = this.props;
 
+        if (!faculties) {
+            return null;
+        }
+
         searchKeyword = searchKeyword.toLowerCase().trim();
 
         if (searchKeyword.length === 0) {
