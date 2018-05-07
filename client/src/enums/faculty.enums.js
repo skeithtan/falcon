@@ -4,6 +4,12 @@ export default {
         "FULL_TIME_TEMPORARY": "Temporary Full Time",
         "PART_TIME": "Part Time",
     },
+
+    SEX: {
+        "M": "Male",
+        "F": "Female"
+    },
+
     DEGREE: {
         "ASSOCIATE": "Associate",
         "BACHELOR": "Bachelor",
