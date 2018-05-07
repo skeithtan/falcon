@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import List, { ListItem } from "material-ui/List";
 import Typography from "material-ui/Typography";
-import Avatar from "material-ui/Avatar";
 import Button from "material-ui/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Grid from "material-ui/Grid";
 import { CircularProgress } from "material-ui/Progress";
 
 import { ErrorState, EmptyState, EmptySearchResultsState } from "../../../../components/states";
+import FacultyAvatar from "../../../../components/FacultyAvatar";
 
 
 class FacultyItem extends Component {
     render() {
-        const classes = this.props.classes;
+        const {classes, faculty} = this.props;
 
         //TODO: Avatar
         return (
@@ -21,11 +21,13 @@ class FacultyItem extends Component {
                       button>
                 <Grid container wrap="nowrap" spacing={16} alignItems="center">
                     <Grid item>
-                        <Avatar>PN</Avatar>
+                        <FacultyAvatar faculty={faculty} />
                     </Grid>
                     <Grid item>
                         <Typography className={this.props.active ? classes.activeListItemText : null}
-                                    variant="subheading">{this.props.children}</Typography>
+                                    variant="subheading">
+                            {faculty.user.name.first} {faculty.user.name.last}
+                        </Typography>
                     </Grid>
                 </Grid>
             </ListItem>
@@ -42,10 +44,9 @@ export default class FacultyList extends Component {
                 {faculties.map(faculty =>
                     <FacultyItem classes={classes}
                                  onClick={() => onFacultyClick(faculty)}
+                                 faculty={faculty}
                                  active={activeFaculty && activeFaculty._id === faculty._id}
-                                 key={faculty._id}>
-                        {faculty.user.name.first} {faculty.user.name.last}
-                    </FacultyItem>,
+                                 key={faculty._id} />,
                 )}
             </List>
         );
@@ -84,7 +85,7 @@ export default class FacultyList extends Component {
         let {searchKeyword, faculties} = this.props;
 
         searchKeyword = searchKeyword.toLowerCase().trim();
-        
+
         if (searchKeyword.length === 0) {
             return faculties;
         }
