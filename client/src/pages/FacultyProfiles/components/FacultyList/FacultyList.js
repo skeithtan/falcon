@@ -7,6 +7,8 @@ import AddIcon from "@material-ui/icons/Add";
 import Grid from "material-ui/Grid";
 import { CircularProgress } from "material-ui/Progress";
 
+import { ErrorState, EmptyState } from "../../../../components/states";
+
 
 class FacultyItem extends Component {
     render() {
@@ -38,7 +40,7 @@ export default class FacultyList extends Component {
                 <FacultyItem classes={this.props.classes}
                              key={faculty._id}>
                     {faculty.user.name.first} {faculty.user.name.last}
-                </FacultyItem>
+                </FacultyItem>,
             )}
         </List>
     );
@@ -47,6 +49,12 @@ export default class FacultyList extends Component {
         <div className={this.props.classes.loadingIndicatorWrapper}>
             <CircularProgress size={100} />
         </div>
+    );
+
+    errorState = () => (
+        <ErrorState onRetryButtonClick={this.props.fetchData}>
+            An error occurred while trying to fetch list of faculties: {this.props.errors[0]}
+        </ErrorState>
     );
 
     componentDidMount() {
@@ -65,6 +73,7 @@ export default class FacultyList extends Component {
 
                 {faculties && this.renderList(faculties)}
                 {isLoading && this.loadingIndicator()}
+                {errors && this.errorState()}
 
                 <Button variant="fab" color="primary" className={classes.addButton}>
                     <AddIcon />
