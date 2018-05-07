@@ -22,7 +22,6 @@ export default class FalconAppBar extends Component {
     };
 
     render() {
-        const {anchor} = this.state;
         const {classes} = this.props;
 
         return (
