@@ -24,7 +24,6 @@ export default theme => ({
     form: {
         paddingTop: theme.spacing.unit * 4,
         display: "grid",
-        gridTemplateRows: "1fr 1fr",
         gridRowGap: `${theme.spacing.unit * 3}px`,
     },
 
