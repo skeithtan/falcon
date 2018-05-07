@@ -8,7 +8,7 @@ export default class FacultyAvatar extends Component {
 
         //TODO: Show photo if present
         return (
-            <Avatar>{name.first[0]}{name.last[0]}</Avatar>
+            <Avatar className={this.props.className}>{name.first[0]}{name.last[0]}</Avatar>
         );
     }
 }
