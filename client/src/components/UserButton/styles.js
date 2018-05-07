@@ -20,7 +20,10 @@ export default theme => ({
         display: "flex",
         flexDirection: "row",
         background: theme.palette.grey["200"],
-        marginTop: theme.spacing.unit * -1,
+
+        "&:focus": {
+            outline: "none",
+        },
     },
 
     userFullName: {
@@ -33,7 +36,7 @@ export default theme => ({
 
     userDetails: {
         marginLeft: 16,
-        minWidth: 240
-    }
+        minWidth: 240,
+    },
 
 });

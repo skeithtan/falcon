@@ -9,7 +9,7 @@ class UserMenu extends Component {
         const {name: {first, last}, email} = this.props.user;
 
         return (
-            <Menu open={open} onClose={onClose} anchorEl={anchorEl}>
+            <Menu open={open} onClose={onClose} anchorEl={anchorEl} MenuListProps={{disablePadding: true}}>
 
                 <div className={classes.currentUserDisplay}>
                     {avatar}
