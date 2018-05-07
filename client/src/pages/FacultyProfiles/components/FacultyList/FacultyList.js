@@ -34,9 +34,9 @@ class FacultyItem extends Component {
 
 export default class FacultyList extends Component {
 
-    renderList = faculties => (
+    renderList = () => (
         <List>
-            {faculties.map(faculty =>
+            {this.props.faculties.map(faculty =>
                 <FacultyItem classes={this.props.classes}
                              key={faculty._id}>
                     {faculty.user.name.first} {faculty.user.name.last}
@@ -51,10 +51,23 @@ export default class FacultyList extends Component {
         </div>
     );
 
+    addFaculty = () => {
+        //TODO: This
+        console.log("Add faculty clicked");
+    };
+
+    emptyState = () => (
+        <EmptyState bigMessage="No faculties found"
+                    smallMessage="When faculties are added, you can see them here"
+                    onAddButtonClick={this.addFaculty}
+                    addButtonText="Add a faculty" />
+    );
+
     errorState = () => (
-        <ErrorState onRetryButtonClick={this.props.fetchData}>
-            An error occurred while trying to fetch list of faculties: {this.props.errors[0]}
-        </ErrorState>
+        <ErrorState onRetryButtonClick={this.props.fetchData}
+                    message="An error occurred while trying to fetch list of faculties."
+                    debug={this.props.errors[0]}
+        />
     );
 
     componentDidMount() {
@@ -64,20 +77,30 @@ export default class FacultyList extends Component {
     render() {
         const {classes, isLoading, faculties, errors} = this.props;
 
+        let view;
+
+        if (faculties) {
+            view = faculties.length === 0 ? this.emptyState() : this.renderList();
+        }
+
+        if (isLoading) {
+            view = this.loadingIndicator();
+        }
+
         if (errors) {
-            console.log(this.props);
+            view = this.errorState();
         }
 
         return (
             <div className={classes.facultyList}>
 
-                {faculties && this.renderList(faculties)}
-                {isLoading && this.loadingIndicator()}
-                {errors && this.errorState()}
+                {view}
 
-                <Button variant="fab" color="primary" className={classes.addButton}>
+                {faculties &&
+                <Button variant="fab" color="primary" className={classes.addButton} onClick={this.addFaculty}>
                     <AddIcon />
                 </Button>
+                }
             </div>
         );
     }
