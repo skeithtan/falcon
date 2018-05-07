@@ -6,7 +6,7 @@ import OverviewDetail from "../OverviewCard";
 export default class FacultyDetail extends Component {
 
     emptyState = () => (
-        <div>
+        <div className={this.props.classes.emptyState}>
             <Typography variant="display1">
                 Select a faculty from the left to see the details
             </Typography>
@@ -14,7 +14,9 @@ export default class FacultyDetail extends Component {
     );
 
     renderCards = faculty => (
-        <OverviewDetail faculty={faculty}/>
+        <div className={this.props.classes.cards}>
+            <OverviewDetail faculty={faculty} />
+        </div>
     );
 
     render() {
