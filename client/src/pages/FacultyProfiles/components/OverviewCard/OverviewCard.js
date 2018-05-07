@@ -37,7 +37,7 @@ class OverviewCard extends Component {
 
                     </Grid>
                 </div>
-                <List>
+                <List disablePadding>
                     <FormDisplayListItem field="Email" value={faculty.user.email} />
                     <FormDisplayListItem field="Sex" value={FACULTY_ENUMS.SEX[faculty.sex]} />
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue}/>
