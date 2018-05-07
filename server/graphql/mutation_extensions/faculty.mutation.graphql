@@ -49,6 +49,12 @@ input PresentationInput {
     daysDuration: Int
 }
 
+input DegreeInput {
+    title: String
+    level: DegreeLevel
+    completionYear: Int
+}
+
 type FacultyMutations {
     createFaculty(newFaculty: FacultyInput!, newUser: UserInput!): Faculty!
     updateFaculty(_id: String!, newFaculty: FacultyInput!): Faculty!
@@ -73,9 +79,15 @@ type InstructionalMaterialMutations {
 }
 
 type ExtensionWorkMutations {
-    create(extensionWork: ExtensionWorkInput!): ExtensionWork!
+    create(newExtensionWork: ExtensionWorkInput!): ExtensionWork!
     update(_id: String!, newExtensionWork: ExtensionWorkInput!): ExtensionWork!
     remove(_id: String!): Boolean!
+}
+
+type DegreeMutations {
+    create(newDegree: DegreeInput!): Degree!
+    update(_id: String!, newDegree: DegreeInput!): Degree!
+    remvoe(_id: String!): Boolean!
 }
 
 extend type Mutation {
@@ -84,4 +96,5 @@ extend type Mutation {
     recognition(facultyId: String!): RecognitionMutations!
     instructionalMaterial(facultyId: String!): InstructionalMaterialMutations!
     extensionWork(facultyId: String!): ExtensionWorkMutations!
+    degree(facultyId: String!): DegreeMutations!
 }
