@@ -14,8 +14,10 @@ class FacultyItem extends Component {
     render() {
         const classes = this.props.classes;
 
+        //TODO: Avatar
         return (
-            <ListItem className={this.props.active && classes.activeListItem}
+            <ListItem className={this.props.active ? classes.activeListItem : null}
+                      onClick={this.props.onClick}
                       button
                       dense>
                 <Grid container wrap="nowrap" spacing={16} alignItems="center">
@@ -23,7 +25,7 @@ class FacultyItem extends Component {
                         <Avatar>PN</Avatar>
                     </Grid>
                     <Grid item>
-                        <Typography className={this.props.active && classes.activeListItemText}
+                        <Typography className={this.props.active ? classes.activeListItemText : null}
                                     variant="subheading">{this.props.children}</Typography>
                     </Grid>
                 </Grid>
@@ -34,16 +36,21 @@ class FacultyItem extends Component {
 
 export default class FacultyList extends Component {
 
-    renderList = () => (
-        <List>
-            {this.props.faculties.map(faculty =>
-                <FacultyItem classes={this.props.classes}
-                             key={faculty._id}>
-                    {faculty.user.name.first} {faculty.user.name.last}
-                </FacultyItem>,
-            )}
-        </List>
-    );
+    renderList = () => {
+        const {faculties, activeFaculty, onFacultyClick, classes} = this.props;
+        return (
+            <List>
+                {faculties.map(faculty =>
+                    <FacultyItem classes={classes}
+                                 onClick={() => onFacultyClick(faculty)}
+                                 active={activeFaculty && activeFaculty._id === faculty._id}
+                                 key={faculty._id}>
+                        {faculty.user.name.first} {faculty.user.name.last}
+                    </FacultyItem>,
+                )}
+            </List>
+        );
+    };
 
     loadingIndicator = () => (
         <div className={this.props.classes.loadingIndicatorWrapper}>
