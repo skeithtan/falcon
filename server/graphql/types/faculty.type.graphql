@@ -81,6 +81,7 @@ enum DegreeLevel {
 }
 
 type Degree {
+    _id: String!
     title: String!
     level: DegreeLevels,
     completionYear: Int!
