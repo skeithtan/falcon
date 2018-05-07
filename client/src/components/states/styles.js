@@ -9,8 +9,7 @@ export default theme => ({
 
     messageWrapper: {
         display: "grid",
-        gridTemplateRows: "auto 1fr auto 1fr",
-        gridRowGap: `${theme.spacing.unit * 2}px`,
+        gridRowGap: `${theme.spacing.unit * 3}px`,
         padding: theme.spacing.unit * 3,
         justifyItems: "center",
         textAlign: "center"
@@ -21,6 +20,6 @@ export default theme => ({
     },
 
     icon: {
-        fontSize: 80,
+        fontSize: 100,
     },
 });
