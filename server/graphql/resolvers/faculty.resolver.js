@@ -173,6 +173,41 @@ async function mutateExtensionWork(object, {facultyId}) {
     };
 }
 
+async function mutateDegree(object, {facultyId}) {
+    const faculty = await Faculty.findById({_id: facultyId}).exec();
+
+    function getDegree(_id) {
+        const degree = faculty.degrees.id(_id);
+        if (degree === null) {
+            throw new Error(`DoesNotExistError: Degree of id ${_id} does not exist`);
+        }
+
+        return degree;
+    }
+
+    return {
+        async create({newDegree}) {
+            faculty.degrees.push(newDegree);
+            await faculty.save();
+            return faculty.degrees[faculty.degrees.length - 1];
+        },
+
+        async update({_id, newDegree}) {
+            const degree = getDegree(_id);
+            Object.assign(degree, newDegree);
+            await faculty.save();
+            return degree;
+        },
+
+        async remove({_id}) {
+            const degree = getDegree(_id);
+            degree.remove();
+            await faculty.save();
+            return faculty.degrees.id(_id) === null;
+        },
+    };
+}
+
 export const queryResolvers = {
     faculties: limitAccess(faculties, {allowed: NO_FACULTY, action: "Get all faculties"}),
 };
@@ -184,4 +219,5 @@ export const mutationResolvers = {
     instructionalMaterial: limitAccess(mutateInstructionalMaterial,
         {allowed: NO_FACULTY, action: "Mutate instructional materials"}),
     extensionWork: limitAccess(mutateExtensionWork, {allowed: NO_FACULTY, action: "Mutate extension work"}),
+    degree: limitAccess(mutateDegree, {allowed: NO_FACULTY, action: "Mutate degrees"}),
 };
