@@ -29,6 +29,9 @@ function mapDispatchToProps(dispatch) {
                     if (query.errors) {
                         dispatch(setErrors(query.errors));
                     }
+                })
+                .catch(error => {
+                    dispatch(setErrors([error.message]));
                 });
         },
     };
