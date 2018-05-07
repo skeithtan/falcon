@@ -3,10 +3,20 @@ import Paper from "material-ui/Paper";
 import Input from "material-ui/Input";
 import Tabs, { Tab } from "material-ui/Tabs";
 
+import { TABS } from "../../detail_tabs";
+
 
 class FacultyProfilesHeader extends Component {
+
+    tabs = () => (
+        TABS.map(tab =>
+            <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.onTabClick(tab)} />,
+        )
+    );
+
     render() {
-        const {classes, searchKeyword, onSearchInputChange} = this.props;
+        const {classes, searchKeyword, onSearchInputChange, activeFaculty, activeTabIdentifier} = this.props;
+        const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTabIdentifier);
 
         return (
             <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
@@ -21,16 +31,13 @@ class FacultyProfilesHeader extends Component {
                     </Paper>
                 </div>
 
-                <Tabs value={0}
+                {activeFaculty &&
+                <Tabs value={activeTabIndex}
                       classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
                       scrollable>
-                    <Tab label="Overview" />
-                    <Tab label="Presentations" />
-                    <Tab label="Recognitions" />
-                    <Tab label="Instructional Materials" />
-                    <Tab label="Extension Works" />
-                    <Tab label="Teaching Subjects" />
+                    {this.tabs()}
                 </Tabs>
+                }
             </div>
         );
     }
