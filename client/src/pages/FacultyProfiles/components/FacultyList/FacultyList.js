@@ -7,7 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Grid from "material-ui/Grid";
 import { CircularProgress } from "material-ui/Progress";
 
-import { ErrorState, EmptyState } from "../../../../components/states";
+import { ErrorState, EmptyState, EmptySearchResultsState } from "../../../../components/states";
 
 
 class FacultyItem extends Component {
@@ -18,8 +18,7 @@ class FacultyItem extends Component {
         return (
             <ListItem className={this.props.active ? classes.activeListItem : null}
                       onClick={this.props.onClick}
-                      button
-                      dense>
+                      button>
                 <Grid container wrap="nowrap" spacing={16} alignItems="center">
                     <Grid item>
                         <Avatar>PN</Avatar>
@@ -36,8 +35,8 @@ class FacultyItem extends Component {
 
 export default class FacultyList extends Component {
 
-    renderList = () => {
-        const {faculties, activeFaculty, onFacultyClick, classes} = this.props;
+    renderList = faculties => {
+        const {activeFaculty, onFacultyClick, classes} = this.props;
         return (
             <List>
                 {faculties.map(faculty =>
@@ -70,6 +69,10 @@ export default class FacultyList extends Component {
                     addButtonText="Add a faculty" />
     );
 
+    noResultsState = () => (
+        <EmptySearchResultsState searchKeyword={this.props.searchKeyword} />
+    );
+
     errorState = () => (
         <ErrorState onRetryButtonClick={this.props.fetchData}
                     message="An error occurred while trying to fetch list of faculties."
@@ -77,17 +80,41 @@ export default class FacultyList extends Component {
         />
     );
 
+    getFaculties = () => {
+        let {searchKeyword, faculties} = this.props;
+
+        if (searchKeyword.length === 0) {
+            return faculties;
+        }
+
+        searchKeyword = searchKeyword.toLowerCase();
+
+        return faculties.filter(faculty => {
+            const fullName = `${faculty.user.name.first} ${faculty.user.name.last}`.toLowerCase();
+            const email = faculty.user.email.toLowerCase();
+
+            return fullName.includes(searchKeyword) || email.includes(searchKeyword);
+        });
+    };
+
     componentDidMount() {
         this.props.fetchData();
     }
 
     render() {
-        const {classes, isLoading, faculties, errors} = this.props;
+        const {classes, isLoading, errors, searchKeyword} = this.props;
+        const faculties = this.getFaculties();
+        const isSearching = searchKeyword.length > 0;
 
         let view;
 
         if (faculties) {
-            view = faculties.length === 0 ? this.emptyState() : this.renderList();
+
+            if (faculties.length === 0) {
+                view = isSearching ? this.noResultsState() : this.emptyState();
+            } else {
+                view = this.renderList(faculties);
+            }
         }
 
         if (isLoading) {

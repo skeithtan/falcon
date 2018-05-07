@@ -6,7 +6,7 @@ import Tabs, { Tab } from "material-ui/Tabs";
 
 class FacultyProfilesHeader extends Component {
     render() {
-        const {classes} = this.props;
+        const {classes, searchKeyword, onSearchInputChange} = this.props;
 
         return (
             <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
@@ -15,6 +15,8 @@ class FacultyProfilesHeader extends Component {
                         <Input className={classes.searchInput}
                                fullWidth
                                type="search"
+                               value={searchKeyword}
+                               onChange={event => onSearchInputChange(event.target.value)}
                                placeholder="Search faculties" />
                     </Paper>
                 </div>
