@@ -83,11 +83,12 @@ export default class FacultyList extends Component {
     getFaculties = () => {
         let {searchKeyword, faculties} = this.props;
 
+        searchKeyword = searchKeyword.toLowerCase().trim();
+        
         if (searchKeyword.length === 0) {
             return faculties;
         }
 
-        searchKeyword = searchKeyword.toLowerCase();
 
         return faculties.filter(faculty => {
             const fullName = `${faculty.user.name.first} ${faculty.user.name.last}`.toLowerCase();
