@@ -1,8 +1,8 @@
-export const SET_ACTIVE_PAGE = "SET_ACTIVE_PAGE";
+export const PAGE_IS_CHANGED = "PAGE_IS_CHANGED";
 
-export function setActivePage(page) {
+export function pageIsChanged(page) {
     return {
-        type: SET_ACTIVE_PAGE,
+        type: PAGE_IS_CHANGED,
         page,
     };
 }

@@ -4,7 +4,7 @@ import { compose } from "recompose";
 
 import style from "./styles";
 import FacultyProfilesPage from "./FacultyProfiles";
-import { setActivePage as makeSetActivePageAction } from "../../actions/pages.actions";
+import { pageIsChanged } from "../../actions/pages.actions";
 
 
 function mapStateToProps(state) {
@@ -16,7 +16,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         setActivePage(page) {
-            dispatch(makeSetActivePageAction(page));
+            dispatch(pageIsChanged(page));
         },
     };
 }

@@ -1,4 +1,4 @@
-import { SET_ACTIVE_PAGE } from "../actions/pages.actions";
+import { PAGE_IS_CHANGED } from "../actions/pages.actions";
 import { HOME_PAGE } from "../pages/pages";
 
 
@@ -8,7 +8,7 @@ const initialState = {
 
 export default function pages(state = initialState, action = {}) {
     switch (action.type) {
-        case SET_ACTIVE_PAGE:
+        case PAGE_IS_CHANGED:
             return {
                 activePageIdentifier: action.page.identifier,
             };
