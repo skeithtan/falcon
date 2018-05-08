@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Typography from "material-ui/Typography";
 
-import OverviewDetail from "../OverviewCard";
+import OverviewDetail from "../OverviewTab";
 
 export default class FacultyDetail extends Component {
 
@@ -13,18 +13,16 @@ export default class FacultyDetail extends Component {
         </div>
     );
 
-    renderCards = faculty => (
-        <div className={this.props.classes.cards}>
-            <OverviewDetail faculty={faculty} />
-        </div>
+    renderCards = () => (
+        <OverviewDetail />
     );
 
     render() {
-        const {classes, activeFaculty} = this.props;
+        const {classes, activeFacultyId} = this.props;
 
         let view;
 
-        view = activeFaculty ? this.renderCards(activeFaculty) : this.emptyState();
+        view = activeFacultyId ? this.renderCards() : this.emptyState();
 
         return (
             <div className={classes.facultyDetail}>

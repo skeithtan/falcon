@@ -7,7 +7,7 @@ import styles from "./styles";
 
 function mapStateToProps(state) {
     return {
-        activeFaculty: state.facultyList.activeFaculty,
+        activeFacultyId: state.facultyList.activeFacultyId,
     };
 }
 
