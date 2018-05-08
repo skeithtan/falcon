@@ -1,14 +1,4 @@
-input NameInput {
-    first: String
-    last: String
-}
 
-input UserInput {
-    email: String
-    photo: String
-    name: NameInput
-    password: String
-}
 
 input FacultyInput {
     sex: Sex

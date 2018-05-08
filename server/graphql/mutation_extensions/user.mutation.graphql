@@ -1,3 +1,18 @@
+input NameInput {
+    first: String
+    last: String
+}
+
+input UserInput {
+    email: String
+    photo: String
+    name: NameInput
+    password: String
+}
+
+
 extend type Mutation {
     signIn(email:String!, password: String!): String!
+    updateUser(_id: String!, newUser: UserInput!): User!
+    changeCurrentUserPassword(newPassword: String!): Boolean!
 }
