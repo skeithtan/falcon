@@ -9,9 +9,8 @@ input UserInput {
     name: NameInput
 }
 
-
 extend type Mutation {
-    signIn(email:String!, password: String!): String!
+    signIn(email:String!, password: String!): Credentials!
     updateUser(_id: String!, newUser: UserInput!): User!
     changeCurrentUserPassword(newPassword: String!): Boolean!
 }

@@ -17,3 +17,12 @@ type User {
     photo: String
     authorization: Authorization!
 }
+
+type Credentials {
+    token: String!
+    name: Name!
+    email: String!
+    photo: String
+    authorization: Authorization!
+    temporaryPassword: Boolean
+}

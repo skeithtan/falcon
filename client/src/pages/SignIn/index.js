@@ -37,6 +37,7 @@ function mapDispatchToProps(dispatch) {
             userService.signIn(email, password)
                        .then(user => {
                            dispatch(setCurrentUser(user));
+                           //TODO: If password is temporary, show tour
                        })
                        .catch(error => {
                            const errorMessage = getMessageFromError(error);

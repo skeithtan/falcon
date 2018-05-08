@@ -25,13 +25,16 @@ async function signIn(object, {email, password}) {
 
     const token = jwt.sign({
         _id: user._id,
-        email: user.email,
-        name: user.name,
-        photo: user.photo,
-        authorization: user.authorization,
     }, config.server.jwtSecret);
 
-    return token;
+    return {
+        token: token,
+        name: user.name,
+        email: user.email,
+        photo: user.photo,
+        authorization: user.authorization,
+        temporaryPassword: user.password.temporary,
+    };
 }
 
 function updateUser(object, {_id, newUser}) {
@@ -45,7 +48,10 @@ function updateUser(object, {_id, newUser}) {
 function changeCurrentUserPassword(object, {newPassword}, context) {
     return getUserFromContext(context)
         .then(user => {
-            user.secret = newPassword;
+            user.password = {
+                secret: newPassword,
+                temporary: false,
+            };
             // Return true because return type is Boolean, true meaning success
             // Errors will not return false, instead an error array from this uncaught promise
             return user.save().then(() => true);

@@ -30,9 +30,15 @@ const UserSchema = new Schema({
                 trim: true,
             },
         },
-        secret: {
-            type: String,
-            required: true,
+        password: {
+            secret: {
+                type: String,
+                required: true,
+            },
+            temporary: {
+                type: Boolean,
+                required: true,
+            },
         },
         photo: {
             type: String,
@@ -51,30 +57,30 @@ const UserSchema = new Schema({
 UserSchema.pre("save", function (next) {
 
     const userIsOld = !this.isNew;
-    const secretIsChanged = this.isModified("secret");
+    const passwordIsChanged = this.isModified("password");
 
     // Calculate hash and salt only when password has been modified
     // AND this is an old user (not creating a new user)
-    if (!secretIsChanged && userIsOld) {
+    if (!passwordIsChanged && userIsOld) {
         next();
         return;
     }
 
     const user = this;
 
-    bcrypt.hash(user.secret, SALT_ROUNDS, (err, hash) => {
+    bcrypt.hash(user.password.secret, SALT_ROUNDS, (err, hash) => {
         if (err) {
             return next(err);
         }
 
-        user.secret = hash;
+        user.password.secret = hash;
         next();
     });
 
 });
 
 UserSchema.methods.comparePassword = function (password) {
-    return bcrypt.compareSync(password, this.secret);
+    return bcrypt.compareSync(password, this.password.secret);
 };
 
 export const User = mongoose.model("User", UserSchema);

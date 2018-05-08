@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import client from "../graphql/client";
 import gql from "graphql-tag";
 
@@ -8,7 +7,17 @@ const userService = {
         return client.mutate({
             mutation: gql`
                 mutation ($email: String!, $password: String!) {
-                    signIn(email:$email, password:$password)
+                    signIn(email:$email, password:$password) {
+                        token
+                        email
+                        photo
+                        authorization
+                        temporaryPassword
+                        name {
+                            first
+                            last
+                        }
+                    }
                 }
             `,
             variables: {
@@ -16,11 +25,8 @@ const userService = {
                 password: password,
             },
         }).then(result => {
-            const token = result.data.signIn;
-            const user = jwtDecode(token);
-            localStorage.token = token;
-
-            return user;
+            localStorage.token = result.data.signIn.token;
+            return result.data.signIn;
         });
     },
 

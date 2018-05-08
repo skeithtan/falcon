@@ -12,7 +12,10 @@ function mutateFaculty() {
     return {
         async createFaculty({newFaculty, newUser, temporaryPassword}) {
             newUser.authorization = FACULTY;
-            newUser.secret = temporaryPassword;
+            newUser.password = {
+                secret: temporaryPassword,
+                temporary: true,
+            };
 
             const user = await User.create(newUser);
             newFaculty.user = user._id;
