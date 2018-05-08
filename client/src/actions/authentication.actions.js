@@ -1,23 +1,30 @@
-export const SET_CURRENT_USER = "SET_CURRENT_USER";
-export const SET_SIGN_IN_ERROR = "SET_SIGN_IN_ERROR";
-export const ATTEMPT_SIGN_IN = "ATTEMPT_SIGN_IN";
+export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
+export const SIGN_IN_IS_LOADING = "SIGN_IN_IS_LOADING";
+export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 
-export function setCurrentUser(user) {
+export function signInSuccess(user) {
     return {
-        type: SET_CURRENT_USER,
+        type: SIGN_IN_SUCCESS,
         user,
     };
 }
 
-export function setSignInError(error) {
+export function signInError(error) {
     return {
-        type: SET_SIGN_IN_ERROR,
+        type: SIGN_IN_ERROR,
         error,
     };
 }
 
-export function attemptSignIn() {
+export function signInIsLoading() {
     return {
-        type: ATTEMPT_SIGN_IN,
+        type: SIGN_IN_IS_LOADING,
+    };
+}
+
+export function signOutSuccess() {
+    return {
+        type: "SIGN_OUT_SUCCESS",
     };
 }

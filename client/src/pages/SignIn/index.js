@@ -7,9 +7,9 @@ import styles from "./styles";
 import SignInPage from "./SignIn";
 import userService from "../../services/user.service";
 import {
-    attemptSignIn,
-    setCurrentUser,
-    setSignInError,
+    signInIsLoading,
+    signInSuccess,
+    signInError,
 } from "../../actions/authentication.actions";
 
 function getMessageFromError(error) {
@@ -32,16 +32,16 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         attemptSignIn(email, password) {
-            dispatch(attemptSignIn());
+            dispatch(signInIsLoading());
 
             userService.signIn(email, password)
                        .then(user => {
-                           dispatch(setCurrentUser(user));
+                           dispatch(signInSuccess(user));
                            //TODO: If password is temporary, show tour
                        })
                        .catch(error => {
                            const errorMessage = getMessageFromError(error);
-                           dispatch(setSignInError(errorMessage));
+                           dispatch(signInError(errorMessage));
                        });
         },
     };

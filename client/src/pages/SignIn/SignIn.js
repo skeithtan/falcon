@@ -29,12 +29,12 @@ export default class SignInPage extends Component {
         const formIsFilled = this.state.email.length > 0 &&
             this.state.password.length > 0;
 
-        const {attemptingSignIn, signInError, classes} = this.props;
+        const {isLoading, signInError, classes} = this.props;
 
         return (
             <div className={classes.background}>
                 <Card>
-                    {attemptingSignIn && <LinearProgress />}
+                    {isLoading && <LinearProgress />}
                     <div className={classes.signInBox}>
                         <img src={pnuLogo} className={classes.pnuLogo} alt="PNU Logo" />
                         <Typography className={classes.welcomeMessage} variant="headline" component="h1">
@@ -67,7 +67,7 @@ export default class SignInPage extends Component {
                                         type="submit"
                                         variant="raised"
                                         color="primary"
-                                        disabled={!formIsFilled || this.props.attemptingSignIn}>
+                                        disabled={!formIsFilled || this.props.isLoading}>
                                     Sign In
                                 </Button>
                             </div>

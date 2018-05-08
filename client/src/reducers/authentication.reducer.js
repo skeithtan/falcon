@@ -1,4 +1,9 @@
-import { SET_CURRENT_USER, ATTEMPT_SIGN_IN, SET_SIGN_IN_ERROR } from "../actions/authentication.actions";
+import {
+    SIGN_IN_SUCCESS,
+    SIGN_IN_IS_LOADING,
+    SIGN_IN_ERROR,
+    SIGN_OUT_SUCCESS,
+} from "../actions/authentication.actions";
 
 
 const hasToken = localStorage.hasOwnProperty("token");
@@ -6,32 +11,39 @@ const hasUser = localStorage.hasOwnProperty("user");
 
 const initialState = {
     isAuthenticated: hasToken,
-    attemptingSignIn: false,
+    isLoading: false,
     signInError: null,
     user: hasUser ? JSON.parse(localStorage.user) : null,
 };
 
 export default function authentication(state = initialState, action) {
     switch (action.type) {
-        case SET_CURRENT_USER:
+        case SIGN_IN_SUCCESS:
             return {
                 isAuthenticated: action.user !== null,
-                attemptingSignIn: false,
+                isLoading: false,
                 signInError: null,
                 user: action.user,
             };
-        case ATTEMPT_SIGN_IN:
+        case SIGN_IN_IS_LOADING:
             return {
                 isAuthenticated: false,
-                attemptingSignIn: true,
+                isLoading: true,
                 signInError: null,
                 user: null,
             };
-        case SET_SIGN_IN_ERROR:
+        case SIGN_IN_ERROR:
             return {
                 isAuthenticated: false,
-                attemptingSignIn: false,
+                isLoading: false,
                 signInError: action.error,
+                user: null,
+            };
+        case SIGN_OUT_SUCCESS:
+            return {
+                isAuthenticated: false,
+                isLoading: false,
+                signInError: null,
                 user: null,
             };
         default:
