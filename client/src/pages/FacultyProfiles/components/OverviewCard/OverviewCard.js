@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import List from "material-ui/List";
+import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "material-ui/IconButton";
+import Tooltip from "material-ui/Tooltip";
 import moment from "moment";
 
 import FacultyAvatar from "../../../../components/FacultyAvatar/FacultyAvatar";
@@ -20,6 +23,15 @@ class OverviewCard extends Component {
 
         return (
             <DetailCard>
+                <div className={classes.buttonArea}>
+                    <div className={classes.buttonsWrapper}>
+                        <Tooltip title="Update these details" placement="left">
+                            <IconButton>
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </div>
+                </div>
                 <div className={classes.bigOverview}>
                     <Grid container alignItems="center" direction="row" spacing={40}>
                         <FacultyAvatar faculty={faculty} className={classes.bigAvatar} />
@@ -35,12 +47,15 @@ class OverviewCard extends Component {
                             </Grid>
                         </Grid>
 
+                        <Grid item>
+                        </Grid>
+
                     </Grid>
                 </div>
                 <List disablePadding>
                     <FormDisplayListItem field="Email" value={faculty.user.email} />
                     <FormDisplayListItem field="Sex" value={FACULTY_ENUMS.SEX[faculty.sex]} />
-                    <FormDisplayListItem field="Date of Birth" value={birthDateValue}/>
+                    <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
             </DetailCard>
         );
