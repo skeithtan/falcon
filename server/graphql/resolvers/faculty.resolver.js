@@ -10,9 +10,9 @@ function faculties() {
 
 function mutateFaculty() {
     return {
-        async createFaculty({newFaculty, newUser}) {
+        async createFaculty({newFaculty, newUser, temporaryPassword}) {
             newUser.authorization = FACULTY;
-            newUser.secret = newUser.password;
+            newUser.secret = temporaryPassword;
 
             const user = await User.create(newUser);
             newFaculty.user = user._id;

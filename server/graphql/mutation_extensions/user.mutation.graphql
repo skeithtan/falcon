@@ -7,7 +7,6 @@ input UserInput {
     email: String
     photo: String
     name: NameInput
-    password: String
 }
 
 
