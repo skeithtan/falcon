@@ -1,13 +1,13 @@
 import {
-    SET_ACTIVE_FACULTY,
-    SET_ERRORS,
-    SET_FACULTIES,
-    SET_SEARCH_KEYWORD,
-    START_LOADING,
+    ACTIVE_FACULTY_CHANGED,
+    PROFILES_FETCH_ERROR,
+    PROFILES_FETCHED,
+    SEARCH_KEYWORD_CHANGED,
+    PROFILES_LIST_IS_LOADING,
     OVERVIEW_FETCH_ERROR,
     OVERVIEW_FETCHED,
     OVERVIEW_IS_LOADING,
-    SET_ACTIVE_TAB,
+    ACTIVE_TAB_CHANGED,
 } from "../actions/faculty_profiles.actions";
 import { OVERVIEW_TAB } from "../pages/FacultyProfiles/detail_tabs";
 
@@ -29,7 +29,7 @@ const initialState = {
 
 export default function facultyProfiles(state = initialState, action) {
     switch (action.type) {
-        case START_LOADING:
+        case PROFILES_LIST_IS_LOADING:
             return {
                 ...state,
                 facultyList: {
@@ -37,7 +37,7 @@ export default function facultyProfiles(state = initialState, action) {
                     errors: null,
                 },
             };
-        case SET_ERRORS:
+        case PROFILES_FETCH_ERROR:
             return {
                 ...state,
                 facultyList: {
@@ -45,7 +45,7 @@ export default function facultyProfiles(state = initialState, action) {
                     errors: action.errors,
                 },
             };
-        case SET_FACULTIES:
+        case PROFILES_FETCHED:
             return {
                 ...state,
                 faculties: action.faculties,
@@ -54,18 +54,18 @@ export default function facultyProfiles(state = initialState, action) {
                     isLoading: false,
                 },
             };
-        case SET_ACTIVE_FACULTY:
+        case ACTIVE_FACULTY_CHANGED:
             return {
                 ...state,
                 activeFacultyId: action.faculty._id,
                 overviewTab: initialState.overviewTab,
             };
-        case SET_SEARCH_KEYWORD:
+        case SEARCH_KEYWORD_CHANGED:
             return {
                 ...state,
                 searchKeyword: action.searchKeyword,
             };
-        case SET_ACTIVE_TAB:
+        case ACTIVE_TAB_CHANGED:
             return {
                 ...state,
                 activeTabIdentifier: action.tab.identifier,

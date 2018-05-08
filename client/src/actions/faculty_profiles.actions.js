@@ -1,51 +1,51 @@
-export const START_LOADING = "START_LOADING";
-export const SET_FACULTIES = "SET_FACULTIES";
-export const SET_ERRORS = "SET_ERRORS";
-export const SET_SEARCH_KEYWORD = "SET_SEARCH_KEYWORD";
-export const SET_ACTIVE_FACULTY = "SET_ACTIVE_FACULTY";
-export const SET_ACTIVE_TAB = "SET_CURRENT_TAB";
+export const PROFILES_LIST_IS_LOADING = "PROFILES_LIST_IS_LOADING";
+export const PROFILES_FETCHED = "PROFILES_FETCHED";
+export const PROFILES_FETCH_ERROR = "PROFILES_FETCH_ERROR";
+export const SEARCH_KEYWORD_CHANGED = "SEARCH_KEYWORD_CHANGED";
+export const ACTIVE_FACULTY_CHANGED = "ACTIVE_FACULTY_CHANGED";
+export const ACTIVE_TAB_CHANGED = "SET_CURRENT_TAB";
 export const OVERVIEW_IS_LOADING = "OVERVIEW_IS_LOADING";
 export const OVERVIEW_FETCHED = "OVERVIEW_FETCHED";
 export const OVERVIEW_FETCH_ERROR = "OVERVIEW_FETCH_ERROR";
 
 
-export function startLoading(isLoading) {
+export function profilesListIsLoading(isLoading) {
     return {
-        type: START_LOADING,
+        type: PROFILES_LIST_IS_LOADING,
     };
 }
 
-export function setFaculties(faculties) {
+export function profilesFetched(faculties) {
     return {
-        type: SET_FACULTIES,
+        type: PROFILES_FETCHED,
         faculties,
     };
 }
 
-export function setErrors(errors) {
+export function profilesFetchError(errors) {
     return {
-        type: SET_ERRORS,
+        type: PROFILES_FETCH_ERROR,
         errors,
     };
 }
 
-export function setActiveFaculty(faculty) {
+export function activeFacultyChanged(faculty) {
     return {
-        type: SET_ACTIVE_FACULTY,
+        type: ACTIVE_FACULTY_CHANGED,
         faculty,
     };
 }
 
-export function setSearchKeyword(searchKeyword) {
+export function searchKeywordChanged(searchKeyword) {
     return {
-        type: SET_SEARCH_KEYWORD,
+        type: SEARCH_KEYWORD_CHANGED,
         searchKeyword,
     };
 }
 
-export function setActiveTab(tab) {
+export function activeTabChanged(tab) {
     return {
-        type: SET_ACTIVE_TAB,
+        type: ACTIVE_TAB_CHANGED,
         tab,
     };
 }

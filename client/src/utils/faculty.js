@@ -1,10 +1,10 @@
-import { setFaculties } from "../actions/faculty_profiles.actions";
+import { profilesFetched } from "../actions/faculty_profiles.actions";
 
 export function updateFacultyFromState(newFaculty, dispatch, getState) {
     // Update without mutating
     const faculties = getState().facultyProfiles.faculties;
 
-    dispatch(setFaculties(faculties.map(faculty => {
+    dispatch(profilesFetched(faculties.map(faculty => {
         if (faculty._id === newFaculty._id) {
             return newFaculty;
         }

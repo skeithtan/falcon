@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import { setActiveTab } from "../../../../actions/faculty_profiles.actions";
+import { activeTabChanged } from "../../../../actions/faculty_profiles.actions";
 
 import FacultyProfilesHeader from "./FacultyProfilesHeader";
-import { setSearchKeyword } from "../../../../actions/faculty_profiles.actions";
+import { searchKeywordChanged } from "../../../../actions/faculty_profiles.actions";
 
 function mapStateToProps(state) {
     return {
@@ -16,11 +16,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onSearchInputChange(searchKeyword) {
-            dispatch(setSearchKeyword(searchKeyword));
+            dispatch(searchKeywordChanged(searchKeyword));
         },
 
         onTabClick(tab) {
-            dispatch(setActiveTab(tab));
+            dispatch(activeTabChanged(tab));
         },
     };
 }
