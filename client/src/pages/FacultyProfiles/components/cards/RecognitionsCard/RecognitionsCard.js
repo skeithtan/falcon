@@ -44,13 +44,14 @@ export default class RecognitionsCard extends Component {
 
     render() {
         const faculty = this.props.faculty;
+        //TODO: Sort by date
         const recognitions = faculty.recognitions;
         const recognitionsIsEmpty = recognitions.length === 0;
 
         return (
             <DetailCard>
-                <TableToolbar tableTitle="Degrees"
-                              addButtonTooltipTitle="Add a degree"
+                <TableToolbar tableTitle="Recognitions"
+                              addButtonTooltipTitle="Add a recognition"
                               onAddButtonClick={this.onAddButtonClick} />
                 {!recognitionsIsEmpty &&
                 <Table>
@@ -59,7 +60,7 @@ export default class RecognitionsCard extends Component {
                             <TableCell>Title</TableCell>
                             <TableCell>Basis</TableCell>
                             <TableCell>Sponsor</TableCell>
-                            <TableCell numeric>Date</TableCell>
+                            <TableCell>Date</TableCell>
                         </TableRow>
                     </TableHead>
 
