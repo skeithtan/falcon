@@ -25,7 +25,9 @@ const userService = {
                 password: password,
             },
         }).then(result => {
-            localStorage.token = result.data.signIn.token;
+            const {token, ...user} = result.data.signIn;
+            localStorage.token = token;
+            localStorage.user = JSON.stringify(user);
             return result.data.signIn;
         });
     },

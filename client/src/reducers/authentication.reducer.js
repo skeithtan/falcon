@@ -1,14 +1,13 @@
-import jwtDecode from "jwt-decode";
 import { SET_CURRENT_USER, ATTEMPT_SIGN_IN, SET_SIGN_IN_ERROR } from "../actions/authentication.actions";
 
 
-const hasToken = localStorage.hasOwnProperty("token");
+const hasToken = localStorage.hasOwnProperty("user");
 
 const initialState = {
     isAuthenticated: hasToken,
     attemptingSignIn: false,
     signInError: null,
-    user: hasToken ? jwtDecode(localStorage.token) : null,
+    user: hasToken ? JSON.parse(localStorage.user) : null,
 };
 
 export default function authentication(state = initialState, action) {
