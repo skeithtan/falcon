@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator";
 import ErrorState from "../../../../components/states/ErrorState";
+import TeachingSubjectsCard from "../cards/TeachingSubjectsCard";
 
 import DetailCard from "../DetailCard";
 import OverviewCard from "../cards/OverviewCard";
@@ -15,6 +16,7 @@ class OverviewTab extends Component {
             <OverviewCard faculty={this.props.activeFaculty} key={1} />
             <DegreeCard faculty={this.props.activeFaculty} key={2} />
             <RecognitionsCard faculty={this.props.activeFaculty} key={3} />
+            <TeachingSubjectsCard faculty={this.props.activeFaculty} key={4}/>
         </div>
     );
 
