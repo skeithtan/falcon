@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator";
 import ErrorState from "../../../../components/states/ErrorState";
 
+import DetailCard from "../DetailCard";
 import OverviewCard from "../cards/OverviewCard";
 import DegreeCard from "../cards/DegreeCard";
-import DetailCard from "../DetailCard";
+import RecognitionsCard from "../cards/RecognitionsCard";
+
 
 class OverviewTab extends Component {
 
@@ -12,6 +14,7 @@ class OverviewTab extends Component {
         <div className={this.props.classes.cards}>
             <OverviewCard faculty={this.props.activeFaculty} key={1} />
             <DegreeCard faculty={this.props.activeFaculty} key={2} />
+            <RecognitionsCard faculty={this.props.activeFaculty} key={3} />
         </div>
     );
 
@@ -49,7 +52,7 @@ class OverviewTab extends Component {
     }
 
     render() {
-        const {isLoading, errors, overviewIsFetched} = this.props;
+        const {isLoading, errors} = this.props;
 
         if (isLoading) {
             return this.renderLoading();
@@ -59,11 +62,7 @@ class OverviewTab extends Component {
             return this.renderError(errors);
         }
 
-        if (overviewIsFetched) {
-            return this.renderOverviewCards();
-        }
-
-        return null;
+        return this.renderOverviewCards();
     }
 
 }
