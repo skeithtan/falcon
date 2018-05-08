@@ -7,7 +7,7 @@ export default class FacultyDetail extends Component {
 
     emptyState = () => (
         <div className={this.props.classes.emptyState}>
-            <Typography variant="display1">
+            <Typography variant="headline" className={this.props.classes.emptyStateText}>
                 Select a faculty from the left to see the details
             </Typography>
         </div>

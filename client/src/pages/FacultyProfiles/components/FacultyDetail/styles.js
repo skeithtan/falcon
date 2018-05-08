@@ -10,6 +10,10 @@ export default theme => ({
         justifyContent: "center",
     },
 
+    emptyStateText: {
+        color: theme.palette.grey["600"],
+    },
+
     cards: {
         paddingTop: theme.spacing.unit * 5,
         paddingBottom: theme.spacing.unit * 5,
