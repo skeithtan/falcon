@@ -35,7 +35,6 @@
     "graphql-tag": "^2.9.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
-    "jwt-decode": "^2.2.0",
     "material-ui": "^1.0.0-beta.44",
     "moment": "^2.22.1",
     "object-assign": "4.1.1",
