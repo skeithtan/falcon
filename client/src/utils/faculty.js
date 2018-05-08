@@ -13,3 +13,9 @@ export function updateFacultyFromState(newFaculty, dispatch, getState) {
     })));
 
 }
+
+
+export function getFullName(faculty) {
+    const name = faculty.user.name;
+    return `${name.first} ${name.last}`;
+}
