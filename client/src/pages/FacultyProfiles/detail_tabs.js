@@ -1,14 +1,7 @@
-export const DEGREES_TAB = {
-    name: "Degrees",
-    identifier: "DEGREES",
-    route: "degrees/",
-    component: null,
-};
-
-export const TEACHING_SUBJECTS_TAB = {
-    name: "Teaching Subjects",
-    identifier: "TEACHING_SUBJECTS",
-    route: "teaching-subjects/",
+export const OVERVIEW_TAB = {
+    name: "Overview",
+    identifier: "OVERVIEW",
+    route: "overview/",
     component: null,
 };
 
@@ -16,13 +9,6 @@ export const PRESENTATIONS_TAB = {
     name: "Presentations",
     identifier: "PRESENTATIONS",
     route: "presentations/",
-    component: null,
-};
-
-export const RECOGNITIONS_TAB = {
-    name: "Recognitions",
-    identifier: "RECOGNITIONS",
-    route: "recognitions/",
     component: null,
 };
 
@@ -42,10 +28,8 @@ export const EXTENSION_WORKS_TAB = {
 
 
 export const TABS = [
-    DEGREES_TAB,
-    TEACHING_SUBJECTS_TAB,
+    OVERVIEW_TAB,
     PRESENTATIONS_TAB,
-    RECOGNITIONS_TAB,
     INSTRUCTIONAL_MATERIALS_TAB,
     EXTENSION_WORKS_TAB,
 ];
