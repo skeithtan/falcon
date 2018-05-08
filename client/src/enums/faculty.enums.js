@@ -7,14 +7,16 @@ export default {
 
     SEX: {
         "M": "Male",
-        "F": "Female"
+        "F": "Female",
     },
 
     DEGREE: {
-        "ASSOCIATE": "Associate",
-        "BACHELOR": "Bachelor",
-        "MASTER": "Master",
-        "DOCTORATE": "Doctorate",
+        LEVEL: {
+            "ASSOCIATE": "Associate",
+            "BACHELOR": "Bachelor",
+            "MASTER": "Master",
+            "DOCTORATE": "Doctorate",
+        },
     },
 
     EXTENSION_WORK: {
