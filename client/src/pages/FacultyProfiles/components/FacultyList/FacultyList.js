@@ -5,8 +5,8 @@ import Button from "material-ui/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Grid from "material-ui/Grid";
 import Tooltip from "material-ui/Tooltip";
-import { CircularProgress } from "material-ui/Progress";
 
+import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
 import { ErrorState, EmptyState, EmptySearchResultsState } from "../../../../components/states";
 import FacultyAvatar from "../../../../components/FacultyAvatar";
 
@@ -39,14 +39,14 @@ class FacultyItem extends Component {
 export default class FacultyList extends Component {
 
     renderList = faculties => {
-        const {activeFaculty, onFacultyClick, classes} = this.props;
+        const {activeFacultyId, onFacultyClick, classes} = this.props;
         return (
             <List>
                 {faculties.map(faculty =>
                     <FacultyItem classes={classes}
                                  onClick={() => onFacultyClick(faculty)}
                                  faculty={faculty}
-                                 active={activeFaculty && activeFaculty._id === faculty._id}
+                                 active={activeFacultyId && activeFacultyId === faculty._id}
                                  key={faculty._id} />,
                 )}
             </List>
@@ -54,9 +54,7 @@ export default class FacultyList extends Component {
     };
 
     loadingIndicator = () => (
-        <div className={this.props.classes.loadingIndicatorWrapper}>
-            <CircularProgress size={100} />
-        </div>
+        <FullPageLoadingIndicator size={100}/>
     );
 
     addFaculty = () => {

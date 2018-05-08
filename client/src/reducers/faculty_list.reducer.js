@@ -11,7 +11,7 @@ const initialState = {
     isLoading: false,
     errors: null,
     searchKeyword: "",
-    activeFaculty: null,
+    activeFacultyId: null,
 };
 
 export default function facultyList(state = initialState, action) {
@@ -40,7 +40,7 @@ export default function facultyList(state = initialState, action) {
         case SET_ACTIVE_FACULTY:
             return {
                 ...state,
-                activeFaculty: action.faculty,
+                activeFacultyId: action.faculty._id,
             };
         case SET_SEARCH_KEYWORD:
             return {
