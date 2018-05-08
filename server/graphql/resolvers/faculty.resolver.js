@@ -5,12 +5,15 @@ import { FACULTY } from "../../models/user.model";
 import { DoesNotExistError } from "../errors";
 
 function faculties() {
-    return Faculty.find({}).populate("user");
+    return Faculty.find({})
+                  .populate("user")
+                  .populate("teachingSubjects");
 }
 
 function faculty(object, {_id}) {
     return Faculty.findById(_id)
                   .populate("user")
+                  .populate("teachingSubjects")
                   .then(faculty => {
                       if (!faculty) {
                           return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
