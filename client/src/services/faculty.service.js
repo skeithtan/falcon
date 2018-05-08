@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
-import client from "../graphql/client";
+import client from "../client";
 
-export function getAllFacultiesOverview() {
+export function fetchAllFacultiesSummary() {
     return client.query({
         query: gql`
             query {
@@ -12,14 +12,54 @@ export function getAllFacultiesOverview() {
                             first
                             last
                         }
-                        
+
                         email
+                        photo
                     }
-                    sex
-                    employment
-                    birthDate
                 }
             }
         `,
+    });
+}
+
+export function fetchFacultyOverview(facultyId) {
+    return client.query({
+        query: gql`
+            query($id: String!) {
+                faculty(_id: $id) {
+                    sex
+                    employment
+                    birthDate
+                    
+                    degrees {
+                        _id
+                        title
+                        level
+                        completionYear
+                    }
+                    
+                    recognitions {
+                        _id
+                        title
+                        basis
+                        sponsor
+                        date {
+                            month
+                            year
+                        }
+                    }
+                    
+                    teachingSubjects {
+                        _id
+                        code
+                        name
+                        major
+                    }
+                }
+            }
+        `,
+        variables: {
+            id: facultyId,
+        },
     });
 }

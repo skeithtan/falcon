@@ -1,4 +1,4 @@
-import client from "../graphql/client";
+import client from "../client";
 import gql from "graphql-tag";
 
 
