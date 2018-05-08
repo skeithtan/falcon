@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import Typography from "material-ui/Typography";
 import Table, {
     TableBody,
     TableCell,
     TableHead,
-    TablePagination,
     TableRow,
-    TableSortLabel,
 } from "material-ui/Table";
-import { getFullName } from "../../../../../utils/faculty";
 
+import { getFullName } from "../../../../../utils/faculty";
 import DetailCard from "../../DetailCard";
 import TableToolbar from "../../TableToolbar";
 import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
@@ -17,7 +14,7 @@ import EmptyState from "../../../../../components/states/EmptyState";
 
 export default class DegreeCard extends Component {
 
-    rows = degrees => degrees.map.forEach(degree => (
+    rows = degrees => degrees.map(degree => (
         //TODO: On click
         <TableRow key={degree._id}>
             <TableCell>{degree.title}</TableCell>
@@ -57,8 +54,9 @@ export default class DegreeCard extends Component {
                             <TableCell numeric>Completion Year</TableCell>
                         </TableRow>
                     </TableHead>
-
-                    {this.rows(degrees)}
+                    <TableBody>
+                        {this.rows(degrees)}
+                    </TableBody>
 
                 </Table>
                 }
