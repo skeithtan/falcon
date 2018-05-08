@@ -10,6 +10,7 @@ import moment from "moment/moment";
 import FacultyAvatar from "../../../../../components/FacultyAvatar/FacultyAvatar";
 import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
+import { getFullName } from "../../../../../utils/faculty";
 import DetailCard from "../../DetailCard";
 
 export default class OverviewCard extends Component {
@@ -38,7 +39,7 @@ export default class OverviewCard extends Component {
                         <Grid item>
                             <Grid container direction="column">
                                 <Typography variant="headline">
-                                    {faculty.user.name.first} {faculty.user.name.last}
+                                    {getFullName(faculty)}
                                 </Typography>
                                 <Typography variant="subheading">
                                     {FACULTY_ENUMS.EMPLOYMENT[faculty.employment]} Faculty

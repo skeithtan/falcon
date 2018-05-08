@@ -9,6 +9,7 @@ import Tooltip from "material-ui/Tooltip";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
 import { ErrorState, EmptyState, EmptySearchResultsState } from "../../../../components/states";
 import FacultyAvatar from "../../../../components/FacultyAvatar";
+import { getFullName } from "../../../../utils/faculty";
 
 
 class FacultyItem extends Component {
@@ -27,7 +28,7 @@ class FacultyItem extends Component {
                     <Grid item>
                         <Typography className={this.props.active ? classes.activeListItemText : null}
                                     variant="subheading">
-                            {faculty.user.name.first} {faculty.user.name.last}
+                            {getFullName(faculty)}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -54,7 +55,7 @@ export default class FacultyList extends Component {
     };
 
     loadingIndicator = () => (
-        <FullPageLoadingIndicator size={100}/>
+        <FullPageLoadingIndicator size={100} />
     );
 
     addFaculty = () => {
