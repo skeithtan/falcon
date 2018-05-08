@@ -155,16 +155,16 @@ const FacultySchema = new Schema({
         type: Date,
         required: true,
     },
-    degrees: [DegreeSchema],
-    presentations: [PresentationSchema],
-    recognitions: [RecognitionSchema],
-    instructionalMaterials: [InstructionalMaterialSchema],
-    extensionWorks: [ExtensionWorkSchema],
     teachingSubjects: [{
         type: Schema.Types.ObjectId,
         ref: "Subject",
         required: true,
     }],
+    degrees: [DegreeSchema],
+    presentations: [PresentationSchema],
+    recognitions: [RecognitionSchema],
+    instructionalMaterials: [InstructionalMaterialSchema],
+    extensionWorks: [ExtensionWorkSchema],
 });
 
 export const Faculty = mongoose.model("Faculty", FacultySchema);
