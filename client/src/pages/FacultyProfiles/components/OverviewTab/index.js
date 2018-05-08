@@ -9,7 +9,20 @@ import OverviewTab from "./OverviewTab";
 import styles from "./styles";
 
 function getFacultyOverviewThunk(faculty) {
+
     return function (dispatch, getState) {
+
+        function dispatchIfActive(action) {
+            const activeFacultyId = getState().facultyList.activeFacultyId;
+
+            // Is the active faculty still the same faculty we fetched for?
+            if (activeFacultyId === faculty._id) {
+
+                // If so, dispatch update
+                dispatch(action);
+            }
+        }
+
         return fetchFacultyOverview(faculty._id)
             .then(result => {
                 const overview = result.data.faculty;
@@ -18,24 +31,12 @@ function getFacultyOverviewThunk(faculty) {
                 // Update faculty list with this new overview
                 updateFacultyFromState(newFaculty, dispatch, getState);
 
-                const activeFacultyId = getState().facultyList.activeFacultyId;
-
-                // Is the active faculty still the same faculty we fetched for?
-                if (activeFacultyId !== faculty._id) {
-
-                    // If so, tell overview to update with these details
-                    dispatch(overviewFetched(faculty));
-                }
+                // Tell overview to update with these details
+                dispatchIfActive(overviewFetched(faculty));
             })
-            .catch(errors => {
-                const activeFacultyId = getState().facultyList.activeFacultyId;
-
-                // Is the active faculty still the same faculty we fetched for?
-                if (activeFacultyId !== faculty._id) {
-
-                    // If so, tell overview we had problems fetching
-                    dispatch(overviewFetchError(errors));
-                }
+            .catch(error => {
+                // Tell overview we had problems fetching
+                dispatchIfActive(overviewFetchError([error.message]));
             });
     };
 }
