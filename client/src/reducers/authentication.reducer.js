@@ -1,13 +1,14 @@
 import { SET_CURRENT_USER, ATTEMPT_SIGN_IN, SET_SIGN_IN_ERROR } from "../actions/authentication.actions";
 
 
-const hasToken = localStorage.hasOwnProperty("user");
+const hasToken = localStorage.hasOwnProperty("token");
+const hasUser = localStorage.hasOwnProperty("user");
 
 const initialState = {
     isAuthenticated: hasToken,
     attemptingSignIn: false,
     signInError: null,
-    user: hasToken ? JSON.parse(localStorage.user) : null,
+    user: hasUser ? JSON.parse(localStorage.user) : null,
 };
 
 export default function authentication(state = initialState, action) {
