@@ -50,8 +50,12 @@ const UserSchema = new Schema({
 //Do not replace function(next) with arrow functions - JavaScript `this` only works on old anonymous functions
 UserSchema.pre("save", function (next) {
 
-    //Calculate hash and salt only when password has been modified or object is newly created
-    if (!this.isModified("secret") || !this.isNew) {
+    const userIsOld = !this.isNew;
+    const secretIsChanged = this.isModified("secret");
+
+    // Calculate hash and salt only when password has been modified
+    // AND this is an old user (not creating a new user)
+    if (!secretIsChanged && userIsOld) {
         next();
         return;
     }
