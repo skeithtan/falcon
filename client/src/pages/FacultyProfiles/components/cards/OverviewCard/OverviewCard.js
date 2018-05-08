@@ -5,15 +5,14 @@ import List from "material-ui/List";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "material-ui/IconButton";
 import Tooltip from "material-ui/Tooltip";
-import moment from "moment";
+import moment from "moment/moment";
 
-import FacultyAvatar from "../../../../components/FacultyAvatar/FacultyAvatar";
-import FormDisplayListItem from "../../../../components/FormDisplayListItem";
-import DetailCard from "../DetailCard";
-import FACULTY_ENUMS from "../../../../enums/faculty.enums";
+import FacultyAvatar from "../../../../../components/FacultyAvatar/FacultyAvatar";
+import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
+import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
+import DetailCard from "../../DetailCard";
 
-
-class OverviewCard extends Component {
+export default class OverviewCard extends Component {
     render() {
         const {faculty, classes} = this.props;
 
@@ -61,5 +60,3 @@ class OverviewCard extends Component {
         );
     }
 }
-
-export default OverviewCard;

@@ -20,4 +20,5 @@ export default theme => ({
     buttonsWrapper: {
         marginLeft: "auto",
     },
+
 })
