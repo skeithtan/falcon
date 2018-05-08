@@ -3,6 +3,11 @@ export const SET_FACULTIES = "SET_FACULTIES";
 export const SET_ERRORS = "SET_ERRORS";
 export const SET_SEARCH_KEYWORD = "SET_SEARCH_KEYWORD";
 export const SET_ACTIVE_FACULTY = "SET_ACTIVE_FACULTY";
+export const SET_ACTIVE_TAB = "SET_CURRENT_TAB";
+export const OVERVIEW_IS_LOADING = "OVERVIEW_IS_LOADING";
+export const OVERVIEW_FETCHED = "OVERVIEW_FETCHED";
+export const OVERVIEW_FETCH_ERROR = "OVERVIEW_FETCH_ERROR";
+
 
 export function startLoading(isLoading) {
     return {
@@ -35,5 +40,31 @@ export function setSearchKeyword(searchKeyword) {
     return {
         type: SET_SEARCH_KEYWORD,
         searchKeyword,
+    };
+}
+
+export function setActiveTab(tab) {
+    return {
+        type: SET_ACTIVE_TAB,
+        tab,
+    };
+}
+
+export function overviewIsLoading() {
+    return {
+        type: OVERVIEW_IS_LOADING,
+    };
+}
+
+export function overviewFetched() {
+    return {
+        type: OVERVIEW_FETCHED,
+    };
+}
+
+export function overviewFetchError(errors) {
+    return {
+        type: OVERVIEW_FETCH_ERROR,
+        errors,
     };
 }

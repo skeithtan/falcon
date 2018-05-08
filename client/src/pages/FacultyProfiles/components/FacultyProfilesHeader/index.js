@@ -1,15 +1,15 @@
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import { setActiveTab } from "../../../../actions/faculty_detail.actions";
+import { setActiveTab } from "../../../../actions/faculty_profiles.actions";
 
 import FacultyProfilesHeader from "./FacultyProfilesHeader";
-import { setSearchKeyword } from "../../../../actions/faculty_list.actions";
+import { setSearchKeyword } from "../../../../actions/faculty_profiles.actions";
 
 function mapStateToProps(state) {
     return {
-        searchKeyword: state.facultyList.searchKeyword,
-        activeFacultyId: state.facultyList.activeFacultyId,
-        activeTabIdentifier: state.facultyDetail.activeTabIdentifier,
+        searchKeyword: state.facultyProfiles.searchKeyword,
+        activeFacultyId: state.facultyProfiles.activeFacultyId,
+        activeTabIdentifier: state.facultyProfiles.activeTabIdentifier,
     };
 }
 

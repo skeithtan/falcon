@@ -1,7 +1,7 @@
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { withTheme, withStyles } from "material-ui/styles";
-import { setFaculties, startLoading, setErrors, setActiveFaculty } from "../../../../actions/faculty_list.actions";
+import { setFaculties, startLoading, setErrors, setActiveFaculty } from "../../../../actions/faculty_profiles.actions";
 
 import style from "./styles";
 import FacultyList from "./FacultyList";
@@ -9,7 +9,10 @@ import { fetchAllFacultiesSummary } from "../../../../services/faculty.service";
 
 function mapStateToProps(state) {
     return {
-        ...state.facultyList
+        activeFacultyId: state.facultyProfiles.activeFacultyId,
+        faculties: state.facultyProfiles.faculties,
+        searchKeyword: state.facultyProfiles.searchKeyword,
+        ...state.facultyProfiles.facultyList,
     };
 }
 

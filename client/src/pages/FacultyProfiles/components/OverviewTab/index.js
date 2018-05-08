@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { withTheme, withStyles } from "material-ui/styles";
 import { compose } from "recompose";
-import { overviewFetched, overviewFetchError, overviewIsLoading } from "../../../../actions/faculty_detail.actions";
+import { overviewFetched, overviewFetchError, overviewIsLoading } from "../../../../actions/faculty_profiles.actions";
 import { fetchFacultyOverview } from "../../../../services/faculty.service";
 import { updateFacultyFromState } from "../../../../utils/faculty";
 
@@ -13,7 +13,7 @@ function getFacultyOverviewThunk(faculty) {
     return function (dispatch, getState) {
 
         function dispatchIfActive(action) {
-            const activeFacultyId = getState().facultyList.activeFacultyId;
+            const activeFacultyId = getState().facultyProfiles.activeFacultyId;
 
             // Is the active faculty still the same faculty we fetched for?
             if (activeFacultyId === faculty._id) {
@@ -44,10 +44,10 @@ function getFacultyOverviewThunk(faculty) {
 
 function mapStateToProps(state) {
     return {
-        ...state.facultyDetail.overviewTab,
+        ...state.facultyProfiles.overviewTab,
         get activeFaculty() {
-            const activeFacultyId = state.facultyList.activeFacultyId;
-            return state.facultyList.faculties.find(faculty => faculty._id === activeFacultyId);
+            const activeFacultyId = state.facultyProfiles.activeFacultyId;
+            return state.facultyProfiles.faculties.find(faculty => faculty._id === activeFacultyId);
         },
     };
 }
