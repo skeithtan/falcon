@@ -4,6 +4,7 @@ import Typography from "material-ui/Typography";
 import Button from "material-ui/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Grid from "material-ui/Grid";
+import Tooltip from "material-ui/Tooltip";
 import { CircularProgress } from "material-ui/Progress";
 
 import { ErrorState, EmptyState, EmptySearchResultsState } from "../../../../components/states";
@@ -137,9 +138,11 @@ export default class FacultyList extends Component {
                 {view}
 
                 {faculties &&
-                <Button variant="fab" color="primary" className={classes.addButton} onClick={this.addFaculty}>
-                    <AddIcon />
-                </Button>
+                <Tooltip title="Add a faculty" placement="top">
+                    <Button variant="fab" color="primary" className={classes.addButton} onClick={this.addFaculty}>
+                        <AddIcon />
+                    </Button>
+                </Tooltip>
                 }
             </div>
         );
