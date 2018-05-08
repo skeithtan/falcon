@@ -39,6 +39,10 @@ export default theme => ({
         boxSizing: "border-box",
     },
 
+    searchAdornment: {
+        opacity: 0.7,
+    },
+
     tabs: {
         color: "white",
         "&:focus": {
