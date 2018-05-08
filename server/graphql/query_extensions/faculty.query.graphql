@@ -1,3 +1,4 @@
 extend type Query {
     faculties: [Faculty]!
+    faculty(_id: String!): Faculty!
 }

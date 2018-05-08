@@ -8,6 +8,26 @@ function faculties() {
     return Faculty.find({}).populate("user");
 }
 
+function faculty(object, {_id}) {
+    return Faculty.findById(_id)
+                  .populate("user")
+                  .then(faculty => {
+                      if (!faculty) {
+                          return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+                      }
+
+                      return faculty;
+                  })
+                  .catch(error => {
+                      // CastErrors happen with id is an invalid ObjectID
+                      if (error.name === "CastError") {
+                          return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+                      }
+
+                      throw error;
+                  });
+}
+
 function mutateFaculty() {
     return {
         async createFaculty({newFaculty, newUser, temporaryPassword}) {
@@ -214,6 +234,7 @@ async function mutateDegree(object, {facultyId}) {
 
 export const queryResolvers = {
     faculties: limitAccess(faculties, {allowed: NO_FACULTY, action: "Get all faculties"}),
+    faculty: limitAccess(faculty, {allowed: NO_FACULTY, action: "Get single faculty"}),
 };
 
 export const mutationResolvers = {
