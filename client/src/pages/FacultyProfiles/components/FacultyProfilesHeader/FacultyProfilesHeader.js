@@ -16,7 +16,7 @@ class FacultyProfilesHeader extends Component {
     );
 
     render() {
-        const {classes, searchKeyword, onSearchInputChange, activeFaculty, activeTabIdentifier} = this.props;
+        const {classes, searchKeyword, onSearchInputChange, activeFacultyId, activeTabIdentifier} = this.props;
         const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTabIdentifier);
 
         return (
@@ -37,7 +37,7 @@ class FacultyProfilesHeader extends Component {
                     </Paper>
                 </div>
 
-                {activeFaculty &&
+                {activeFacultyId &&
                 <Tabs value={activeTabIndex}
                       classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
                       scrollable>

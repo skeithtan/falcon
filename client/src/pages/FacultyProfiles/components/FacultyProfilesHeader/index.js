@@ -8,7 +8,7 @@ import { setSearchKeyword } from "../../../../actions/faculty_list.actions";
 function mapStateToProps(state) {
     return {
         searchKeyword: state.facultyList.searchKeyword,
-        activeFaculty: state.facultyList.activeFaculty,
+        activeFacultyId: state.facultyList.activeFacultyId,
         activeTabIdentifier: state.facultyDetail.activeTabIdentifier,
     };
 }
