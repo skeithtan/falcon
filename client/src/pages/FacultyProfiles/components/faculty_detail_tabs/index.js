@@ -6,28 +6,28 @@ import ExtensionWorksTab from "./ExtensionWorksTab";
 export const OVERVIEW_TAB = {
     name: "Overview",
     identifier: "OVERVIEW",
-    route: "overview/",
+    path: "overview",
     component: OverviewTab,
 };
 
 export const PRESENTATIONS_TAB = {
     name: "Presentations",
     identifier: "PRESENTATIONS",
-    route: "presentations/",
+    path: "presentations",
     component: PresentationsTab,
 };
 
 export const INSTRUCTIONAL_MATERIALS_TAB = {
     name: "Instructional Materials",
     identifier: "INSTRUCTIONAL_MATERIALS",
-    route: "instructional-materials/",
+    path: "instructional-materials",
     component: InstructionalMaterialTab,
 };
 
 export const EXTENSION_WORKS_TAB = {
     name: "Extension Works",
     identifier: "EXTENSION_WORKS",
-    route: "extension-works/",
+    path: "extension-works",
     component: ExtensionWorksTab,
 };
 
@@ -39,12 +39,10 @@ export const TABS = [
     EXTENSION_WORKS_TAB,
 ];
 
-export function getTabFromIdentifier(candidateIdentifier) {
-    for (const [index, {identifier}] of TABS.entries()) {
-        if (identifier === candidateIdentifier) {
-            return TABS[index];
-        }
-    }
+export function getTabFromPath(candidatePath) {
+    return TABS.find(tab => tab.path === candidatePath);
+}
 
-    return null;
+export function getTabFromIdentifier(candidateIdentifier) {
+    return TABS.find(tab => tab.identifier === candidateIdentifier);
 }
