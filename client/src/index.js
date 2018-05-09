@@ -14,7 +14,7 @@ const app = (
         <Router>
             <Switch>
                 <Route path="/:currentPage/" component={App} />
-                <Route path="/" component={() => <Redirect to={HOME_PAGE.path} />} />
+                <Route path="/" render={() => <Redirect to={HOME_PAGE.path} />} />
             </Switch>
         </Router>
     </Provider>
