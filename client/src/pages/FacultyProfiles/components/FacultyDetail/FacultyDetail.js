@@ -24,7 +24,7 @@ export default class FacultyDetail extends Component {
         <div className={this.props.classes.cards}>
             <DetailCard>
                 <ErrorState onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
-                            message="An error occurred while trying to fetch faculty overview."
+                            message="An error occurred while trying to fetch faculty details."
                             debug={errors[0]} />
             </DetailCard>
         </div>
@@ -34,7 +34,7 @@ export default class FacultyDetail extends Component {
         const {activeTab, classes, onTabChange, activeFaculty} = this.props;
         const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTab.identifier);
         const tabComponents = TABS.map(tab =>
-            createElement(tab.component, {faculty: activeFaculty, classes: classes})
+            createElement(tab.component, {faculty: activeFaculty, classes: classes, key: tab.identifier})
         );
 
         function handleChangeIndex(newIndex) {
@@ -83,7 +83,7 @@ export default class FacultyDetail extends Component {
         }
 
         if (errors) {
-            return this.renderErrors();
+            return this.renderErrors(errors);
         }
 
         if (isFetched) {
