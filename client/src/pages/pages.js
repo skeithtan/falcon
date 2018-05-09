@@ -75,25 +75,19 @@ export const PAGES = [
 ];
 
 export function getPageFromPath(candidatePath) {
-    for (const [index, {path}] of PAGES.entries()) {
-        // It must start with, not be equal to, because the path could have a descendant
-        // E.g.: /faculty-profiles/Melinda vs /faculty-profiles
-        if (candidatePath.startsWith(path)) {
-            return PAGES[index];
-        }
+    const page = PAGES.find(page => page.path === candidatePath);
+    if (!page) {
+        // If path is not found, it means path is invalid, return not found
+        return NOT_FOUND_PAGE;
     }
-
-    // If path is not found, it means path is invalid, return not found
-    return NOT_FOUND_PAGE;
+    return page;
 }
 
 export function getPageFromIdentifier(candidateIdentifier) {
-
-    for (const [index, {identifier}] of PAGES.entries()) {
-        if (candidateIdentifier === identifier) {
-            return PAGES[index];
-        }
+    const page = PAGES.find(page => page.identifier === candidateIdentifier);
+    if (!page) {
+        // If path is not found, it means path is invalid, return not found
+        return NOT_FOUND_PAGE;
     }
-    // If identifier is not found, it means identifier is invalid, return not found
-    return NOT_FOUND_PAGE;
+    return page;
 }
