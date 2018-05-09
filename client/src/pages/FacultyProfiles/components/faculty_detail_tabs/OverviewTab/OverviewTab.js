@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator";
-import ErrorState from "../../../../components/states/ErrorState";
-import TeachingSubjectsCard from "../cards/TeachingSubjectsCard";
+import FullPageLoadingIndicator from "../../../../../components/FullPageLoadingIndicator/index";
+import ErrorState from "../../../../../components/states/ErrorState/index";
+import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard/index";
 
-import DetailCard from "../DetailCard";
-import OverviewCard from "../cards/OverviewCard";
-import DegreeCard from "../cards/DegreeCard";
-import RecognitionsCard from "../cards/RecognitionsCard";
+import DetailCard from "../../../../../components/DetailCard/index";
+import OverviewCard from "../../cards/OverviewCard/index";
+import DegreeCard from "../../cards/DegreeCard/index";
+import RecognitionsCard from "../../cards/RecognitionsCard/index";
 
 
 class OverviewTab extends Component {

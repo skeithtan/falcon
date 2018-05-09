@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Typography from "material-ui/Typography";
 
-import OverviewDetail from "../OverviewTab";
+import OverviewDetail from "../faculty_detail_tabs/OverviewTab";
 
 export default class FacultyDetail extends Component {
 

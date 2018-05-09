@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { withTheme, withStyles } from "material-ui/styles";
 import { compose } from "recompose";
-import { overviewFetched, overviewFetchError, overviewIsLoading } from "../../../../actions/faculty_profiles.actions";
-import { fetchFacultyOverview } from "../../../../services/faculty.service";
-import { updateFacultyFromState } from "../../../../utils/faculty";
+import { overviewFetched, overviewFetchError, overviewIsLoading } from "../../../../../actions/faculty_profiles.actions";
+import { fetchFacultyOverview } from "../../../../../services/faculty.service";
+import { updateFacultyFromState } from "../../../../../utils/faculty";
 
 import OverviewTab from "./OverviewTab";
 import styles from "./styles";
