@@ -4,9 +4,9 @@ export const PROFILES_FETCH_ERROR = "PROFILES_FETCH_ERROR";
 export const SEARCH_KEYWORD_CHANGED = "SEARCH_KEYWORD_CHANGED";
 export const ACTIVE_FACULTY_CHANGED = "ACTIVE_FACULTY_CHANGED";
 export const ACTIVE_TAB_CHANGED = "SET_CURRENT_TAB";
-export const OVERVIEW_IS_LOADING = "OVERVIEW_IS_LOADING";
-export const OVERVIEW_FETCHED = "OVERVIEW_FETCHED";
-export const OVERVIEW_FETCH_ERROR = "OVERVIEW_FETCH_ERROR";
+export const DETAILS_IS_LOADING = "DETAILS_IS_LOADING";
+export const DETAILS_FETCHED = "DETAILS_FETCHED";
+export const DETAIL_FETCH_ERROR = "DETAIL_FETCH_ERROR";
 
 
 export function profilesListIsLoading(isLoading) {
@@ -50,21 +50,21 @@ export function activeTabChanged(tab) {
     };
 }
 
-export function overviewIsLoading() {
+export function detailsIsLoading() {
     return {
-        type: OVERVIEW_IS_LOADING,
+        type: DETAILS_IS_LOADING,
     };
 }
 
-export function overviewFetched() {
+export function detailFetched() {
     return {
-        type: OVERVIEW_FETCHED,
+        type: DETAILS_FETCHED,
     };
 }
 
-export function overviewFetchError(errors) {
+export function detailFetchError(errors) {
     return {
-        type: OVERVIEW_FETCH_ERROR,
+        type: DETAIL_FETCH_ERROR,
         errors,
     };
 }

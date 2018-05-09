@@ -11,14 +11,14 @@ export default theme => ({
         },
     },
 
-    emptyState: {
+    selectFacultyState: {
         display: "flex",
         height: "100%",
         alignItems: "center",
         justifyContent: "center",
     },
 
-    emptyStateText: {
+    selectFacultyText: {
         color: theme.palette.grey["600"],
     },
 });

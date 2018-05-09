@@ -6,6 +6,7 @@ import {
     profilesListIsLoading,
     profilesFetchError,
     activeFacultyChanged,
+    detailsIsLoading,
 } from "../../../../actions/faculty_profiles.actions";
 
 import style from "./styles";
@@ -42,6 +43,7 @@ function mapDispatchToProps(dispatch) {
         },
 
         onFacultyClick(faculty) {
+            dispatch(detailsIsLoading());
             dispatch(activeFacultyChanged(faculty));
         },
     };

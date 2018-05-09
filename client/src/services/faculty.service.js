@@ -22,7 +22,7 @@ export function fetchAllFacultiesSummary() {
     });
 }
 
-export function fetchFacultyOverview(facultyId) {
+export function fetchFacultyDetails(facultyId) {
     return client.query({
         query: gql`
             query($id: String!) {
@@ -54,6 +54,38 @@ export function fetchFacultyOverview(facultyId) {
                         code
                         name
                         major
+                    }
+                    
+                    presentations {
+                        _id
+                        title
+                        category
+                        sponsor
+                        venue
+                        conference
+                        medium
+                        daysDuration
+                        date {
+                            month
+                            year
+                        }
+                    }
+                    
+                    instructionalMaterials {
+                        _id
+                        title
+                        medium
+                        classification
+                        usageYear
+                        level
+                        nonPrintType
+                    }
+                    
+                    extensionWorks {
+                        _id
+                        title
+                        roles
+                        venue
                     }
                 }
             }

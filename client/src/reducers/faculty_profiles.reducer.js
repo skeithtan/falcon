@@ -4,9 +4,9 @@ import {
     PROFILES_FETCHED,
     SEARCH_KEYWORD_CHANGED,
     PROFILES_LIST_IS_LOADING,
-    OVERVIEW_FETCH_ERROR,
-    OVERVIEW_FETCHED,
-    OVERVIEW_IS_LOADING,
+    DETAIL_FETCH_ERROR,
+    DETAILS_FETCHED,
+    DETAILS_IS_LOADING,
     ACTIVE_TAB_CHANGED,
 } from "../actions/faculty_profiles.actions";
 import { OVERVIEW_TAB } from "../pages/FacultyProfiles/components/faculty_detail_tabs";
@@ -20,9 +20,9 @@ const initialState = {
         errors: null,
     },
     activeTabIdentifier: OVERVIEW_TAB.identifier,
-    overviewTab: {
+    facultyDetails: {
         isLoading: true,
-        overviewIsFetched: false,
+        isFetched: false,
         errors: null,
     },
 };
@@ -58,7 +58,6 @@ export default function facultyProfiles(state = initialState, action) {
             return {
                 ...state,
                 activeFacultyId: action.faculty._id,
-                overviewTab: initialState.overviewTab,
             };
         case SEARCH_KEYWORD_CHANGED:
             return {
@@ -70,30 +69,30 @@ export default function facultyProfiles(state = initialState, action) {
                 ...state,
                 activeTabIdentifier: action.tab.identifier,
             };
-        case OVERVIEW_IS_LOADING:
+        case DETAILS_IS_LOADING:
             return {
                 ...state,
-                overviewTab: {
+                facultyDetails: {
                     isLoading: true,
-                    overviewIsFetched: false,
+                    isFetched: false,
                     errors: null,
                 },
             };
-        case OVERVIEW_FETCHED:
+        case DETAILS_FETCHED:
             return {
                 ...state,
-                overviewTab: {
+                facultyDetails: {
                     isLoading: false,
-                    overviewIsFetched: true,
+                    isFetched: true,
                     errors: null,
                 },
             };
-        case OVERVIEW_FETCH_ERROR:
+        case DETAIL_FETCH_ERROR:
             return {
                 ...state,
-                overviewTab: {
+                facultyDetails: {
                     isLoading: false,
-                    overviewIsFetched: false,
+                    isFetched: false,
                     errors: action.errors,
                 },
             };
