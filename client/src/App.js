@@ -3,8 +3,8 @@ import { Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { MuiThemeProvider } from "material-ui/styles";
 
-import { PAGES, HOME_PAGE, SIGN_IN_PAGE, getPageFromIdentifier, getPageFromRoute } from "./pages/pages";
-import { pageIsChanged as makeSetActivePageAction } from "./actions/pages.actions";
+import { PAGES, HOME_PAGE, SIGN_IN_PAGE, getPageFromIdentifier, getPageFromPath } from "./pages/pages";
+import { pageIsChanged } from "./actions/pages.actions";
 import FalconAppBar from "./components/FalconAppBar";
 
 
@@ -12,41 +12,41 @@ class App extends Component {
     //Useless line but gets rid of annoying error
     state = {};
 
-    static reflectRouteToActivePage({currentRoute, activePage, setActivePage}) {
-        const currentRouteIsActivePage = currentRoute.startsWith(activePage.route);
-
-        if (!currentRouteIsActivePage) {
-            const currentPage = getPageFromRoute(currentRoute);
-            setActivePage(currentPage);
-        }
-    }
 
     static getDerivedStateFromProps(nextProps) {
-        const {isAuthenticated, location, history} = nextProps;
-        const currentRoute = location.pathname;
+        const {isAuthenticated, match, history, setActivePage, activePage} = nextProps;
+        const currentPath = match.params.currentPage;
 
-        //Is the user in the sign in page or any of its descendants?
-        const userIsSigningIn = currentRoute.startsWith(SIGN_IN_PAGE.route);
+        // Is the user in the sign in page or any of its descendants?
+        const userIsSigningIn = currentPath === SIGN_IN_PAGE.path;
 
-        //If user is not signed in and trying to access any other page
+        // If user is not signed in and trying to access any other page
         if (!isAuthenticated && !userIsSigningIn) {
             //Force them to sign in
-            history.replace(SIGN_IN_PAGE.route);
+            history.replace(SIGN_IN_PAGE.path);
+            setActivePage(SIGN_IN_PAGE);
+            return {};
         }
 
-        //We can't let them sign in if they're already signed in
+        // We can't let them sign in if they're already signed in
         if (isAuthenticated && userIsSigningIn) {
-            history.replace(HOME_PAGE.route);
+            history.replace(HOME_PAGE.path);
+            setActivePage(HOME_PAGE);
+            return {};
         }
 
-        //Our homepage is in /home, redirect anyone authenticated to it
-        if (currentRoute === "/") {
-            history.replace(HOME_PAGE.route);
+        // Our homepage is in /home, redirect anyone authenticated to it
+        if (!currentPath) {
+            history.replace(HOME_PAGE.path);
+            setActivePage(HOME_PAGE);
+            return {};
         }
 
-        const {activePage, setActivePage} = nextProps;
-        App.reflectRouteToActivePage({currentRoute, activePage, setActivePage});
-
+        // If current path is not the same path as the active page in Redux
+        if (activePage.path !== currentPath) {
+            // Reflect the current path to Redux
+            setActivePage(getPageFromPath(currentPath));
+        }
         return {};
     }
 
@@ -54,9 +54,9 @@ class App extends Component {
     render() {
         const {isAuthenticated, activePage} = this.props;
 
-        const routes = PAGES.map(({identifier, route, component}) =>
-            <Route key={identifier} path={route} component={component} />,
-        );
+        const routes = PAGES.map(({identifier, path, component}) => (
+           <Route key={identifier} path={"/" + path} component={component} />
+        ));
 
         return (
             <MuiThemeProvider theme={activePage.theme}>
@@ -77,7 +77,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         setActivePage(page) {
-            dispatch(makeSetActivePageAction(page));
+            dispatch(pageIsChanged(page));
         },
     };
 }
