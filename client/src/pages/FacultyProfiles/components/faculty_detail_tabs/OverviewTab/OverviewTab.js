@@ -13,10 +13,10 @@ class OverviewTab extends Component {
     render() {
         return (
             <div className={this.props.classes.cards}>
-                <OverviewCard faculty={this.props.activeFaculty} />
-                <DegreeCard faculty={this.props.activeFaculty} />
-                <RecognitionsCard faculty={this.props.activeFaculty} />
-                <TeachingSubjectsCard faculty={this.props.activeFaculty} />
+                <OverviewCard faculty={this.props.faculty} />
+                <DegreeCard faculty={this.props.faculty} />
+                <RecognitionsCard faculty={this.props.faculty} />
+                <TeachingSubjectsCard faculty={this.props.faculty} />
             </div>
         );
     }

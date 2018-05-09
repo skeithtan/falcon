@@ -21,4 +21,26 @@ export default theme => ({
     selectFacultyText: {
         color: theme.palette.grey["600"],
     },
+
+    cards: {
+        paddingTop: theme.spacing.unit * 5,
+        paddingBottom: theme.spacing.unit * 5,
+        display: "grid",
+        justifyItems: "center",
+        gridRowGap: `${theme.spacing.unit * 3}px`,
+        width: "100%",
+    },
+
+    expansionCards: {
+        paddingTop: theme.spacing.unit * 5,
+        paddingBottom: theme.spacing.unit * 5,
+        justifyItems: "center",
+        display: "grid",
+        width: "100%",
+    },
+
+    expansionPanelDetails: {
+        padding: 0,
+        flexDirection: "column",
+    },
 });
