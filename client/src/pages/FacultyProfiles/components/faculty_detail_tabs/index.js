@@ -6,28 +6,24 @@ import ExtensionWorksTab from "./ExtensionWorksTab";
 export const OVERVIEW_TAB = {
     name: "Overview",
     identifier: "OVERVIEW",
-    path: "overview",
     component: OverviewTab,
 };
 
 export const PRESENTATIONS_TAB = {
     name: "Presentations",
     identifier: "PRESENTATIONS",
-    path: "presentations",
     component: PresentationsTab,
 };
 
 export const INSTRUCTIONAL_MATERIALS_TAB = {
     name: "Instructional Materials",
     identifier: "INSTRUCTIONAL_MATERIALS",
-    path: "instructional-materials",
     component: InstructionalMaterialTab,
 };
 
 export const EXTENSION_WORKS_TAB = {
     name: "Extension Works",
     identifier: "EXTENSION_WORKS",
-    path: "extension-works",
     component: ExtensionWorksTab,
 };
 
