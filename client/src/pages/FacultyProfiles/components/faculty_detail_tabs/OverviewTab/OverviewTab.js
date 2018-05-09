@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import FullPageLoadingIndicator from "../../../../../components/FullPageLoadingIndicator/index";
-import ErrorState from "../../../../../components/states/ErrorState/index";
-import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard/index";
 
-import DetailCard from "../../../../../components/DetailCard/index";
+import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard/index";
 import OverviewCard from "../../cards/OverviewCard/index";
 import DegreeCard from "../../cards/DegreeCard/index";
 import RecognitionsCard from "../../cards/RecognitionsCard/index";
