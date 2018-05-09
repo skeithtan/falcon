@@ -1,7 +1,7 @@
 export default theme => ({
-
     drawer: {
-        height: "100%"
+        height: "100%",
+        minWidth: 240,
     },
 
     drawerHeadWrapper: {
