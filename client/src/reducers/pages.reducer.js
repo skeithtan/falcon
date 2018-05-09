@@ -1,5 +1,5 @@
 import { PAGE_IS_CHANGED } from "../actions/pages.actions";
-import { HOME_PAGE } from "../pages/pages";
+import { HOME_PAGE } from "../pages";
 
 
 const initialState = {

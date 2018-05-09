@@ -3,7 +3,7 @@ import Drawer from "material-ui/Drawer";
 import { Link } from "react-router-dom";
 import List, { ListItem, ListItemText } from "material-ui/List";
 
-import { MODULE_PAGES } from "../../pages/pages";
+import { MODULE_PAGES } from "../../pages";
 import pnuLogo from "../../images/pnu-logo.png";
 
 

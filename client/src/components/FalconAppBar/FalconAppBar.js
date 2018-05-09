@@ -8,7 +8,7 @@ import Typography from "material-ui/Typography";
 
 import PageDrawer from "../PageDrawer";
 import UserMenu from "../UserButton";
-import { getPageFromIdentifier } from "../../pages/pages";
+import { getPageFromIdentifier } from "../../pages";
 
 
 export default class FalconAppBar extends Component {

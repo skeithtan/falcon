@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import { HOME_PAGE } from "./pages/pages";
+import { HOME_PAGE } from "./pages";
 
 import registerServiceWorker from "./registerServiceWorker";
 import App from "./App";
