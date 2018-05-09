@@ -11,7 +11,7 @@ import FacultyAvatar from "../../../../../components/FacultyAvatar/FacultyAvatar
 import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import { getFullName } from "../../../../../utils/faculty";
-import DetailCard from "../../DetailCard";
+import DetailCard from "../../../../../components/DetailCard";
 
 export default class OverviewCard extends Component {
     render() {

@@ -8,8 +8,8 @@ import Table, {
 } from "material-ui/Table";
 
 import { getFullName } from "../../../../../utils/faculty";
-import DetailCard from "../../DetailCard";
-import TableToolbar from "../../TableToolbar";
+import DetailCard from "../../../../../components/DetailCard";
+import TableToolbar from "../../../../../components/TableToolbar";
 import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
 import EmptyState from "../../../../../components/states/EmptyState";
 

@@ -7,8 +7,8 @@ import Table, {
 } from "material-ui/Table";
 
 import { getFullName } from "../../../../../utils/faculty";
-import DetailCard from "../../DetailCard";
-import TableToolbar from "../../TableToolbar";
+import DetailCard from "../../../../../components/DetailCard";
+import TableToolbar from "../../../../../components/TableToolbar";
 import EmptyState from "../../../../../components/states/EmptyState";
 
 export default class TeachingSubjectsCard extends Component {
