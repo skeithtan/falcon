@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import moment from "moment";
 import Table, {
     TableBody,
     TableCell,
@@ -7,7 +6,7 @@ import Table, {
     TableRow,
 } from "material-ui/Table";
 
-import { getFullName } from "../../../../../utils/faculty";
+import { formatMonthYearDate, getFullName } from "../../../../../utils/faculty";
 import DetailCard from "../../../../../components/DetailCard";
 import TableToolbar from "../../../../../components/TableToolbar";
 import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
@@ -15,18 +14,12 @@ import EmptyState from "../../../../../components/states/EmptyState";
 
 export default class RecognitionsCard extends Component {
 
-    static recognitionDateFormatted(recognition) {
-        const date = recognition.date;
-        const dateString = `${date.month}-${date.year}`;
-        return moment(dateString, "MM-YYYY").format("MMMM Y");
-    }
-
     rows = recognitions => recognitions.map(recognition => (
         <TableRow key={recognition._id}>
             <TableCell>{recognition.title}</TableCell>
             <TableCell>{FACULTY_ENUMS.RECOGNITION.BASIS[recognition.basis]}</TableCell>
             <TableCell>{recognition.sponsor}</TableCell>
-            <TableCell>{RecognitionsCard.recognitionDateFormatted(recognition)}</TableCell>
+            <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
         </TableRow>
     ));
 

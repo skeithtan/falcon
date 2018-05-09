@@ -1,3 +1,4 @@
+import moment from "moment";
 import { profilesFetched } from "../actions/faculty_profiles.actions";
 
 export function updateFacultyFromState(newFaculty, dispatch, getState) {
@@ -18,4 +19,9 @@ export function updateFacultyFromState(newFaculty, dispatch, getState) {
 export function getFullName(faculty) {
     const name = faculty.user.name;
     return `${name.first} ${name.last}`;
+}
+
+export function formatMonthYearDate(date) {
+    const dateString = `${date.month}-${date.year}`;
+    return moment(dateString, "MM-YYYY").format("MMMM Y");
 }
