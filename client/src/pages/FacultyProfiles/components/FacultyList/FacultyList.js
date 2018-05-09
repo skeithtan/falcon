@@ -54,7 +54,7 @@ export default class FacultyList extends Component {
         );
     };
 
-    loadingIndicator = () => (
+    renderLoadingIndicator = () => (
         <FullPageLoadingIndicator size={100} />
     );
 
@@ -63,21 +63,21 @@ export default class FacultyList extends Component {
         console.log("Add faculty clicked");
     };
 
-    emptyState = () => (
+    renderEmptyState = () => (
         <EmptyState bigMessage="No faculties found"
                     smallMessage="When faculties are added, you can see them here"
                     onAddButtonClick={this.addFaculty}
                     addButtonText="Add a faculty" />
     );
 
-    noResultsState = () => (
+    renderNoResultsState = () => (
         <EmptySearchResultsState searchKeyword={this.props.searchKeyword} />
     );
 
-    errorState = () => (
+    renderErrors = errors => (
         <ErrorState onRetryButtonClick={this.props.fetchData}
                     message="An error occurred while trying to fetch list of faculties."
-                    debug={this.props.errors[0]}
+                    debug={errors[0]}
         />
     );
 
@@ -117,18 +117,18 @@ export default class FacultyList extends Component {
         if (faculties) {
 
             if (faculties.length === 0) {
-                view = isSearching ? this.noResultsState() : this.emptyState();
+                view = isSearching ? this.renderNoResultsState() : this.renderEmptyState();
             } else {
                 view = this.renderList(faculties);
             }
         }
 
         if (isLoading) {
-            view = this.loadingIndicator();
+            view = this.renderLoadingIndicator();
         }
 
         if (errors) {
-            view = this.errorState();
+            view = this.renderErrors(errors);
         }
 
         return (
