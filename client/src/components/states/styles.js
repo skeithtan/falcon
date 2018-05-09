@@ -9,7 +9,7 @@ export default theme => ({
 
     messageWrapper: {
         display: "grid",
-        gridRowGap: `${theme.spacing.unit * 3}px`,
+        gridRowGap: `${theme.spacing.unit * 2}px`,
         padding: theme.spacing.unit * 3,
         justifyItems: "center",
         textAlign: "center",
