@@ -9,7 +9,7 @@ import {
     OVERVIEW_IS_LOADING,
     ACTIVE_TAB_CHANGED,
 } from "../actions/faculty_profiles.actions";
-import { OVERVIEW_TAB } from "../pages/FacultyProfiles/detail_tabs";
+import { OVERVIEW_TAB } from "../pages/FacultyProfiles/components/faculty_detail_tabs";
 
 const initialState = {
     faculties: null,

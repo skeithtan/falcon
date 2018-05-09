@@ -4,7 +4,7 @@ import Input, { InputAdornment } from "material-ui/Input";
 import Tabs, { Tab } from "material-ui/Tabs";
 import Search from "@material-ui/icons/Search";
 
-import { TABS } from "../../detail_tabs";
+import { TABS } from "../faculty_detail_tabs";
 
 
 class FacultyProfilesHeader extends Component {
