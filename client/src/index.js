@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { HOME_PAGE } from "./pages/pages";
 
 import registerServiceWorker from "./registerServiceWorker";
 import App from "./App";
@@ -11,7 +12,10 @@ import store from "./store";
 const app = (
     <Provider store={store}>
         <Router>
-            <Route path="/:currentPage*/" component={App} />
+            <Switch>
+                <Route path="/:currentPage/" component={App} />
+                <Route path="/" component={() => <Redirect to={HOME_PAGE.path} />} />
+            </Switch>
         </Router>
     </Provider>
 );
