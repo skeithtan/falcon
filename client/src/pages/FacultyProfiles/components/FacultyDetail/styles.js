@@ -1,6 +1,14 @@
 export default theme => ({
     facultyDetail: {
         overflowY: "scroll",
+
+        "& > div": {
+            height: "100%",
+        },
+
+        "& .react-swipeable-view-container": {
+            height: "100%",
+        },
     },
 
     emptyState: {
