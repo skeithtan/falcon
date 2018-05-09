@@ -1,7 +1,12 @@
-import { compose } from "recompose";
 import { connect } from "react-redux";
 import { withTheme, withStyles } from "material-ui/styles";
-import { profilesFetched, profilesListIsLoading, profilesFetchError, activeFacultyChanged } from "../../../../actions/faculty_profiles.actions";
+import { compose } from "recompose";
+import {
+    profilesFetched,
+    profilesListIsLoading,
+    profilesFetchError,
+    activeFacultyChanged,
+} from "../../../../actions/faculty_profiles.actions";
 
 import style from "./styles";
 import FacultyList from "./FacultyList";
