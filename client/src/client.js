@@ -31,5 +31,15 @@ const client = new ApolloClient({
     //httpLink MUST be the last in the array otherwise it won't work
     link: from([authMiddleware, errorMiddleware, httpLink]),
     cache: new InMemoryCache(),
+    defaultOptions: {
+        watchQuery: {
+            fetchPolicy: "network-only",
+            errorPolicy: "ignore",
+        },
+        query: {
+            fetchPolicy: "network-only",
+            errorPolicy: "all",
+        },
+    },
 });
 export default client;
