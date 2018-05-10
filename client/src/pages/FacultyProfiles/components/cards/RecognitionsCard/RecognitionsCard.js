@@ -4,7 +4,7 @@ import DetailCard from "../../../../../components/DetailCard";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
-import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
+import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate, getFullName } from "../../../../../utils/faculty";
 
 
@@ -24,7 +24,7 @@ class RecognitionRow extends Component {
         return (
             <TableRow>
                 <TableCell>{recognition.title}</TableCell>
-                <TableCell>{FACULTY_ENUMS.RECOGNITION.BASIS[recognition.basis]}</TableCell>
+                <TableCell>{RECOGNITION.BASIS[recognition.basis]}</TableCell>
                 <TableCell>{recognition.sponsor}</TableCell>
                 <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this recognition"

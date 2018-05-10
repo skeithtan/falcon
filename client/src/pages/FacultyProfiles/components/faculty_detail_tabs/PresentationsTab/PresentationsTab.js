@@ -9,7 +9,7 @@ import FormDisplayExpansionPanelDetails
     from "../../../../../components/FormDisplayExpansionPanelDetails/FormDisplayExpansionPanelDetails";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import TableToolbar from "../../../../../components/TableToolbar";
-import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
+import { PRESENTATION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../utils/faculty";
 
 
@@ -36,7 +36,7 @@ class PresentationRow extends Component {
                 <FormDisplayExpansionPanelDetails>
 
                     <FormDisplayListItem field="Category"
-                                         value={FACULTY_ENUMS.PRESENTATION.CATEGORY[presentation.category]} />
+                                         value={PRESENTATION.CATEGORY[presentation.category]} />
                     <FormDisplayListItem field="Date"
                                          value={formatMonthYearDate(presentation.date)} />
                     <FormDisplayListItem field="Sponsor"
@@ -46,7 +46,7 @@ class PresentationRow extends Component {
                     <FormDisplayListItem field="Conference"
                                          value={presentation.conference} />
                     <FormDisplayListItem field="Medium"
-                                         value={FACULTY_ENUMS.PRESENTATION.MEDIUM[presentation.medium]} />
+                                         value={PRESENTATION.MEDIUM[presentation.medium]} />
                     <FormDisplayListItem field="Duration"
                                          value={`${presentation.daysDuration} Days`} />
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove presentation"
@@ -67,7 +67,7 @@ class PresentationsTab extends Component {
     };
 
     rows = presentations => presentations.map(presentation =>
-        <PresentationRow presentation={presentation} key={presentation._id}/>,
+        <PresentationRow presentation={presentation} key={presentation._id} />,
     );
 
     render() {

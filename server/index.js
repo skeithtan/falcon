@@ -25,7 +25,7 @@ function onDatabaseConnect() {
     }));
 
     app.use("/graphiql", graphiqlExpress({endpointURL: "/graphql"}));
-    
+
     app.listen(config.server.port, () => {
         console.info(`Server listening at port ${config.server.port}`);
     });

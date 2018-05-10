@@ -4,7 +4,7 @@ import DetailCard from "../../../../../components/DetailCard";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
-import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
+import { DEGREE } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/faculty";
 
 
@@ -24,7 +24,7 @@ class DegreeRow extends Component {
         return (
             <TableRow>
                 <TableCell>{degree.title}</TableCell>
-                <TableCell>{FACULTY_ENUMS.DEGREE.LEVEL[degree.level]}</TableCell>
+                <TableCell>{DEGREE.LEVEL[degree.level]}</TableCell>
                 <TableCell>{degree.completionYear}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this recognition"
                                  updateButtonTooltipTitle="Update this recognition"
@@ -37,7 +37,7 @@ class DegreeRow extends Component {
 
 export default class DegreeCard extends Component {
     renderRows = degrees => degrees.map(degree =>
-        <DegreeRow degree={degree} key={degree._id}/>
+        <DegreeRow degree={degree} key={degree._id} />,
     );
 
     renderEmptyState = () => (

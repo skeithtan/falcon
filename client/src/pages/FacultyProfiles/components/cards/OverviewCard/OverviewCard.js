@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
 import FacultyAvatar from "../../../../../components/FacultyAvatar/FacultyAvatar";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
-import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
+import {EMPLOYMENT, SEX} from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/faculty";
 
 
@@ -40,7 +40,7 @@ export default class OverviewCard extends Component {
                                     {getFullName(faculty)}
                                 </Typography>
                                 <Typography variant="subheading">
-                                    {FACULTY_ENUMS.EMPLOYMENT[faculty.employment]} Faculty
+                                    {EMPLOYMENT[faculty.employment]} Faculty
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -52,7 +52,7 @@ export default class OverviewCard extends Component {
                 </div>
                 <List disablePadding>
                     <FormDisplayListItem field="Email" value={faculty.user.email} />
-                    <FormDisplayListItem field="Sex" value={FACULTY_ENUMS.SEX[faculty.sex]} />
+                    <FormDisplayListItem field="Sex" value={SEX[faculty.sex]} />
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
             </DetailCard>
