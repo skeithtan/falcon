@@ -1,9 +1,9 @@
+import { withStyles, withTheme } from "material-ui/styles";
 import { connect } from "react-redux";
-import { withTheme, withStyles } from "material-ui/styles";
 import { compose } from "recompose";
-
-import styles from "./styles";
 import FalconAppBar from "./FalconAppBar";
+import styles from "./styles";
+
 
 function mapStateToProps(state) {
     return {

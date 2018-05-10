@@ -1,27 +1,22 @@
 export default theme => ({
     facultyDetail: {
         overflowY: "scroll",
-
         "& > div": {
             height: "100%",
         },
-
         "& .react-swipeable-view-container": {
             height: "100%",
         },
     },
-
     selectFacultyState: {
         display: "flex",
         height: "100%",
         alignItems: "center",
         justifyContent: "center",
     },
-
     selectFacultyText: {
         color: theme.palette.grey["600"],
     },
-
     cards: {
         paddingTop: theme.spacing.unit * 5,
         paddingBottom: theme.spacing.unit * 5,
@@ -30,7 +25,6 @@ export default theme => ({
         gridRowGap: `${theme.spacing.unit * 3}px`,
         width: "100%",
     },
-
     expansionCards: {
         paddingTop: theme.spacing.unit * 5,
         paddingBottom: theme.spacing.unit * 5,
@@ -38,7 +32,6 @@ export default theme => ({
         display: "grid",
         width: "100%",
     },
-
     expansionPanelDetails: {
         padding: 0,
         flexDirection: "column",

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import authentication from "./authentication.reducer";
-import pages from "./pages.reducer";
 import facultyProfiles from "./faculty_profiles.reducer";
+import pages from "./pages.reducer";
 
 
 export default combineReducers({

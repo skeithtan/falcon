@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-
-import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard/index";
-import OverviewCard from "../../cards/OverviewCard/index";
 import DegreeCard from "../../cards/DegreeCard/index";
+import OverviewCard from "../../cards/OverviewCard/index";
 import RecognitionsCard from "../../cards/RecognitionsCard/index";
+import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard/index";
 
 
 class OverviewTab extends Component {
@@ -17,7 +16,6 @@ class OverviewTab extends Component {
             </div>
         );
     }
-
 }
 
 export default OverviewTab;

@@ -1,1 +1,1 @@
-export { default } from './InstructionalMaterialsTab';
+export { default } from "./InstructionalMaterialsTab";

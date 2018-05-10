@@ -1,5 +1,5 @@
-import client from "../client";
 import gql from "graphql-tag";
+import client from "../client";
 
 
 const userService = {
@@ -31,11 +31,9 @@ const userService = {
             return result.data.signIn;
         });
     },
-
     signOut() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
     },
 };
-
 export default userService;

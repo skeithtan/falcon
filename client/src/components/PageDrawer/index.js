@@ -1,7 +1,6 @@
-import { withTheme, withStyles } from "material-ui/styles";
+import { withStyles, withTheme } from "material-ui/styles";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-
 import PageDrawer from "./PageDrawer";
 import styles from "./styles";
 

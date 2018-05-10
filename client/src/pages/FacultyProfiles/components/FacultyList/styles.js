@@ -7,22 +7,18 @@ export default theme => ({
         overflowY: "scroll",
         position: "relative",
     },
-
     listSection: {
         backgroundColor: "inherit",
     },
-
     ul: {
         padding: 0,
         background: theme.palette.background.paper,
     },
-
     addButton: {
         position: "fixed",
         left: 240,
         bottom: theme.spacing.unit * 3,
     },
-
     activeListItem: {
         background: theme.palette.grey["200"],
         borderStyle: "solid",
@@ -31,7 +27,6 @@ export default theme => ({
         borderLeft: 0,
         borderColor: theme.palette.grey["A100"],
     },
-
     activeListItemText: {
         fontWeight: theme.typography.fontWeightMedium,
     },

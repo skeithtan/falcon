@@ -1,19 +1,13 @@
-import React, { Component } from "react";
-import Card from "material-ui/Card";
-import Typography from "material-ui/Typography";
-import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
+import Card from "material-ui/Card";
 import { LinearProgress } from "material-ui/Progress";
-
+import TextField from "material-ui/TextField";
+import Typography from "material-ui/Typography";
+import React, { Component } from "react";
 import pnuLogo from "../../images/pnu-logo.png";
 
 
 export default class SignInPage extends Component {
-    state = {
-        email: "",
-        password: "",
-    };
-
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
@@ -28,9 +22,7 @@ export default class SignInPage extends Component {
     render() {
         const formIsFilled = this.state.email.length > 0 &&
             this.state.password.length > 0;
-
         const {isLoading, signInError, classes} = this.props;
-
         return (
             <div className={classes.background}>
                 <Card>
@@ -77,4 +69,9 @@ export default class SignInPage extends Component {
             </div>
         );
     }
+
+    state = {
+        email: "",
+        password: "",
+    };
 }

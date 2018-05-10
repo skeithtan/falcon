@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-import List, { ListItem } from "material-ui/List";
-import Typography from "material-ui/Typography";
-import Button from "material-ui/Button";
 import AddIcon from "@material-ui/icons/Add";
+import Button from "material-ui/Button";
 import Grid from "material-ui/Grid";
+import List, { ListItem } from "material-ui/List";
 import Tooltip from "material-ui/Tooltip";
-
-import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
-import { ErrorState, EmptyState, EmptySearchResultsState } from "../../../../components/states";
+import Typography from "material-ui/Typography";
+import React, { Component } from "react";
 import FacultyAvatar from "../../../../components/FacultyAvatar";
+import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
+import { EmptySearchResultsState, EmptyState, ErrorState } from "../../../../components/states";
 import { getFullName } from "../../../../utils/faculty";
 
 
 class FacultyItem extends Component {
     render() {
         const {classes, faculty} = this.props;
-
         //TODO: Avatar
         return (
             <ListItem className={this.props.active ? classes.activeListItem : null}
@@ -38,7 +36,6 @@ class FacultyItem extends Component {
 }
 
 export default class FacultyList extends Component {
-
     renderList = faculties => {
         const {activeFacultyId, onFacultyClick, classes} = this.props;
         return (
@@ -83,22 +80,16 @@ export default class FacultyList extends Component {
 
     getFaculties = () => {
         let {searchKeyword, faculties} = this.props;
-
         if (!faculties) {
             return null;
         }
-
         searchKeyword = searchKeyword.toLowerCase().trim();
-
         if (searchKeyword.length === 0) {
             return faculties;
         }
-
-
         return faculties.filter(faculty => {
             const fullName = `${faculty.user.name.first} ${faculty.user.name.last}`.toLowerCase();
             const email = faculty.user.email.toLowerCase();
-
             return fullName.includes(searchKeyword) || email.includes(searchKeyword);
         });
     };
@@ -111,26 +102,20 @@ export default class FacultyList extends Component {
         const {classes, isLoading, errors, searchKeyword} = this.props;
         const faculties = this.getFaculties();
         const isSearching = searchKeyword.length > 0;
-
         let view;
-
         if (faculties) {
-
             if (faculties.length === 0) {
                 view = isSearching ? this.renderNoResultsState() : this.renderEmptyState();
             } else {
                 view = this.renderList(faculties);
             }
         }
-
         if (isLoading) {
             view = this.renderLoadingIndicator();
         }
-
         if (errors) {
             view = this.renderErrors(errors);
         }
-
         return (
             <div className={classes.facultyList}>
 

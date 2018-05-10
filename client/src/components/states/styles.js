@@ -6,7 +6,6 @@ export default theme => ({
         alignItems: "center",
         justifyContent: "center",
     },
-
     messageWrapper: {
         display: "grid",
         gridRowGap: `${theme.spacing.unit * 2}px`,
@@ -14,19 +13,15 @@ export default theme => ({
         justifyItems: "center",
         textAlign: "center",
     },
-
     messageColor: {
         color: theme.palette.grey["700"],
     },
-
     icon: {
         fontSize: 100,
     },
-
     breakWord: {
         wordWrap: "break-word",
     },
-
     wordWrapContainer: {
         display: "table",
         tableLayout: "fixed",

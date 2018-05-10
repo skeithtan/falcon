@@ -8,7 +8,6 @@ export const DETAILS_IS_LOADING = "DETAILS_IS_LOADING";
 export const DETAILS_FETCHED = "DETAILS_FETCHED";
 export const DETAIL_FETCH_ERROR = "DETAIL_FETCH_ERROR";
 
-
 export function profilesListIsLoading(isLoading) {
     return {
         type: PROFILES_LIST_IS_LOADING,

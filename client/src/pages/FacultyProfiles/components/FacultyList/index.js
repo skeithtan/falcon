@@ -1,17 +1,17 @@
+import { withStyles, withTheme } from "material-ui/styles";
 import { connect } from "react-redux";
-import { withTheme, withStyles } from "material-ui/styles";
 import { compose } from "recompose";
 import {
-    profilesFetched,
-    profilesListIsLoading,
-    profilesFetchError,
     activeFacultyChanged,
     detailsIsLoading,
+    profilesFetched,
+    profilesFetchError,
+    profilesListIsLoading,
 } from "../../../../actions/faculty_profiles.actions";
-
-import style from "./styles";
-import FacultyList from "./FacultyList";
 import { fetchAllFacultiesSummary } from "../../../../services/faculty.service";
+import FacultyList from "./FacultyList";
+import style from "./styles";
+
 
 function mapStateToProps(state) {
     return {
@@ -26,13 +26,11 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchData() {
             dispatch(profilesListIsLoading());
-
             fetchAllFacultiesSummary()
                 .then(query => {
                     if (query.data) {
                         dispatch(profilesFetched(query.data.faculties));
                     }
-
                     if (query.errors) {
                         dispatch(profilesFetchError(query.errors));
                     }
@@ -41,14 +39,12 @@ function mapDispatchToProps(dispatch) {
                     dispatch(profilesFetchError([error.message]));
                 });
         },
-
         onFacultyClick(faculty) {
             dispatch(detailsIsLoading());
             dispatch(activeFacultyChanged(faculty));
         },
     };
 }
-
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

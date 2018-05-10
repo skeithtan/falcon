@@ -1,8 +1,8 @@
-import { withTheme, withStyles } from "material-ui/styles";
+import { withStyles, withTheme } from "material-ui/styles";
 import { compose } from "recompose";
-
 import styles from "./styles";
 import TableToolbar from "./TableToolbar";
+
 
 export default compose(
     withTheme(),

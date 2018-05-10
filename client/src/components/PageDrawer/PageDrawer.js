@@ -1,10 +1,9 @@
-import React, { Component } from "react";
 import Drawer from "material-ui/Drawer";
-import { Link } from "react-router-dom";
 import List, { ListItem, ListItemText } from "material-ui/List";
-
-import { MODULE_PAGES } from "../../pages";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import pnuLogo from "../../images/pnu-logo.png";
+import { MODULE_PAGES } from "../../pages";
 
 
 export default class PageDrawer extends Component {
@@ -13,16 +12,14 @@ export default class PageDrawer extends Component {
               style={{textDecoration: "none"}}
               key={page.identifier}
               onClick={this.props.onClose}>
-            <ListItem button >
+            <ListItem button>
                 <ListItemText primary={page.name} />
             </ListItem>
         </Link>,
     );
 
     render() {
-
         const {open, onClose, classes} = this.props;
-
         return (
             <Drawer open={open} onClose={onClose}>
                 <div className={classes.drawer}>

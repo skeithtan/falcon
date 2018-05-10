@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import client from "../client";
 
+
 export function fetchAllFacultiesSummary() {
     return client.query({
         query: gql`
@@ -30,14 +31,14 @@ export function fetchFacultyDetails(facultyId) {
                     sex
                     employment
                     birthDate
-                    
+
                     degrees {
                         _id
                         title
                         level
                         completionYear
                     }
-                    
+
                     recognitions {
                         _id
                         title
@@ -48,14 +49,14 @@ export function fetchFacultyDetails(facultyId) {
                             year
                         }
                     }
-                    
+
                     teachingSubjects {
                         _id
                         code
                         name
                         major
                     }
-                    
+
                     presentations {
                         _id
                         title
@@ -70,7 +71,7 @@ export function fetchFacultyDetails(facultyId) {
                             year
                         }
                     }
-                    
+
                     instructionalMaterials {
                         _id
                         title
@@ -80,7 +81,7 @@ export function fetchFacultyDetails(facultyId) {
                         level
                         nonPrintType
                     }
-                    
+
                     extensionWorks {
                         _id
                         title

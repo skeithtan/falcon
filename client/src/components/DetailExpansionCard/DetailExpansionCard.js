@@ -1,5 +1,6 @@
-import React, { Component } from "react";
 import ExpansionPanel from "material-ui/ExpansionPanel";
+import React, { Component } from "react";
+
 
 class DetailExpansionCard extends Component {
     render() {

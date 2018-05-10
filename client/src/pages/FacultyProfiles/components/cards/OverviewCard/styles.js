@@ -4,11 +4,9 @@ export default theme => ({
         height: 80,
         fontSize: 40,
     },
-
     bigOverview: {
         padding: theme.spacing.unit * 5,
     },
-
     buttonArea: {
         display: "flex",
         position: "absolute",
@@ -16,9 +14,7 @@ export default theme => ({
         padding: theme.spacing.unit,
         boxSizing: "border-box",
     },
-
     buttonsWrapper: {
         marginLeft: "auto",
     },
-
 })

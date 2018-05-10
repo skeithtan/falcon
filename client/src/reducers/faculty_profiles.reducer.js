@@ -1,15 +1,16 @@
 import {
     ACTIVE_FACULTY_CHANGED,
-    PROFILES_FETCH_ERROR,
-    PROFILES_FETCHED,
-    SEARCH_KEYWORD_CHANGED,
-    PROFILES_LIST_IS_LOADING,
+    ACTIVE_TAB_CHANGED,
     DETAIL_FETCH_ERROR,
     DETAILS_FETCHED,
     DETAILS_IS_LOADING,
-    ACTIVE_TAB_CHANGED,
+    PROFILES_FETCH_ERROR,
+    PROFILES_FETCHED,
+    PROFILES_LIST_IS_LOADING,
+    SEARCH_KEYWORD_CHANGED,
 } from "../actions/faculty_profiles.actions";
 import { OVERVIEW_TAB } from "../pages/FacultyProfiles/components/faculty_detail_tabs";
+
 
 const initialState = {
     faculties: null,
@@ -26,7 +27,6 @@ const initialState = {
         errors: null,
     },
 };
-
 export default function facultyProfiles(state = initialState, action) {
     switch (action.type) {
         case PROFILES_LIST_IS_LOADING:

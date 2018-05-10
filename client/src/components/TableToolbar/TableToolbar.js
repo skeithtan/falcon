@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import AddIcon from "@material-ui/icons/Add";
+import IconButton from "material-ui/IconButton";
 import Toolbar from "material-ui/Toolbar";
 import Tooltip from "material-ui/Tooltip";
 import Typography from "material-ui/Typography";
-import IconButton from "material-ui/IconButton";
-import AddIcon from "@material-ui/icons/Add";
+import React, { Component } from "react";
+
 
 class TableToolbar extends Component {
     render() {
         const {classes, tableTitle, onAddButtonClick, addButtonTooltipTitle} = this.props;
-
         return (
             <Toolbar>
                 <div className={classes.titleWrapper}>

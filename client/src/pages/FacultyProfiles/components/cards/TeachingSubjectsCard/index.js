@@ -1,1 +1,1 @@
-export { default } from './TeachingSubjectsCard';
+export { default } from "./TeachingSubjectsCard";

@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import Typography from "material-ui/Typography";
 import Error from "@material-ui/icons/Error";
 import Button from "material-ui/Button";
-import Dialog, { DialogTitle, DialogContent, DialogContentText } from "material-ui/Dialog";
+import Dialog, { DialogContent, DialogContentText, DialogTitle } from "material-ui/Dialog";
+import Typography from "material-ui/Typography";
+import React, { Component } from "react";
+
 
 class ErrorDetailsDialog extends Component {
     render() {
@@ -18,16 +19,9 @@ class ErrorDetailsDialog extends Component {
     }
 }
 
-
 export default class ErrorState extends Component {
-    state = {
-        detailsOpen: false,
-    };
-
-
     render() {
         const classes = this.props.classes;
-
         return (
             <div className={classes.blankState}>
 
@@ -65,4 +59,8 @@ export default class ErrorState extends Component {
             </div>
         );
     }
+
+    state = {
+        detailsOpen: false,
+    };
 }

@@ -1,18 +1,13 @@
-import React, { Component } from "react";
-import { Route, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
 import { MuiThemeProvider } from "material-ui/styles";
-
-import { PAGES, HOME_PAGE, SIGN_IN_PAGE, getPageFromIdentifier, getPageFromPath } from "./pages";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Route, withRouter } from "react-router-dom";
 import { pageIsChanged } from "./actions/pages.actions";
 import FalconAppBar from "./components/FalconAppBar";
+import { getPageFromIdentifier, getPageFromPath, HOME_PAGE, PAGES, SIGN_IN_PAGE } from "./pages";
 
 
 class App extends Component {
-    //Useless line but gets rid of annoying error
-    state = {};
-
-
     static getDerivedStateFromProps(nextProps) {
         const {isAuthenticated, match, history, setActivePage, activePage} = nextProps;
         const currentPath = match.params.currentPage;
@@ -50,14 +45,11 @@ class App extends Component {
         return {};
     }
 
-
     render() {
         const {isAuthenticated, activePage} = this.props;
-
         const routes = PAGES.map(({identifier, path, component}) => (
-           <Route key={identifier} path={"/" + path} component={component} />
+            <Route key={identifier} path={"/" + path} component={component} />
         ));
-
         return (
             <MuiThemeProvider theme={activePage.theme}>
                 {isAuthenticated && <FalconAppBar />}
@@ -65,6 +57,9 @@ class App extends Component {
             </MuiThemeProvider>
         );
     }
+
+    //Useless line but gets rid of annoying error
+    state = {};
 }
 
 function mapStateToProps(state) {

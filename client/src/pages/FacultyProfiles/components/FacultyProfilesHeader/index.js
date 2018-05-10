@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import { activeTabChanged } from "../../../../actions/faculty_profiles.actions";
-
+import { activeTabChanged, searchKeywordChanged } from "../../../../actions/faculty_profiles.actions";
 import FacultyProfilesHeader from "./FacultyProfilesHeader";
-import { searchKeywordChanged } from "../../../../actions/faculty_profiles.actions";
+
 
 function mapStateToProps(state) {
     return {
@@ -18,13 +17,11 @@ function mapDispatchToProps(dispatch) {
         onSearchInputChange(searchKeyword) {
             dispatch(searchKeywordChanged(searchKeyword));
         },
-
         onTabClick(tab) {
             dispatch(activeTabChanged(tab));
         },
     };
 }
-
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

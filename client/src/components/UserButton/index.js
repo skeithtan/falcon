@@ -1,11 +1,11 @@
+import { withStyles, withTheme } from "material-ui/styles";
 import { connect } from "react-redux";
-import { withTheme, withStyles } from "material-ui/styles";
 import { compose } from "recompose";
-
-import userService from "../../services/user.service";
 import { signOutSuccess } from "../../actions/authentication.actions";
-import UserButton from "./UserButton";
+import userService from "../../services/user.service";
 import styles from "./styles";
+import UserButton from "./UserButton";
+
 
 function mapStateToProps(state) {
     return state.authentication;

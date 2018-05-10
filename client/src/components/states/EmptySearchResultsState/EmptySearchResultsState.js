@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import Typography from "material-ui/Typography";
 import Search from "@material-ui/icons/Search";
+import Typography from "material-ui/Typography";
+import React, { Component } from "react";
+
 
 class EmptySearchResultsState extends Component {
     render() {

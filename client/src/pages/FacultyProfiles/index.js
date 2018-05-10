@@ -1,8 +1,7 @@
-import { withTheme, withStyles } from "material-ui/styles";
+import { withStyles, withTheme } from "material-ui/styles";
 import { compose } from "recompose";
-
-import style from "./styles";
 import FacultyProfilesPage from "./FacultyProfiles";
+import style from "./styles";
 
 
 export default compose(

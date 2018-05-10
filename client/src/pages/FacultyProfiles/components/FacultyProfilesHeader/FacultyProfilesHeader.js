@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-import Paper from "material-ui/Paper";
-import Input, { InputAdornment } from "material-ui/Input";
-import Tabs, { Tab } from "material-ui/Tabs";
 import Search from "@material-ui/icons/Search";
-
+import Input, { InputAdornment } from "material-ui/Input";
+import Paper from "material-ui/Paper";
+import Tabs, { Tab } from "material-ui/Tabs";
+import React, { Component } from "react";
 import { TABS } from "../faculty_detail_tabs";
 
 
 class FacultyProfilesHeader extends Component {
-
     tabs = () => (
         TABS.map(tab =>
             <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.onTabClick(tab)} />,
@@ -18,7 +16,6 @@ class FacultyProfilesHeader extends Component {
     render() {
         const {classes, searchKeyword, onSearchInputChange, activeFacultyId, activeTabIdentifier} = this.props;
         const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTabIdentifier);
-
         return (
             <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
                 <div className={classes.searchWrapper}>

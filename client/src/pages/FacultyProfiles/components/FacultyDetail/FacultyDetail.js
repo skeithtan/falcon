@@ -1,11 +1,11 @@
-import React, { Component, createElement } from "react";
 import Typography from "material-ui/Typography";
+import React, { Component, createElement } from "react";
 import SwipeableViews from "react-swipeable-views";
-
 import DetailCard from "../../../../components/DetailCard";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator";
 import ErrorState from "../../../../components/states/ErrorState";
 import { TABS } from "../faculty_detail_tabs";
+
 
 export default class FacultyDetail extends Component {
     renderSelectFacultyState = () => (
@@ -34,7 +34,7 @@ export default class FacultyDetail extends Component {
         const {activeTab, classes, onTabChange, activeFaculty} = this.props;
         const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTab.identifier);
         const tabComponents = TABS.map(tab =>
-            createElement(tab.component, {faculty: activeFaculty, classes: classes, key: tab.identifier})
+            createElement(tab.component, {faculty: activeFaculty, classes: classes, key: tab.identifier}),
         );
 
         function handleChangeIndex(newIndex) {
@@ -52,22 +52,18 @@ export default class FacultyDetail extends Component {
 
     static getDerivedStateFromProps(nextProps) {
         const {activeFaculty, getFacultyDetails, setDetailsFetched, errors} = nextProps;
-
         if (!activeFaculty) {
             return {};
         }
-
         // Do not fetch if there is an error showing
         if (errors) {
             return {};
         }
-
         // Overview would have been fetched if birthDate exists
         if (!activeFaculty.birthDate) {
             getFacultyDetails(activeFaculty);
             return {};
         }
-
         setDetailsFetched();
         return {};
     }
@@ -77,19 +73,15 @@ export default class FacultyDetail extends Component {
         if (!activeFaculty) {
             return this.renderSelectFacultyState();
         }
-
         if (isLoading) {
             return this.renderLoading();
         }
-
         if (errors) {
             return this.renderErrors(errors);
         }
-
         if (isFetched) {
             return this.renderTabs();
         }
-
         return null;
     }
 }

@@ -1,14 +1,8 @@
-import SignInPage from "./SignIn";
-import HomePage from "./Home";
 import FacultyProfilesPage from "./FacultyProfiles";
-import {
-    BLUE_THEME,
-    GREY_THEME,
-    INDIGO_THEME,
-    PINK_THEME,
-    PNU_THEME,
-    TEAL_THEME,
-} from "./themes";
+import HomePage from "./Home";
+import SignInPage from "./SignIn";
+import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, PNU_THEME, TEAL_THEME } from "./themes";
+
 
 export const SIGN_IN_PAGE = {
     identifier: "SIGN_IN_PAGE",

@@ -4,12 +4,10 @@ export default {
         "FULL_TIME_TEMPORARY": "Temporary Full Time",
         "PART_TIME": "Part Time",
     },
-
     SEX: {
         "M": "Male",
         "F": "Female",
     },
-
     DEGREE: {
         LEVEL: {
             "ASSOCIATE": "Associate",
@@ -18,7 +16,6 @@ export default {
             "DOCTORATE": "Doctorate",
         },
     },
-
     EXTENSION_WORK: {
         ROLES: {
             "LECTURER": "Lecturer",
@@ -29,7 +26,6 @@ export default {
             "MATERIAL_WRITER": "Material Writer",
         },
     },
-
     INSTRUCTIONAL_MATERIAL: {
         NON_PRINT_TYPES: {
             "MODULE": "Module",
@@ -38,18 +34,15 @@ export default {
             "DIGITAL_FILE": "Digital File",
             "AUDIO": "Audio",
         },
-
         MEDIUM: {
             "PRINT": "Print",
             "NON_PRINT": "Non-Print",
         },
-
         CLASSIFICATION: {
             "STUDENT": "Student",
             "TEACHER": "Teacher",
         },
     },
-
     RECOGNITION: {
         BASIS: {
             "RESEARCH": "Research",
@@ -58,7 +51,6 @@ export default {
             "CIVIC": "Civic",
         },
     },
-
     PRESENTATION: {
         CATEGORY: {
             "INSTITUTIONAL": "Institutional",
@@ -72,5 +64,4 @@ export default {
             "RESEARCH": "Research",
         },
     },
-
 };

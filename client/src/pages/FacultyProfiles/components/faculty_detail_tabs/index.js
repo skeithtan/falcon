@@ -1,33 +1,29 @@
+import ExtensionWorksTab from "./ExtensionWorksTab";
+import InstructionalMaterialTab from "./InstructionalMaterialsTab";
 import OverviewTab from "./OverviewTab";
 import PresentationsTab from "./PresentationsTab";
-import InstructionalMaterialTab from "./InstructionalMaterialsTab";
-import ExtensionWorksTab from "./ExtensionWorksTab";
+
 
 export const OVERVIEW_TAB = {
     name: "Overview",
     identifier: "OVERVIEW",
     component: OverviewTab,
 };
-
 export const PRESENTATIONS_TAB = {
     name: "Presentations",
     identifier: "PRESENTATIONS",
     component: PresentationsTab,
 };
-
 export const INSTRUCTIONAL_MATERIALS_TAB = {
     name: "Instructional Materials",
     identifier: "INSTRUCTIONAL_MATERIALS",
     component: InstructionalMaterialTab,
 };
-
 export const EXTENSION_WORKS_TAB = {
     name: "Extension Works",
     identifier: "EXTENSION_WORKS",
     component: ExtensionWorksTab,
 };
-
-
 export const TABS = [
     OVERVIEW_TAB,
     PRESENTATIONS_TAB,

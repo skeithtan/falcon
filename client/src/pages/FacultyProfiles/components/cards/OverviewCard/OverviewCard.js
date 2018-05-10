@@ -1,26 +1,24 @@
-import React, { Component } from "react";
-import Grid from "material-ui/Grid";
-import Typography from "material-ui/Typography";
-import List from "material-ui/List";
 import EditIcon from "@material-ui/icons/Edit";
+import Grid from "material-ui/Grid";
 import IconButton from "material-ui/IconButton";
+import List from "material-ui/List";
 import Tooltip from "material-ui/Tooltip";
+import Typography from "material-ui/Typography";
 import moment from "moment/moment";
-
-import FacultyAvatar from "../../../../../components/FacultyAvatar/FacultyAvatar";
-import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
-import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
-import { getFullName } from "../../../../../utils/faculty";
+import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
+import FacultyAvatar from "../../../../../components/FacultyAvatar/FacultyAvatar";
+import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
+import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
+import { getFullName } from "../../../../../utils/faculty";
+
 
 export default class OverviewCard extends Component {
     render() {
         const {faculty, classes} = this.props;
-
         const birthDate = moment(faculty.birthDate);
         const today = moment();
         const birthDateValue = `${birthDate.format("LL")} (${today.to(birthDate, true)})`;
-
         return (
             <DetailCard>
                 <div className={classes.buttonArea}>

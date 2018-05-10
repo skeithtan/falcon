@@ -1,5 +1,6 @@
-import React, { Component } from "react";
 import { CircularProgress } from "material-ui/Progress";
+import React, { Component } from "react";
+
 
 export default class FullPageLoadingIndicator extends Component {
     render() {

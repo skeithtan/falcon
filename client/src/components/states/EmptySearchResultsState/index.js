@@ -1,8 +1,7 @@
-import { withTheme, withStyles } from "material-ui/styles";
+import { withStyles, withTheme } from "material-ui/styles";
 import { compose } from "recompose";
-
-import EmptySearchResultsState from "./EmptySearchResultsState";
 import style from "../styles";
+import EmptySearchResultsState from "./EmptySearchResultsState";
 
 
 export default compose(

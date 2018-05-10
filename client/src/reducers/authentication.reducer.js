@@ -1,21 +1,19 @@
 import {
-    SIGN_IN_SUCCESS,
-    SIGN_IN_IS_LOADING,
     SIGN_IN_ERROR,
+    SIGN_IN_IS_LOADING,
+    SIGN_IN_SUCCESS,
     SIGN_OUT_SUCCESS,
 } from "../actions/authentication.actions";
 
 
 const hasToken = localStorage.hasOwnProperty("token");
 const hasUser = localStorage.hasOwnProperty("user");
-
 const initialState = {
     isAuthenticated: hasToken,
     isLoading: false,
     signInError: null,
     user: hasUser ? JSON.parse(localStorage.user) : null,
 };
-
 export default function authentication(state = initialState, action) {
     switch (action.type) {
         case SIGN_IN_SUCCESS:
