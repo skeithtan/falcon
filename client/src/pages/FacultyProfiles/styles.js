@@ -12,6 +12,7 @@ export default theme => ({
     facultyProfilesBody: {
         flexGrow: 1,
         height: "100%",
+        minHeight: 0,
     },
     split: {
         display: "grid",

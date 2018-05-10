@@ -3,5 +3,6 @@ export default theme => ({
         width: "80%",
         maxWidth: 1024,
         position: "relative",
+        display: "grid",
     },
 })
