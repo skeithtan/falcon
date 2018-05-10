@@ -6,7 +6,7 @@ class FormDisplayExpansionPanelDetails extends Component {
     render() {
         return (
             <ExpansionPanelDetails className={this.props.classes.expansionPanelDetails}>
-
+                {this.props.children}
             </ExpansionPanelDetails>
         );
     }
