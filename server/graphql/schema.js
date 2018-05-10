@@ -1,6 +1,5 @@
-import requireText from "require-text";
 import { makeExecutableSchema } from "graphql-tools";
-
+import requireText from "require-text";
 import resolvers from "./resolvers";
 
 

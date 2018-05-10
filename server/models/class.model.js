@@ -4,15 +4,15 @@ import mongoose, { Schema } from "mongoose";
 const SubjectSchema = new Schema({
     code: {
         type: String,
-        required: true
+        required: true,
     },
     name: {
         type: String,
-        required: true
+        required: true,
     },
     major: {
         type: String,
-        required: true
+        required: true,
     },
 });
 
@@ -34,11 +34,11 @@ const ClassSchema = new Schema({
     },
     room: {
         type: String,
-        required: true
+        required: true,
     },
     enrollmentCap: {
         type: Number,
-        required: true
+        required: true,
     },
     faculty: {
         type: Schema.Types.ObjectId,
@@ -63,5 +63,4 @@ const AcademicYearSchema = new Schema({
 const Subject = mongoose.model("Subject", SubjectSchema);
 const AcademicYear = mongoose.model("AcademicYear", AcademicYearSchema);
 const Class = mongoose.model("Class", ClassSchema);
-
 export { Subject, AcademicYear, Class };

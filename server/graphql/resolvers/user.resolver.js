@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-
+import config from "../../config";
 import { User } from "../../models/user.model";
 import { requireSignIn } from "../../utils/user_decorator";
-import { AuthenticationError, DoesNotExistError } from "../errors";
 import { getUserFromContext } from "../../utils/user_from_context";
-import config from "../../config";
+import { AuthenticationError, DoesNotExistError } from "../errors";
+
 
 function currentUser(object, args, context) {
     return getUserFromContext(context);
@@ -18,7 +18,6 @@ async function signIn(object, {email, password}) {
     }
 
     const isValidPassword = user.comparePassword(password);
-
     if (!isValidPassword) {
         return new AuthenticationError();
     }

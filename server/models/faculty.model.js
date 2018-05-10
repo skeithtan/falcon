@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const MonthYearDate = {
     month: {
         type: Number,
@@ -10,7 +11,6 @@ const MonthYearDate = {
         required: true,
     },
 };
-
 const PresentationSchema = new Schema({
     title: String,
     category: {
@@ -41,7 +41,6 @@ const PresentationSchema = new Schema({
         required: true,
     },
 });
-
 const RecognitionSchema = new Schema({
     title: {
         type: String,
@@ -58,7 +57,6 @@ const RecognitionSchema = new Schema({
         required: true,
     },
 });
-
 const InstructionalMaterialSchema = new Schema({
     title: String,
     medium: {
@@ -75,7 +73,6 @@ const InstructionalMaterialSchema = new Schema({
         type: Number,
         required: true,
     },
-
     // Student only fields
     level: {
         type: String,
@@ -84,7 +81,6 @@ const InstructionalMaterialSchema = new Schema({
             return this.classification === "STUDENT";
         },
     },
-
     // Non-print types
     nonPrintType: {
         type: String,
@@ -94,7 +90,6 @@ const InstructionalMaterialSchema = new Schema({
         },
     },
 });
-
 export const EXTENSION_WORK_ROLES = [
     "LECTURER",
     "TRAINER",
@@ -103,7 +98,6 @@ export const EXTENSION_WORK_ROLES = [
     "COACH",
     "MATERIAL_WRITER",
 ];
-
 const ExtensionWorkSchema = new Schema({
     title: {
         type: String,
@@ -118,7 +112,6 @@ const ExtensionWorkSchema = new Schema({
         required: true,
     },
 });
-
 const DegreeSchema = new Schema({
     title: {
         type: String,
@@ -134,7 +127,6 @@ const DegreeSchema = new Schema({
         required: true,
     },
 });
-
 const FacultySchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -166,5 +158,4 @@ const FacultySchema = new Schema({
     instructionalMaterials: [InstructionalMaterialSchema],
     extensionWorks: [ExtensionWorkSchema],
 });
-
 export const Faculty = mongoose.model("Faculty", FacultySchema);

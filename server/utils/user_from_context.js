@@ -3,6 +3,7 @@ import config from "../config";
 import { GuestAccessError } from "../graphql/errors";
 import { User } from "../models/user.model";
 
+
 function getAuthorizationFromContext(context) {
     return new Promise((resolve, reject) => {
         if (context.authorization) {
@@ -26,7 +27,6 @@ function getUserIdFromAuthorization(authorization) {
         }
     });
 }
-
 
 // Ensures authorization is in the header, else throws GuestAccessError
 // Ensures JWT is valid, else throws JWTValidationError

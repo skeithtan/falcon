@@ -1,6 +1,7 @@
-import { Subject, AcademicYear, Class } from "../../models/class.model";
+import { AcademicYear, Class, Subject } from "../../models/class.model";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import ValidationError from "../errors/validation.error";
+
 
 function subjects() {
     return Subject.find({});
@@ -13,7 +14,6 @@ function academicYears() {
             model: "Subject",
         };
     };
-
     return AcademicYear.find({})
                        .populate(makePopulateObject("_1"))
                        .populate(makePopulateObject("_2"))
@@ -38,7 +38,6 @@ function createAcademicYear(object, {startYear}) {
 async function createClass(object, args) {
     const {academicYearStart, term} = args;
     const classInput = args.class;
-
     const academicYear = await AcademicYear
         .findOne({startYear: academicYearStart})
         .exec();
@@ -48,10 +47,8 @@ async function createClass(object, args) {
     }
 
     const newClass = new Class(classInput);
-
     academicYear.termsClasses[term].push(newClass);
     academicYear.save();
-
     return newClass;
 }
 
@@ -63,7 +60,6 @@ export const queryResolvers = {
 export const mutationResolvers = {
     createSubject: limitAccess(createSubject, {allowed: NO_FACULTY, action: "Create subject"}),
     updateSubject: limitAccess(updateSubject, {allowed: NO_FACULTY, action: "Update subject"}),
-
     createAcademicYear: limitAccess(createAcademicYear, {allowed: NO_FACULTY, action: "Create academic year"}),
     createClass: limitAccess(createClass, {allowed: NO_FACULTY, action: "Create class"}),
 };

@@ -1,8 +1,8 @@
 import { Faculty } from "../../models/faculty.model";
-import { User } from "../../models/user.model";
+import { FACULTY, User } from "../../models/user.model";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
-import { FACULTY } from "../../models/user.model";
 import { DoesNotExistError } from "../errors";
+
 
 function faculties() {
     return Faculty.find({})
@@ -18,7 +18,6 @@ function faculty(object, {_id}) {
                       if (!faculty) {
                           return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
                       }
-
                       return faculty;
                   })
                   .catch(error => {
@@ -26,7 +25,6 @@ function faculty(object, {_id}) {
                       if (error.name === "CastError") {
                           return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
                       }
-
                       throw error;
                   });
 }
@@ -79,14 +77,12 @@ async function mutatePresentation(object, {facultyId}) {
             await faculty.save();
             return faculty.presentations[faculty.presentations.length - 1];
         },
-
         async update({_id, newPresentation}) {
             const presentation = getPresentation(_id);
             Object.assign(presentation, newPresentation);
             await faculty.save();
             return presentation;
         },
-
         async remove({_id}) {
             const presentation = getPresentation(_id);
             presentation.remove();
@@ -113,14 +109,12 @@ async function mutateRecognition(object, {facultyId}) {
             await faculty.save();
             return faculty.recognitions[faculty.recognitions.length - 1];
         },
-
         async update({_id, newRecognition}) {
             const recognition = getRecognition(_id);
             Object.assign(recognition, newRecognition);
             await faculty.save();
             return recognition;
         },
-
         async remove({_id}) {
             const recognition = getRecognition(_id);
             recognition.remove();
@@ -138,7 +132,6 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
         if (instructionalMaterial === null) {
             throw new DoesNotExistError(`Instructional material of id ${_id} does not exist`);
         }
-
         return instructionalMaterial;
     }
 
@@ -148,14 +141,12 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
             await faculty.save();
             return faculty.instructionalMaterials[faculty.instructionalMaterials.length - 1];
         },
-
         async update({_id, newInstructionalMaterial}) {
             const instructionalMaterial = getInstructionalMaterial(_id);
             Object.assign(instructionalMaterial, newInstructionalMaterial);
             await faculty.save();
             return instructionalMaterial;
         },
-
         async remove({_id}) {
             const instructionalMaterial = getInstructionalMaterial(_id);
             instructionalMaterial.remove();
@@ -173,7 +164,6 @@ async function mutateExtensionWork(object, {facultyId}) {
         if (extensionWork === null) {
             throw new DoesNotExistError(`Extension work of id ${_id} does not exist`);
         }
-
         return extensionWork;
     }
 
@@ -183,14 +173,12 @@ async function mutateExtensionWork(object, {facultyId}) {
             await faculty.save();
             return faculty.extensionWorks[faculty.extensionWorks.length - 1];
         },
-
         async update({_id, newExtensionWork}) {
             const extensionWork = getExtensionWork(_id);
             Object.assign(extensionWork, newExtensionWork);
             await faculty.save();
             return extensionWork;
         },
-
         async remove({_id}) {
             const extensionWork = getExtensionWork(_id);
             extensionWork.remove();
@@ -208,7 +196,6 @@ async function mutateDegree(object, {facultyId}) {
         if (degree === null) {
             throw new DoesNotExistError(`Degree of id ${_id} does not exist`);
         }
-
         return degree;
     }
 
@@ -218,14 +205,12 @@ async function mutateDegree(object, {facultyId}) {
             await faculty.save();
             return faculty.degrees[faculty.degrees.length - 1];
         },
-
         async update({_id, newDegree}) {
             const degree = getDegree(_id);
             Object.assign(degree, newDegree);
             await faculty.save();
             return degree;
         },
-
         async remove({_id}) {
             const degree = getDegree(_id);
             degree.remove();

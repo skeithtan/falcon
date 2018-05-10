@@ -1,21 +1,9 @@
-import {
-    queryResolvers as userQueries,
-    mutationResolvers as userMutations,
-} from "./user.resolver";
-
-import {
-    queryResolvers as classQueries,
-    mutationResolvers as classMutations,
-} from "./class.resolver";
-
-import {
-    queryResolvers as facultyQueries,
-    mutationResolvers as facultyMutations,
-} from "./faculty.resolver";
+import { mutationResolvers as classMutations, queryResolvers as classQueries } from "./class.resolver";
+import { mutationResolvers as facultyMutations, queryResolvers as facultyQueries } from "./faculty.resolver";
+import { mutationResolvers as userMutations, queryResolvers as userQueries } from "./user.resolver";
 
 
 const helloWorldResolver = () => "World";
-
 export default {
     Query: {
         hello: helloWorldResolver,

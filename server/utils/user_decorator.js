@@ -1,6 +1,7 @@
-import { getUserFromContext } from "./user_from_context";
 import { AuthorizationError } from "../graphql/errors";
-import { DEAN, ASSOCIATE_DEAN, CLERK } from "../models/user.model";
+import { ASSOCIATE_DEAN, CLERK, DEAN } from "../models/user.model";
+import { getUserFromContext } from "./user_from_context";
+
 
 export const NO_FACULTY = [DEAN, ASSOCIATE_DEAN, CLERK];
 

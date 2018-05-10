@@ -1,9 +1,8 @@
+import { graphiqlExpress, graphqlExpress } from "apollo-server-express";
 import "babel-polyfill"; //Needed for async/await operations
-import express from "express";
 import bodyParser from "body-parser";
-import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
+import express from "express";
 import mongoose from "mongoose";
-
 import config from "./config";
 import schema from "./graphql/schema";
 
@@ -14,7 +13,6 @@ mongoose.connect(config.database.url)
 
 function onDatabaseConnect() {
     console.log("Connected to database");
-
     const app = express();
 
     app.use("/graphql", bodyParser.json(), graphqlExpress(request => {
@@ -27,7 +25,7 @@ function onDatabaseConnect() {
     }));
 
     app.use("/graphiql", graphiqlExpress({endpointURL: "/graphql"}));
-
+    
     app.listen(config.server.port, () => {
         console.info(`Server listening at port ${config.server.port}`);
     });
