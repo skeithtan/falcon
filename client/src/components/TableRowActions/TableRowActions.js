@@ -17,18 +17,18 @@ class TableRowActions extends Component {
 
         return (
             <TableCell>
-                {onRemoveButtonClick &&
-                <Tooltip title={removeButtonTooltipTitle}>
-                    <IconButton aria-label="remove" onClick={onRemoveButtonClick}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-                }
-
                 {onUpdateButtonClick &&
                 <Tooltip title={updateButtonTooltipTitle}>
                     <IconButton aria-label="update" onClick={onUpdateButtonClick}>
                         <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                }
+
+                {onRemoveButtonClick &&
+                <Tooltip title={removeButtonTooltipTitle}>
+                    <IconButton aria-label="remove" onClick={onRemoveButtonClick}>
+                        <DeleteIcon />
                     </IconButton>
                 </Tooltip>
                 }

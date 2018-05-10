@@ -19,6 +19,14 @@ class DetailExpansionCardActions extends Component {
         return (
             <ListItem className={classes.actionButtonsWrapper}>
 
+                {onUpdateButtonClick &&
+                <Tooltip title={updateButtonTooltipTitle}>
+                    <IconButton aria-label="update" onClick={onUpdateButtonClick}>
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                }
+
                 {onRemoveButtonClick &&
                 <Tooltip title={removeButtonTooltipTitle}>
                     <IconButton aria-label="remove" onClick={onRemoveButtonClick}>
@@ -27,13 +35,6 @@ class DetailExpansionCardActions extends Component {
                 </Tooltip>
                 }
 
-                {onUpdateButtonClick &&
-                <Tooltip title={updateButtonTooltipTitle}>
-                    <IconButton aria-label="update" onClick={onUpdateButtonClick}>
-                        <EditIcon />
-                    </IconButton>
-                </Tooltip>
-                }
             </ListItem>
         );
     }
