@@ -1,29 +1,46 @@
+import Table, { TableBody, TableCell, TableHead, TableRow } from "material-ui/Table";
 import React, { Component } from "react";
-import Table, {
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-} from "material-ui/Table";
-
-import { getFullName } from "../../../../../utils/faculty";
 import DetailCard from "../../../../../components/DetailCard";
+import EmptyState from "../../../../../components/states/EmptyState";
+import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
-import EmptyState from "../../../../../components/states/EmptyState";
+import { getFullName } from "../../../../../utils/faculty";
+
+
+class DegreeRow extends Component {
+    onUpdateButtonClick = degree => {
+        //TODO
+        console.log(`Degree ${degree._id} edit button clicked`);
+    };
+
+    onRemoveButtonClick = degree => {
+        //TODO
+        console.log(`Degree ${degree._id} remove button clicked`);
+    };
+
+    render() {
+        const degree = this.props.degree;
+        return (
+            <TableRow>
+                <TableCell>{degree.title}</TableCell>
+                <TableCell>{FACULTY_ENUMS.DEGREE.LEVEL[degree.level]}</TableCell>
+                <TableCell>{degree.completionYear}</TableCell>
+                <TableRowActions removeButtonTooltipTitle="Remove this recognition"
+                                 updateButtonTooltipTitle="Update this recognition"
+                                 onRemoveButtonClick={() => this.onRemoveButtonClick(degree)}
+                                 onUpdateButtonClick={() => this.onUpdateButtonClick(degree)} />
+            </TableRow>
+        );
+    }
+}
 
 export default class DegreeCard extends Component {
+    renderRows = degrees => degrees.map(degree =>
+        <DegreeRow degree={degree} key={degree._id}/>
+    );
 
-    rows = degrees => degrees.map(degree => (
-        //TODO: On click
-        <TableRow key={degree._id}>
-            <TableCell>{degree.title}</TableCell>
-            <TableCell>{FACULTY_ENUMS.DEGREE.LEVEL[degree.level]}</TableCell>
-            <TableCell>{degree.completionYear}</TableCell>
-        </TableRow>
-    ));
-
-    emptyState = () => (
+    renderEmptyState = () => (
         <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have recorded degrees.`}
                     smallMessage="Degrees added will be shown here."
                     onAddButtonClick={this.onAddButtonClick}
@@ -39,7 +56,6 @@ export default class DegreeCard extends Component {
         const faculty = this.props.faculty;
         const degrees = faculty.degrees;
         const degreesIsEmpty = degrees.length === 0;
-
         return (
             <DetailCard>
                 <TableToolbar tableTitle="Degrees"
@@ -55,13 +71,13 @@ export default class DegreeCard extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.rows(degrees)}
+                        {this.renderRows(degrees)}
                     </TableBody>
 
                 </Table>
                 }
 
-                {degreesIsEmpty && this.emptyState()}
+                {degreesIsEmpty && this.renderEmptyState()}
             </DetailCard>
         );
     }
