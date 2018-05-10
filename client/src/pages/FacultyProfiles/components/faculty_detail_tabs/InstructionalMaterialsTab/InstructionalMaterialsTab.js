@@ -55,10 +55,10 @@ class InstructionalMaterialRow extends Component {
 
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
                                                 updateButtonTooltipTitle="Update instructional material details"
-                                                onRemoveButtonClick={() => this.onRemoveButtonClick(
-                                                    instructionalMaterial)}
-                                                onUpdateButtonClick={() => this.onUpdateButtonClick(
-                                                    instructionalMaterial)} />
+                                                onRemoveButtonClick={() =>
+                                                    this.onRemoveButtonClick(instructionalMaterial)}
+                                                onUpdateButtonClick={() =>
+                                                    this.onUpdateButtonClick(instructionalMaterial)} />
 
                 </FormDisplayExpansionPanelDetails>
             </DetailExpansionCard>
