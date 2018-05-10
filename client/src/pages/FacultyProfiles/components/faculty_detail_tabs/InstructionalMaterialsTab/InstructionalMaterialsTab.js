@@ -7,8 +7,10 @@ import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
 import DetailExpansionCardActions from "../../../../../components/DetailExpansionCardActions";
 import FormDisplayExpansionPanelDetails from "../../../../../components/FormDisplayExpansionPanelDetails";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
+import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
+import { getFullName } from "../../../../../utils/faculty";
 
 
 class InstructionalMaterialRow extends Component {
@@ -76,6 +78,13 @@ class InstructionalMaterialsTab extends Component {
         <InstructionalMaterialRow instructionalMaterial={instructionalMaterial} key={instructionalMaterial._id} />,
     );
 
+    renderEmptyState = () => (
+        <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have recorded instructional materials`}
+                    smallMessage="Instructional materials added will be shown here"
+                    onAddButtonClick={this.onAddButtonClick}
+                    addButtonText="Add an instructional material" />
+    );
+
     render() {
         const {faculty, classes} = this.props;
         const instructionalMaterials = faculty.instructionalMaterials;
@@ -86,6 +95,7 @@ class InstructionalMaterialsTab extends Component {
                     <TableToolbar tableTitle="Instructional Materials"
                                   addButtonTooltipTitle="Add an instructional material"
                                   onAddButtonClick={this.onAddButtonClick} />
+                    {instructionalMaterialsIsEmpty && this.renderEmptyState()}
                 </DetailCard>
 
                 {!instructionalMaterialsIsEmpty && this.renderRows(instructionalMaterials)}

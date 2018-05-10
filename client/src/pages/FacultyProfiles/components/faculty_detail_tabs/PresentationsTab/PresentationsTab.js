@@ -7,9 +7,10 @@ import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
 import DetailExpansionCardActions from "../../../../../components/DetailExpansionCardActions";
 import FormDisplayExpansionPanelDetails from "../../../../../components/FormDisplayExpansionPanelDetails";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
+import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
-import { formatMonthYearDate } from "../../../../../utils/faculty";
+import { formatMonthYearDate, getFullName } from "../../../../../utils/faculty";
 
 
 class PresentationRow extends Component {
@@ -69,6 +70,13 @@ class PresentationsTab extends Component {
         <PresentationRow presentation={presentation} key={presentation._id} />,
     );
 
+    renderEmptyState = () => (
+      <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have recorded presentations`}
+                  smallMessage="Presentations added will be shown here"
+                  onAddButtonClick={this.onAddButtonClick}
+                  addButtonText="Add a presentation" />
+    );
+
     render() {
         const {faculty, classes} = this.props;
         const presentations = faculty.presentations;
@@ -79,6 +87,7 @@ class PresentationsTab extends Component {
                     <TableToolbar tableTitle="Presentations"
                                   addButtonTooltipTitle="Add a presentation"
                                   onAddButtonClick={this.onAddButtonClick} />
+                    {presentationsIsEmpty && this.renderEmptyState()}
                 </DetailCard>
 
                 {!presentationsIsEmpty && this.renderRows(presentations)}
