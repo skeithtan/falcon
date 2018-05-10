@@ -15,6 +15,7 @@ class DetailExpansionCardActions extends Component {
             removeButtonTooltipTitle,
             updateButtonTooltipTitle,
         } = this.props;
+
         return (
             <ListItem className={classes.actionButtonsWrapper}>
 
