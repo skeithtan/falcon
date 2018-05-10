@@ -32,8 +32,4 @@ export default theme => ({
         display: "grid",
         width: "100%",
     },
-    expansionPanelDetails: {
-        padding: 0,
-        flexDirection: "column",
-    },
 });

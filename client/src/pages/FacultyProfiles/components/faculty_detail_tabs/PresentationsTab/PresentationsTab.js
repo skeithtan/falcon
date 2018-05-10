@@ -1,10 +1,12 @@
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { ExpansionPanelDetails, ExpansionPanelSummary } from "material-ui/ExpansionPanel";
+import { ExpansionPanelSummary } from "material-ui/ExpansionPanel";
 import Typography from "material-ui/Typography";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
 import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
 import DetailExpansionCardActions from "../../../../../components/DetailExpansionCardActions";
+import FormDisplayExpansionPanelDetails
+    from "../../../../../components/FormDisplayExpansionPanelDetails/FormDisplayExpansionPanelDetails";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import TableToolbar from "../../../../../components/TableToolbar";
 import FACULTY_ENUMS from "../../../../../enums/faculty.enums";
@@ -23,7 +25,7 @@ class PresentationRow extends Component {
     };
 
     render() {
-        const {presentation, classes} = this.props;
+        const {presentation} = this.props;
         return (
             <DetailExpansionCard>
 
@@ -31,7 +33,7 @@ class PresentationRow extends Component {
                     <Typography>{presentation.title}</Typography>
                 </ExpansionPanelSummary>
 
-                <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                <FormDisplayExpansionPanelDetails>
 
                     <FormDisplayListItem field="Category"
                                          value={FACULTY_ENUMS.PRESENTATION.CATEGORY[presentation.category]} />
@@ -52,7 +54,7 @@ class PresentationRow extends Component {
                                                 onRemoveButtonClick={() => this.onRemoveButtonClick(presentation)}
                                                 onUpdateButtonClick={() => this.onUpdateButtonClick(presentation)} />
 
-                </ExpansionPanelDetails>
+                </FormDisplayExpansionPanelDetails>
             </DetailExpansionCard>
         );
     }
@@ -65,7 +67,7 @@ class PresentationsTab extends Component {
     };
 
     rows = presentations => presentations.map(presentation =>
-        <PresentationRow presentation={presentation} key={presentation._id} classes={this.props.classes}/>,
+        <PresentationRow presentation={presentation} key={presentation._id}/>,
     );
 
     render() {
