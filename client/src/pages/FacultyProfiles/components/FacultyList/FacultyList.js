@@ -36,6 +36,14 @@ class FacultyItem extends Component {
 }
 
 export default class FacultyList extends Component {
+    constructor(props) {
+        super(props);
+        const {faculties, fetchData} = props;
+        if (!faculties) {
+            fetchData();
+        }
+    }
+
     renderList = faculties => {
         const {activeFacultyId, onFacultyClick, classes} = this.props;
         return (
@@ -93,10 +101,6 @@ export default class FacultyList extends Component {
             return fullName.includes(searchKeyword) || email.includes(searchKeyword);
         });
     };
-
-    componentDidMount() {
-        this.props.fetchData();
-    }
 
     render() {
         const {classes, isLoading, errors, searchKeyword} = this.props;
