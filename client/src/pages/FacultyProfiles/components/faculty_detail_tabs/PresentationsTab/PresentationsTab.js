@@ -5,8 +5,7 @@ import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
 import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
 import DetailExpansionCardActions from "../../../../../components/DetailExpansionCardActions";
-import FormDisplayExpansionPanelDetails
-    from "../../../../../components/FormDisplayExpansionPanelDetails/FormDisplayExpansionPanelDetails";
+import FormDisplayExpansionPanelDetails from "../../../../../components/FormDisplayExpansionPanelDetails";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
@@ -66,7 +65,7 @@ class PresentationsTab extends Component {
         console.log("Add presentation button clicked");
     };
 
-    rows = presentations => presentations.map(presentation =>
+    renderRows = presentations => presentations.map(presentation =>
         <PresentationRow presentation={presentation} key={presentation._id} />,
     );
 
@@ -82,7 +81,7 @@ class PresentationsTab extends Component {
                                   onAddButtonClick={this.onAddButtonClick} />
                 </DetailCard>
 
-                {!presentationsIsEmpty && this.rows(presentations)}
+                {!presentationsIsEmpty && this.renderRows(presentations)}
             </div>
         );
     }
