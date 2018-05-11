@@ -5,7 +5,7 @@ import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { DEGREE } from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/faculty";
+import { getFullName } from "../../../../../utils/user";
 
 
 class DegreeRow extends Component {
@@ -41,7 +41,7 @@ export default class DegreeCard extends Component {
     );
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have recorded degrees.`}
+        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded degrees.`}
                     smallMessage="Degrees added will be shown here."
                     onAddButtonClick={this.onAddButtonClick}
                     addButtonText="Add a degree" />

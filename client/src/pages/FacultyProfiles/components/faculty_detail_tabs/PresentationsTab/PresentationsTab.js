@@ -10,7 +10,8 @@ import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
-import { formatMonthYearDate, getFullName } from "../../../../../utils/faculty";
+import { formatMonthYearDate } from "../../../../../utils/faculty";
+import { getFullName } from "../../../../../utils/user";
 
 
 class PresentationRow extends Component {
@@ -71,7 +72,7 @@ class PresentationsTab extends Component {
     );
 
     renderEmptyState = () => (
-      <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have recorded presentations`}
+      <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded presentations`}
                   smallMessage="Presentations added will be shown here"
                   onAddButtonClick={this.onAddButtonClick}
                   addButtonText="Add a presentation" />

@@ -7,10 +7,10 @@ import Typography from "material-ui/Typography";
 import moment from "moment/moment";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
-import FacultyAvatar from "../../../../../components/FacultyAvatar/FacultyAvatar";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
-import {EMPLOYMENT, SEX} from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/faculty";
+import UserAvatar from "../../../../../components/UserAvatar/UserAvatar";
+import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
+import { getFullName } from "../../../../../utils/user";
 
 
 export default class OverviewCard extends Component {
@@ -32,12 +32,12 @@ export default class OverviewCard extends Component {
                 </div>
                 <div className={classes.bigOverview}>
                     <Grid container alignItems="center" direction="row" spacing={40}>
-                        <FacultyAvatar faculty={faculty} className={classes.bigAvatar} />
+                        <UserAvatar user={faculty.user} className={classes.bigAvatar} />
 
                         <Grid item>
                             <Grid container direction="column">
                                 <Typography variant="headline">
-                                    {getFullName(faculty)}
+                                    {getFullName(faculty.user)}
                                 </Typography>
                                 <Typography variant="subheading">
                                     {EMPLOYMENT[faculty.employment]} Faculty

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import DegreeCard from "../../cards/DegreeCard/index";
-import OverviewCard from "../../cards/OverviewCard/index";
-import RecognitionsCard from "../../cards/RecognitionsCard/index";
-import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard/index";
+import DegreeCard from "../../cards/DegreeCard";
+import OverviewCard from "../../cards/OverviewCard";
+import RecognitionsCard from "../../cards/RecognitionsCard";
+import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard";
 
 
 class OverviewTab extends Component {

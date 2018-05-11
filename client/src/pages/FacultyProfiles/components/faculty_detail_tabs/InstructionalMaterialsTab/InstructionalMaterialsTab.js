@@ -10,7 +10,7 @@ import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/faculty";
+import { getFullName } from "../../../../../utils/user";
 
 
 class InstructionalMaterialRow extends Component {
@@ -79,7 +79,7 @@ class InstructionalMaterialsTab extends Component {
     );
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have recorded instructional materials`}
+        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded instructional materials`}
                     smallMessage="Instructional materials added will be shown here"
                     onAddButtonClick={this.onAddButtonClick}
                     addButtonText="Add an instructional material" />

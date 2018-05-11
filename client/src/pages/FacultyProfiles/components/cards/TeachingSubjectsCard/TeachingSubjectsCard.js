@@ -4,7 +4,7 @@ import DetailCard from "../../../../../components/DetailCard";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
-import { getFullName } from "../../../../../utils/faculty";
+import { getFullName } from "../../../../../utils/user";
 
 
 class TeachingSubjectRow extends Component {
@@ -32,7 +32,7 @@ export default class TeachingSubjectsCard extends Component {
     );
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have assigned teaching subjects.`}
+        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have assigned teaching subjects.`}
                     smallMessage="Teaching subjects assigned will be shown here."
                     onAddButtonClick={this.onAddButtonClick}
                     addButtonText="Assign a subject" />

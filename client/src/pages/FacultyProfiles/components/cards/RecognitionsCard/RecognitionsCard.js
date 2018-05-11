@@ -5,7 +5,8 @@ import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
-import { formatMonthYearDate, getFullName } from "../../../../../utils/faculty";
+import { formatMonthYearDate } from "../../../../../utils/faculty";
+import { getFullName } from "../../../../../utils/user";
 
 
 class RecognitionRow extends Component {
@@ -42,7 +43,7 @@ export default class RecognitionsCard extends Component {
     );
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty)} does not have recorded recognitions.`}
+        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded recognitions.`}
                     smallMessage="Recognitions added will be shown here."
                     onAddButtonClick={this.onAddButtonClick}
                     addButtonText="Add a recognition" />

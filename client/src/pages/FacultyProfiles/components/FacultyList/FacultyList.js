@@ -5,10 +5,10 @@ import List, { ListItem } from "material-ui/List";
 import Tooltip from "material-ui/Tooltip";
 import Typography from "material-ui/Typography";
 import React, { Component } from "react";
-import FacultyAvatar from "../../../../components/FacultyAvatar";
+import UserAvatar from "../../../../components/UserAvatar";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
 import { EmptySearchResultsState, EmptyState, ErrorState } from "../../../../components/states";
-import { getFullName } from "../../../../utils/faculty";
+import { getFullName } from "../../../../utils/user";
 
 
 class FacultyItem extends Component {
@@ -21,12 +21,12 @@ class FacultyItem extends Component {
                       button>
                 <Grid container wrap="nowrap" spacing={16} alignItems="center">
                     <Grid item>
-                        <FacultyAvatar faculty={faculty} />
+                        <UserAvatar user={faculty.user} />
                     </Grid>
                     <Grid item>
                         <Typography className={this.props.active ? classes.activeListItemText : null}
                                     variant="subheading">
-                            {getFullName(faculty)}
+                            {getFullName(faculty.user)}
                         </Typography>
                     </Grid>
                 </Grid>
