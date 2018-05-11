@@ -1,7 +1,7 @@
-import Avatar from "material-ui/Avatar";
 import Menu, { MenuItem } from "material-ui/Menu";
 import Typography from "material-ui/Typography";
 import React, { Component } from "react";
+import UserAvatar from "../UserAvatar";
 
 
 class UserMenu extends Component {
@@ -34,15 +34,14 @@ export default class UserButton extends Component {
         });
     };
 
-    //FIXME: Get real avatar
-    avatar = (user) => {
-        return <Avatar className={this.props.classes.avatar} onClick={this.toggleMenu}>{user.name.first[0]}</Avatar>;
-    };
+    renderAvatar = (user) => (
+        <UserAvatar user={user} className={this.props.classes.avatar} onClick={this.toggleMenu} />
+    );
 
     render() {
         const anchor = this.state.anchor;
         const {classes, user} = this.props;
-        const avatar = this.avatar(user);
+        const avatar = this.renderAvatar(user);
         return (
             <div className={classes.userButton}>
                 <Typography className={classes.userNameDisplay}>{user.name.first}</Typography>
