@@ -1,7 +1,7 @@
 import { MuiThemeProvider } from "material-ui/styles";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Route, withRouter } from "react-router-dom";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { pageIsChanged } from "./actions/pages.actions";
 import FalconAppBar from "./components/FalconAppBar";
 import { getPageFromIdentifier, getPageFromPath, HOME_PAGE, PAGES, SIGN_IN_PAGE } from "./pages";
@@ -53,7 +53,10 @@ class App extends Component {
         return (
             <MuiThemeProvider theme={activePage.theme}>
                 {isAuthenticated && <FalconAppBar />}
-                {routes}
+                <Switch>
+                    {routes}
+                    <Redirect to="/404" />
+                </Switch>
             </MuiThemeProvider>
         );
     }
