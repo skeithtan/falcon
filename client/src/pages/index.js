@@ -1,5 +1,6 @@
 import FacultyProfilesPage from "./FacultyProfiles";
 import HomePage from "./Home";
+import NotFoundPage from "./NotFound";
 import SignInPage from "./SignIn";
 import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, PNU_THEME, TEAL_THEME } from "./themes";
 
@@ -52,6 +53,7 @@ export const NOT_FOUND_PAGE = {
     identifier: "NOT_FOUND_PAGE",
     path: "404",
     theme: PINK_THEME,
+    component: NotFoundPage,
 };
 
 export const MODULE_PAGES = [
