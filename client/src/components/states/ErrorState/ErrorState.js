@@ -15,7 +15,7 @@ class ErrorDetailsDialog extends Component {
                     onClose={this.props.onClose}>
                 <DialogTitle id="alert-dialog-title">Error details</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>{this.props.debug}</DialogContentText>
+                    <DialogContentText>{String(this.props.debug)}</DialogContentText>
                 </DialogContent>
             </Dialog>
         );
