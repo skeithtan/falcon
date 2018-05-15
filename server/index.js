@@ -7,7 +7,9 @@ import config from "./config";
 import schema from "./graphql/schema";
 
 
-mongoose.connect(config.database.url)
+const {server, database} = config;
+
+mongoose.connect(database.url, database.options)
         .then(onDatabaseConnect)
         .catch(err => console.log(`Could not connect to mongodb: ${err}`));
 
@@ -26,8 +28,8 @@ function onDatabaseConnect() {
 
     app.use("/graphiql", graphiqlExpress({endpointURL: "/graphql"}));
 
-    app.listen(config.server.port, () => {
-        console.info(`Server listening at port ${config.server.port}`);
+    app.listen(server.port, () => {
+        console.info(`Server listening at port ${server.port}`);
     });
 }
 
