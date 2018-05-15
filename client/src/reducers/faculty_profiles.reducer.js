@@ -4,6 +4,7 @@ import {
     DETAIL_FETCH_ERROR,
     DETAILS_FETCHED,
     DETAILS_IS_LOADING,
+    PROFILE_IS_ADDED,
     PROFILES_FETCH_ERROR,
     PROFILES_FETCHED,
     PROFILES_LIST_IS_LOADING,
@@ -44,6 +45,11 @@ export default function facultyProfiles(state = initialState, action) {
                     isLoading: false,
                     errors: action.errors,
                 },
+            };
+        case PROFILE_IS_ADDED:
+            return {
+                ...state,
+                faculties: [...state.faculties, action.faculty],
             };
         case PROFILES_FETCHED:
             return {

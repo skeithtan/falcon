@@ -1,5 +1,6 @@
 export const PROFILES_LIST_IS_LOADING = "PROFILES_LIST_IS_LOADING";
 export const PROFILES_FETCHED = "PROFILES_FETCHED";
+export const PROFILE_IS_ADDED = "PROFILE_IS_ADDED";
 export const PROFILES_FETCH_ERROR = "PROFILES_FETCH_ERROR";
 export const SEARCH_KEYWORD_CHANGED = "SEARCH_KEYWORD_CHANGED";
 export const ACTIVE_FACULTY_CHANGED = "ACTIVE_FACULTY_CHANGED";
@@ -18,6 +19,13 @@ export function profilesFetched(faculties) {
     return {
         type: PROFILES_FETCHED,
         faculties,
+    };
+}
+
+export function profileIsAdded(faculty) {
+    return {
+        type: PROFILE_IS_ADDED,
+        faculty,
     };
 }
 
