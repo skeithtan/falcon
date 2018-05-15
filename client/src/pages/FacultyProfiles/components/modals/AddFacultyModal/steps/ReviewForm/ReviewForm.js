@@ -9,7 +9,7 @@ export default class ReviewForm extends Component {
     render() {
         const {firstName, lastName, email, password, sex} = this.props.form;
         const fullName = `${firstName} ${lastName}`;
-        const pronoun = sex === SEX.M ? "his" : "her";
+        const pronoun = sex === SEX.M.identifier ? "his" : "her";
 
         return [
             <Typography key={0} variant="body1">

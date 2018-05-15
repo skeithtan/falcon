@@ -40,7 +40,7 @@ export default class OverviewCard extends Component {
                                     {getFullName(faculty.user)}
                                 </Typography>
                                 <Typography variant="subheading">
-                                    {EMPLOYMENT[faculty.employment]} Faculty
+                                    {EMPLOYMENT[faculty.employment].name} Faculty
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -52,7 +52,7 @@ export default class OverviewCard extends Component {
                 </div>
                 <List disablePadding>
                     <FormDisplayListItem field="Email" value={faculty.user.email} />
-                    <FormDisplayListItem field="Sex" value={SEX[faculty.sex]} />
+                    <FormDisplayListItem field="Sex" value={SEX[faculty.sex].name} />
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
             </DetailCard>

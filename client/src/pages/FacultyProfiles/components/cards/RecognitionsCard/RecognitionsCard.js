@@ -29,7 +29,7 @@ class RecognitionRow extends Component {
         return (
             <TableRow>
                 <TableCell>{recognition.title}</TableCell>
-                <TableCell>{RECOGNITION.BASIS[recognition.basis]}</TableCell>
+                <TableCell>{RECOGNITION.BASIS[recognition.basis].name}</TableCell>
                 <TableCell>{recognition.sponsor}</TableCell>
                 <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this recognition"

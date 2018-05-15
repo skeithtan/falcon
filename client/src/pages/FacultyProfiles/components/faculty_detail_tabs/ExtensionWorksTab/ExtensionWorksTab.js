@@ -34,7 +34,7 @@ class ExtensionWorkRow extends Component {
         }
 
         return roles
-            .map(roleCode => EXTENSION_WORK.ROLES[roleCode])
+            .map(roleCode => EXTENSION_WORK.ROLES[roleCode].name)
             .reduce(reducer);
     };
 

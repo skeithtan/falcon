@@ -37,9 +37,9 @@ class InstructionalMaterialRow extends Component {
                 <FormDisplayExpansionPanelDetails>
 
                     <FormDisplayListItem field="Medium"
-                                         value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium]} />
+                                         value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium].name} />
                     <FormDisplayListItem field="Classification"
-                                         value={INSTRUCTIONAL_MATERIAL.CLASSIFICATION[instructionalMaterial.classification]} />
+                                         value={INSTRUCTIONAL_MATERIAL.CLASSIFICATION[instructionalMaterial.classification].name} />
                     <FormDisplayListItem field="Usage Year"
                                          value={instructionalMaterial.usageYear} />
 
@@ -52,7 +52,7 @@ class InstructionalMaterialRow extends Component {
                     {/*Student exclusive stuff*/}
                     {instructionalMaterial.medium === INSTRUCTIONAL_MATERIAL.MEDIUM.NON_PRINT &&
                     <FormDisplayListItem field="Type"
-                                         value={INSTRUCTIONAL_MATERIAL.NON_PRINT_TYPES[instructionalMaterial.nonPrintType]} />
+                                         value={INSTRUCTIONAL_MATERIAL.NON_PRINT_TYPES[instructionalMaterial.nonPrintType].name} />
                     }
 
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"

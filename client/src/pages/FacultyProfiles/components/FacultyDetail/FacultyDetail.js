@@ -59,6 +59,7 @@ export default class FacultyDetail extends Component {
         if (errors) {
             return {};
         }
+
         // Overview would have been fetched if birthDate exists
         if (!activeFaculty.birthDate) {
             getFacultyDetails(activeFaculty);

@@ -28,7 +28,7 @@ class DegreeRow extends Component {
         return (
             <TableRow>
                 <TableCell>{degree.title}</TableCell>
-                <TableCell>{DEGREE.LEVEL[degree.level]}</TableCell>
+                <TableCell>{DEGREE.LEVEL[degree.level].name}</TableCell>
                 <TableCell>{degree.completionYear}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this recognition"
                                  updateButtonTooltipTitle="Update this recognition"

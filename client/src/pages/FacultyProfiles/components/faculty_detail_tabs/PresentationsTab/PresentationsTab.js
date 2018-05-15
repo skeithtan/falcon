@@ -37,7 +37,7 @@ class PresentationRow extends Component {
                 <FormDisplayExpansionPanelDetails>
 
                     <FormDisplayListItem field="Category"
-                                         value={PRESENTATION.CATEGORY[presentation.category]} />
+                                         value={PRESENTATION.CATEGORY[presentation.category].name} />
                     <FormDisplayListItem field="Date"
                                          value={formatMonthYearDate(presentation.date)} />
                     <FormDisplayListItem field="Sponsor"
@@ -47,7 +47,7 @@ class PresentationRow extends Component {
                     <FormDisplayListItem field="Conference"
                                          value={presentation.conference} />
                     <FormDisplayListItem field="Medium"
-                                         value={PRESENTATION.MEDIUM[presentation.medium]} />
+                                         value={PRESENTATION.MEDIUM[presentation.medium].name} />
                     <FormDisplayListItem field="Duration"
                                          value={`${presentation.daysDuration} Days`} />
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove presentation"

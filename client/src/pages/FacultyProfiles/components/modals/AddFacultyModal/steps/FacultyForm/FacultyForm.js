@@ -29,19 +29,17 @@ export default class FacultyForm extends Component {
             <FormControl key={0}>
                 <FormLabel>Sex</FormLabel>
                 <RadioGroup value={form.sex} onChange={handleFormChange("sex")}>
-                    <FormControlLabel value={SEX.M} label={SEX.M} control={<Radio />} />
-                    <FormControlLabel value={SEX.F} label={SEX.F} control={<Radio />} />
+                    {Object.entries(SEX).map(([identifier, {name}]) => (
+                        <FormControlLabel key={identifier} value={identifier} label={name} control={<Radio />} />
+                    ))}
                 </RadioGroup>
             </FormControl>,
             <FormControl key={1}>
                 <FormLabel>Employment</FormLabel>
                 <RadioGroup value={form.employment} onChange={handleFormChange("employment")}>
-                    <FormControlLabel value={EMPLOYMENT.FULL_TIME_PERMANENT} label={EMPLOYMENT.FULL_TIME_PERMANENT}
-                                      control={<Radio />} />
-                    <FormControlLabel value={EMPLOYMENT.FULL_TIME_TEMPORARY} label={EMPLOYMENT.FULL_TIME_TEMPORARY}
-                                      control={<Radio />} />
-                    <FormControlLabel value={EMPLOYMENT.PART_TIME} label={EMPLOYMENT.PART_TIME}
-                                      control={<Radio />} />
+                    {Object.entries(EMPLOYMENT).map(([identifier, {name}]) => (
+                        <FormControlLabel key={identifier} value={identifier} label={name} control={<Radio />} />
+                    ))}
 
                 </RadioGroup>
             </FormControl>,
