@@ -16,15 +16,15 @@ import { FacultyForm, ReviewForm, UserForm } from "./steps";
 
 function mapFormToGraphQLParameters(form) {
     return {
-        user: {
+        newUser: {
             name: {
                 first: form.firstName,
                 last: form.lastName,
             },
             email: form.email,
         },
-        password: form.password,
-        faculty: {
+        temporaryPassword: form.password,
+        newFaculty: {
             sex: form.sex,
             employment: form.employment,
             birthDate: form.birthDate,
@@ -32,24 +32,27 @@ function mapFormToGraphQLParameters(form) {
     };
 }
 
+const initialForm = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    sex: SEX.M.identifier,
+    employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
+    birthDate: "",
+};
+
 const initialState = {
     activeStep: 0,
-    form: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        sex: SEX.M,
-        employment: EMPLOYMENT.FULL_TIME_PERMANENT,
-        birthDate: "",
-    },
+    form: {...initialForm},
     isSubmitting: false,
+    error: null,
 };
 
 export default class AddFacultyModal extends Component {
     state = {...initialState};
 
-    resetForm = () => this.setState({...initialState});
+    resetForm = () => this.setState({...initialState, form: {...initialForm}});
 
     handleBack = () => this.setState({
         activeStep: this.state.activeStep - 1,
@@ -62,13 +65,42 @@ export default class AddFacultyModal extends Component {
     handleFinish = () => {
         this.setState({
             isSubmitting: true,
+            error: null,
         });
-        //TODO
-        console.log("Handle Finish called");
+
+        const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(this.state.form);
+
+        this.props.submitFaculty(newFaculty, newUser, temporaryPassword)
+            .then(() => this.setState({isSubmitting: false}, this.closeModal))
+            .catch(error => {
+                console.log(error.graphQLErrors[0].message);
+                if (error.graphQLErrors &&
+                    error.graphQLErrors[0].message.startsWith("ValidationError: User with email")) {
+                    this.setState({
+                        error: `User with email ${newUser.email} already exists.`,
+                        isSubmitting: false,
+                    });
+                } else {
+                    this.setState({
+                        error: error,
+                        isSubmitting: false,
+                    });
+                }
+            });
+    };
+
+    closeModal = () => {
+        if (this.state.isSubmitting) {
+            // You can't exit while the form is submitting!
+            return;
+        }
+
+        this.props.onClose();
+        this.resetForm();
     };
 
     handleFormChange = fieldName => event => {
-        const form = this.state.form;
+        const form = {...this.state.form};
         form[fieldName] = event.target.value;
         this.setState({form: form});
     };
@@ -129,6 +161,12 @@ export default class AddFacultyModal extends Component {
                         <Typography color="primary">Submitting...</Typography>
                     </Grid>
                     }
+
+                    {this.state.error &&
+                    <Grid item>
+                        <Typography color="error">{String(this.state.error)}</Typography>
+                    </Grid>
+                    }
                 </Grid>
 
             </StepContent>
@@ -136,11 +174,11 @@ export default class AddFacultyModal extends Component {
     ];
 
     render() {
-        const {open, onClose, classes} = this.props;
+        const {open} = this.props;
         const {activeStep} = this.state;
 
         return (
-            <Dialog open={open} onClose={onClose} maxWidth={false}>
+            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
                 <DialogTitle>Add a Faculty</DialogTitle>
                 <DialogContent>
                     <Stepper activeStep={activeStep} orientation="vertical">
