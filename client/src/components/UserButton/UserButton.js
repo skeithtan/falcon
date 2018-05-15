@@ -1,5 +1,6 @@
-import Menu, { MenuItem } from "material-ui/Menu";
-import Typography from "material-ui/Typography";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import UserAvatar from "../UserAvatar";
 

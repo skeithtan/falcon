@@ -1,5 +1,7 @@
-import Drawer from "material-ui/Drawer";
-import List, { ListItem, ListItemText } from "material-ui/List";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import pnuLogo from "../../images/pnu-logo.png";

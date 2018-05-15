@@ -1,14 +1,16 @@
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
-import Button from "material-ui/Button";
-import Grid from "material-ui/Grid";
-import List, { ListItem } from "material-ui/List";
-import Tooltip from "material-ui/Tooltip";
-import Typography from "material-ui/Typography";
 import React, { Component } from "react";
-import UserAvatar from "../../../../components/UserAvatar";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
 import { EmptySearchResultsState, EmptyState, ErrorState } from "../../../../components/states";
+import UserAvatar from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user";
+import AddFacultyModal from "../modals/AddFacultyModal";
 
 
 class FacultyItem extends Component {
@@ -36,6 +38,10 @@ class FacultyItem extends Component {
 }
 
 export default class FacultyList extends Component {
+    state = {
+        addFacultyModalIsShowing: false,
+    };
+
     constructor(props) {
         super(props);
         const {faculties, fetchData} = props;
@@ -63,15 +69,14 @@ export default class FacultyList extends Component {
         <FullPageLoadingIndicator size={100} />
     );
 
-    addFaculty = () => {
-        //TODO: This
-        console.log("Add faculty clicked");
-    };
+    toggleAddFacultyModal = () => this.setState({
+        addFacultyModalIsShowing: !this.state.addFacultyModalIsShowing,
+    });
 
     renderEmptyState = () => (
         <EmptyState bigMessage="No faculties found"
                     smallMessage="When faculties are added, you can see them here"
-                    onAddButtonClick={this.addFaculty}
+                    onAddButtonClick={this.toggleAddFacultyModal}
                     addButtonText="Add a faculty" />
     );
 
@@ -127,11 +132,14 @@ export default class FacultyList extends Component {
 
                 {faculties &&
                 <Tooltip title="Add a faculty" placement="top">
-                    <Button variant="fab" color="primary" className={classes.addButton} onClick={this.addFaculty}>
+                    <Button variant="fab" color="primary" className={classes.addButton}
+                            onClick={this.toggleAddFacultyModal}>
                         <AddIcon />
                     </Button>
                 </Tooltip>
                 }
+
+                <AddFacultyModal open={this.state.addFacultyModalIsShowing} onClose={this.toggleAddFacultyModal} />
             </div>
         );
     }

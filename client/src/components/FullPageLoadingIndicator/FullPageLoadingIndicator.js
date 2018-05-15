@@ -1,4 +1,4 @@
-import { CircularProgress } from "material-ui/Progress";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { Component } from "react";
 
 

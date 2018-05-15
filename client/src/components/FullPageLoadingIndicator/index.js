@@ -1,4 +1,4 @@
-import { withStyles, withTheme } from "material-ui/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import { compose } from "recompose";
 import FullPageLoadingIndicator from "./FullPageLoadingIndicator";
 import styles from "./styles";

@@ -1,11 +1,11 @@
-import blue from "material-ui/colors/blue";
-import blueGrey from "material-ui/colors/blueGrey";
-import deepPurple from "material-ui/colors/deepPurple";
-import grey from "material-ui/colors/grey";
-import indigo from "material-ui/colors/indigo";
-import pink from "material-ui/colors/pink";
-import teal from "material-ui/colors/teal";
-import { createMuiTheme } from "material-ui/styles/index";
+import blue from "@material-ui/core/colors/blue";
+import blueGrey from "@material-ui/core/colors/blueGrey";
+import deepPurple from "@material-ui/core/colors/deepPurple";
+import grey from "@material-ui/core/colors/grey";
+import indigo from "@material-ui/core/colors/indigo";
+import pink from "@material-ui/core/colors/pink";
+import teal from "@material-ui/core/colors/teal";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 
 function makeTheme({primary, secondary, primaryShade = 700, secondaryShade = 600}) {

@@ -1,5 +1,5 @@
 import Search from "@material-ui/icons/Search";
-import Typography from "material-ui/Typography";
+import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 

@@ -1,4 +1,4 @@
-import Typography from "material-ui/Typography";
+import Typography from "@material-ui/core/Typography";
 import React, { Component, createElement } from "react";
 import SwipeableViews from "react-swipeable-views";
 import DetailCard from "../../../../components/DetailCard";

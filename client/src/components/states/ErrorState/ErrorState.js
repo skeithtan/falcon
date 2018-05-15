@@ -1,7 +1,10 @@
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
 import Error from "@material-ui/icons/Error";
-import Button from "material-ui/Button";
-import Dialog, { DialogContent, DialogContentText, DialogTitle } from "material-ui/Dialog";
-import Typography from "material-ui/Typography";
 import React, { Component } from "react";
 
 

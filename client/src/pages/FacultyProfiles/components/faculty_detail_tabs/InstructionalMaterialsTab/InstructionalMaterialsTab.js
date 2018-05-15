@@ -1,6 +1,6 @@
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { ExpansionPanelSummary } from "material-ui/ExpansionPanel";
-import Typography from "material-ui/Typography";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
 import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
@@ -79,10 +79,11 @@ class InstructionalMaterialsTab extends Component {
     );
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded instructional materials`}
-                    smallMessage="Instructional materials added will be shown here"
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Add an instructional material" />
+        <EmptyState
+            bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded instructional materials`}
+            smallMessage="Instructional materials added will be shown here"
+            onAddButtonClick={this.onAddButtonClick}
+            addButtonText="Add an instructional material" />
     );
 
     render() {

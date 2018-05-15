@@ -1,6 +1,6 @@
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { ExpansionPanelSummary } from "material-ui/ExpansionPanel";
-import Typography from "material-ui/Typography";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
 import DetailExpansionCard from "../../../../../components/DetailExpansionCard";

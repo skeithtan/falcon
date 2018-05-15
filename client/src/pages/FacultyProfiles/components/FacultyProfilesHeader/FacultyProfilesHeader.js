@@ -1,7 +1,10 @@
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+
+import Paper from "@material-ui/core/Paper";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
 import Search from "@material-ui/icons/Search";
-import Input, { InputAdornment } from "material-ui/Input";
-import Paper from "material-ui/Paper";
-import Tabs, { Tab } from "material-ui/Tabs";
 import React, { Component } from "react";
 import { TABS } from "../faculty_detail_tabs";
 

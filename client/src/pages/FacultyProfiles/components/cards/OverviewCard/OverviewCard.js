@@ -1,9 +1,9 @@
 import EditIcon from "@material-ui/icons/Edit";
-import Grid from "material-ui/Grid";
-import IconButton from "material-ui/IconButton";
-import List from "material-ui/List";
-import Tooltip from "material-ui/Tooltip";
-import Typography from "material-ui/Typography";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 import moment from "moment/moment";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";

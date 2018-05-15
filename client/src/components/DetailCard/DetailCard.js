@@ -1,4 +1,4 @@
-import Paper from "material-ui/Paper";
+import Paper from "@material-ui/core/Paper";
 import React, { Component } from "react";
 
 

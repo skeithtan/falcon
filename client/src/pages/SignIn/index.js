@@ -1,4 +1,4 @@
-import { withStyles, withTheme } from "material-ui/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { signInError, signInIsLoading, signInSuccess } from "../../actions/authentication.actions";

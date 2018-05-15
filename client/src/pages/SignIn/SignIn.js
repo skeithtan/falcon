@@ -1,8 +1,8 @@
-import Button from "material-ui/Button";
-import Card from "material-ui/Card";
-import { LinearProgress } from "material-ui/Progress";
-import TextField from "material-ui/TextField";
-import Typography from "material-ui/Typography";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import pnuLogo from "../../images/pnu-logo.png";
 

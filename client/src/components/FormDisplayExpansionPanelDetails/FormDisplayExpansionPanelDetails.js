@@ -1,4 +1,4 @@
-import { ExpansionPanelDetails } from "material-ui/ExpansionPanel";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import React, { Component } from "react";
 
 

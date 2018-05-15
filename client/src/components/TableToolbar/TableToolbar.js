@@ -1,8 +1,8 @@
 import AddIcon from "@material-ui/icons/Add";
-import IconButton from "material-ui/IconButton";
-import Toolbar from "material-ui/Toolbar";
-import Tooltip from "material-ui/Tooltip";
-import Typography from "material-ui/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 

@@ -1,6 +1,6 @@
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { ExpansionPanelSummary } from "material-ui/ExpansionPanel";
-import Typography from "material-ui/Typography";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
 import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
@@ -72,10 +72,10 @@ class PresentationsTab extends Component {
     );
 
     renderEmptyState = () => (
-      <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded presentations`}
-                  smallMessage="Presentations added will be shown here"
-                  onAddButtonClick={this.onAddButtonClick}
-                  addButtonText="Add a presentation" />
+        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded presentations`}
+                    smallMessage="Presentations added will be shown here"
+                    onAddButtonClick={this.onAddButtonClick}
+                    addButtonText="Add a presentation" />
     );
 
     render() {
