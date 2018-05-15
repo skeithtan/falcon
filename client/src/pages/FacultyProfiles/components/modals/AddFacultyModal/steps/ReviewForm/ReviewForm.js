@@ -2,17 +2,19 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import FormDisplayListItem from "../../../../../../../components/FormDisplayListItem";
+import { SEX } from "../../../../../../../enums/faculty.enums";
 
 
 export default class ReviewForm extends Component {
     render() {
-        const {firstName, lastName, email, password} = this.props.form;
+        const {firstName, lastName, email, password, sex} = this.props.form;
         const fullName = `${firstName} ${lastName}`;
+        const pronoun = sex === SEX.M ? "his" : "her";
 
         return [
             <Typography key={0} variant="body1">
                 Upon signing in for the first time, {fullName} will be
-                prompted to change their password for security reasons.
+                prompted to change {pronoun} password for security reasons.
             </Typography>,
 
             <Typography key={1} variant="body1">
