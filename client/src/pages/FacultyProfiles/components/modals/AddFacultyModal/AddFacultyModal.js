@@ -1,11 +1,14 @@
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/es/Grid";
 import Step from "@material-ui/core/Step";
 import StepContent from "@material-ui/core/StepContent";
 import StepLabel from "@material-ui/core/StepLabel";
 import Stepper from "@material-ui/core/Stepper";
+import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { FacultyForm, ReviewForm, UserForm } from "./steps";
@@ -57,6 +60,9 @@ export default class AddFacultyModal extends Component {
     });
 
     handleFinish = () => {
+        this.setState({
+            isSubmitting: true,
+        });
         //TODO
         console.log("Handle Finish called");
     };
@@ -86,25 +92,44 @@ export default class AddFacultyModal extends Component {
                 </div>
             </StepContent>
         </Step>,
-        <Step key={1}>
+        <Step key={2}>
             <StepLabel>Review details</StepLabel>
             <StepContent>
                 <div className={this.props.classes.form}>
-                    <ReviewForm form={this.state.form} classes={this.props.classes}/>
+                    <ReviewForm form={this.state.form} classes={this.props.classes} />
                 </div>
 
-                <Button
-                    onClick={this.handleBack}
-                    className={this.props.classes.backButton}>
-                    Back
-                </Button>
+                <Grid container key={3} spacing={16} alignItems="center">
+                    <Grid item>
+                        <Button
+                            disabled={this.state.isSubmitting}
+                            onClick={this.handleBack}
+                            className={this.props.classes.backButton}>
+                            Back
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            disabled={this.state.isSubmitting}
+                            variant="raised"
+                            color="primary"
+                            onClick={this.handleFinish}>
+                            Finish
+                        </Button>
+                    </Grid>
 
-                <Button
-                    variant="raised"
-                    color="primary"
-                    onClick={this.handleFinish}>
-                    Finish
-                </Button>
+                    {this.state.isSubmitting &&
+                    <Grid item>
+                        <CircularProgress size={24} />
+                    </Grid>
+                    }
+
+                    {this.state.isSubmitting &&
+                    <Grid item>
+                        <Typography color="primary">Submitting...</Typography>
+                    </Grid>
+                    }
+                </Grid>
 
             </StepContent>
         </Step>,
