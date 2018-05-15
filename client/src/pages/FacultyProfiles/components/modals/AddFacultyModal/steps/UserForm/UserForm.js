@@ -8,16 +8,24 @@ import React, { Component } from "react";
 import validateForm from "../../../../../../../utils/forms";
 
 
-function getUserFormErrors(form) {
+function getUserFormErrors(form, existingFaculties) {
     return validateForm({
         email: {
             value: form.email,
-            customValidators: [{
-                isValid(value) {
-                    return /\S+@\S+\.\S+/.test(value);
+            customValidators: [
+                {
+                    isValid(value) {
+                        return /\S+@\S+\.\S+/.test(value);
+                    },
+                    errorMessage: "Must be a valid email address",
                 },
-                errorMessage: "Must be a valid email address",
-            }],
+                {
+                    isValid(value) {
+                        return existingFaculties.every(faculty => faculty.user.email !== value);
+                    },
+                    errorMessage: "A faculty with this email already exists",
+                },
+            ],
         },
         firstName: {
             value: form.firstName,
@@ -35,7 +43,7 @@ function getUserFormErrors(form) {
 export default class UserForm extends Component {
     render() {
         const {handleFormChange, form, handleNext} = this.props;
-        const {hasErrors, fieldErrors} = getUserFormErrors(form);
+        const {hasErrors, fieldErrors} = getUserFormErrors(form, this.props.faculties);
 
         return [
             <Grid container spacing={16} key={0}>
@@ -67,7 +75,7 @@ export default class UserForm extends Component {
             </FormControl>,
             <FormControl key={2} error={fieldErrors.password.length > 0} fullWidth>
                 <InputLabel>Temporary Password</InputLabel>
-                <Input value={form.password} onChange={handleFormChange("password")}/>
+                <Input value={form.password} onChange={handleFormChange("password")} />
                 {fieldErrors.password.length > 0 &&
                 <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
                 }
