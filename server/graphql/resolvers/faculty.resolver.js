@@ -2,6 +2,7 @@ import { Faculty } from "../../models/faculty.model";
 import { FACULTY, User } from "../../models/user.model";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { DoesNotExistError } from "../errors";
+import ValidationError from "../errors/validation.error";
 
 
 function faculties() {
@@ -38,8 +39,19 @@ function mutateFaculty() {
                 temporary: true,
             };
 
-            const user = await User.create(newUser);
-            newFaculty.user = user._id;
+            let user = null;
+
+            try {
+                user = await User.create(newUser);
+                newFaculty.user = user._id;
+            } catch (error) {
+                // E11000 is duplicate key error index
+                if (error.code === 11000) {
+                    return new ValidationError(`User with email ${error.getOperation().email} already exists`);
+                } else {
+                    throw error;
+                }
+            }
 
             try {
                 const faculty = await Faculty.create(newFaculty);
