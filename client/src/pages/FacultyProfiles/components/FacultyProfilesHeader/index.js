@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import compose from "recompose/compose";
 import { activeTabChanged, searchKeywordChanged } from "../../../../actions/faculty_profiles.actions";
 import FacultyProfilesHeader from "./FacultyProfilesHeader";
 

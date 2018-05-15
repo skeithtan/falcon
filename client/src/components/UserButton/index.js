@@ -1,6 +1,6 @@
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import compose from "recompose/compose";
 import { signOutSuccess } from "../../actions/authentication.actions";
 import userService from "../../services/user.service";
 import styles from "./styles";
