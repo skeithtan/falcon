@@ -96,3 +96,31 @@ export function fetchFacultyDetails(facultyId) {
         },
     });
 }
+
+export function addFaculty(newFaculty, newUser, temporaryPassword) {
+    return client.mutate({
+        mutation: gql`
+            mutation createFaculty($newFaculty: FacultyInput!, $newUser: UserInput!, $temporaryPassword: String!) {
+                faculty {
+                    createFaculty(newFaculty: $newFaculty, newUser: $newUser, temporaryPassword: $temporaryPassword) {
+                        _id
+                        user {
+                            name {
+                                first
+                                last
+                            }
+
+                            email
+                            photo
+                        }
+                    }
+                }
+            }
+        `,
+        variables: {
+            newFaculty,
+            newUser,
+            temporaryPassword,
+        },
+    });
+}
