@@ -6,7 +6,6 @@ import { HOME_PAGE } from "../index";
 export default class NotFoundPage extends Component {
     render() {
         const {classes, history} = this.props;
-        console.log(this.props);
         return (
             <div className={classes.container}>
                 <div className={classes.messageGrid}>
