@@ -150,7 +150,7 @@ export function addFaculty(newFaculty, newUser, temporaryPassword) {
 export function updateFaculty(_id, newFaculty, newUser) {
     return client.mutate({
         mutation: gql`
-            updateFaculty($_id: String!, $newFaculty: FacultyInput!, $newUser: UserInput) {
+            mutation updateFaculty($_id: String!, $newFaculty: FacultyInput!, $newUser: UserInput) {
                 faculty {
                     updateFaculty(_id: $_id, newFaculty: $newFaculty, newUser: $newUser) {
                         ${fullFacultyDetails}
