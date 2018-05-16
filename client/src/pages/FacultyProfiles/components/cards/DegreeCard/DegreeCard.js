@@ -10,6 +10,7 @@ import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { DEGREE } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
+import DegreeModal from "../../modals/DegreeModal";
 
 
 class DegreeRow extends Component {
@@ -40,6 +41,16 @@ class DegreeRow extends Component {
 }
 
 export default class DegreeCard extends Component {
+    state = {
+        addDegreeModalIsShowing: false,
+    };
+
+    toggleAddDegreeModal = () => {
+        this.setState({
+            addDegreeModalIsShowing: !this.state.addDegreeModalIsShowing,
+        });
+    };
+
     renderRows = degrees => degrees.map(degree =>
         <DegreeRow degree={degree} key={degree._id} />,
     );
@@ -47,14 +58,9 @@ export default class DegreeCard extends Component {
     renderEmptyState = () => (
         <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded degrees.`}
                     smallMessage="Degrees added will be shown here."
-                    onAddButtonClick={this.onAddButtonClick}
+                    onAddButtonClick={this.toggleAddDegreeModal}
                     addButtonText="Add a degree" />
     );
-
-    onAddButtonClick = () => {
-        //TODO
-        console.log("Add degree button clicked");
-    };
 
     render() {
         const faculty = this.props.faculty;
@@ -64,7 +70,7 @@ export default class DegreeCard extends Component {
             <DetailCard>
                 <TableToolbar tableTitle="Degrees"
                               addButtonTooltipTitle="Add a degree"
-                              onAddButtonClick={this.onAddButtonClick} />
+                              onAddButtonClick={this.toggleAddDegreeModal} />
                 {!degreesIsEmpty &&
                 <Table>
                     <TableHead>
@@ -82,6 +88,11 @@ export default class DegreeCard extends Component {
                 }
 
                 {degreesIsEmpty && this.renderEmptyState()}
+
+                <DegreeModal add
+                             open={this.state.addDegreeModalIsShowing}
+                             onClose={this.toggleAddDegreeModal}
+                             faculty={faculty} />
             </DetailCard>
         );
     }
