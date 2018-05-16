@@ -5,6 +5,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import React, { Component } from "react";
+import Uploader from "../../../../../../../components/Uploader";
 import validateForm from "../../../../../../../utils/forms";
 
 
@@ -80,8 +81,14 @@ export default class UserForm extends Component {
                 <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
                 }
             </FormControl>,
+            <div key={4}>
+                <Uploader
+                    onUploadComplete={url => {form.photo = url}}
+                    data-system-dialog
+                    data-images-only />
+            </div>,
             <Button
-                key={4}
+                key={5}
                 disabled={hasErrors}
                 variant="raised"
                 color="primary"

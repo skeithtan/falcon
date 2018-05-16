@@ -22,6 +22,7 @@ function mapFormToGraphQLParameters(form) {
                 last: form.lastName,
             },
             email: form.email,
+            photo: form.photo,
         },
         temporaryPassword: form.password,
         newFaculty: {
@@ -37,6 +38,7 @@ const initialForm = {
     lastName: "",
     email: "",
     password: "",
+    photo: null,
     sex: SEX.M.identifier,
     employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
     birthDate: "",
