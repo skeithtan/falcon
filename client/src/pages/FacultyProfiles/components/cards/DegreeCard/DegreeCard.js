@@ -14,18 +14,8 @@ import DegreeModal from "../../modals/DegreeModal";
 
 
 class DegreeRow extends Component {
-    onUpdateButtonClick = degree => {
-        //TODO
-        console.log(`Degree ${degree._id} edit button clicked`);
-    };
-
-    onRemoveButtonClick = degree => {
-        //TODO
-        console.log(`Degree ${degree._id} remove button clicked`);
-    };
-
     render() {
-        const degree = this.props.degree;
+        const {degree, onUpdateButtonClick, onRemoveButtonClick} = this.props;
         return (
             <TableRow>
                 <TableCell>{degree.title}</TableCell>
@@ -33,8 +23,8 @@ class DegreeRow extends Component {
                 <TableCell numeric>{degree.completionYear}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this recognition"
                                  updateButtonTooltipTitle="Update this recognition"
-                                 onRemoveButtonClick={() => this.onRemoveButtonClick(degree)}
-                                 onUpdateButtonClick={() => this.onUpdateButtonClick(degree)} />
+                                 onRemoveButtonClick={onRemoveButtonClick}
+                                 onUpdateButtonClick={onUpdateButtonClick} />
             </TableRow>
         );
     }
@@ -42,23 +32,48 @@ class DegreeRow extends Component {
 
 export default class DegreeCard extends Component {
     state = {
-        addDegreeModalIsShowing: false,
+        degreeFormModalIsShowing: false,
+        activeDegree: null,
     };
 
-    toggleAddDegreeModal = () => {
+    toggleDegreeFormModal = () => {
         this.setState({
-            addDegreeModalIsShowing: !this.state.addDegreeModalIsShowing,
+            degreeFormModalIsShowing: !this.state.degreeFormModalIsShowing,
         });
     };
 
     renderRows = degrees => degrees.map(degree =>
-        <DegreeRow degree={degree} key={degree._id} />,
+        <DegreeRow degree={degree} key={degree._id}
+                   onUpdateButtonClick={() => {
+                       this.setState({
+                           activeDegree: degree,
+                       });
+
+                       this.toggleDegreeFormModal();
+                   }}
+                   onRemoveButtonClick={() => {
+                       this.setState({
+                           activeDegree: degree,
+                       });
+
+                       // TODO
+                       console.log("Remove button clicked");
+                   }}
+        />,
     );
+
+    onAddButtonClick = () => {
+        this.setState({
+            activeDegree: null,
+        });
+
+        this.toggleDegreeFormModal();
+    };
 
     renderEmptyState = () => (
         <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded degrees.`}
                     smallMessage="Degrees added will be shown here."
-                    onAddButtonClick={this.toggleAddDegreeModal}
+                    onAddButtonClick={this.onAddButtonClick}
                     addButtonText="Add a degree" />
     );
 
@@ -70,7 +85,7 @@ export default class DegreeCard extends Component {
             <DetailCard>
                 <TableToolbar tableTitle="Degrees"
                               addButtonTooltipTitle="Add a degree"
-                              onAddButtonClick={this.toggleAddDegreeModal} />
+                              onAddButtonClick={this.onAddButtonClick} />
                 {!degreesIsEmpty &&
                 <Table>
                     <TableHead>
@@ -90,9 +105,10 @@ export default class DegreeCard extends Component {
 
                 {degreesIsEmpty && this.renderEmptyState()}
 
-                <DegreeModal action="add"
-                             open={this.state.addDegreeModalIsShowing}
-                             onClose={this.toggleAddDegreeModal}
+                <DegreeModal action={this.state.activeDegree ? "update" : "add"}
+                             degree={this.state.activeDegree}
+                             open={this.state.degreeFormModalIsShowing}
+                             onClose={this.toggleDegreeFormModal}
                              faculty={faculty} />
             </DetailCard>
         );

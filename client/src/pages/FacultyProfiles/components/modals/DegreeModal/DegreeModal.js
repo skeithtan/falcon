@@ -42,49 +42,72 @@ function getFormErrors(form) {
     });
 }
 
+// Removes unwanted details like _id and __typename
+function mapDegreeToForm(degree) {
+    return {
+        title: degree.title,
+        completionYear: degree.completionYear,
+        level: degree.level,
+    };
+}
+
+const initialForm = {
+    title: "",
+    level: DEGREE.LEVEL.ASSOCIATE.identifier,
+    completionYear: "",
+};
+
 export default class DegreeModal extends ModalFormComponent {
     get initialForm() {
-        return {
-            title: "",
-            level: DEGREE.LEVEL.ASSOCIATE.identifier,
-            completionYear: "",
-        };
+        return initialForm;
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.action === "add") {
-            return {...prevState};
+            return {
+                ...prevState,
+                form: {...initialForm},
+            };
         }
 
-        return prevState;
-
-        //TODO: Update degree
+        return {
+            ...prevState,
+            form: mapDegreeToForm(nextProps.degree),
+        };
     }
 
     handleSubmit = () => {
         const form = this.state.form;
-        const {faculty, submitAddDegreeForm, action} = this.props;
+        const {faculty, action, submitAddDegreeForm, submitUpdateDegreeForm} = this.props;
         this.setState({isSubmitting: true, error: null});
 
-        if (action === "add") {
-            submitAddDegreeForm(form, faculty)
-                .then(() => this.setState({isSubmitting: false}, this.closeModal))
-                .catch(error => {
-                    console.log(error);
-                    this.setState({
-                        isSubmitting: false,
-                        error: error,
-                    });
+        const submit = () => {
+            if (action === "add") {
+                return submitAddDegreeForm(form, faculty);
+            } else {
+                const degree = this.props.degree;
+                return submitUpdateDegreeForm(form, degree._id, faculty);
+            }
+        };
+
+        submit()
+            .then(() => this.setState({isSubmitting: false}, this.closeModal))
+            .catch(error => {
+                console.log(error);
+                this.setState({
+                    isSubmitting: false,
+                    error: error,
                 });
-        } else {
-            //TODO: Update
-        }
+            });
     };
 
+    get buttonName() {
+        return this.props.action === "add" ? "Add Degree" : "Update Degree";
+    };
 
-    buttonName = this.props.action === "add" ? "Add Degree" : "Update Degree";
-
-    modalTitle = this.props.action === "add" ? "Add a Degree" : "Update Degree";
+    get modalTitle() {
+        return this.props.action === "add" ? "Add a Degree" : "Update Degree";
+    }
 
     render() {
         const {open, classes} = this.props;
