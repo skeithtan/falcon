@@ -4,7 +4,7 @@ import {
     DETAIL_FETCH_ERROR,
     DETAILS_FETCHED,
     DETAILS_IS_LOADING,
-    PROFILE_IS_ADDED,
+    PROFILE_IS_ADDED, PROFILE_IS_UPDATED,
     PROFILES_FETCH_ERROR,
     PROFILES_FETCHED,
     PROFILES_LIST_IS_LOADING,
@@ -50,6 +50,22 @@ export default function facultyProfiles(state = initialState, action) {
             return {
                 ...state,
                 faculties: [...state.faculties, action.faculty],
+            };
+        case PROFILE_IS_UPDATED:
+            const modifiedFaculty = action.faculty;
+
+            // Replace the old with the new
+            const faculties = state.faculties.map(faculty => {
+                if (faculty._id === modifiedFaculty._id) {
+                    return modifiedFaculty;
+                }
+
+                return faculty;
+            });
+
+            return {
+                ...state,
+                faculties: faculties,
             };
         case PROFILES_FETCHED:
             return {
