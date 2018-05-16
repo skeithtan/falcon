@@ -8,7 +8,7 @@ import moment from "moment";
  *         value : 'Actual field value',
  *             optional : false,
  *             customValidators : [{
- *             isValid : (fieldValue) => !isNaN(parseInt(name)),
+ *             isValid : (fieldValue) => !isNaN(parseInt(fieldValue)),
  *             errorMessage : "Must be a valid integer"
  *         }]
  *     },
