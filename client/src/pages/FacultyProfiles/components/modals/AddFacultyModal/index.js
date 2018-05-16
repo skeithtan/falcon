@@ -38,7 +38,6 @@ function mapDispatchToProps(dispatch) {
                 .then(result => {
                     const faculty = result.data.faculty.createFaculty;
                     dispatch(profileIsAdded(faculty));
-                    dispatch(detailsIsLoading());
                     dispatch(activeFacultyChanged(faculty));
 
                     return faculty;

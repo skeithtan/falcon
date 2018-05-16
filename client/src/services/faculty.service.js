@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import client from "../client";
 
+
 const facultySummary = `
     _id
     user {
@@ -14,18 +15,22 @@ const facultySummary = `
     }
 `;
 
-const fullFacultyDetails = `
+const facultyOverview = `
     sex
     employment
     birthDate
-    
+`;
+
+const degrees = `
     degrees {
         _id
         title
         level
         completionYear
     }
-    
+`;
+
+const recognitions = `
     recognitions {
         _id
         title
@@ -36,14 +41,18 @@ const fullFacultyDetails = `
             year
         }
     }
-    
+`;
+
+const teachingSubjects = `
     teachingSubjects {
         _id
         code
         name
         major
     }
-    
+`;
+
+const presentations = `
     presentations {
         _id
         title
@@ -58,7 +67,9 @@ const fullFacultyDetails = `
             year
         }
     }
-    
+`;
+
+const instructionalMaterials = `
     instructionalMaterials {
         _id
         title
@@ -68,7 +79,9 @@ const fullFacultyDetails = `
         level
         nonPrintType
     }
-    
+`;
+
+const extensionWorks = `
     extensionWorks {
         _id
         title
@@ -77,7 +90,16 @@ const fullFacultyDetails = `
     }
 `;
 
-
+const fullFacultyDetails = [
+    facultySummary,
+    facultyOverview,
+    degrees,
+    recognitions,
+    teachingSubjects,
+    presentations,
+    instructionalMaterials,
+    extensionWorks,
+].join("");
 
 export function fetchAllFacultiesSummary() {
     return client.query({
@@ -112,7 +134,7 @@ export function addFaculty(newFaculty, newUser, temporaryPassword) {
             mutation createFaculty($newFaculty: FacultyInput!, $newUser: UserInput!, $temporaryPassword: String!) {
                 faculty {
                     createFaculty(newFaculty: $newFaculty, newUser: $newUser, temporaryPassword: $temporaryPassword) {
-                        ${facultySummary}
+                        ${fullFacultyDetails}
                     }
                 }
             }
@@ -121,6 +143,25 @@ export function addFaculty(newFaculty, newUser, temporaryPassword) {
             newFaculty,
             newUser,
             temporaryPassword,
+        },
+    });
+}
+
+export function updateFaculty(_id, newFaculty, newUser) {
+    return client.mutate({
+        mutation: gql`
+            updateFaculty($_id: String!, $newFaculty: FacultyInput!, $newUser: UserInput) {
+                faculty {
+                    updateFaculty(_id: $_id, newFaculty: $newFaculty, newUser: $newUser) {
+                        ${fullFacultyDetails}
+                    }
+                }
+            }
+        `,
+        variables: {
+            _id,
+            newFaculty,
+            newUser,
         },
     });
 }
