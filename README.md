@@ -34,12 +34,6 @@ export default {
         get url() {
             return `` //Create a URL using this.username, this.password and this.name
         },
-        // Prevents Topology was destroyed errors
-        // Recommended by StackOverflow: https://stackoverflow.com/a/33163368
-        mongooseOptions: {
-            server: {socketOptions: {keepAlive: 1, connectTimeoutMS: 30000}},
-            replset: {socketOptions: {keepAlive: 1, connectTimeoutMS: 30000}},
-        },
     },
 };
 ```
