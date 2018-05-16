@@ -165,3 +165,24 @@ export function updateFaculty(_id, newFaculty, newUser) {
         },
     });
 }
+
+export function addDegree(facultyId, newDegree) {
+    return client.mutate({
+        mutation: gql`
+            mutation createDegree($facultyId: String!, $newDegree: DegreeInput!) {
+                degree(facultyId: $facultyId) {
+                    create(newDegree: $newDegree) {
+                        _id
+                        title
+                        level
+                        completionYear
+                    }
+                }
+            }
+        `,
+        variables: {
+            facultyId,
+            newDegree
+        }
+    })
+}

@@ -52,7 +52,7 @@ export default class DegreeModal extends ModalFormComponent {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.add) {
+        if (nextProps.action === "add") {
             return {...prevState};
         }
 
@@ -63,14 +63,28 @@ export default class DegreeModal extends ModalFormComponent {
 
     handleSubmit = () => {
         const form = this.state.form;
+        const {faculty, submitAddDegreeForm, action} = this.props;
         this.setState({isSubmitting: true, error: null});
 
-        //TODO
+        if (action === "add") {
+            submitAddDegreeForm(form, faculty)
+                .then(() => this.setState({isSubmitting: false}, this.closeModal))
+                .catch(error => {
+                    console.log(error);
+                    this.setState({
+                        isSubmitting: false,
+                        error: error,
+                    });
+                });
+        } else {
+            //TODO: Update
+        }
     };
 
-    buttonName = this.props.add ? "Add Degree" : "Update Degree";
 
-    modalTitle = this.props.add ? "Add a Degree" : "Update Degree";
+    buttonName = this.props.action === "add" ? "Add Degree" : "Update Degree";
+
+    modalTitle = this.props.action === "add" ? "Add a Degree" : "Update Degree";
 
     render() {
         const {open, classes} = this.props;

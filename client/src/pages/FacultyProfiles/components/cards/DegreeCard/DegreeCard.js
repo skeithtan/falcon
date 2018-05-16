@@ -90,7 +90,7 @@ export default class DegreeCard extends Component {
 
                 {degreesIsEmpty && this.renderEmptyState()}
 
-                <DegreeModal add
+                <DegreeModal action="add"
                              open={this.state.addDegreeModalIsShowing}
                              onClose={this.toggleAddDegreeModal}
                              faculty={faculty} />
