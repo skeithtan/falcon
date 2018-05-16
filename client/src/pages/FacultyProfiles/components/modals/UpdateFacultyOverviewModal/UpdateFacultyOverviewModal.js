@@ -15,29 +15,13 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React, { Component } from "react";
+import React from "react";
+import ModalFormComponent from "../../../../../components/ModalFormComponent";
 import Uploader from "../../../../../components/Uploader";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import validateForm, { dateToFormInputValue } from "../../../../../utils/forms";
 import { getFullName } from "../../../../../utils/user";
 
-
-const initialForm = {
-    _id: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    photo: null,
-    sex: SEX.M.identifier,
-    employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
-    birthDate: "",
-};
-
-const initialState = {
-    form: {...initialForm},
-    isSubmitting: false,
-    error: null,
-};
 
 function getFormErrors(form, existingFaculties, currentFaculty) {
     return validateForm({
@@ -90,36 +74,28 @@ function mapFacultyToForm(faculty) {
     };
 }
 
-export default class UpdateFacultyOverviewModal extends Component {
-    state = {...initialState};
+export default class UpdateFacultyOverviewModal extends ModalFormComponent {
+    state = {...this.initialState};
+
+    static initialForm = {
+        _id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        photo: null,
+        sex: SEX.M.identifier,
+        employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
+        birthDate: "",
+    };
 
     static getDerivedStateFromProps(nextProps) {
         const {faculty} = nextProps;
 
         return {
-            ...initialState,
+            ...UpdateFacultyOverviewModal.initialState,
             form: mapFacultyToForm(faculty),
         };
     }
-
-    closeModal = () => {
-        if (this.state.isSubmitting) {
-            return;
-        }
-
-        this.props.onClose();
-        this.resetForm();
-    };
-
-    handleFormChange = fieldName => event => {
-        const form = {...this.state.form};
-        form[fieldName] = event.target.value;
-        this.setState({
-            form: {
-                ...form,
-            },
-        });
-    };
 
     handleSubmit = () => {
         const form = this.state.form;
@@ -137,8 +113,6 @@ export default class UpdateFacultyOverviewModal extends Component {
                 });
             });
     };
-
-    resetForm = () => this.setState({...initialForm});
 
     render() {
         const {open, onClose, faculties, faculty, classes} = this.props;
