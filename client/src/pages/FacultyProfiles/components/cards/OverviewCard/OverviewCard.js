@@ -1,9 +1,9 @@
-import EditIcon from "@material-ui/icons/Edit";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
+import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment/moment";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
@@ -11,9 +11,18 @@ import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import UserAvatar from "../../../../../components/UserAvatar/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
+import UpdateFacultyOverviewModal from "../../modals/UpdateFacultyOverviewModal";
 
 
 export default class OverviewCard extends Component {
+    state = {
+        updateFacultyModalIsShowing: false,
+    };
+
+    toggleUpdateFacultyModal = () => this.setState({
+        updateFacultyModalIsShowing: !this.state.updateFacultyModalIsShowing,
+    });
+
     render() {
         const {faculty, classes} = this.props;
         const birthDate = moment(faculty.birthDate);
@@ -24,7 +33,7 @@ export default class OverviewCard extends Component {
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
                         <Tooltip title="Update these details" placement="left">
-                            <IconButton>
+                            <IconButton onClick={this.toggleUpdateFacultyModal}>
                                 <EditIcon />
                             </IconButton>
                         </Tooltip>
@@ -55,6 +64,8 @@ export default class OverviewCard extends Component {
                     <FormDisplayListItem field="Sex" value={SEX[faculty.sex].name} />
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
+                <UpdateFacultyOverviewModal faculty={faculty} open={this.state.updateFacultyModalIsShowing}
+                                            onClose={this.toggleUpdateFacultyModal} />
             </DetailCard>
         );
     }
