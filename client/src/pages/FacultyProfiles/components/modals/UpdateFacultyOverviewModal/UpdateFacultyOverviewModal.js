@@ -23,6 +23,7 @@ import { getFullName } from "../../../../../utils/user";
 
 
 const initialForm = {
+    _id: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -78,6 +79,7 @@ function getFormErrors(form, existingFaculties, currentFaculty) {
 
 function mapFacultyToForm(faculty) {
     return {
+        _id: faculty._id,
         firstName: faculty.user.name.first,
         lastName: faculty.user.name.last,
         email: faculty.user.email,
@@ -101,6 +103,10 @@ export default class UpdateFacultyOverviewModal extends Component {
     }
 
     closeModal = () => {
+        if (this.state.isSubmitting) {
+            return;
+        }
+
         this.props.onClose();
         this.resetForm();
     };
@@ -109,7 +115,6 @@ export default class UpdateFacultyOverviewModal extends Component {
         const form = {...this.state.form};
         form[fieldName] = event.target.value;
         this.setState({
-            ...this.state,
             form: {
                 ...form,
             },
@@ -118,8 +123,19 @@ export default class UpdateFacultyOverviewModal extends Component {
 
     handleSubmit = () => {
         const form = this.state.form;
+        this.setState({isSubmitting: true, error: null});
 
-        //TODO
+        this.props.submitForm(form)
+            .then(() => {
+                this.closeModal();
+            })
+            .catch(error => {
+                console.log(error, error.message);
+                this.setState({
+                    isSubmitting: false,
+                    error: String(error),
+                });
+            });
     };
 
     resetForm = () => this.setState({...initialForm});
