@@ -1,6 +1,13 @@
+import { formContainer } from "../../../../../components/styles";
+
+
 export default theme => ({
+
+    container: {
+        ...formContainer(theme),
+    },
+
     form: {
-        width: 560,
         paddingTop: theme.spacing.unit * 3,
         paddingBottom: theme.spacing.unit * 3,
         display: "grid",

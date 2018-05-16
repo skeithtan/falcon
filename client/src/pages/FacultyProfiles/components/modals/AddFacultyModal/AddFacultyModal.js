@@ -155,13 +155,13 @@ export default class AddFacultyModal extends Component {
     ];
 
     render() {
-        const {open} = this.props;
+        const {open, classes} = this.props;
         const {activeStep} = this.state;
 
         return (
             <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
                 <DialogTitle>Add a Faculty</DialogTitle>
-                <DialogContent>
+                <DialogContent className={classes.container}>
                     <Stepper activeStep={activeStep} orientation="vertical">
                         {this.getSteps()}
                     </Stepper>
