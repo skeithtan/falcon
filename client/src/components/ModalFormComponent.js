@@ -1,12 +1,19 @@
-import {Component} from "react";
+import { Component } from "react";
+
 
 export default class ModalFormComponent extends Component {
-    static initialForm;
+    state = {...this.initialState};
 
-    static initialState = {
-        form: {...this.initialForm},
-        isSubmitting: false,
-        error: null,
+    get initialForm() {
+        return {};
+    };
+
+    get initialState() {
+        return {
+            form: {...this.initialForm},
+            isSubmitting: false,
+            error: null,
+        }
     };
 
     closeModal = () => {

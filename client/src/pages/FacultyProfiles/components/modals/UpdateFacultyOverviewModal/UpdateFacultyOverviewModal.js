@@ -75,24 +75,25 @@ function mapFacultyToForm(faculty) {
 }
 
 export default class UpdateFacultyOverviewModal extends ModalFormComponent {
-    state = {...this.initialState};
+    get initialForm() {
+        return {
+            _id: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            photo: null,
+            sex: SEX.M.identifier,
+            employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
+            birthDate: "",
+        };
 
-    static initialForm = {
-        _id: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        photo: null,
-        sex: SEX.M.identifier,
-        employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
-        birthDate: "",
-    };
+    }
 
-    static getDerivedStateFromProps(nextProps) {
+    static getDerivedStateFromProps(nextProps, prevState) {
         const {faculty} = nextProps;
 
         return {
-            ...UpdateFacultyOverviewModal.initialState,
+            ...prevState,
             form: mapFacultyToForm(faculty),
         };
     }
@@ -102,9 +103,7 @@ export default class UpdateFacultyOverviewModal extends ModalFormComponent {
         this.setState({isSubmitting: true, error: null});
 
         this.props.submitForm(form)
-            .then(() => {
-                this.closeModal();
-            })
+            .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
                 console.log(error, error.message);
                 this.setState({
@@ -115,7 +114,7 @@ export default class UpdateFacultyOverviewModal extends ModalFormComponent {
     };
 
     render() {
-        const {open, onClose, faculties, faculty, classes} = this.props;
+        const {open, faculties, faculty, classes} = this.props;
         const {form, isSubmitting, error} = this.state;
         const {hasErrors, fieldErrors} = getFormErrors(form, faculties, faculty);
 
