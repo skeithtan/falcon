@@ -82,10 +82,9 @@ export default class UserForm extends Component {
                 }
             </FormControl>,
             <div key={4}>
-                <Uploader
-                    onUploadComplete={url => {form.photo = url}}
-                    data-system-dialog
-                    data-images-only />
+                <Uploader onUploadComplete={url => {
+                    form.photo = url;
+                }} />
             </div>,
             <Button
                 key={5}
