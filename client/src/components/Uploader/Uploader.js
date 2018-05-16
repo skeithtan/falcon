@@ -33,24 +33,61 @@ export default class Uploader extends Component {
         success: false,
     };
 
-    onInputChanged = () => {
+    setError = error => {
+        this.setState({error: error, isUploading: false});
+    };
+
+    setSuccess = () => {
+        this.setState({success: true, isUploading: false});
+    };
+
+    onUrlChanged(url) {
+        if (this.props.onUploadComplete) {
+            this.props.onUploadComplete(url);
+        }
+    }
+
+    onInputChanged = event => {
+        // Required for clearInput()
+        event.persist();
+
         const file = this.fileUpload.files[0];
         this.setState({fileName: file.name, error: null});
+
+        // When cleared and the user selects the same photo, it uploads again
+        function clearInput() {
+            event.target.value = "";
+        }
 
         uploadcare.fileFrom("object", file)
                   .progress(() => {
                       this.setState({isUploading: true});
                   })
                   .done(fileInfo => {
-                      this.setState({success: true, isUploading: false});
+                      clearInput();
 
-                      if (this.props.onUploadComplete) {
-                          this.props.onUploadComplete(fileInfo.cdnUrl);
+                      if (!fileInfo.isImage) {
+                          this.setError("File must be an image");
+                          return;
                       }
+
+                      this.setSuccess();
+                      this.onUrlChanged(fileInfo.cdnUrl);
                   })
                   .fail(error => {
-                      this.setState({error: getErrorMessageFromCode(error), isUploading: false});
+                      clearInput();
+                      this.setError(getErrorMessageFromCode(error));
                   });
+    };
+
+    onClearButtonPress = () => {
+        this.onUrlChanged(null);
+        this.setState({
+            fileName: null,
+            error: null,
+            isUploading: false,
+            success: false,
+        });
     };
 
     render() {
@@ -71,7 +108,7 @@ export default class Uploader extends Component {
                             type="file"
                         />
                         <label htmlFor="uploadcare-input">
-                            <Button component="span" color="primary" className={classes.button}>
+                            <Button component="span" color="primary" className={classes.button} disabled={isUploading}>
                                 Upload a photo
                             </Button>
                         </label>
@@ -102,6 +139,14 @@ export default class Uploader extends Component {
                     <Icon color="primary">
                         <CheckIcon />
                     </Icon>
+                </Grid>
+                }
+
+                {success &&
+                <Grid item>
+                    <Button component="span" color="primary" onClick={this.onClearButtonPress}>
+                        Clear photo
+                    </Button>
                 </Grid>
                 }
             </Grid>
