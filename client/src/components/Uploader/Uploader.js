@@ -22,6 +22,8 @@ function getErrorMessageFromCode(code) {
             return "Error when fetching file information";
         case "deleted":
             return "File was deleted";
+        default:
+            return `An error occurred: ${code}`;
     }
 }
 
