@@ -104,6 +104,7 @@ export default class Uploader extends Component {
                         <input
                             accept="image/*"
                             id="uploadcare-input"
+                            disabled={isUploading || disabled}
                             className={classes.input}
                             onChange={this.onInputChanged}
                             ref={ref => this.fileUpload = ref}
