@@ -30,7 +30,7 @@ class DegreeRow extends Component {
             <TableRow>
                 <TableCell>{degree.title}</TableCell>
                 <TableCell>{DEGREE.LEVEL[degree.level].name}</TableCell>
-                <TableCell>{degree.completionYear}</TableCell>
+                <TableCell numeric>{degree.completionYear}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this recognition"
                                  updateButtonTooltipTitle="Update this recognition"
                                  onRemoveButtonClick={() => this.onRemoveButtonClick(degree)}
@@ -78,6 +78,7 @@ export default class DegreeCard extends Component {
                             <TableCell>Title</TableCell>
                             <TableCell>Level</TableCell>
                             <TableCell numeric>Completion Year</TableCell>
+                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
