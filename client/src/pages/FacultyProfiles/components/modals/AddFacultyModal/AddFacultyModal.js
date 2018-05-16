@@ -14,25 +14,6 @@ import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { FacultyForm, ReviewForm, UserForm } from "./steps";
 
 
-function mapFormToGraphQLParameters(form) {
-    return {
-        newUser: {
-            name: {
-                first: form.firstName,
-                last: form.lastName,
-            },
-            email: form.email,
-            photo: form.photo,
-        },
-        temporaryPassword: form.password,
-        newFaculty: {
-            sex: form.sex,
-            employment: form.employment,
-            birthDate: form.birthDate,
-        },
-    };
-}
-
 const initialForm = {
     firstName: "",
     lastName: "",
@@ -70,16 +51,14 @@ export default class AddFacultyModal extends Component {
             error: null,
         });
 
-        const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(this.state.form);
-
-        this.props.submitFaculty(newFaculty, newUser, temporaryPassword)
+        this.props.submitForm(this.state.form)
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
                 console.log(error.graphQLErrors[0].message);
                 if (error.graphQLErrors &&
                     error.graphQLErrors[0].message.startsWith("ValidationError: User with email")) {
                     this.setState({
-                        error: `User with email ${newUser.email} already exists.`,
+                        error: `User with email ${this.state.form.email} already exists.`,
                         isSubmitting: false,
                     });
                 } else {

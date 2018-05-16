@@ -11,9 +11,29 @@ import AddFacultyModal from "./AddFacultyModal";
 import styles from "./styles";
 
 
+function mapFormToGraphQLParameters(form) {
+    return {
+        newUser: {
+            name: {
+                first: form.firstName,
+                last: form.lastName,
+            },
+            email: form.email,
+            photo: form.photo,
+        },
+        temporaryPassword: form.password,
+        newFaculty: {
+            sex: form.sex,
+            employment: form.employment,
+            birthDate: form.birthDate,
+        },
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return {
-        submitFaculty(newFaculty, newUser, temporaryPassword) {
+        submitForm(form) {
+            const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(form);
             return addFaculty(newFaculty, newUser, temporaryPassword)
                 .then(result => {
                     const faculty = result.data.faculty.createFaculty;
