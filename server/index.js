@@ -7,6 +7,11 @@ import config from "./config";
 import schema from "./graphql/schema";
 
 
+// Format date properly on server responses
+Date.prototype.toString = function () {
+    return this.toISOString();
+};
+
 const {server, database} = config;
 
 mongoose.connect(database.url, database.options)
