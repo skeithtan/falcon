@@ -1,15 +1,19 @@
-// Returns errors from fields if there are errors. If not, null.
-// Takes an object that looks like this:
-// {
-//     age : {
-//         value : 'Actual field value',
-//         optional : false,
-//         customValidators : [{
-//             isValid : (fieldValue) => !isNaN(parseInt(name)),
-//             errorMessage : "Must be a valid integer"
-//         }]
-//     },
-// };
+import moment from "moment";
+
+/*
+ * Returns errors from fields if there are errors. If not, null.
+ *    Takes an object that looks like this:
+ * {
+ *     age : {
+ *         value : 'Actual field value',
+ *             optional : false,
+ *             customValidators : [{
+ *             isValid : (fieldValue) => !isNaN(parseInt(name)),
+ *             errorMessage : "Must be a valid integer"
+ *         }]
+ *     },
+ * };
+ */
 export default function validateForm(formFields) {
     const formErrors = {
         hasErrors: false,
@@ -29,7 +33,6 @@ export default function validateForm(formFields) {
     return formErrors;
 }
 
-
 function validateField({value, optional, customValidators}) {
     let validators = [];
 
@@ -45,6 +48,11 @@ function validateField({value, optional, customValidators}) {
     return validators.filter(validator => !validator.isValid(value))
                      .map(validator => validator.errorMessage);
 
+}
+
+// Converts DB date to conform to the required format, "yyyy-MM-dd".
+export function dateToFormInputValue(date) {
+    return moment(date).format("YYYY-MM-DD");
 }
 
 const fieldIsNotEmptyValidator = {
