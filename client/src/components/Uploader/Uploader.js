@@ -94,7 +94,7 @@ export default class Uploader extends Component {
 
     render() {
         // const attributes = this.getInputAttributes();
-        const classes = this.props.classes;
+        const {classes, disabled} = this.props;
         const {fileName, isUploading, error, success} = this.state;
 
         return (
@@ -110,7 +110,8 @@ export default class Uploader extends Component {
                             type="file"
                         />
                         <label htmlFor="uploadcare-input">
-                            <Button component="span" color="primary" className={classes.button} disabled={isUploading}>
+                            <Button component="span" variant="outlined" color="primary" className={classes.button}
+                                    disabled={isUploading || disabled}>
                                 Upload a photo
                             </Button>
                         </label>
@@ -146,7 +147,7 @@ export default class Uploader extends Component {
 
                 {success &&
                 <Grid item>
-                    <Button component="span" color="primary" onClick={this.onClearButtonPress}>
+                    <Button component="span" variant="outlined" color="primary" onClick={this.onClearButtonPress}>
                         Clear photo
                     </Button>
                 </Grid>
