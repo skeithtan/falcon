@@ -66,8 +66,16 @@ function mutateFaculty() {
             }
         },
 
-        async updateFaculty({_id, newFaculty}) {
-            return Faculty.findByIdAndUpdate(_id, newFaculty, {new: true});
+        async updateFaculty({_id, newFaculty, newUser}) {
+            const faculty = await Faculty.findByIdAndUpdate(_id, newFaculty, {new: true})
+                                         .populate("teachingSubjects")
+                                         .exec();
+
+            const user = await User.findByIdAndUpdate(faculty.user, newUser, {new: true}).exec();
+
+            faculty.user = user;
+            return faculty;
+
         },
     };
 }
