@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import {
     activeFacultyChanged,
-    detailsIsLoading,
     profileIsAdded,
 } from "../../../../../actions/faculty_profiles.actions";
 import { addFaculty } from "../../../../../services/faculty.service";
