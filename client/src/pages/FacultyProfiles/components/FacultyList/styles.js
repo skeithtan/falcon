@@ -19,15 +19,17 @@ export default theme => ({
         left: 240,
         bottom: theme.spacing.unit * 3,
     },
-    activeListItem: {
-        background: theme.palette.grey["200"],
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderRight: 0,
-        borderLeft: 0,
-        borderColor: theme.palette.grey["A100"],
+    listItem: {
+        transition: "150ms",
     },
-    activeListItemText: {
-        fontWeight: theme.typography.fontWeightMedium,
+    activeListItem: {
+        background: theme.palette.grey["100"],
+        borderLeft: "4px solid",
+        borderColor: theme.palette.primary.main,
+
+        "& h3": {
+            fontWeight: theme.typography.fontWeightMedium,
+            color: theme.palette.primary.main,
+        },
     },
 })

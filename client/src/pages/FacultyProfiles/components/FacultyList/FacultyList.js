@@ -11,27 +11,19 @@ import { EmptySearchResultsState, EmptyState, ErrorState } from "../../../../com
 import UserAvatar from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user";
 import AddFacultyModal from "../modals/AddFacultyModal";
-
+import ListItemText from '@material-ui/core/ListItemText';
 
 class FacultyItem extends Component {
     render() {
-        const {classes, faculty} = this.props;
-        //TODO: Avatar
+        const {classes, faculty, active} = this.props;
+        const {activeListItem, listItem} = classes;
+        const className = active ? [activeListItem, listItem].join(" ")  : listItem;
         return (
-            <ListItem className={this.props.active ? classes.activeListItem : null}
+            <ListItem className={className}
                       onClick={this.props.onClick}
                       button>
-                <Grid container wrap="nowrap" spacing={16} alignItems="center">
-                    <Grid item>
-                        <UserAvatar user={faculty.user} />
-                    </Grid>
-                    <Grid item>
-                        <Typography className={this.props.active ? classes.activeListItemText : null}
-                                    variant="subheading">
-                            {getFullName(faculty.user)}
-                        </Typography>
-                    </Grid>
-                </Grid>
+                <UserAvatar user={faculty.user} />
+                <ListItemText primary={getFullName(faculty.user)}/>
             </ListItem>
         );
     }
