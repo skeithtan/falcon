@@ -55,6 +55,22 @@ export function dateToFormInputValue(date) {
     return moment(date).format("YYYY-MM-DD");
 }
 
+export const yearValidators = [
+    {
+        isValid(value) {
+            return !isNaN(parseInt(value));
+        },
+        errorMessage: "Must be a number",
+    },
+    {
+        isValid(value) {
+            const year = parseInt(value);
+            return year > 1900 && year < 2200;
+        },
+        errorMessage: "Must be a valid year",
+    },
+];
+
 const fieldIsNotEmptyValidator = {
     isValid(fieldValue) {
         return String(fieldValue).length > 0;

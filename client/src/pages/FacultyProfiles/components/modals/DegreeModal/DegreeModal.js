@@ -13,7 +13,7 @@ import React from "react";
 import ModalFormComponent from "../../../../../components/ModalFormComponent";
 import ModalFormDialogActions from "../../../../../components/ModalFormDialogActions/ModalFormDialogActions";
 import { DEGREE } from "../../../../../enums/faculty.enums";
-import validateForm from "../../../../../utils/forms";
+import validateForm, { yearValidators } from "../../../../../utils/forms";
 
 
 function getFormErrors(form) {
@@ -23,21 +23,7 @@ function getFormErrors(form) {
         },
         completionYear: {
             value: form.completionYear,
-            customValidators: [
-                {
-                    isValid(value) {
-                        return !isNaN(parseInt(value));
-                    },
-                    errorMessage: "Must be a number",
-                },
-                {
-                    isValid(value) {
-                        const year = parseInt(value);
-                        return year > 1900 && year < 2200;
-                    },
-                    errorMessage: "Must be a valid year",
-                },
-            ],
+            customValidators: yearValidators,
         },
     });
 }
@@ -128,9 +114,6 @@ export default class DegreeModal extends ModalFormComponent {
                                     disabled={isSubmitting}
                                     onChange={this.handleFormChange("title")}
                                     value={form.title}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
                                 />
                                 {fieldErrors.title.length > 0 &&
                                 <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
@@ -148,9 +131,6 @@ export default class DegreeModal extends ModalFormComponent {
                                     disabled={isSubmitting}
                                     onChange={this.handleFormChange("completionYear")}
                                     value={form.completionYear}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
                                 />
                                 {fieldErrors.completionYear.length > 0 &&
                                 <FormHelperText>{fieldErrors.completionYear[0]}</FormHelperText>
