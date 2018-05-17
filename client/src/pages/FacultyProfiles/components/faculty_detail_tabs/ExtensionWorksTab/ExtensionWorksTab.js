@@ -11,22 +11,12 @@ import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
-
+import ExtensionWorkModal from "../../modals/ExtensionWorkModal"
 
 class ExtensionWorkRow extends Component {
-    onUpdateButtonClick = extensionWork => {
-        //TODO
-        console.log(`Extension work ${extensionWork._id} edit button clicked`);
-    };
-
-    onRemoveButtonClick = extensionWork => {
-        //TODO
-        console.log(`Extension work ${extensionWork._id} remove button clicked`);
-    };
-
     extensionWorkRolesText = roles => {
         if (roles.length === 0) {
-            return "There are no extension roles";
+            return <i>No extension work roles</i>;
         }
 
         function reducer(accumulator, currentString) {
@@ -39,8 +29,7 @@ class ExtensionWorkRow extends Component {
     };
 
     render() {
-        const {extensionWork} = this.props;
-
+        const {extensionWork, onRemoveButtonClick, onUpdateButtonClick} = this.props;
         return (
             <DetailExpansionCard>
 
@@ -58,10 +47,8 @@ class ExtensionWorkRow extends Component {
 
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
                                                 updateButtonTooltipTitle="Update instructional material details"
-                                                onRemoveButtonClick={() =>
-                                                    this.onRemoveButtonClick(extensionWork)}
-                                                onUpdateButtonClick={() =>
-                                                    this.onUpdateButtonClick(extensionWork)} />
+                                                onRemoveButtonClick={onRemoveButtonClick}
+                                                onUpdateButtonClick={onUpdateButtonClick} />
 
                 </FormDisplayExpansionPanelDetails>
             </DetailExpansionCard>
@@ -70,14 +57,42 @@ class ExtensionWorkRow extends Component {
 }
 
 class ExtensionWorksTab extends Component {
+    state = {
+        extensionWorkModalIsShowing: false,
+        activeExtensionWork: null,
+        removeExtensionWorkModalIsShowing: false,
+    };
+
+    toggleExtensionWorkModal = shouldShow => this.setState({
+        extensionWorkModalIsShowing: shouldShow,
+    });
+
+    toggleRemoveExtensionWorkModal = shouldShow => this.setState({
+        removeExtensionWorkModalIsShowing: shouldShow,
+    });
+
     renderRows = extensionWorks => extensionWorks.map(extensionWork =>
-        <ExtensionWorkRow extensionWork={extensionWork} key={extensionWork._id} classes={this.props.classes} />,
+        <ExtensionWorkRow
+            extensionWork={extensionWork}
+            key={extensionWork._id}
+            classes={this.props.classes}
+
+            onUpdateButtonClick={() => this.setState({
+                activeExtensionWork: extensionWork,
+                extensionWorkModalIsShowing: true,
+            })}
+
+            onRemoveButtonClick={() => this.setState({
+                activeExtensionWork: extensionWork,
+                removeExtensionWorkModalIsShowing: true,
+            })}
+        />,
     );
 
-    onAddButtonClick = () => {
-        //TODO
-        console.log("Add extension work button clicked");
-    };
+    onAddButtonClick = () => this.setState({
+        activeExtensionWork: null,
+        extensionWorkModalIsShowing: true,
+    });
 
     renderEmptyState = () => (
         <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded extension works`}
@@ -90,6 +105,9 @@ class ExtensionWorksTab extends Component {
         const {faculty, classes} = this.props;
         const extensionWorks = faculty.extensionWorks;
         const extensionWorksIsEmpty = extensionWorks.length === 0;
+
+        const {extensionWorkModalIsShowing, activeExtensionWork, removeExtensionWorkModalIsShowing} = this.state;
+
         return (
             <div className={classes.expansionCards}>
                 <DetailCard>
@@ -100,6 +118,15 @@ class ExtensionWorksTab extends Component {
                 </DetailCard>
 
                 {!extensionWorksIsEmpty && this.renderRows(extensionWorks)}
+
+                <ExtensionWorkModal
+                    action={activeExtensionWork ? "update" : "add"}
+                    extensionWork={activeExtensionWork}
+                    faculty={faculty}
+                    open={extensionWorkModalIsShowing}
+                    onClose={() => this.toggleExtensionWorkModal(false)}
+                />
+
             </div>
         );
     }
