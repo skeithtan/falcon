@@ -14,7 +14,7 @@ Date.prototype.toString = function () {
 
 const {server, database} = config;
 
-mongoose.connect(database.url, database.options)
+mongoose.connect(database.url)
         .then(onDatabaseConnect)
         .catch(err => console.log(`Could not connect to mongodb: ${err}`));
 
