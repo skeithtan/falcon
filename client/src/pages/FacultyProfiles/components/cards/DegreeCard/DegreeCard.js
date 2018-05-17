@@ -33,14 +33,14 @@ class DegreeRow extends Component {
 
 export default class DegreeCard extends Component {
     state = {
-        degreeFormModalIsShowing: false,
+        degreeModalIsShowing: false,
         activeDegree: null,
         removeDegreeModalIsShowing: false,
     };
 
     toggleDegreeFormModal = shouldShow => {
         this.setState({
-            degreeFormModalIsShowing: shouldShow,
+            degreeModalIsShowing: shouldShow,
         });
     };
 
@@ -51,27 +51,26 @@ export default class DegreeCard extends Component {
     };
 
     renderRows = degrees => degrees.map(degree =>
-        <DegreeRow degree={degree} key={degree._id}
-                   onUpdateButtonClick={() => {
-                       this.setState({
-                           activeDegree: degree,
-                       });
+        <DegreeRow
+            degree={degree}
+            key={degree._id}
 
-                       this.toggleDegreeFormModal(true);
-                   }}
-                   onRemoveButtonClick={() => {
-                       this.setState({
-                           activeDegree: degree,
-                       });
+            onUpdateButtonClick={() => this.setState({
+                activeDegree: degree,
+                degreeModalIsShowing: true,
+            })}
 
-                       this.toggleRemoveDegreeModal(true);
-                   }}
+            onRemoveButtonClick={() => this.setState({
+                activeDegree: degree,
+                removeDegreeModalIsShowing: true,
+            })}
         />,
     );
 
     onAddButtonClick = () => this.setState({
         activeDegree: null,
-    }, () => this.toggleDegreeFormModal(true));
+        degreeModalIsShowing: true,
+    });
 
     renderEmptyState = () => (
         <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded degrees.`}
@@ -85,7 +84,7 @@ export default class DegreeCard extends Component {
         const degrees = faculty.degrees;
         const degreesIsEmpty = degrees.length === 0;
 
-        const {activeDegree, degreeFormModalIsShowing, removeDegreeModalIsShowing} = this.state;
+        const {activeDegree, degreeModalIsShowing, removeDegreeModalIsShowing} = this.state;
 
         return (
             <DetailCard>
@@ -114,7 +113,7 @@ export default class DegreeCard extends Component {
                 <DegreeModal
                     action={activeDegree ? "update" : "add"}
                     degree={activeDegree}
-                    open={degreeFormModalIsShowing}
+                    open={degreeModalIsShowing}
                     onClose={() => this.toggleDegreeFormModal(false)}
                     faculty={faculty}
                 />

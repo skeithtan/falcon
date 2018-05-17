@@ -1,4 +1,4 @@
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
@@ -62,13 +62,39 @@ class PresentationRow extends Component {
 }
 
 class PresentationsTab extends Component {
-    onAddButtonClick = () => {
-        //TODO
-        console.log("Add presentation button clicked");
+    state = {
+        presentationModalIsShowing: false,
+        activePresentation: null,
+        removePresentationIsShowing: false,
     };
 
+    togglePresentationModal = shouldShow => this.setState({
+        presentationModalisShowing: shouldShow,
+    });
+
+    toggleRemovePresentation = shouldShow => this.setState({
+        removePresentationIsShowing: shouldShow,
+    });
+
+    onAddButtonClick = () => this.setState({
+        activePresentation: null,
+    }, () => this.togglePresentationModal(true));
+
     renderRows = presentations => presentations.map(presentation =>
-        <PresentationRow presentation={presentation} key={presentation._id} />,
+        <PresentationRow
+            presentation={presentation}
+            key={presentation._id}
+
+            onUpdateButtonClick={() => this.setState({
+                activePresentation: presentation,
+                presentationModalIsShowing: true,
+            })}
+
+            onRemoveButtonClick={() => this.setState({
+                activePresentation: presentation,
+                removePresentationIsShowing: true,
+            })}
+        />,
     );
 
     renderEmptyState = () => (

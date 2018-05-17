@@ -49,21 +49,19 @@ export default class RecognitionsCard extends Component {
     });
 
     renderRows = recognitions => recognitions.map(recognition =>
-        <RecognitionRow recognition={recognition} key={recognition._id}
-                        onUpdateButtonClick={() => {
-                            this.setState({
-                                activeRecognition: recognition,
-                            });
+        <RecognitionRow
+            recognition={recognition}
+            key={recognition._id}
 
-                            this.toggleRecognitionModal(true);
-                        }}
-                        onRemoveButtonClick={() => {
-                            this.setState({
-                                activeRecognition: recognition,
-                            });
+            onUpdateButtonClick={() => this.setState({
+                activeRecognition: recognition,
+                recognitionModalIsShowing: true,
+            })}
 
-                            this.toggleRemoveRecognitionModal(true);
-                        }}
+            onRemoveButtonClick={() => this.setState({
+                activeRecognition: recognition,
+                removeRecognitionModalIsShowing: true,
+            })}
         />,
     );
 
@@ -76,7 +74,8 @@ export default class RecognitionsCard extends Component {
 
     onAddButtonClick = () => this.setState({
         activeRecognition: null,
-    }, () => this.toggleRecognitionModal(true));
+        recognitionModalIsShowing: true,
+    });
 
     render() {
         const faculty = this.props.faculty;
