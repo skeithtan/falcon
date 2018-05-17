@@ -12,6 +12,7 @@ import TableToolbar from "../../../../../components/TableToolbar";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
 import InstructionalMaterialModal from "../../modals/InstructionalMaterialModal";
+import RemoveInstructionalMaterialModal from "../../modals/RemoveInstructionalMaterialModal";
 
 
 class InstructionalMaterialRow extends Component {
@@ -124,6 +125,15 @@ export default class InstructionalMaterialsTab extends Component {
                     instructionalMaterial={activeInstructionalMaterial}
                     faculty={faculty}
                 />
+
+                {activeInstructionalMaterial &&
+                <RemoveInstructionalMaterialModal
+                    open={removeInstructionalMaterialModalIsShowing}
+                    onClose={() => this.toggleRemoveInstructionalMaterialModal(false)}
+                    instructionalMaterial={activeInstructionalMaterial}
+                    faculty={faculty}
+                />
+                }
             </div>
         );
     }
