@@ -50,7 +50,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-    connect(null, mapDispatchToProps), //TODO
+    connect(null, mapDispatchToProps),
     withTheme(),
     withStyles(styles),
 )(DegreeModal);
