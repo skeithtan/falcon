@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import client from "../../client";
 
+
 export const fields = `
     _id
     title
@@ -21,9 +22,9 @@ export function addExtensionWork(facultyId, newExtensionWork) {
         `,
         variables: {
             facultyId,
-            newExtensionWork
-        }
-    })
+            newExtensionWork,
+        },
+    });
 }
 
 export function updateExtensionWork(facultyId, _id, newExtensionWork) {
@@ -31,7 +32,7 @@ export function updateExtensionWork(facultyId, _id, newExtensionWork) {
         mutation: gql`
             mutation updateExtensionWork($facultyId: String!, $_id: String!, $newExtensionWork: ExtensionWorkInput!) {
                 extensionWork(facultyId: $facultyId) {
-                    update(_id: $id, newExtensionWork: $newExtensionWork) {
+                    update(_id: $_id, newExtensionWork: $newExtensionWork) {
                         ${fields}
                     }
                 }
@@ -39,9 +40,10 @@ export function updateExtensionWork(facultyId, _id, newExtensionWork) {
         `,
         variables: {
             facultyId,
-            newExtensionWork
-        }
-    })
+            _id,
+            newExtensionWork,
+        },
+    });
 }
 
 export function removeExtensionWork(facultyId, _id) {
@@ -55,7 +57,7 @@ export function removeExtensionWork(facultyId, _id) {
         `,
         variables: {
             facultyId,
-            _id
-        }
-    })
+            _id,
+        },
+    });
 }
