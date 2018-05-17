@@ -17,6 +17,7 @@ import ModalFormComponent from "../../../../../components/ModalFormComponent";
 import ModalFormDialogActions from "../../../../../components/ModalFormDialogActions";
 import Uploader from "../../../../../components/Uploader";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
+import { getPossessivePronoun } from "../../../../../utils/faculty";
 import validateForm, { dateToFormInputValue } from "../../../../../utils/forms";
 import { getFullName } from "../../../../../utils/user";
 
@@ -114,6 +115,8 @@ export default class UpdateFacultyOverviewModal extends ModalFormComponent {
     render() {
         const {open, faculties, faculty, classes} = this.props;
         const {form, isSubmitting, error} = this.state;
+        const fullName = getFullName(faculty.user);
+        const pronoun = getPossessivePronoun(faculty);
         const {hasErrors, fieldErrors} = getFormErrors(form, faculties, faculty);
 
         return (
@@ -148,14 +151,27 @@ export default class UpdateFacultyOverviewModal extends ModalFormComponent {
                         </Grid>
 
                         <Grid item>
-                            <FormControl error={fieldErrors.email.length > 0} fullWidth>
-                                <InputLabel>Email Address</InputLabel>
-                                <Input disabled={isSubmitting} value={form.email}
-                                       onChange={this.handleFormChange("email")} type="email" />
-                                {fieldErrors.email.length > 0 &&
-                                <FormHelperText>{fieldErrors.email[0]}</FormHelperText>
-                                }
-                            </FormControl>
+
+                            <Grid container spacing={16} direction="column">
+                                <Grid item>
+                                    <FormControl error={fieldErrors.email.length > 0} fullWidth>
+                                        <InputLabel>Email Address</InputLabel>
+                                        <Input disabled={isSubmitting} value={form.email}
+                                               onChange={this.handleFormChange("email")} type="email" />
+                                        {fieldErrors.email.length > 0 &&
+                                        <FormHelperText>{fieldErrors.email[0]}</FormHelperText>
+                                        }
+                                    </FormControl>
+                                </Grid>
+
+                                <Grid item>
+                                    <Typography>
+                                        Changing {fullName}'s email will also change {pronoun} sign in
+                                        credentials.
+                                        Make sure you communicate the changes to avoid confusion.
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
 
                         <Grid item>
