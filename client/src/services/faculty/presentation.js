@@ -62,6 +62,10 @@ export function removePresentation(facultyId, _id) {
                     remove(_id: $_id)
                 }
             }
-        `
+        `,
+        variables: {
+            facultyId,
+            _id
+        }
     })
 }
