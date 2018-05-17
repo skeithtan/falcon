@@ -16,18 +16,8 @@ import PresentationModal from "../../modals/PresentationModal";
 
 
 class PresentationRow extends Component {
-    onUpdateButtonClick = presentation => {
-        //TODO
-        console.log(`Presentation ${presentation._id} edit button clicked`);
-    };
-
-    onRemoveButtonClick = presentation => {
-        //TODO
-        console.log(`Presentation ${presentation._id} remove button clicked`);
-    };
-
     render() {
-        const {presentation} = this.props;
+        const {presentation, onUpdateButtonClick, onRemoveButtonClick} = this.props;
         return (
             <DetailExpansionCard>
 
@@ -53,8 +43,8 @@ class PresentationRow extends Component {
                                          value={`${presentation.daysDuration} Days`} />
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove presentation"
                                                 updateButtonTooltipTitle="Update presentation details"
-                                                onRemoveButtonClick={() => this.onRemoveButtonClick(presentation)}
-                                                onUpdateButtonClick={() => this.onUpdateButtonClick(presentation)} />
+                                                onRemoveButtonClick={onRemoveButtonClick}
+                                                onUpdateButtonClick={onUpdateButtonClick} />
 
                 </FormDisplayExpansionPanelDetails>
             </DetailExpansionCard>
