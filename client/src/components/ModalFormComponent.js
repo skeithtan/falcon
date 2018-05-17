@@ -50,7 +50,7 @@ export default class ModalFormComponent extends Component {
 
     handleSubmit = () => {
         this.setState({isSubmitting: true, error: null});
-        const action = this.props;
+        const action = this.props.action;
         const submit = action === "add" ? this.submitAddAction : this.submitUpdateAction;
 
         submit()
