@@ -1,8 +1,7 @@
 export default theme => ({
     facultyList: {
         background: theme.palette.background.paper,
-        borderStyle: "solid",
-        borderWidth: 1,
+        borderRight: "1px solid",
         borderColor: theme.palette.grey["300"],
         overflowY: "scroll",
         position: "relative",
