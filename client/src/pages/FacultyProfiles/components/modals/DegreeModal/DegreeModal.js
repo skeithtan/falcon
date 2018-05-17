@@ -79,10 +79,10 @@ export default class DegreeModal extends ModalFormComponent {
         submit()
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
-                console.log(error);
+                console.log("An error occurred in DegreeModal", error);
                 this.setState({
                     isSubmitting: false,
-                    error: error,
+                    error: "An error occurred",
                 });
             });
     };

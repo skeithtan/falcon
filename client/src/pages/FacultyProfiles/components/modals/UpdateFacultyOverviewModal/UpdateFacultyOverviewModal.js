@@ -104,10 +104,10 @@ export default class UpdateFacultyOverviewModal extends ModalFormComponent {
         this.props.submitForm(form)
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
-                console.log(error, error.message);
+                console.log("An error occurred while updating faculty", error);
                 this.setState({
                     isSubmitting: false,
-                    error: String(error),
+                    error: "An error occurred",
                 });
             });
     };

@@ -54,7 +54,7 @@ export default class AddFacultyModal extends Component {
         this.props.submitForm(this.state.form)
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
-                console.log(error.graphQLErrors[0].message);
+                console.log("An error occurred while adding faculty", error);
                 if (error.graphQLErrors &&
                     error.graphQLErrors[0].message.startsWith("ValidationError: User with email")) {
                     this.setState({
@@ -63,7 +63,7 @@ export default class AddFacultyModal extends Component {
                     });
                 } else {
                     this.setState({
-                        error: error,
+                        error: "An error occurred",
                         isSubmitting: false,
                     });
                 }

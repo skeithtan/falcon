@@ -33,8 +33,8 @@ export default class RemoveRecognitionModal extends DangerActionConfirmationModa
         onConfirmRemove(faculty, recognition._id)
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
-                console.log(error);
-                this.setState({isSubmitting: false, error: error});
+                console.log("An error occurred while removing recognition", error);
+                this.setState({isSubmitting: false, error: "An error occurred"});
             });
     };
 }

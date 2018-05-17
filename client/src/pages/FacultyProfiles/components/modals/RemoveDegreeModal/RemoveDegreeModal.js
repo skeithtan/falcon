@@ -31,8 +31,8 @@ export default class RemoveDegreeModal extends DangerActionConfirmationModal {
         onConfirmRemove(faculty, degree._id)
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
-                console.log(error);
-                this.setState({isSubmitting: false, error: error});
+                console.log("An error occurred while removing degree", error);
+                this.setState({isSubmitting: false, error: "An error occurred"});
             });
     };
 }
