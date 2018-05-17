@@ -1,5 +1,6 @@
 import moment from "moment";
 import { profilesFetched } from "../actions/faculty_profiles.actions";
+import { SEX } from "../enums/faculty.enums";
 
 
 export function updateFacultyFromState(newFaculty, dispatch, getState) {
@@ -13,7 +14,13 @@ export function updateFacultyFromState(newFaculty, dispatch, getState) {
     })));
 }
 
+export function getPossessivePronoun(faculty) {
+    return faculty.sex === SEX.M.identifier ? "his" : "her";
+}
 
+export function getThirdPersonPronoun(faculty) {
+    return faculty.sex === SEX.M.identifier ? "him" : "her";
+}
 
 export function formatMonthYearDate(date) {
     const dateString = `${date.month}-${date.year}`;
