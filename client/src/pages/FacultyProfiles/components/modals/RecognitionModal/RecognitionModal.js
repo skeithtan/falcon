@@ -79,30 +79,17 @@ export default class RecognitionModal extends ModalFormComponent {
         return this.props.action === "add" ? "Add a Recognition" : "Update Recognition";
     }
 
-    handleSubmit = () => {
+    get submitAddAction() {
         const form = this.state.form;
-        const {faculty, action, submitAddRecognitionForm, submitUpdateRecognitionForm} = this.props;
-        this.setState({isSubmitting: true, error: null});
+        const {faculty, submitAddRecognitionForm} = this.props;
+        return () => submitAddRecognitionForm(form, faculty);
+    }
 
-        const submit = () => {
-            if (action === "add") {
-                return submitAddRecognitionForm(form, faculty);
-            } else {
-                const recognition = this.props.recognition;
-                return submitUpdateRecognitionForm(form, recognition._id, faculty);
-            }
-        };
-
-        submit()
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred in RecognitionModal", error);
-                this.setState({
-                    isSubmitting: false,
-                    error: "An error occurred",
-                });
-            });
-    };
+    get submitUpdateAction() {
+        const form = this.state.form;
+        const {faculty, recognition, submitUpdateRecognitionForm} = this.props;
+        return () => submitUpdateRecognitionForm(form, recognition._id, faculty);
+    }
 
     render() {
         const {open, classes} = this.props;

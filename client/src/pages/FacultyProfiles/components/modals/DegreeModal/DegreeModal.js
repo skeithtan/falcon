@@ -62,30 +62,17 @@ export default class DegreeModal extends ModalFormComponent {
         };
     }
 
-    handleSubmit = () => {
+    get submitAddAction() {
         const form = this.state.form;
-        const {faculty, action, submitAddDegreeForm, submitUpdateDegreeForm} = this.props;
-        this.setState({isSubmitting: true, error: null});
+        const {faculty, submitAddDegreeForm} = this.props;
+        return () => submitAddDegreeForm(form, faculty);
+    }
 
-        const submit = () => {
-            if (action === "add") {
-                return submitAddDegreeForm(form, faculty);
-            } else {
-                const degree = this.props.degree;
-                return submitUpdateDegreeForm(form, degree._id, faculty);
-            }
-        };
-
-        submit()
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred in DegreeModal", error);
-                this.setState({
-                    isSubmitting: false,
-                    error: "An error occurred",
-                });
-            });
-    };
+    get submitUpdateAction() {
+        const form = this.state.form;
+        const {faculty, degree, submitUpdateDegreeForm} = this.props;
+        return () => submitUpdateDegreeForm(form, degree._id, faculty);
+    }
 
     get buttonName() {
         return this.props.action === "add" ? "Add Degree" : "Update Degree";

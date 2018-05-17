@@ -4,6 +4,7 @@ import { Component } from "react";
 export default class ModalFormComponent extends Component {
     state = {...this.initialState};
 
+    // To be implemented by subclass
     get initialForm() {
         return {};
     };
@@ -36,4 +37,30 @@ export default class ModalFormComponent extends Component {
             },
         });
     };
+
+    // To be implemented by subclass
+    get submitAddAction() {
+
+    }
+
+    // To be implemented by subclass
+    get submitUpdateAction() {
+
+    }
+
+    handleSubmit = () => {
+        this.setState({isSubmitting: true, error: null});
+        const action = this.props;
+        const submit = action === "add" ? this.submitAddAction : this.submitUpdateAction;
+
+        submit()
+            .then(() => this.setState({isSubmitting: false}, this.closeModal))
+            .catch(error => {
+                console.log("An error occurred while submitting form", error);
+                this.setState({
+                    isSubmitting: false,
+                    error: "An error occurred",
+                });
+            });
+    }
 }

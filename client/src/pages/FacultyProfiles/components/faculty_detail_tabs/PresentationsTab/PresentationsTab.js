@@ -12,6 +12,7 @@ import TableToolbar from "../../../../../components/TableToolbar";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../utils/faculty";
 import { getFullName } from "../../../../../utils/user";
+import PresentationModal from "../../modals/PresentationModal";
 
 
 class PresentationRow extends Component {
@@ -69,7 +70,7 @@ class PresentationsTab extends Component {
     };
 
     togglePresentationModal = shouldShow => this.setState({
-        presentationModalisShowing: shouldShow,
+        presentationModalIsShowing: shouldShow,
     });
 
     toggleRemovePresentation = shouldShow => this.setState({
@@ -78,7 +79,8 @@ class PresentationsTab extends Component {
 
     onAddButtonClick = () => this.setState({
         activePresentation: null,
-    }, () => this.togglePresentationModal(true));
+        presentationModalIsShowing: true,
+    });
 
     renderRows = presentations => presentations.map(presentation =>
         <PresentationRow
@@ -118,6 +120,14 @@ class PresentationsTab extends Component {
                 </DetailCard>
 
                 {!presentationsIsEmpty && this.renderRows(presentations)}
+
+                <PresentationModal
+                    action={this.state.activePresentation ? "update" : "add"}
+                    open={this.state.presentationModalIsShowing}
+                    onClose={() => this.togglePresentationModal(false)}
+                    presentation={this.state.activePresentation}
+                    faculty={faculty}
+                />
             </div>
         );
     }
