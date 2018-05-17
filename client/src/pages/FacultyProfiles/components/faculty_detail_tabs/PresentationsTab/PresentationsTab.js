@@ -13,6 +13,7 @@ import { PRESENTATION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../utils/faculty";
 import { getFullName } from "../../../../../utils/user";
 import PresentationModal from "../../modals/PresentationModal";
+import RemovePresentationModal from "../../modals/RemovePresentationModal";
 
 
 class PresentationRow extends Component {
@@ -56,7 +57,7 @@ class PresentationsTab extends Component {
     state = {
         presentationModalIsShowing: false,
         activePresentation: null,
-        removePresentationIsShowing: false,
+        removePresentationModalIsShowing: false,
     };
 
     togglePresentationModal = shouldShow => this.setState({
@@ -64,7 +65,7 @@ class PresentationsTab extends Component {
     });
 
     toggleRemovePresentation = shouldShow => this.setState({
-        removePresentationIsShowing: shouldShow,
+        removePresentationModalIsShowing: shouldShow,
     });
 
     onAddButtonClick = () => this.setState({
@@ -84,7 +85,7 @@ class PresentationsTab extends Component {
 
             onRemoveButtonClick={() => this.setState({
                 activePresentation: presentation,
-                removePresentationIsShowing: true,
+                removePresentationModalIsShowing: true,
             })}
         />,
     );
@@ -98,6 +99,7 @@ class PresentationsTab extends Component {
 
     render() {
         const {faculty, classes} = this.props;
+        const {activePresentation, presentationModalIsShowing, removePresentationModalIsShowing} = this.state;
         const presentations = faculty.presentations;
         const presentationsIsEmpty = presentations.length === 0;
         return (
@@ -112,12 +114,21 @@ class PresentationsTab extends Component {
                 {!presentationsIsEmpty && this.renderRows(presentations)}
 
                 <PresentationModal
-                    action={this.state.activePresentation ? "update" : "add"}
-                    open={this.state.presentationModalIsShowing}
+                    action={activePresentation ? "update" : "add"}
+                    open={presentationModalIsShowing}
                     onClose={() => this.togglePresentationModal(false)}
-                    presentation={this.state.activePresentation}
+                    presentation={activePresentation}
                     faculty={faculty}
                 />
+
+                {activePresentation &&
+                <RemovePresentationModal
+                    open={removePresentationModalIsShowing}
+                    onClose={() => this.toggleRemovePresentation(false)}
+                    presentation={activePresentation}
+                    faculty={faculty}
+                />
+                }
             </div>
         );
     }
