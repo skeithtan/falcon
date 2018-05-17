@@ -1,34 +1,36 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 import DangerActionConfirmationModal from "../../../../../components/DangerActionConfirmationModal";
+import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
 
 
-export default class RemoveDegreeModal extends DangerActionConfirmationModal {
+export default class RemoveRecognitionModal extends DangerActionConfirmationModal {
     get dialogTitle() {
-        return "Are you sure you want to remove this degree?";
+        return "Are you sure you want to remove this recognition?";
     }
 
     get dialogContent() {
         const facultyName = getFullName(this.props.faculty.user);
-        const {title, completionYear} = this.props.degree;
+        const {title, basis} = this.props.recognition;
+        const basisName = RECOGNITION.BASIS[basis].name;
 
         return (
             <DialogContentText>
-                You are about to remove <b>{facultyName}</b>'s degree <b>{title}</b> from <b>{completionYear}</b>.
+                You are about to remove <b>{facultyName}</b>'s <b>{basisName}</b> recognition titled <b>{title}</b>.
             </DialogContentText>
         );
     }
 
     get buttonName() {
-        return "Remove degree";
+        return "Remove recognition";
     }
 
     onConfirmAction = () => {
         this.setState({isSubmitting: true, error: null});
-        const {faculty, degree, onConfirmRemove} = this.props;
+        const {faculty, recognition, onConfirmRemove} = this.props;
 
-        onConfirmRemove(faculty, degree._id)
+        onConfirmRemove(faculty, recognition._id)
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
                 console.log(error);

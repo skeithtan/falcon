@@ -12,6 +12,7 @@ import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../utils/faculty";
 import { getFullName } from "../../../../../utils/user";
 import RecognitionModal from "../../modals/RecognitionModal";
+import RemoveRecognitionModal from "../../modals/RemoveRecognitionModal";
 
 
 class RecognitionRow extends Component {
@@ -36,10 +37,15 @@ export default class RecognitionsCard extends Component {
     state = {
         recognitionModalIsShowing: false,
         activeRecognition: null,
+        removeRecognitionModalIsShowing: false,
     };
 
     toggleRecognitionModal = shouldShow => this.setState({
         recognitionModalIsShowing: shouldShow,
+    });
+
+    toggleRemoveRecognitionModal = shouldShow => this.setState({
+        removeRecognitionModalIsShowing: shouldShow,
     });
 
     renderRows = recognitions => recognitions.map(recognition =>
@@ -56,7 +62,7 @@ export default class RecognitionsCard extends Component {
                                 activeRecognition: recognition,
                             });
 
-                            //TODO: Show remove modal
+                            this.toggleRemoveRecognitionModal(true);
                         }}
         />,
     );
@@ -68,9 +74,9 @@ export default class RecognitionsCard extends Component {
                     addButtonText="Add a recognition" />
     );
 
-    onAddButtonClick = () => {
-        this.toggleRecognitionModal(true);
-    };
+    onAddButtonClick = () => this.setState({
+        activeRecognition: null,
+    }, () => this.toggleRecognitionModal(true));
 
     render() {
         const faculty = this.props.faculty;
@@ -78,7 +84,7 @@ export default class RecognitionsCard extends Component {
         const recognitions = faculty.recognitions;
         const recognitionsIsEmpty = recognitions.length === 0;
 
-        const {recognitionModalIsShowing, activeRecognition} = this.state;
+        const {recognitionModalIsShowing, activeRecognition, removeRecognitionModalIsShowing} = this.state;
 
         return (
             <DetailCard>
@@ -113,6 +119,15 @@ export default class RecognitionsCard extends Component {
                     open={recognitionModalIsShowing}
                     onClose={() => this.toggleRecognitionModal(false)}
                 />
+
+                {activeRecognition &&
+                <RemoveRecognitionModal
+                    recognition={activeRecognition}
+                    faculty={faculty}
+                    open={removeRecognitionModalIsShowing}
+                    onClose={() => this.toggleRemoveRecognitionModal(false)}
+                />
+                }
             </DetailCard>
         );
     }
