@@ -60,14 +60,14 @@ export default class FacultyList extends Component {
         <FullPageLoadingIndicator size={100} />
     );
 
-    toggleAddFacultyModal = () => this.setState({
-        addFacultyModalIsShowing: !this.state.addFacultyModalIsShowing,
+    toggleAddFacultyModal = shouldShow => this.setState({
+        addFacultyModalIsShowing: shouldShow,
     });
 
     renderEmptyState = () => (
         <EmptyState bigMessage="No faculties found"
                     smallMessage="When faculties are added, you can see them here"
-                    onAddButtonClick={this.toggleAddFacultyModal}
+                    onAddButtonClick={() => this.toggleAddFacultyModal(true)}
                     addButtonText="Add a faculty" />
     );
 
@@ -124,13 +124,14 @@ export default class FacultyList extends Component {
                 {faculties &&
                 <Tooltip title="Add a faculty" placement="top">
                     <Button variant="fab" color="primary" className={classes.addButton}
-                            onClick={this.toggleAddFacultyModal}>
+                            onClick={() => this.toggleAddFacultyModal(true)}>
                         <AddIcon />
                     </Button>
                 </Tooltip>
                 }
 
-                <AddFacultyModal open={this.state.addFacultyModalIsShowing} onClose={this.toggleAddFacultyModal} />
+                <AddFacultyModal open={this.state.addFacultyModalIsShowing}
+                                 onClose={() => this.toggleAddFacultyModal(false)} />
             </div>
         );
     }

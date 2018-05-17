@@ -38,15 +38,15 @@ export default class DegreeCard extends Component {
         removeDegreeModalIsShowing: false,
     };
 
-    toggleDegreeFormModal = () => {
+    toggleDegreeFormModal = shouldShow => {
         this.setState({
-            degreeFormModalIsShowing: !this.state.degreeFormModalIsShowing,
+            degreeFormModalIsShowing: shouldShow,
         });
     };
 
-    toggleRemoveDegreeModal = () => {
+    toggleRemoveDegreeModal = shouldShow => {
         this.setState({
-            removeDegreeModalIsShowing: !this.state.removeDegreeModalIsShowing,
+            removeDegreeModalIsShowing: shouldShow,
         });
     };
 
@@ -57,14 +57,14 @@ export default class DegreeCard extends Component {
                            activeDegree: degree,
                        });
 
-                       this.toggleDegreeFormModal();
+                       this.toggleDegreeFormModal(true);
                    }}
                    onRemoveButtonClick={() => {
                        this.setState({
                            activeDegree: degree,
                        });
 
-                       this.toggleRemoveDegreeModal();
+                       this.toggleRemoveDegreeModal(true);
                    }}
         />,
     );
@@ -74,7 +74,7 @@ export default class DegreeCard extends Component {
             activeDegree: null,
         });
 
-        this.toggleDegreeFormModal();
+        this.toggleDegreeFormModal(true);
     };
 
     renderEmptyState = () => (
@@ -118,12 +118,12 @@ export default class DegreeCard extends Component {
                 <DegreeModal action={activeDegree ? "update" : "add"}
                              degree={activeDegree}
                              open={degreeFormModalIsShowing}
-                             onClose={this.toggleDegreeFormModal}
+                             onClose={() => this.toggleDegreeFormModal(false)}
                              faculty={faculty} />
 
                 {activeDegree &&
                 <RemoveDegreeModal open={removeDegreeModalIsShowing}
-                                   onClose={this.toggleRemoveDegreeModal}
+                                   onClose={() => this.toggleRemoveDegreeModal(false)}
                                    dialogTitle={"Are you sure you want to remove this degree?"}
                                    degree={activeDegree}
                                    faculty={faculty}

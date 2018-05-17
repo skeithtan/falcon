@@ -19,8 +19,8 @@ export default class OverviewCard extends Component {
         updateFacultyModalIsShowing: false,
     };
 
-    toggleUpdateFacultyModal = () => this.setState({
-        updateFacultyModalIsShowing: !this.state.updateFacultyModalIsShowing,
+    toggleUpdateFacultyModal = shouldShow => this.setState({
+        updateFacultyModalIsShowing: shouldShow,
     });
 
     render() {
@@ -33,7 +33,7 @@ export default class OverviewCard extends Component {
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
                         <Tooltip title="Update these details" placement="left">
-                            <IconButton onClick={this.toggleUpdateFacultyModal}>
+                            <IconButton onClick={() => this.toggleUpdateFacultyModal(true)}>
                                 <EditIcon />
                             </IconButton>
                         </Tooltip>
@@ -65,7 +65,7 @@ export default class OverviewCard extends Component {
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
                 <UpdateFacultyOverviewModal faculty={faculty} open={this.state.updateFacultyModalIsShowing}
-                                            onClose={this.toggleUpdateFacultyModal} />
+                                            onClose={() => this.toggleUpdateFacultyModal(false)} />
             </DetailCard>
         );
     }
