@@ -1,9 +1,8 @@
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import React, { Component } from "react";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
@@ -11,19 +10,19 @@ import { EmptySearchResultsState, EmptyState, ErrorState } from "../../../../com
 import UserAvatar from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user";
 import AddFacultyModal from "../modals/AddFacultyModal";
-import ListItemText from '@material-ui/core/ListItemText';
+
 
 class FacultyItem extends Component {
     render() {
         const {classes, faculty, active} = this.props;
         const {activeListItem, listItem} = classes;
-        const className = active ? [activeListItem, listItem].join(" ")  : listItem;
+        const className = active ? [activeListItem, listItem].join(" ") : listItem;
         return (
             <ListItem className={className}
                       onClick={this.props.onClick}
                       button>
                 <UserAvatar user={faculty.user} />
-                <ListItemText primary={getFullName(faculty.user)}/>
+                <ListItemText primary={getFullName(faculty.user)} />
             </ListItem>
         );
     }
