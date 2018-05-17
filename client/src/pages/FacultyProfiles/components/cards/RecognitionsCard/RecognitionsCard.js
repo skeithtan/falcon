@@ -11,6 +11,7 @@ import TableToolbar from "../../../../../components/TableToolbar";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../utils/faculty";
 import { getFullName } from "../../../../../utils/user";
+import RecognitionModal from "../../modals/RecognitionModal";
 
 
 class RecognitionRow extends Component {
@@ -42,6 +43,14 @@ class RecognitionRow extends Component {
 }
 
 export default class RecognitionsCard extends Component {
+    state = {
+        recognitionModalIsShowing: false,
+    };
+
+    toggleRecognitionModal = shouldShow => this.setState({
+        recognitionModalIsShowing: shouldShow,
+    });
+
     renderRows = recognitions => recognitions.map(recognition =>
         <RecognitionRow recognition={recognition} key={recognition._id} />,
     );
@@ -54,8 +63,7 @@ export default class RecognitionsCard extends Component {
     );
 
     onAddButtonClick = () => {
-        //TODO
-        console.log("Add recognition button clicked");
+        this.toggleRecognitionModal(true);
     };
 
     render() {
@@ -63,6 +71,9 @@ export default class RecognitionsCard extends Component {
         //TODO: Sort by date
         const recognitions = faculty.recognitions;
         const recognitionsIsEmpty = recognitions.length === 0;
+
+        const {recognitionModalIsShowing} = this.state;
+
         return (
             <DetailCard>
                 <TableToolbar tableTitle="Recognitions"
@@ -87,6 +98,13 @@ export default class RecognitionsCard extends Component {
                 }
 
                 {recognitionsIsEmpty && this.renderEmptyState()}
+
+
+                <RecognitionModal
+                    action="add"
+                    open={recognitionModalIsShowing}
+                    onClose={() => this.toggleRecognitionModal(false)}
+                />
             </DetailCard>
         );
     }
