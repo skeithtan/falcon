@@ -16,8 +16,13 @@ export default class DangerActionConfirmationModal extends Component {
         error: null,
     };
 
+    // Preferably overriden by subclass
+    get dialogTitle() {
+        return "Are you sure you want to perform this action?";
+    }
+
+    // Preferably overriden by subclass
     get dialogContent() {
-        // Preferably overriden by subclass
         return (
             <DialogContentText>
                 This action cannot be undone.
@@ -25,8 +30,13 @@ export default class DangerActionConfirmationModal extends Component {
         );
     }
 
+    // Preferably overriden by subclass
+    get buttonName() {
+        return "Confirm Action";
+    }
+
+    // To be implemented by subclass
     onConfirmAction = () => {
-        // To be implemented by subclass
         console.log("Invoked parent onConfirmAction()");
     };
 
@@ -39,12 +49,12 @@ export default class DangerActionConfirmationModal extends Component {
     };
 
     render() {
-        const {open, dialogTitle, buttonName} = this.props;
+        const open = this.props.open;
         const {isSubmitting, error} = this.state;
 
         return (
             <Dialog open={open} onClose={this.closeModal}>
-                <DialogTitle>{dialogTitle}</DialogTitle>
+                <DialogTitle>{this.dialogTitle}</DialogTitle>
                 <DialogContent>
                     {this.dialogContent}
                 </DialogContent>
@@ -67,7 +77,7 @@ export default class DangerActionConfirmationModal extends Component {
                     <Button color="primary"
                             disabled={isSubmitting}
                             onClick={this.onConfirmAction}>
-                        {buttonName}
+                        {this.buttonName}
                     </Button>
                 </DialogActions>
             </Dialog>

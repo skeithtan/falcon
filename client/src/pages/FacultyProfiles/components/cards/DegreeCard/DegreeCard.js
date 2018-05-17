@@ -69,13 +69,9 @@ export default class DegreeCard extends Component {
         />,
     );
 
-    onAddButtonClick = () => {
-        this.setState({
-            activeDegree: null,
-        });
-
-        this.toggleDegreeFormModal(true);
-    };
+    onAddButtonClick = () => this.setState({
+        activeDegree: null,
+    }, () => this.toggleDegreeFormModal(true));
 
     renderEmptyState = () => (
         <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded degrees.`}
@@ -115,19 +111,20 @@ export default class DegreeCard extends Component {
 
                 {degreesIsEmpty && this.renderEmptyState()}
 
-                <DegreeModal action={activeDegree ? "update" : "add"}
-                             degree={activeDegree}
-                             open={degreeFormModalIsShowing}
-                             onClose={() => this.toggleDegreeFormModal(false)}
-                             faculty={faculty} />
+                <DegreeModal
+                    action={activeDegree ? "update" : "add"}
+                    degree={activeDegree}
+                    open={degreeFormModalIsShowing}
+                    onClose={() => this.toggleDegreeFormModal(false)}
+                    faculty={faculty}
+                />
 
                 {activeDegree &&
-                <RemoveDegreeModal open={removeDegreeModalIsShowing}
-                                   onClose={() => this.toggleRemoveDegreeModal(false)}
-                                   dialogTitle={"Are you sure you want to remove this degree?"}
-                                   degree={activeDegree}
-                                   faculty={faculty}
-                                   buttonName={"Remove degree"}
+                <RemoveDegreeModal
+                    open={removeDegreeModalIsShowing}
+                    onClose={() => this.toggleRemoveDegreeModal(false)}
+                    degree={activeDegree}
+                    faculty={faculty}
                 />
                 }
             </DetailCard>
