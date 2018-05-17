@@ -15,18 +15,8 @@ import RecognitionModal from "../../modals/RecognitionModal";
 
 
 class RecognitionRow extends Component {
-    onUpdateButtonClick = recognition => {
-        //TODO
-        console.log(`Recognition ${recognition._id} edit button clicked`);
-    };
-
-    onRemoveButtonClick = recognition => {
-        //TODO
-        console.log(`Recognition ${recognition._id} remove button clicked`);
-    };
-
     render() {
-        const recognition = this.props.recognition;
+        const {recognition, onRemoveButtonClick, onUpdateButtonClick} = this.props;
         return (
             <TableRow>
                 <TableCell>{recognition.title}</TableCell>
@@ -35,8 +25,8 @@ class RecognitionRow extends Component {
                 <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this recognition"
                                  updateButtonTooltipTitle="Update this recognition"
-                                 onRemoveButtonClick={() => this.onRemoveButtonClick(recognition)}
-                                 onUpdateButtonClick={() => this.onUpdateButtonClick(recognition)} />
+                                 onRemoveButtonClick={onRemoveButtonClick}
+                                 onUpdateButtonClick={onUpdateButtonClick} />
             </TableRow>
         );
     }
@@ -45,6 +35,7 @@ class RecognitionRow extends Component {
 export default class RecognitionsCard extends Component {
     state = {
         recognitionModalIsShowing: false,
+        activeRecognition: null,
     };
 
     toggleRecognitionModal = shouldShow => this.setState({
@@ -52,7 +43,22 @@ export default class RecognitionsCard extends Component {
     });
 
     renderRows = recognitions => recognitions.map(recognition =>
-        <RecognitionRow recognition={recognition} key={recognition._id} />,
+        <RecognitionRow recognition={recognition} key={recognition._id}
+                        onUpdateButtonClick={() => {
+                            this.setState({
+                                activeRecognition: recognition,
+                            });
+
+                            this.toggleRecognitionModal(true);
+                        }}
+                        onRemoveButtonClick={() => {
+                            this.setState({
+                                activeRecognition: recognition,
+                            });
+
+                            //TODO: Show remove modal
+                        }}
+        />,
     );
 
     renderEmptyState = () => (
@@ -72,7 +78,7 @@ export default class RecognitionsCard extends Component {
         const recognitions = faculty.recognitions;
         const recognitionsIsEmpty = recognitions.length === 0;
 
-        const {recognitionModalIsShowing} = this.state;
+        const {recognitionModalIsShowing, activeRecognition} = this.state;
 
         return (
             <DetailCard>
@@ -101,7 +107,9 @@ export default class RecognitionsCard extends Component {
 
 
                 <RecognitionModal
-                    action="add"
+                    action={activeRecognition ? "update" : "add"}
+                    recognition={activeRecognition}
+                    faculty={faculty}
                     open={recognitionModalIsShowing}
                     onClose={() => this.toggleRecognitionModal(false)}
                 />

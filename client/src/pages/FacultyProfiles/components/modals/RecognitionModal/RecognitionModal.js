@@ -34,7 +34,13 @@ function getFormErrors(form) {
 }
 
 function mapRecognitionToForm(recognition) {
-    // TODO
+    return {
+        title: recognition.title,
+        basis: recognition.basis,
+        sponsor: recognition.sponsor,
+        year: recognition.date.year,
+        month: recognition.date.month,
+    };
 }
 
 const initialForm = {
@@ -59,13 +65,10 @@ export default class RecognitionModal extends ModalFormComponent {
             };
         }
 
-        return prevState;
-
-        // TODO: Update
-        // return {
-        //     ...prevState,
-        //     form: mapDegreeToForm(nextProps.degree),
-        // };
+        return {
+            ...prevState,
+            form: mapRecognitionToForm(nextProps.recognition),
+        };
     }
 
     get buttonName() {
@@ -77,7 +80,28 @@ export default class RecognitionModal extends ModalFormComponent {
     }
 
     handleSubmit = () => {
-        //TODO
+        const form = this.state.form;
+        const {faculty, action, submitAddRecognitionForm, submitUpdateRecognitionForm} = this.props;
+        this.setState({isSubmitting: true, error: null});
+
+        const submit = () => {
+            if (action === "add") {
+                return submitAddRecognitionForm(form, faculty);
+            } else {
+                const recognition = this.props.recognition;
+                return submitUpdateRecognitionForm(form, recognition._id, faculty);
+            }
+        };
+
+        submit()
+            .then(() => this.setState({isSubmitting: false}, this.closeModal))
+            .catch(error => {
+                console.log(error);
+                this.setState({
+                    isSubmitting: false,
+                    error: error,
+                });
+            });
     };
 
     render() {
