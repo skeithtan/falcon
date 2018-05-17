@@ -58,7 +58,7 @@ export function dateToFormInputValue(date) {
 export const yearValidators = [
     {
         isValid(value) {
-            return !isNaN(parseInt(value));
+            return /^\d+$/.test(value);
         },
         errorMessage: "Must be a number",
     },
