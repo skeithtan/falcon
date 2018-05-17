@@ -75,7 +75,7 @@ type ExtensionWorkMutations {
 type DegreeMutations {
     create(newDegree: DegreeInput!): Degree!
     update(_id: String!, newDegree: DegreeInput!): Degree!
-    remvoe(_id: String!): Boolean!
+    remove(_id: String!): Boolean!
 }
 
 extend type Mutation {
