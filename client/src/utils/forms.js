@@ -55,13 +55,15 @@ export function dateToFormInputValue(date) {
     return moment(date).format("YYYY-MM-DD");
 }
 
-export const yearValidators = [
-    {
-        isValid(value) {
-            return /^\d+$/.test(value);
-        },
-        errorMessage: "Must be a number",
+export const mustBeNumberValidator = {
+    isValid(value) {
+        return /^\d+$/.test(value);
     },
+    errorMessage: "Must be a number",
+};
+
+export const yearValidators = [
+    mustBeNumberValidator,
     {
         isValid(value) {
             const year = parseInt(value);
