@@ -5,7 +5,7 @@ import {
     activeFacultyChanged,
     profileIsAdded,
 } from "../../../../../actions/faculty_profiles.actions";
-import { addFaculty } from "../../../../../services/faculty.service";
+import { addFaculty } from "../../../../../services/faculty/faculty";
 import AddFacultyModal from "./AddFacultyModal";
 import styles from "./styles";
 

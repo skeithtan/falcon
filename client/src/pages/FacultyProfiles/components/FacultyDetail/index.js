@@ -7,7 +7,7 @@ import {
     detailFetchError,
     detailsIsLoading,
 } from "../../../../actions/faculty_profiles.actions";
-import { fetchFacultyDetails } from "../../../../services/faculty.service";
+import { fetchFacultyDetails } from "../../../../services/faculty/faculty";
 import { updateFacultyFromState } from "../../../../utils/faculty";
 import { getTabFromIdentifier } from "../faculty_detail_tabs";
 import FacultyDetail from "./FacultyDetail";

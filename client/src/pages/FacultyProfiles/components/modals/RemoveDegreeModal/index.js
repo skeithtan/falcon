@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
-import { removeDegree } from "../../../../../services/faculty.service";
+import { removeDegree } from "../../../../../services/faculty/degree";
 import RemoveDegreeModal from "./RemoveDegreeModal";
 
 

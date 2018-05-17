@@ -1,5 +1,9 @@
 import gql from "graphql-tag";
-import client from "../client";
+import client from "../../client";
+import { fields as degreeFields } from "./degree";
+import { fields as extensionWorkFields } from "./extension_work";
+import { fields as presentationFields } from "./presentation";
+import { fields as recognitionFields } from "./recognition";
 
 
 const facultySummary = `
@@ -23,23 +27,13 @@ const facultyOverview = `
 
 const degrees = `
     degrees {
-        _id
-        title
-        level
-        completionYear
+        ${degreeFields}
     }
 `;
 
 const recognitions = `
     recognitions {
-        _id
-        title
-        basis
-        sponsor
-        date {
-            month
-            year
-        }
+        ${recognitionFields}
     }
 `;
 
@@ -51,24 +45,11 @@ const teachingSubjects = `
         major
     }
 `;
-
 const presentations = `
     presentations {
-        _id
-        title
-        category
-        sponsor
-        venue
-        conference
-        medium
-        daysDuration
-        date {
-            month
-            year
-        }
+        ${presentationFields}
     }
 `;
-
 const instructionalMaterials = `
     instructionalMaterials {
         _id
@@ -80,16 +61,11 @@ const instructionalMaterials = `
         nonPrintType
     }
 `;
-
 const extensionWorks = `
     extensionWorks {
-        _id
-        title
-        roles
-        venue
+        ${extensionWorkFields}
     }
 `;
-
 const fullFacultyDetails = [
     facultySummary,
     facultyOverview,
@@ -162,65 +138,6 @@ export function updateFaculty(_id, newFaculty, newUser) {
             _id,
             newFaculty,
             newUser,
-        },
-    });
-}
-
-export function addDegree(facultyId, newDegree) {
-    return client.mutate({
-        mutation: gql`
-            mutation createDegree($facultyId: String!, $newDegree: DegreeInput!) {
-                degree(facultyId: $facultyId) {
-                    create(newDegree: $newDegree) {
-                        _id
-                        title
-                        level
-                        completionYear
-                    }
-                }
-            }
-        `,
-        variables: {
-            facultyId,
-            newDegree,
-        },
-    });
-}
-
-export function updateDegree(facultyId, _id, newDegree) {
-    return client.mutate({
-        mutation: gql`
-            mutation updateDegree($facultyId: String!, $_id: String!, $newDegree: DegreeInput!) {
-                degree(facultyId: $facultyId) {
-                    update(_id: $_id, newDegree: $newDegree) {
-                        _id
-                        title
-                        level
-                        completionYear
-                    }
-                }
-            }
-        `,
-        variables: {
-            facultyId,
-            _id,
-            newDegree,
-        },
-    });
-}
-
-export function removeDegree(facultyId, _id) {
-    return client.mutate({
-        mutation: gql`
-            mutation removeDegree($facultyId: String!, $_id: String!) {
-                degree(facultyId: $facultyId) {
-                    remove(_id: $_id)
-                }
-            }
-        `,
-        variables: {
-            facultyId,
-            _id,
         },
     });
 }

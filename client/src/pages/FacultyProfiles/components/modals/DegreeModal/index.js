@@ -2,7 +2,8 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
-import { addDegree, updateDegree } from "../../../../../services/faculty.service";
+import { updateDegree } from "../../../../../services/faculty/degree";
+import { addDegree } from "../../../../../services/faculty/degree";
 import DegreeModal from "./DegreeModal";
 import styles from "./styles";
 

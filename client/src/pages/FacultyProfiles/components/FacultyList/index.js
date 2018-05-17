@@ -8,7 +8,7 @@ import {
     profilesFetchError,
     profilesListIsLoading,
 } from "../../../../actions/faculty_profiles.actions";
-import { fetchAllFacultiesSummary } from "../../../../services/faculty.service";
+import { fetchAllFacultiesSummary } from "../../../../services/faculty/faculty";
 import FacultyList from "./FacultyList";
 import style from "./styles";
 

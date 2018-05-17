@@ -2,7 +2,7 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
-import { updateFaculty } from "../../../../../services/faculty.service";
+import { updateFaculty } from "../../../../../services/faculty/faculty";
 import styles from "./styles";
 import UpdateFacultyOverviewModal from "./UpdateFacultyOverviewModal";
 
