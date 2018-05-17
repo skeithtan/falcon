@@ -13,10 +13,9 @@ input ExtensionWorkInput {
 input InstructionalMaterialInput {
     title: String
     medium: InstructionalMaterialMedium
-    classification: InstructionalMaterialClassification
+    audience: InstructionalMaterialAudience
     usageYear: Int
     level: String
-    nonPrintType: InstructionalMaterialNonPrintType
 }
 
 input RecognitionInput {

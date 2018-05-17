@@ -55,10 +55,9 @@ const instructionalMaterials = `
         _id
         title
         medium
-        classification
+        audience
         usageYear
         level
-        nonPrintType
     }
 `;
 const extensionWorks = `

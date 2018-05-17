@@ -61,10 +61,10 @@ const InstructionalMaterialSchema = new Schema({
     title: String,
     medium: {
         type: String,
-        enum: ["PRINT", "NON_PRINT"],
+        enum: ["PRINT", "MODULE", "VIDEO", "SLIDE", "DIGITAL_FILE", "AUDIO"],
         required: true,
     },
-    classification: {
+    audience: {
         type: String,
         enum: ["STUDENT", "TEACHER"],
         required: true,
@@ -78,15 +78,7 @@ const InstructionalMaterialSchema = new Schema({
         type: String,
         enum: ["1", "2", "3", "4"],
         required: function () {
-            return this.classification === "STUDENT";
-        },
-    },
-    // Non-print types
-    nonPrintType: {
-        type: String,
-        enum: ["MODULE", "VIDEO", "SLIDE", "DIGITAL_FILE", "AUDIO"],
-        required: function () {
-            return this.medium === "NON_PRINT";
+            return this.audience === "STUDENT";
         },
     },
 });

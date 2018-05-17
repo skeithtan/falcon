@@ -75,7 +75,11 @@ export const EXTENSION_WORK = {
 };
 
 export const INSTRUCTIONAL_MATERIAL = {
-    NON_PRINT_TYPES: {
+    MEDIUM: {
+        "PRINT": {
+            identifier: "PRINT",
+            name: "Print",
+        },
         "MODULE": {
             identifier: "MODULE",
             name: "Module",
@@ -97,17 +101,7 @@ export const INSTRUCTIONAL_MATERIAL = {
             name: "Audio",
         },
     },
-    MEDIUM: {
-        "PRINT": {
-            identifier: "PRINT",
-            name: "Print",
-        },
-        "NON_PRINT": {
-            identifier: "NON_PRINT",
-            name: "Non-Print",
-        },
-    },
-    CLASSIFICATION: {
+    AUDIENCE: {
         "STUDENT": {
             identifier: "STUDENT",
             name: "Student",

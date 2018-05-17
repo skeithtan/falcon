@@ -40,15 +40,6 @@ type Recognition {
 
 enum InstructionalMaterialMedium {
     PRINT,
-    NON_PRINT
-}
-
-enum InstructionalMaterialClassification {
-    STUDENT,
-    TEACHER
-}
-
-enum InstructionalMaterialNonPrintType {
     MODULE,
     VIDEO,
     SLIDE,
@@ -56,14 +47,18 @@ enum InstructionalMaterialNonPrintType {
     AUDIO
 }
 
+enum InstructionalMaterialAudience {
+    STUDENT,
+    TEACHER
+}
+
 type InstructionalMaterial {
     _id: String!
     title: String!
     medium: InstructionalMaterialMedium!
-    classification: InstructionalMaterialClassification!
+    audience: InstructionalMaterialAudience!
     usageYear: Int!
     level: String
-    nonPrintType: InstructionalMaterialNonPrintType
 }
 
 type ExtensionWork {
