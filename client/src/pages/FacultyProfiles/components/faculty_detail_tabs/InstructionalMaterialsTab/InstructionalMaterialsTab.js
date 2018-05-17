@@ -11,22 +11,12 @@ import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
+import InstructionalMaterialModal from "../../modals/InstructionalMaterialModal";
 
 
 class InstructionalMaterialRow extends Component {
-    onUpdateButtonClick = instructionalMaterial => {
-        //TODO
-        console.log(`Instructional material ${instructionalMaterial._id} edit button clicked`);
-    };
-
-    onRemoveButtonClick = instructionalMaterial => {
-        //TODO
-        console.log(`Instructional material ${instructionalMaterial._id} remove button clicked`);
-    };
-
     render() {
-        const {instructionalMaterial} = this.props;
-
+        const {instructionalMaterial, onRemoveButtonClick, onUpdateButtonClick} = this.props;
         return (
             <DetailExpansionCard>
 
@@ -44,17 +34,15 @@ class InstructionalMaterialRow extends Component {
                                          value={instructionalMaterial.usageYear} />
 
                     {/*Student exclusive stuff*/}
-                    {instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT &&
-                    <FormDisplayListItem field="Level"
+                    {instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier &&
+                    <FormDisplayListItem field="Student Level"
                                          value={instructionalMaterial.level} />
                     }
 
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
                                                 updateButtonTooltipTitle="Update instructional material details"
-                                                onRemoveButtonClick={() =>
-                                                    this.onRemoveButtonClick(instructionalMaterial)}
-                                                onUpdateButtonClick={() =>
-                                                    this.onUpdateButtonClick(instructionalMaterial)} />
+                                                onRemoveButtonClick={onRemoveButtonClick}
+                                                onUpdateButtonClick={onUpdateButtonClick} />
 
                 </FormDisplayExpansionPanelDetails>
             </DetailExpansionCard>
@@ -62,14 +50,41 @@ class InstructionalMaterialRow extends Component {
     }
 }
 
-class InstructionalMaterialsTab extends Component {
-    onAddButtonClick = () => {
-        //TODO
-        console.log("Add instructional material button clicked");
+export default class InstructionalMaterialsTab extends Component {
+    state = {
+        instructionalMaterialModalIsShowing: false,
+        activeInstructionalMaterial: null,
+        removeInstructionalMaterialModalIsShowing: false,
     };
 
+    toggleInstructionalMaterialModal = shouldShow => this.setState({
+        instructionalMaterialModalIsShowing: shouldShow,
+    });
+
+    toggleRemoveInstructionalMaterialModal = shouldShow => this.setState({
+        removeInstructionalMaterialModalIsShowing: shouldShow,
+    });
+
+    onAddButtonClick = () => this.setState({
+        activeInstructionalMaterial: null,
+        instructionalMaterialModalIsShowing: true,
+    });
+
     renderRows = instructionalMaterials => instructionalMaterials.map(instructionalMaterial =>
-        <InstructionalMaterialRow instructionalMaterial={instructionalMaterial} key={instructionalMaterial._id} />,
+        <InstructionalMaterialRow
+            instructionalMaterial={instructionalMaterial}
+            key={instructionalMaterial._id}
+
+            onUpdateButtonClick={() => this.setState({
+                activeInstructionalMaterial: instructionalMaterial,
+                instructionalMaterialModalIsShowing: true,
+            })}
+
+            onRemoveButtonClick={() => this.setState({
+                activeInstructionalMaterial: instructionalMaterial,
+                removeInstructionalMaterialModalIsShowing: true,
+            })}
+        />,
     );
 
     renderEmptyState = () => (
@@ -84,6 +99,13 @@ class InstructionalMaterialsTab extends Component {
         const {faculty, classes} = this.props;
         const instructionalMaterials = faculty.instructionalMaterials;
         const instructionalMaterialsIsEmpty = instructionalMaterials.length === 0;
+
+        const {
+            activeInstructionalMaterial,
+            instructionalMaterialModalIsShowing,
+            removeInstructionalMaterialModalIsShowing,
+        } = this.state;
+
         return (
             <div className={classes.expansionCards}>
                 <DetailCard>
@@ -94,9 +116,15 @@ class InstructionalMaterialsTab extends Component {
                 </DetailCard>
 
                 {!instructionalMaterialsIsEmpty && this.renderRows(instructionalMaterials)}
+
+                <InstructionalMaterialModal
+                    action={activeInstructionalMaterial ? "update" : "add"}
+                    open={instructionalMaterialModalIsShowing}
+                    onClose={() => this.toggleInstructionalMaterialModal(false)}
+                    instructionalMaterial={activeInstructionalMaterial}
+                    faculty={faculty}
+                />
             </div>
         );
     }
 }
-
-export default InstructionalMaterialsTab;
