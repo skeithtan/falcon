@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
 import { addRecognition, updateRecognition } from "../../../../../services/faculty/recognition";
+import styles from "../generic_modal_style";
 import RecognitionModal from "./RecognitionModal";
-import styles from "./styles";
 
 
 function mapFormToRecognitionInput(form) {

@@ -5,7 +5,7 @@ import { profileIsUpdated } from "../../../../../actions/faculty_profiles.action
 import { updateDegree } from "../../../../../services/faculty/degree";
 import { addDegree } from "../../../../../services/faculty/degree";
 import DegreeModal from "./DegreeModal";
-import styles from "./styles";
+import styles from "../generic_modal_style";
 
 
 function mapDispatchToProps(dispatch) {

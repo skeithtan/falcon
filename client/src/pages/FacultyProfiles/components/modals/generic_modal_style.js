@@ -1,4 +1,4 @@
-import { form, formContainer } from "../../../../../components/styles";
+import { form, formContainer } from "../../../../components/styles";
 
 
 export default theme => ({
