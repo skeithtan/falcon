@@ -208,3 +208,19 @@ export function updateDegree(facultyId, _id, newDegree) {
         },
     });
 }
+
+export function removeDegree(facultyId, _id) {
+    return client.mutate({
+        mutation: gql`
+            mutation removeDegree($facultyId: String!, $_id: String!) {
+                degree(facultyId: $facultyId) {
+                    remove(_id: $_id)
+                }
+            }
+        `,
+        variables: {
+            facultyId,
+            _id,
+        },
+    });
+}

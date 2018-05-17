@@ -11,6 +11,7 @@ import TableToolbar from "../../../../../components/TableToolbar";
 import { DEGREE } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
 import DegreeModal from "../../modals/DegreeModal";
+import RemoveDegreeModal from "../../modals/RemoveDegreeModal";
 
 
 class DegreeRow extends Component {
@@ -34,11 +35,18 @@ export default class DegreeCard extends Component {
     state = {
         degreeFormModalIsShowing: false,
         activeDegree: null,
+        removeDegreeModalIsShowing: false,
     };
 
     toggleDegreeFormModal = () => {
         this.setState({
             degreeFormModalIsShowing: !this.state.degreeFormModalIsShowing,
+        });
+    };
+
+    toggleRemoveDegreeModal = () => {
+        this.setState({
+            removeDegreeModalIsShowing: !this.state.removeDegreeModalIsShowing,
         });
     };
 
@@ -56,8 +64,7 @@ export default class DegreeCard extends Component {
                            activeDegree: degree,
                        });
 
-                       // TODO
-                       console.log("Remove button clicked");
+                       this.toggleRemoveDegreeModal();
                    }}
         />,
     );
@@ -81,6 +88,9 @@ export default class DegreeCard extends Component {
         const faculty = this.props.faculty;
         const degrees = faculty.degrees;
         const degreesIsEmpty = degrees.length === 0;
+
+        const {activeDegree, degreeFormModalIsShowing, removeDegreeModalIsShowing} = this.state;
+
         return (
             <DetailCard>
                 <TableToolbar tableTitle="Degrees"
@@ -105,11 +115,21 @@ export default class DegreeCard extends Component {
 
                 {degreesIsEmpty && this.renderEmptyState()}
 
-                <DegreeModal action={this.state.activeDegree ? "update" : "add"}
-                             degree={this.state.activeDegree}
-                             open={this.state.degreeFormModalIsShowing}
+                <DegreeModal action={activeDegree ? "update" : "add"}
+                             degree={activeDegree}
+                             open={degreeFormModalIsShowing}
                              onClose={this.toggleDegreeFormModal}
                              faculty={faculty} />
+
+                {activeDegree &&
+                <RemoveDegreeModal open={removeDegreeModalIsShowing}
+                                   onClose={this.toggleRemoveDegreeModal}
+                                   dialogTitle={"Are you sure you want to remove this degree?"}
+                                   degree={activeDegree}
+                                   faculty={faculty}
+                                   buttonName={"Remove degree"}
+                />
+                }
             </DetailCard>
         );
     }
