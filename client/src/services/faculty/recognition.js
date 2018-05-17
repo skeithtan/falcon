@@ -55,7 +55,7 @@ export function removeRecognition(facultyId, _id) {
         mutation: gql`
             mutation removeRecognition($facultyId: String!, $_id: String!) {
                 recognition(facultyId: $facultyId) {
-                    remove(_id: $id)
+                    remove(_id: $_id)
                 }
             }
         `,
