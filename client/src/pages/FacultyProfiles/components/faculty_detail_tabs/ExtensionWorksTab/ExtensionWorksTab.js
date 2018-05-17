@@ -11,7 +11,9 @@ import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user";
-import ExtensionWorkModal from "../../modals/ExtensionWorkModal"
+import ExtensionWorkModal from "../../modals/ExtensionWorkModal";
+import RemoveExtensionWorkModal from "../../modals/RemoveExtensionWorkModal";
+
 
 class ExtensionWorkRow extends Component {
     extensionWorkRolesText = roles => {
@@ -126,6 +128,15 @@ class ExtensionWorksTab extends Component {
                     open={extensionWorkModalIsShowing}
                     onClose={() => this.toggleExtensionWorkModal(false)}
                 />
+
+                {activeExtensionWork &&
+                <RemoveExtensionWorkModal
+                    extensionWork={activeExtensionWork}
+                    faculty={faculty}
+                    open={removeExtensionWorkModalIsShowing}
+                    onClose={() => this.toggleRemoveExtensionWorkModal(false)}
+                />
+                }
 
             </div>
         );
