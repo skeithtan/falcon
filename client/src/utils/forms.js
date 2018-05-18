@@ -66,7 +66,7 @@ export const yearValidators = [
     mustBeNumberValidator,
     {
         isValid(value) {
-            const year = parseInt(value);
+            const year = parseInt(value, 10);
             return year > 1900 && year < 2200;
         },
         errorMessage: "Must be a valid year",

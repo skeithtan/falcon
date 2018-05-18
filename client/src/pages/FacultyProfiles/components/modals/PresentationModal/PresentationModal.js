@@ -41,7 +41,7 @@ function getFormErrors(form) {
                 mustBeNumberValidator,
                 {
                     isValid(value) {
-                        const days = parseInt(value);
+                        const days = parseInt(value, 10);
                         return days > 0;
                     },
                     errorMessage: "Must be a valid amount of days",
@@ -118,7 +118,7 @@ export default class PresentationModal extends ModalFormComponent {
 
     render() {
         const {open, classes} = this.props;
-        const {form, isSubmitting, error} = this.state;
+        const {form, isSubmitting} = this.state;
         const {hasErrors, fieldErrors} = getFormErrors(form);
 
         return (
