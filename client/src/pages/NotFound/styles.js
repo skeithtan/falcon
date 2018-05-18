@@ -22,9 +22,10 @@ export default theme => ({
         },
     },
 
-    emoji: {
+    sadFace: {
         fontSize: 160,
         margin: 0,
+        fontWeight: theme.typography.fontWeightLight
     },
 
     bigMessage: {
