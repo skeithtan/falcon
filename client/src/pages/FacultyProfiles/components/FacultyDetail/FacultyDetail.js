@@ -8,6 +8,9 @@ import { TABS } from "../faculty_detail_tabs";
 
 
 export default class FacultyDetail extends Component {
+    // Fixes error in console, but not necessary
+    state = {};
+
     renderSelectFacultyState = () => (
         <div className={this.props.classes.selectFacultyState}>
             <Typography variant="headline" className={this.props.classes.selectFacultyText}>
@@ -50,23 +53,23 @@ export default class FacultyDetail extends Component {
         );
     };
 
-    static getDerivedStateFromProps(nextProps) {
+    static getDerivedStateFromProps(nextProps, prevState) {
         const {activeFaculty, getFacultyDetails, setDetailsFetched, errors} = nextProps;
         if (!activeFaculty) {
-            return {};
+            return prevState;
         }
         // Do not fetch if there is an error showing
         if (errors) {
-            return {};
+            return prevState;
         }
 
         // Overview would have been fetched if birthDate exists
         if (!activeFaculty.birthDate) {
             getFacultyDetails(activeFaculty);
-            return {};
+            return prevState;
         }
         setDetailsFetched();
-        return {};
+        return prevState;
     }
 
     render() {
