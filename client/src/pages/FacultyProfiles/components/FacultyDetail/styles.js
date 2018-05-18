@@ -1,6 +1,7 @@
 export default theme => ({
     facultyDetail: {
         overflowY: "scroll",
+
         "& > div": {
             height: "100%",
         },

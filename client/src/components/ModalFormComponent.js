@@ -1,4 +1,5 @@
-import { Component } from "react";
+import React, { Component } from "react";
+import ModalFormDialogActions from "./ModalFormDialogActions";
 
 
 export default class ModalFormComponent extends Component {
@@ -14,7 +15,8 @@ export default class ModalFormComponent extends Component {
             form: {...this.initialForm},
             isSubmitting: false,
             error: null,
-        }
+            keepForm: false,
+        };
     };
 
     closeModal = () => {
@@ -24,6 +26,17 @@ export default class ModalFormComponent extends Component {
 
         this.props.onClose();
         this.resetForm();
+    };
+
+    onSubmitSuccess = () => {
+        this.resetForm();
+
+        if (!this.state.keepForm) {
+            this.props.onClose();
+        } else {
+            // If keepForm is true, do not turn false unless user says so
+            this.setState({keepForm: true});
+        }
     };
 
     resetForm = () => this.setState({...this.initialState});
@@ -37,6 +50,23 @@ export default class ModalFormComponent extends Component {
             },
         });
     };
+
+    handleKeepFormChange = event => this.setState({
+        keepForm: event.target.checked,
+    });
+
+    renderModalFormDialogActions = disabled => (
+        <ModalFormDialogActions
+            isSubmitting={this.state.isSubmitting}
+            error={this.state.error}
+            showKeepForm={this.props.action === "add"}
+            keepForm={this.state.keepForm}
+            handleKeepFormChange={this.handleKeepFormChange}
+            disabled={disabled}
+            handleSubmit={this.handleSubmit}
+            buttonName={this.buttonName}
+        />
+    );
 
     // To be implemented by subclass
     get submitAddAction() {
@@ -54,7 +84,7 @@ export default class ModalFormComponent extends Component {
         const submit = action === "add" ? this.submitAddAction : this.submitUpdateAction;
 
         submit()
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
+            .then(() => this.setState({isSubmitting: false}, this.onSubmitSuccess))
             .catch(error => {
                 console.log("An error occurred while submitting form", error);
                 this.setState({
@@ -62,5 +92,5 @@ export default class ModalFormComponent extends Component {
                     error: "An error occurred",
                 });
             });
-    }
+    };
 }

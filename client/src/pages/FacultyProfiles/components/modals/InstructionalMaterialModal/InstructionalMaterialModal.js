@@ -13,7 +13,6 @@ import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 import ModalFormComponent from "../../../../../components/ModalFormComponent";
-import ModalFormDialogActions from "../../../../../components/ModalFormDialogActions";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import validateForm, { yearValidators } from "../../../../../utils/forms";
 
@@ -33,11 +32,10 @@ function getFormErrors(form) {
         },
     };
 
-
     if (isForStudents(form)) {
         toValidate.level = {
-            value: form.level
-        }
+            value: form.level,
+        };
     }
 
     return validateForm(toValidate);
@@ -49,7 +47,7 @@ function mapInstructionalMaterialToForm(instructionalMaterial) {
         medium: instructionalMaterial.medium,
         audience: instructionalMaterial.audience,
         usageYear: instructionalMaterial.usageYear,
-        level: ""
+        level: "",
     };
 
     const forStudents = instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier;
@@ -205,13 +203,7 @@ export default class InstructionalMaterialModal extends ModalFormComponent {
                     </Grid>
                 </DialogContent>
 
-                <ModalFormDialogActions
-                    isSubmitting={isSubmitting}
-                    error={error}
-                    disabled={hasErrors}
-                    handleSubmit={this.handleSubmit}
-                    buttonName={this.buttonName}
-                />
+                {this.renderModalFormDialogActions(hasErrors)}
             </Dialog>
         );
     }

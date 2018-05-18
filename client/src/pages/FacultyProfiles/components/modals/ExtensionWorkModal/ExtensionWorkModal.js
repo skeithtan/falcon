@@ -11,7 +11,6 @@ import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 import ModalFormComponent from "../../../../../components/ModalFormComponent";
-import ModalFormDialogActions from "../../../../../components/ModalFormDialogActions";
 import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
 import validateForm from "../../../../../utils/forms";
 
@@ -161,14 +160,7 @@ export default class ExtensionWorkModal extends ModalFormComponent {
 
                 </DialogContent>
 
-                <ModalFormDialogActions
-                    isSubmitting={isSubmitting}
-                    error={error}
-                    disabled={hasErrors}
-                    handleSubmit={this.handleSubmit}
-                    buttonName={this.buttonName}
-                />
-
+                {this.renderModalFormDialogActions(hasErrors)}
             </Dialog>
         );
     }

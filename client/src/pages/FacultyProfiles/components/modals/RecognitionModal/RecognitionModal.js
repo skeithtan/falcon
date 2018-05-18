@@ -12,7 +12,6 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 import ModalFormComponent from "../../../../../components/ModalFormComponent";
-import ModalFormDialogActions from "../../../../../components/ModalFormDialogActions";
 import MonthPicker from "../../../../../components/MonthPicker";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import validateForm, { yearValidators } from "../../../../../utils/forms";
@@ -193,11 +192,7 @@ export default class RecognitionModal extends ModalFormComponent {
 
                 </DialogContent>
 
-                <ModalFormDialogActions isSubmitting={isSubmitting}
-                                        error={error}
-                                        disabled={hasErrors}
-                                        handleSubmit={this.handleSubmit}
-                                        buttonName={this.buttonName} />
+                {this.renderModalFormDialogActions(hasErrors)}
             </Dialog>
         );
     }
