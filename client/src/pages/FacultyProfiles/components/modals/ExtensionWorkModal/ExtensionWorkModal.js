@@ -97,7 +97,7 @@ export default class ExtensionWorkModal extends ModalFormComponent {
 
     render() {
         const {open, classes} = this.props;
-        const {form, isSubmitting, error} = this.state;
+        const {form, isSubmitting} = this.state;
         const {hasErrors, fieldErrors} = getFormErrors(form);
 
         return (
