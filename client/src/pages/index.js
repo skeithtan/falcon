@@ -1,4 +1,5 @@
 import FacultyProfilesPage from "./FacultyProfiles";
+import FacultyLoadingPage from "./FacultyLoading";
 import HomePage from "./Home";
 import NotFoundPage from "./NotFound";
 import SignInPage from "./SignIn";
@@ -31,6 +32,7 @@ export const HOME_PAGE = {
 export const FACULTY_LOADING_PAGE = {
     identifier: "FACULTY_LOADING_PAGE",
     path: "faculty-loading",
+    component: FacultyLoadingPage,
     name: "Faculty Loading",
     theme: INDIGO_THEME,
 };
