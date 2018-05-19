@@ -1,19 +1,27 @@
+import CoursesTab from "./Courses";
+import SubjectsTab from "./Subjects";
+import TermsScheduleTab from "./TermsSchedule";
+
+
 export const TERMS_SCHEDULE_TAB = {
     name: "Terms Schedule",
     identifier: "TERMS_SCHEDULE",
-    component: null,
+    path: "terms-schedule",
+    component: TermsScheduleTab,
 };
 
 export const SUBJECTS_TAB = {
     name: "Subjects",
     identifier: "SUBJECTS",
-    component: null,
+    path: "subjects",
+    component: SubjectsTab,
 };
 
 export const COURSES_TAB = {
     name: "Courses",
     identifier: "COURSES",
-    component: null,
+    path: "courses",
+    component: CoursesTab,
 };
 
 export const TABS = [
