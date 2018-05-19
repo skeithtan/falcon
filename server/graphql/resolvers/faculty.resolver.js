@@ -81,7 +81,7 @@ function mutateFaculty() {
 }
 
 async function mutatePresentation(object, {facultyId}) {
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    const faculty = await Faculty.findById(facultyId).exec();
 
     function getPresentation(_id) {
         const presentation = faculty.presentations.id(_id);
@@ -113,7 +113,7 @@ async function mutatePresentation(object, {facultyId}) {
 }
 
 async function mutateRecognition(object, {facultyId}) {
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    const faculty = await Faculty.findById(facultyId).exec();
 
     function getRecognition(_id) {
         const recognition = faculty.recognitions.id(_id);
@@ -145,7 +145,7 @@ async function mutateRecognition(object, {facultyId}) {
 }
 
 async function mutateInstructionalMaterial(object, {facultyId}) {
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    const faculty = await Faculty.findById(facultyId).exec();
 
     function getInstructionalMaterial(_id) {
         const instructionalMaterial = faculty.instructionalMaterials.id(_id);
@@ -177,7 +177,7 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
 }
 
 async function mutateExtensionWork(object, {facultyId}) {
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    const faculty = await Faculty.findById(facultyId).exec();
 
     function getExtensionWork(_id) {
         const extensionWork = faculty.extensionWorks.id(_id);
@@ -209,7 +209,7 @@ async function mutateExtensionWork(object, {facultyId}) {
 }
 
 async function mutateDegree(object, {facultyId}) {
-    const faculty = await Faculty.findById({_id: facultyId}).exec();
+    const faculty = await Faculty.findById(facultyId).exec();
 
     function getDegree(_id) {
         const degree = faculty.degrees.id(_id);
