@@ -6,7 +6,7 @@ input FacultyInput {
 
 input ExtensionWorkInput {
     title: String
-    roles: [String]
+    roles: [String!]
     venue: String
 }
 
@@ -44,37 +44,37 @@ input DegreeInput {
 
 type FacultyMutations {
     createFaculty(newFaculty: FacultyInput!, newUser: UserInput!, temporaryPassword: String!): Faculty!
-    updateFaculty(_id: String!, newFaculty: FacultyInput!, newUser: UserInput): Faculty!
+    updateFaculty(_id: ID!, newFaculty: FacultyInput!, newUser: UserInput): Faculty!
 }
 
 type PresentationMutations {
     create(newPresentation: PresentationInput!): Presentation!
-    update(_id: String!, newPresentation: PresentationInput!): Presentation!
-    remove(_id: String!): Boolean!
+    update(_id: ID!, newPresentation: PresentationInput!): Presentation!
+    remove(_id: ID!): Boolean!
 }
 
 type RecognitionMutations {
     create(newRecognition: RecognitionInput!): Recognition!
-    update(_id: String!, newRecognition: RecognitionInput!): Recognition!
-    remove(_id: String!): Boolean!
+    update(_id: ID!, newRecognition: RecognitionInput!): Recognition!
+    remove(_id: ID!): Boolean!
 }
 
 type InstructionalMaterialMutations {
     create(newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
-    update(_id: String!, newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
-    remove(_id: String!): Boolean!
+    update(_id: ID!, newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
+    remove(_id: ID!): Boolean!
 }
 
 type ExtensionWorkMutations {
     create(newExtensionWork: ExtensionWorkInput!): ExtensionWork!
-    update(_id: String!, newExtensionWork: ExtensionWorkInput!): ExtensionWork!
-    remove(_id: String!): Boolean!
+    update(_id: ID!, newExtensionWork: ExtensionWorkInput!): ExtensionWork!
+    remove(_id: ID!): Boolean!
 }
 
 type DegreeMutations {
     create(newDegree: DegreeInput!): Degree!
-    update(_id: String!, newDegree: DegreeInput!): Degree!
-    remove(_id: String!): Boolean!
+    update(_id: ID!, newDegree: DegreeInput!): Degree!
+    remove(_id: ID!): Boolean!
 }
 
 extend type Mutation {

@@ -1,12 +1,12 @@
 type Subject {
-    _id: String!
+    _id: ID!
     code: String!
     name: String!
-    faculties: [Faculty]!
+    faculties: [Faculty!]!
 }
 
 type Course {
-    _id: String!
+    _id: ID!
     code: String!
     name: String!
 }
@@ -17,7 +17,7 @@ enum MeetingDay {
 }
 
 type Class {
-    _id: String!
+    _id: ID!
     subject: Subject!
     meetingDays: MeetingDay!
     meetingHours: String!
@@ -27,14 +27,20 @@ type Class {
     faculty: Faculty
 }
 
+enum YearTerm {
+    FIRST,
+    SECOND,
+    THIRD
+}
+
 type Term {
-    first: [Class]!
-    second: [Class]!
-    third: [Class]!
+    first: [Class!]!
+    second: [Class!]!
+    third: [Class!]!
 }
 
 type AcademicYear {
-    _id: String!
+    _id: ID!
     startYear: Int!
     termsClasses: Term!
 }

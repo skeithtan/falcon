@@ -11,6 +11,6 @@ input UserInput {
 
 extend type Mutation {
     signIn(email:String!, password: String!): Credentials!
-    updateUser(_id: String!, newUser: UserInput!): User!
+    updateUser(_id: ID!, newUser: UserInput!): User!
     changeCurrentUserPassword(newPassword: String!): Boolean!
 }
