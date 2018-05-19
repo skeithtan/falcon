@@ -1,5 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
+const CourseSchema = new Schema({
+    code: {
+        type: String,
+        required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+});
 
 const SubjectSchema = new Schema({
     code: {
@@ -10,10 +20,10 @@ const SubjectSchema = new Schema({
         type: String,
         required: true,
     },
-    major: {
-        type: String,
-        required: true,
-    },
+    faculties: [{
+        type: Schema.Types.ObjectId,
+        ref: "Faculty",
+    }]
 });
 
 const ClassSchema = new Schema({
@@ -45,6 +55,11 @@ const ClassSchema = new Schema({
         ref: "Faculty",
         required: false,
     },
+    course: {
+        type: Schema.Types.ObjectId,
+        ref: "Course",
+        required: true
+    }
 });
 
 const AcademicYearSchema = new Schema({
@@ -61,6 +76,7 @@ const AcademicYearSchema = new Schema({
 });
 
 const Subject = mongoose.model("Subject", SubjectSchema);
+const Course = mongoose.model("Course", CourseSchema);
 const AcademicYear = mongoose.model("AcademicYear", AcademicYearSchema);
 const Class = mongoose.model("Class", ClassSchema);
 export { Subject, AcademicYear, Class };
