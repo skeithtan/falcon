@@ -10,7 +10,7 @@ import { TABS } from "../faculty_detail_tabs";
 
 
 class FacultyProfilesHeader extends Component {
-    tabs = () => (
+    renderTabs = () => (
         TABS.map(tab =>
             <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.onTabClick(tab)} />,
         )
@@ -41,7 +41,7 @@ class FacultyProfilesHeader extends Component {
                 <Tabs value={activeTabIndex}
                       classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
                       scrollable>
-                    {this.tabs()}
+                    {this.renderTabs()}
                 </Tabs>
                 }
             </div>
