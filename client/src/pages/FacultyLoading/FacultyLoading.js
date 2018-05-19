@@ -1,10 +1,13 @@
 import React, {Component} from "react";
+import FacultyLoadingHeader from "./components/FacultyLoadingHeader";
 
 
 export default class FacultyLoadingPage extends Component {
     render() {
         return (
-            <h1>FacultyLoadingPage</h1>
+            <div>
+                <FacultyLoadingHeader/>
+            </div>
         )
     }
 }
