@@ -78,5 +78,4 @@ const AcademicYearSchema = new Schema({
 const Subject = mongoose.model("Subject", SubjectSchema);
 const Course = mongoose.model("Course", CourseSchema);
 const AcademicYear = mongoose.model("AcademicYear", AcademicYearSchema);
-const Class = mongoose.model("Class", ClassSchema);
-export { Subject, AcademicYear, Class };
+export { Subject, Course, AcademicYear };
