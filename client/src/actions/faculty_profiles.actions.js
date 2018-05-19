@@ -1,48 +1,9 @@
-export const PROFILES_LIST_IS_LOADING = "PROFILES_LIST_IS_LOADING";
-export const PROFILES_FETCHED = "PROFILES_FETCHED";
-export const PROFILE_IS_ADDED = "PROFILE_IS_ADDED";
-export const PROFILE_IS_UPDATED = "PROFILE_IS_UPDATED";
-export const PROFILES_FETCH_ERROR = "PROFILES_FETCH_ERROR";
 export const SEARCH_KEYWORD_CHANGED = "SEARCH_KEYWORD_CHANGED";
 export const ACTIVE_FACULTY_CHANGED = "ACTIVE_FACULTY_CHANGED";
 export const ACTIVE_TAB_CHANGED = "SET_CURRENT_TAB";
 export const DETAILS_IS_LOADING = "DETAILS_IS_LOADING";
 export const DETAILS_FETCHED = "DETAILS_FETCHED";
 export const DETAIL_FETCH_ERROR = "DETAIL_FETCH_ERROR";
-
-export function profilesListIsLoading() {
-    return {
-        type: PROFILES_LIST_IS_LOADING,
-    };
-}
-
-export function profilesFetched(faculties) {
-    return {
-        type: PROFILES_FETCHED,
-        faculties,
-    };
-}
-
-export function profileIsAdded(faculty) {
-    return {
-        type: PROFILE_IS_ADDED,
-        faculty,
-    };
-}
-
-export function profileIsUpdated(faculty) {
-    return {
-        type: PROFILE_IS_UPDATED,
-        faculty,
-    };
-}
-
-export function profilesFetchError(errors) {
-    return {
-        type: PROFILES_FETCH_ERROR,
-        errors,
-    };
-}
 
 export function activeFacultyChanged(faculty) {
     return {

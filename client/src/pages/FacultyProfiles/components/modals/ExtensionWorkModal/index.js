@@ -1,7 +1,7 @@
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { addExtensionWork, updateExtensionWork } from "../../../../../services/faculty/extension_work";
 import styles from "../generic_modal_style";
 import ExtensionWorkModal from "./ExtensionWorkModal";
@@ -30,7 +30,7 @@ function mapDispatchToProps(dispatch) {
                         ],
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                     return newExtensionWork;
                 });
         },
@@ -51,7 +51,7 @@ function mapDispatchToProps(dispatch) {
                         }),
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                     return newExtensionWork;
                 });
         },

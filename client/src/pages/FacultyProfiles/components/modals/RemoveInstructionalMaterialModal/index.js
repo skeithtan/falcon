@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removeInstructionalMaterial } from "../../../../../services/faculty/instructional_material";
 import RemoveInstructionalMaterialModal from "./RemoveInstructionalMaterialModal";
 
@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch) {
                         ),
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                 });
         },
     };

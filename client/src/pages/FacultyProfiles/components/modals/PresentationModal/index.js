@@ -1,7 +1,7 @@
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { addPresentation, updatePresentation } from "../../../../../services/faculty/presentation";
 import styles from "../generic_modal_style";
 import PresentationModal from "./PresentationModal";
@@ -38,7 +38,7 @@ function mapDispatchToProps(dispatch) {
                         ],
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                     return newPresentation;
                 });
         },
@@ -59,7 +59,7 @@ function mapDispatchToProps(dispatch) {
                         }),
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                     return newPresentation;
                 });
         },

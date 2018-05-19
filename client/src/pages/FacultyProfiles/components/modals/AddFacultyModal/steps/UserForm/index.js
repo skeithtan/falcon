@@ -5,7 +5,7 @@ import UserForm from "./UserForm";
 
 function mapStateToProps(state) {
     return {
-        faculties: state.facultyProfiles.faculties,
+        faculties: state.faculty.faculties,
     };
 }
 

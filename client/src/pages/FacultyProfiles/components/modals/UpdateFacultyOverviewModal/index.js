@@ -1,7 +1,7 @@
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { updateFaculty } from "../../../../../services/faculty/faculty";
 import styles from "../generic_modal_style";
 import UpdateFacultyOverviewModal from "./UpdateFacultyOverviewModal";
@@ -28,7 +28,7 @@ function mapFormToGraphQLParameters(form) {
 
 function mapStateToProps(state) {
     return {
-        faculties: state.facultyProfiles.faculties,
+        faculties: state.faculty.faculties,
     };
 }
 
@@ -39,7 +39,7 @@ function mapDispatchToProps(dispatch) {
             return updateFaculty(_id, newFaculty, newUser)
                 .then(result => {
                     const faculty = result.data.faculty.updateFaculty;
-                    dispatch(profileIsUpdated(faculty));
+                    dispatch(facultyIsUpdated(faculty));
                     return faculty;
                 });
         },

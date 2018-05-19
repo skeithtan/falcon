@@ -47,10 +47,10 @@ function mapStateToProps(state) {
         activeTab: getTabFromIdentifier(state.facultyProfiles.activeTabIdentifier),
         ...state.facultyProfiles.facultyDetails,
         get activeFaculty() {
-            if (!state.facultyProfiles.faculties) {
+            if (!state.faculty.faculties) {
                 return null;
             }
-            return state.facultyProfiles.faculties.find(faculty =>
+            return state.faculty.faculties.find(faculty =>
                 faculty._id === state.facultyProfiles.activeFacultyId,
             );
         },

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removeDegree } from "../../../../../services/faculty/degree";
 import RemoveDegreeModal from "./RemoveDegreeModal";
 
@@ -15,7 +15,7 @@ function mapDispatchToProps(dispatch) {
                         degrees: faculty.degrees.filter(degree => degree._id !== _id),
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                 });
         },
     };

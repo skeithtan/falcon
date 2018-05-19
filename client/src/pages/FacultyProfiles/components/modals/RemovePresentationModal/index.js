@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removePresentation } from "../../../../../services/faculty/presentation";
 import RemovePresentationModal from "./RemovePresentationModal";
 
@@ -15,7 +15,7 @@ function mapDispatchToProps(dispatch) {
                         presentations: faculty.presentations.filter(presentation => presentation._id !== _id),
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                 });
         },
     };

@@ -1,7 +1,7 @@
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { profileIsUpdated } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { updateDegree } from "../../../../../services/faculty/degree";
 import { addDegree } from "../../../../../services/faculty/degree";
 import DegreeModal from "./DegreeModal";
@@ -22,7 +22,7 @@ function mapDispatchToProps(dispatch) {
                         ],
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                     return newDegree;
                 });
         },
@@ -42,7 +42,7 @@ function mapDispatchToProps(dispatch) {
                         }),
                     };
 
-                    dispatch(profileIsUpdated(newFaculty));
+                    dispatch(facultyIsUpdated(newFaculty));
                     return newDegree;
                 });
         },
