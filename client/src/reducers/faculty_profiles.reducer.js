@@ -1,6 +1,6 @@
 import {
     ACTIVE_FACULTY_CHANGED,
-    ACTIVE_TAB_CHANGED,
+    DETAIL_ACTIVE_TAB_CHANGED,
     DETAIL_FETCH_ERROR,
     DETAILS_FETCHED,
     DETAILS_IS_LOADING,
@@ -31,7 +31,7 @@ export default function facultyProfiles(state = initialState, action) {
                 ...state,
                 searchKeyword: action.searchKeyword,
             };
-        case ACTIVE_TAB_CHANGED:
+        case DETAIL_ACTIVE_TAB_CHANGED:
             return {
                 ...state,
                 activeTabIdentifier: action.tab.identifier,

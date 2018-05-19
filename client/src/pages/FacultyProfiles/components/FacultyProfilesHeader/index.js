@@ -1,7 +1,7 @@
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { activeTabChanged, searchKeywordChanged } from "../../../../actions/faculty_profiles.actions";
+import { detailActiveTabChanged, searchKeywordChanged } from "../../../../actions/faculty_profiles.actions";
 import FacultyProfilesHeader from "./FacultyProfilesHeader";
 import styles from "./styles";
 
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(searchKeywordChanged(searchKeyword));
         },
         onTabClick(tab) {
-            dispatch(activeTabChanged(tab));
+            dispatch(detailActiveTabChanged(tab));
         },
     };
 }

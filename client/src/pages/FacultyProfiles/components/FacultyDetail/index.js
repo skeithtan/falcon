@@ -2,7 +2,7 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import {
-    activeTabChanged,
+    detailActiveTabChanged,
     detailFetched,
     detailFetchError,
     detailsIsLoading,
@@ -60,7 +60,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onTabChange(tab) {
-            dispatch(activeTabChanged(tab));
+            dispatch(detailActiveTabChanged(tab));
         },
         getFacultyDetails(faculty) {
             dispatch(detailsIsLoading());
