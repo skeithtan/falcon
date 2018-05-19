@@ -69,9 +69,9 @@ const AcademicYearSchema = new Schema({
         unique: true,
     },
     termsClasses: {
-        _1: [ClassSchema],
-        _2: [ClassSchema],
-        _3: [ClassSchema],
+        first: [ClassSchema],
+        second: [ClassSchema],
+        third: [ClassSchema],
     },
 });
 

@@ -4,7 +4,7 @@ import ValidationError from "../errors/validation.error";
 
 
 function subjects() {
-    return Subject.find({});
+    return Subject.find().populate("faculties");
 }
 
 function academicYears() {
@@ -15,9 +15,9 @@ function academicYears() {
         };
     };
     return AcademicYear.find({})
-                       .populate(makePopulateObject("_1"))
-                       .populate(makePopulateObject("_2"))
-                       .populate(makePopulateObject("_3"))
+                       .populate(makePopulateObject("first"))
+                       .populate(makePopulateObject("second"))
+                       .populate(makePopulateObject("third"))
                        .exec();
 }
 
