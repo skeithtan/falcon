@@ -1,9 +1,9 @@
+import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { getPageFromPath, HOME_PAGE, PAGES, SIGN_IN_PAGE } from "../../pages";
 import FalconAppBar from "../FalconAppBar";
-import Grid from "@material-ui/core/Grid";
 
 
 export default class App extends Component {
@@ -13,7 +13,6 @@ export default class App extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         const {isAuthenticated, match, history, setActivePage, activePage} = nextProps;
         const currentPath = match.params.currentPage;
-
         // Is the user in the sign in page or any of its descendants?
         const userIsSigningIn = currentPath === SIGN_IN_PAGE.path;
 

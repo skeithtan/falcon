@@ -10,7 +10,7 @@ import { MODULE_PAGES } from "../../pages";
 
 export default class PageDrawer extends Component {
     pageItems = MODULE_PAGES.map(page =>
-        <Link to={page.path}
+        <Link to={"/" + page.path}
               style={{textDecoration: "none"}}
               key={page.identifier}
               onClick={this.props.onClose}>
