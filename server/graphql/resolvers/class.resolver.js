@@ -1,10 +1,73 @@
-import { AcademicYear, Class, Subject } from "../../models/class.model";
+import { AcademicYear, Course, Subject } from "../../models/class.model";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
-import ValidationError from "../errors/validation.error";
 
 
 function subjects() {
     return Subject.find().populate("faculties");
+}
+
+function mutateSubject() {
+    return {
+        async create({newSubject}) {
+            const subject = Subject.create(newSubject).exec();
+            return subject.populate("faculties").execPopulate();
+        },
+
+        async update({_id, newSubject}) {
+            return Subject
+                .findByIdAndUpdate(_id, newSubject, {new: true})
+                .populate("faculties");
+        },
+    };
+}
+
+function mutateCourse() {
+    return {
+        async create({newCourse}) {
+            return Course.create(newCourse);
+        },
+
+        async update({_id, newCourse}) {
+            return Course.findByIdAndUpdate(_id, newCourse, {new: true});
+        },
+    };
+}
+
+function mutateAcademicYear() {
+    return {
+        async create({startYear}) {
+            return AcademicYear.create({startYear: startYear});
+        },
+        async setTermClasses({academicYearId, term, classes}) {
+            // TODO
+        },
+    };
+}
+
+async function mutateClass(object, {academicYearId, term}) {
+    const academicYear = await AcademicYear.findById(academicYearId);
+
+    function termClasses() {
+        // term is uppercase, because it's a YearTerm enum in class.type.graphql
+        return academicYear.termsClasses[term.toLowerCase()];
+    }
+
+    return {
+        async create({newClass}) {
+            termClasses().append(newClass);
+            await academicYear.save();
+
+            // Re-fetch termClasses
+            const termClasses = termClasses();
+            return termClasses[termClasses.length - 1];
+        },
+
+        async remove({classId}) {
+            termClasses().id(classId).remove();
+            await academicYear.save();
+            return true;
+        },
+    };
 }
 
 function academicYears() {
@@ -21,45 +84,14 @@ function academicYears() {
                        .exec();
 }
 
-function createSubject(object, args) {
-    return Subject.create(args.subject);
-}
-
-function updateSubject(object, args) {
-    const {_id, newSubject} = args;
-    // new: true specifies that the updated version is returned
-    return Subject.findByIdAndUpdate(_id, newSubject, {new: true});
-}
-
-function createAcademicYear(object, {startYear}) {
-    return AcademicYear.create({startYear: startYear});
-}
-
-async function createClass(object, args) {
-    const {academicYearStart, term} = args;
-    const classInput = args.class;
-    const academicYear = await AcademicYear
-        .findOne({startYear: academicYearStart})
-        .exec();
-
-    if (!academicYear) {
-        throw new ValidationError(`Could not find academic year that starts at ${academicYearStart}`);
-    }
-
-    const newClass = new Class(classInput);
-    academicYear.termsClasses[term].push(newClass);
-    academicYear.save();
-    return newClass;
-}
-
 export const queryResolvers = {
     subjects: limitAccess(subjects, {allowed: NO_FACULTY, action: "Get all subjects"}),
     academicYears: limitAccess(academicYears, {allowed: NO_FACULTY, action: "Get all terms"}),
 };
 
 export const mutationResolvers = {
-    createSubject: limitAccess(createSubject, {allowed: NO_FACULTY, action: "Create subject"}),
-    updateSubject: limitAccess(updateSubject, {allowed: NO_FACULTY, action: "Update subject"}),
-    createAcademicYear: limitAccess(createAcademicYear, {allowed: NO_FACULTY, action: "Create academic year"}),
-    createClass: limitAccess(createClass, {allowed: NO_FACULTY, action: "Create class"}),
+    subject: limitAccess(mutateSubject, {allowed: NO_FACULTY, action: "Mutate subject"}),
+    academicYear: limitAccess(mutateAcademicYear, {allowed: NO_FACULTY, action: "Mutate academic year"}),
+    course: limitAccess(mutateCourse, {allowed: NO_FACULTY, action: "Mutate course"}),
+    class: limitAccess(mutateClass, {allowed: NO_FACULTY, action: "Mutate class"}),
 };

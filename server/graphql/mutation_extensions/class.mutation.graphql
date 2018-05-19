@@ -1,7 +1,12 @@
 input SubjectInput {
     code: String
     name: String
-    major: String
+    faculties: [ID!]
+}
+
+input CourseInput {
+    code: String
+    name: String
 }
 
 input ClassInput {
@@ -10,12 +15,32 @@ input ClassInput {
     meetingHours: String
     room: String
     enrollmentCap: Int
+    course: CourseInput
+}
+
+type SubjectMutations {
+    create(newSubject: SubjectInput!): Subject!
+    update(_id: ID!, newSubject: SubjectInput!): Subject!
+}
+
+type CourseMutations {
+    create(newCourse: CourseInput!): Course!
+    update(_id: ID!, newCourse: CourseInput!): Course!
+}
+
+type AcademicYearMutations {
+    create(startYear: Int!): AcademicYear!
+    setTermClasses(academicYearId: ID!, term: YearTerm!, classes: [ClassInput!]!): [Class!]!
+}
+
+type ClassMutations {
+    create(newClass: ClassInput!): Class!
+    remove(classId: ID!): Boolean!
 }
 
 extend type Mutation {
-    createSubject(subject: SubjectInput): Subject!
-    updateSubject(_id: String!, newSubject: SubjectInput): Subject!
-
-    createAcademicYear(startYear: Int!): AcademicYear!
-    createClass(academicYearStart: Int!, term: String!, class: ClassInput!): Class!
+    subject: SubjectMutations!
+    course: CourseMutations!
+    academicYear: AcademicYearMutations!
+    class(academicYearId: ID!, term: YearTerm!): ClassMutations!
 }
