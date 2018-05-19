@@ -32,7 +32,7 @@ export function addInstructionalMaterial(facultyId, newInstructionalMaterial) {
 export function updateInstructionalMaterial(facultyId, _id, newInstructionalMaterial) {
     return client.mutate({
         mutation: gql`
-            mutation updateInstructionalMaterial($facultyId: String!, $_id: String!, $newInstructionalMaterial: InstructionalMaterialInput!) {
+            mutation updateInstructionalMaterial($facultyId: String!, $_id: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
                 instructionalMaterial(facultyId: $facultyId) {
                     update(_id: $_id, newInstructionalMaterial: $newInstructionalMaterial) {
                         ${fields}
@@ -51,7 +51,7 @@ export function updateInstructionalMaterial(facultyId, _id, newInstructionalMate
 export function removeInstructionalMaterial(facultyId, _id) {
     return client.mutate({
         mutation: gql`
-            mutation removeInstructionalMaterial($facultyId: String!, $_id: String!) {
+            mutation removeInstructionalMaterial($facultyId: String!, $_id: ID!) {
                 instructionalMaterial(facultyId: $facultyId) {
                     remove(_id: $_id)
                 }

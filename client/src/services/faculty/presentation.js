@@ -38,7 +38,7 @@ export function addPresentation(facultyId, newPresentation) {
 export function updatePresentation(facultyId, _id, newPresentation) {
     return client.mutate({
         mutation: gql`
-            mutation updatePresentation($facultyId: String!, $_id: String!, $newPresentation: PresentationInput!) {
+            mutation updatePresentation($facultyId: String!, $_id: ID!, $newPresentation: PresentationInput!) {
                 presentation(facultyId: $facultyId) {
                     update(_id: $_id, newPresentation: $newPresentation) {
                         ${fields}
@@ -57,7 +57,7 @@ export function updatePresentation(facultyId, _id, newPresentation) {
 export function removePresentation(facultyId, _id) {
     return client.mutate({
         mutation: gql`
-            mutation removePresentation($facultyId: String!, $_id: String!) {
+            mutation removePresentation($facultyId: String!, $_id: ID!) {
                 presentation(facultyId: $facultyId) {
                     remove(_id: $_id)
                 }

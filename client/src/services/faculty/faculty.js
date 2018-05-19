@@ -43,7 +43,6 @@ const teachingSubjects = `
         _id
         code
         name
-        major
     }
 `;
 const presentations = `
@@ -84,17 +83,17 @@ export function fetchAllFacultiesSummary() {
     });
 }
 
-export function fetchFacultyDetails(facultyId) {
+export function fetchFacultyDetails(_id) {
     return client.query({
         query: gql`
-            query($id: String!) {
-                faculty(_id: $id) {
+            query($_id: ID!) {
+                faculty(_id: $_id) {
                     ${fullFacultyDetails}
                 }
             }
         `,
         variables: {
-            id: facultyId,
+            _id
         },
     });
 }
@@ -121,7 +120,7 @@ export function addFaculty(newFaculty, newUser, temporaryPassword) {
 export function updateFaculty(_id, newFaculty, newUser) {
     return client.mutate({
         mutation: gql`
-            mutation updateFaculty($_id: String!, $newFaculty: FacultyInput!, $newUser: UserInput) {
+            mutation updateFaculty($_id: ID!, $newFaculty: FacultyInput!, $newUser: UserInput) {
                 faculty {
                     updateFaculty(_id: $_id, newFaculty: $newFaculty, newUser: $newUser) {
                         ${fullFacultyDetails}

@@ -30,7 +30,7 @@ export function addDegree(facultyId, newDegree) {
 export function updateDegree(facultyId, _id, newDegree) {
     return client.mutate({
         mutation: gql`
-            mutation updateDegree($facultyId: String!, $_id: String!, $newDegree: DegreeInput!) {
+            mutation updateDegree($facultyId: String!, $_id: ID!, $newDegree: DegreeInput!) {
                 degree(facultyId: $facultyId) {
                     update(_id: $_id, newDegree: $newDegree) {
                         ${fields}
@@ -49,7 +49,7 @@ export function updateDegree(facultyId, _id, newDegree) {
 export function removeDegree(facultyId, _id) {
     return client.mutate({
         mutation: gql`
-            mutation removeDegree($facultyId: String!, $_id: String!) {
+            mutation removeDegree($facultyId: String!, $_id: ID!) {
                 degree(facultyId: $facultyId) {
                     remove(_id: $_id)
                 }

@@ -34,7 +34,7 @@ export function addRecognition(facultyId, newRecognition) {
 export function updateRecognition(facultyId, _id, newRecognition) {
     return client.mutate({
         mutation: gql`
-            mutation updateRecognition($facultyId: String!, $_id: String!, $newRecognition: RecognitionInput!) {
+            mutation updateRecognition($facultyId: String!, $_id: ID!, $newRecognition: RecognitionInput!) {
                 recognition(facultyId: $facultyId) {
                     update(_id: $_id, newRecognition: $newRecognition) {
                         ${fields}
@@ -53,7 +53,7 @@ export function updateRecognition(facultyId, _id, newRecognition) {
 export function removeRecognition(facultyId, _id) {
     return client.mutate({
         mutation: gql`
-            mutation removeRecognition($facultyId: String!, $_id: String!) {
+            mutation removeRecognition($facultyId: String!, $_id: ID!) {
                 recognition(facultyId: $facultyId) {
                     remove(_id: $_id)
                 }
