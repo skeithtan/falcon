@@ -17,14 +17,13 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 });
 const errorMiddleware = onError(({graphQLErrors, networkError}) => {
     if (graphQLErrors) {
-        graphQLErrors.forEach(({message, location, path}) => {
-            console.log(
-                `GraphQL Error: Message: ${message}, Location: ${location}, Path: ${path}`,
-            );
-        });
+        graphQLErrors.forEach(({message, ...details}) =>
+            console.log(`GraphQL Error: Message: ${message}`, details),
+        );
     }
+
     if (networkError) {
-        console.log(`Network Error: ${networkError}`);
+        console.log("Network Error: ", networkError);
     }
 });
 const client = new ApolloClient({
