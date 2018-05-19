@@ -8,7 +8,7 @@ import DetailCard from "../../../../../components/DetailCard";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
-import { getFullName } from "../../../../../utils/user";
+import { getFullName } from "../../../../../utils/user.util";
 
 
 class TeachingSubjectRow extends Component {

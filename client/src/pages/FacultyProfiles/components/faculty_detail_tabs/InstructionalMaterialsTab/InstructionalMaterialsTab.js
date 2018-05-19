@@ -10,7 +10,7 @@ import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/user";
+import { getFullName } from "../../../../../utils/user.util";
 import InstructionalMaterialModal from "../../modals/InstructionalMaterialModal";
 import RemoveInstructionalMaterialModal from "../../modals/RemoveInstructionalMaterialModal";
 

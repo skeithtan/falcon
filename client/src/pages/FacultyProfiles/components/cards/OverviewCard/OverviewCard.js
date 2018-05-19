@@ -10,7 +10,7 @@ import DetailCard from "../../../../../components/DetailCard";
 import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import UserAvatar from "../../../../../components/UserAvatar/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/user";
+import { getFullName } from "../../../../../utils/user.util";
 import UpdateFacultyOverviewModal from "../../modals/UpdateFacultyOverviewModal";
 
 

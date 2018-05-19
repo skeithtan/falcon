@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import React from "react";
 import ModalFormComponent from "../../../../../components/ModalFormComponent";
 import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
-import validateForm from "../../../../../utils/forms";
+import validateForm from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {

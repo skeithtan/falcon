@@ -9,7 +9,7 @@ import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { DEGREE } from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/user";
+import { getFullName } from "../../../../../utils/user.util";
 import DegreeModal from "../../modals/DegreeModal";
 import RemoveDegreeModal from "../../modals/RemoveDegreeModal";
 

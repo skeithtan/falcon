@@ -9,8 +9,8 @@ import EmptyState from "../../../../../components/states/EmptyState";
 import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
-import { formatMonthYearDate } from "../../../../../utils/faculty";
-import { getFullName } from "../../../../../utils/user";
+import { formatMonthYearDate } from "../../../../../utils/faculty.util";
+import { getFullName } from "../../../../../utils/user.util";
 import RecognitionModal from "../../modals/RecognitionModal";
 import RemoveRecognitionModal from "../../modals/RemoveRecognitionModal";
 

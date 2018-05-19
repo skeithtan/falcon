@@ -18,12 +18,12 @@ export function updateFacultyFromState(newFaculty, dispatch, getState) {
 export const getFetchFacultyListThunk = () => dispatch => {
     dispatch(facultyListIsLoading());
     fetchAllFacultiesSummary()
-        .then(query => {
-            if (query.data) {
-                dispatch(facultyListIsFetched(query.data.faculties));
+        .then(result => {
+            if (result.data) {
+                dispatch(facultyListIsFetched(result.data.faculties));
             }
-            if (query.errors) {
-                dispatch(facultyListFetchError(query.errors));
+            if (result.errors) {
+                dispatch(facultyListFetchError(result.errors));
             }
         })
         .catch(error => {

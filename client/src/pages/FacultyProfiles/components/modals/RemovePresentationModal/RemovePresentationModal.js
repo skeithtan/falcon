@@ -1,7 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 import DangerActionConfirmationModal from "../../../../../components/DangerActionConfirmationModal";
-import { getFullName } from "../../../../../utils/user";
+import { getFullName } from "../../../../../utils/user.util";
 
 
 export default class RemovePresentationModal extends DangerActionConfirmationModal {

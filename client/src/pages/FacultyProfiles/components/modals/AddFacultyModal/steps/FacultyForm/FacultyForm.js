@@ -9,7 +9,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
 import React, { Component } from "react";
 import { EMPLOYMENT, SEX } from "../../../../../../../enums/faculty.enums";
-import validateForm from "../../../../../../../utils/forms";
+import validateForm from "../../../../../../../utils/forms.util";
 
 
 function getFacultyFormErrors(form) {

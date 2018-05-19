@@ -2,7 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 import DangerActionConfirmationModal from "../../../../../components/DangerActionConfirmationModal";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/user";
+import { getFullName } from "../../../../../utils/user.util";
 
 
 export default class RemoveRecognitionModal extends DangerActionConfirmationModal {

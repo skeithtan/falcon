@@ -2,7 +2,7 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { activeFacultyChanged, detailsIsLoading } from "../../../../actions/faculty_profiles.actions";
-import { getFetchFacultyListThunk } from "../../../../utils/faculty";
+import { getFetchFacultyListThunk } from "../../../../utils/faculty.util";
 import FacultyList from "./FacultyList";
 import style from "./styles";
 

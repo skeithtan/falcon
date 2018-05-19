@@ -2,7 +2,7 @@ export const FACULTY_LIST_IS_LOADING = "FACULTY_LIST_IS_LOADING";
 export const FACULTY_LIST_IS_FETCHED = "FACULTY_LIST_IS_FETCHED";
 export const FACULTY_IS_ADDED = "FACULTY_IS_ADDED";
 export const FACULTY_IS_UPDATED = "FACULTY_IS_UPDATED";
-export const FACULTIES_LIST_FETCH_ERROR = "FACULTIES_LIST_FETCH_ERROR";
+export const FACULTY_LIST_FETCH_ERROR = "FACULTY_LIST_FETCH_ERROR";
 
 export function facultyListIsLoading() {
     return {
@@ -33,7 +33,7 @@ export function facultyIsUpdated(faculty) {
 
 export function facultyListFetchError(errors) {
     return {
-        type: FACULTIES_LIST_FETCH_ERROR,
+        type: FACULTY_LIST_FETCH_ERROR,
         errors,
     };
 }

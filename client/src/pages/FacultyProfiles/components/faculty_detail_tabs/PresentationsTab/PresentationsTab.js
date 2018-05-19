@@ -10,8 +10,8 @@ import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
 import EmptyState from "../../../../../components/states/EmptyState";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
-import { formatMonthYearDate } from "../../../../../utils/faculty";
-import { getFullName } from "../../../../../utils/user";
+import { formatMonthYearDate } from "../../../../../utils/faculty.util";
+import { getFullName } from "../../../../../utils/user.util";
 import PresentationModal from "../../modals/PresentationModal";
 import RemovePresentationModal from "../../modals/RemovePresentationModal";
 

@@ -17,9 +17,9 @@ import ModalFormComponent from "../../../../../components/ModalFormComponent";
 import ModalFormDialogActions from "../../../../../components/ModalFormDialogActions";
 import Uploader from "../../../../../components/Uploader";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
-import { getPossessivePronoun } from "../../../../../utils/faculty";
-import validateForm, { dateToFormInputValue } from "../../../../../utils/forms";
-import { getFullName } from "../../../../../utils/user";
+import { getPossessivePronoun } from "../../../../../utils/faculty.util";
+import validateForm, { dateToFormInputValue } from "../../../../../utils/forms.util";
+import { getFullName } from "../../../../../utils/user.util";
 
 
 function getFormErrors(form, existingFaculties, currentFaculty) {

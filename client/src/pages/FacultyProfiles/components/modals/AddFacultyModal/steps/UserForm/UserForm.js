@@ -6,7 +6,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import React, { Component } from "react";
 import Uploader from "../../../../../../../components/Uploader";
-import validateForm from "../../../../../../../utils/forms";
+import validateForm from "../../../../../../../utils/forms.util";
 
 
 function getUserFormErrors(form, existingFaculties) {

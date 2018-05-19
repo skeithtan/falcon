@@ -8,7 +8,7 @@ import React, { Component } from "react";
 import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
 import { EmptySearchResultsState, EmptyState, ErrorState } from "../../../../components/states";
 import UserAvatar from "../../../../components/UserAvatar";
-import { getFullName } from "../../../../utils/user";
+import { getFullName } from "../../../../utils/user.util";
 import AddFacultyModal from "../modals/AddFacultyModal";
 
 

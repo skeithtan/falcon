@@ -8,7 +8,7 @@ import {
     detailsIsLoading,
 } from "../../../../actions/faculty_profiles.actions";
 import { fetchFacultyDetails } from "../../../../services/faculty/faculty";
-import { updateFacultyFromState } from "../../../../utils/faculty";
+import { updateFacultyFromState } from "../../../../utils/faculty.util";
 import { getTabFromIdentifier } from "../faculty_detail_tabs";
 import FacultyDetail from "./FacultyDetail";
 import styles from "./styles";

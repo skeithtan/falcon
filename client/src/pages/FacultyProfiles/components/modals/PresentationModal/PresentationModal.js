@@ -14,7 +14,7 @@ import React from "react";
 import ModalFormComponent from "../../../../../components/ModalFormComponent";
 import MonthPicker from "../../../../../components/MonthPicker";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
-import validateForm, { mustBeNumberValidator, yearValidators } from "../../../../../utils/forms";
+import validateForm, { mustBeNumberValidator, yearValidators } from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {

@@ -1,6 +1,6 @@
 import Avatar from "@material-ui/core/Avatar";
 import React, { Component } from "react";
-import { getInitials, getFullName } from "../../utils/user";
+import { getInitials, getFullName } from "../../utils/user.util";
 
 
 export default class UserAvatar extends Component {

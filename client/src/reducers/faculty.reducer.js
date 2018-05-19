@@ -1,7 +1,7 @@
 import {
     FACULTY_IS_ADDED,
     FACULTY_IS_UPDATED,
-    FACULTIES_LIST_FETCH_ERROR,
+    FACULTY_LIST_FETCH_ERROR,
     FACULTY_LIST_IS_FETCHED,
     FACULTY_LIST_IS_LOADING,
 } from "../actions/faculty.actions";
@@ -21,7 +21,7 @@ export default function faculty(state = initialState, action) {
                 isLoading: true,
                 errors: null,
             };
-        case FACULTIES_LIST_FETCH_ERROR:
+        case FACULTY_LIST_FETCH_ERROR:
             return {
                 faculties: null,
                 isLoading: false,
