@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { SIGN_OUT_SUCCESS } from "../actions/authentication.actions";
 import authentication from "./authentication.reducer";
 import faculty from "./faculty.reducer";
+import facultyLoading from "./faculty_loading.reducer";
 import facultyProfiles from "./faculty_profiles.reducer";
 import pages from "./pages.reducer";
 
@@ -10,6 +11,7 @@ const appReducer = combineReducers({
     authentication,
     pages,
     facultyProfiles,
+    facultyLoading,
     faculty,
 });
 
