@@ -9,7 +9,7 @@ export default class FacultyProfilesPage extends Component {
         const {classes} = this.props;
         return (
             <div className={classes.facultyProfiles}>
-                <FacultyProfilesHeader classes={classes} />
+                <FacultyProfilesHeader/>
 
                 <div className={`${classes.facultyProfilesBody} ${classes.split}`}>
                     <FacultyList />
