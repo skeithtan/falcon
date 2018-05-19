@@ -6,7 +6,7 @@ import { TABS } from "../tabs";
 
 export default class FacultyLoadingHeader extends Component {
     renderTabs = () => TABS.map(tab =>
-        <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.onTabClick(tab)} />,
+        <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.history.push(tab.path)} />,
     );
 
     render() {

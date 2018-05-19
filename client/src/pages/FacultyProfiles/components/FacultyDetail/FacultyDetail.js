@@ -36,13 +36,10 @@ export default class FacultyDetail extends Component {
     renderTabs = () => {
         const {activeTab, classes, onTabChange, activeFaculty} = this.props;
         const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTab.identifier);
+        const handleChangeIndex = newIndex => onTabChange(TABS[newIndex]);
         const tabComponents = TABS.map(tab =>
             createElement(tab.component, {faculty: activeFaculty, classes: classes, key: tab.identifier}),
         );
-
-        function handleChangeIndex(newIndex) {
-            onTabChange(TABS[newIndex]);
-        }
 
         return (
             <div className={classes.facultyDetail}>

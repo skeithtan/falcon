@@ -1,7 +1,7 @@
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
-import { facultyLoadingActiveTabChanged } from "../../../../actions/faculty_loading.actions";
 import FacultyLoadingHeader from "./FacultyLoadingHeader";
 import styles from "./styles";
 
@@ -12,16 +12,9 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onTabClick(tab) {
-            dispatch(facultyLoadingActiveTabChanged(tab));
-        },
-    };
-}
-
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, null),
     withTheme(),
     withStyles(styles),
+    withRouter,
 )(FacultyLoadingHeader);
