@@ -45,7 +45,7 @@ export default class OverviewCard extends Component {
 
                         <Grid item>
                             <Grid container direction="column">
-                                <Typography variant="headline">
+                                <Typography variant="title">
                                     {getFullName(faculty.user)}
                                 </Typography>
                                 <Typography variant="subheading">
