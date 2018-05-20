@@ -47,7 +47,7 @@ function mapDispatchToProps(dispatch) {
                                 return newExtensionWork;
                             }
 
-                            return newExtensionWork;
+                            return extensionWork;
                         }),
                     };
 

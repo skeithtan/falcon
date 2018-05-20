@@ -52,7 +52,7 @@ function mapDispatchToProps(dispatch) {
                                 return newInstructionalMaterial;
                             }
 
-                            return newInstructionalMaterial;
+                            return instructionalMaterial;
                         }),
                     };
 
