@@ -26,24 +26,7 @@ export default class FacultyForm extends Component {
         const {hasErrors, fieldErrors} = getFacultyFormErrors(form);
 
         return [
-            <FormControl key={0}>
-                <FormLabel>Sex</FormLabel>
-                <RadioGroup value={form.sex} onChange={handleFormChange("sex")}>
-                    {Object.entries(SEX).map(([identifier, {name}]) => (
-                        <FormControlLabel key={identifier} value={identifier} label={name} control={<Radio />} />
-                    ))}
-                </RadioGroup>
-            </FormControl>,
-            <FormControl key={1}>
-                <FormLabel>Employment</FormLabel>
-                <RadioGroup value={form.employment} onChange={handleFormChange("employment")}>
-                    {Object.entries(EMPLOYMENT).map(([identifier, {name}]) => (
-                        <FormControlLabel key={identifier} value={identifier} label={name} control={<Radio />} />
-                    ))}
-
-                </RadioGroup>
-            </FormControl>,
-            <FormControl key={2} error={fieldErrors.birthDate.length > 0} fullWidth>
+            <FormControl key={0} error={fieldErrors.birthDate.length > 0} fullWidth>
                 <TextField
                     error={fieldErrors.birthDate.length > 0}
                     label="Date of Birth"
@@ -57,6 +40,23 @@ export default class FacultyForm extends Component {
                 {fieldErrors.birthDate.length > 0 &&
                 <FormHelperText>{fieldErrors.birthDate[0]}</FormHelperText>
                 }
+            </FormControl>,
+            <FormControl key={1}>
+                <FormLabel>Sex</FormLabel>
+                <RadioGroup value={form.sex} onChange={handleFormChange("sex")}>
+                    {Object.entries(SEX).map(([identifier, {name}]) => (
+                        <FormControlLabel key={identifier} value={identifier} label={name} control={<Radio />} />
+                    ))}
+                </RadioGroup>
+            </FormControl>,
+            <FormControl key={2}>
+                <FormLabel>Employment</FormLabel>
+                <RadioGroup value={form.employment} onChange={handleFormChange("employment")}>
+                    {Object.entries(EMPLOYMENT).map(([identifier, {name}]) => (
+                        <FormControlLabel key={identifier} value={identifier} label={name} control={<Radio />} />
+                    ))}
+
+                </RadioGroup>
             </FormControl>,
             <Grid container key={3} spacing={16}>
                 <Grid item>

@@ -174,6 +174,26 @@ export default class UpdateFacultyOverviewModal extends ModalFormComponent {
                             </Grid>
                         </Grid>
 
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.birthDate.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.birthDate.length > 0}
+                                    label="Date of Birth"
+                                    type="date"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("birthDate")}
+                                    value={form.birthDate}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                                {fieldErrors.birthDate.length > 0 &&
+                                <FormHelperText>{fieldErrors.birthDate[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
                         <Grid item>
                             <Grid container spacing={16} direction="column">
                                 <Grid item>
@@ -223,24 +243,6 @@ export default class UpdateFacultyOverviewModal extends ModalFormComponent {
                             </FormControl>
                         </Grid>
 
-                        <Grid item>
-                            <FormControl error={fieldErrors.birthDate.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.birthDate.length > 0}
-                                    label="Date of Birth"
-                                    type="date"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("birthDate")}
-                                    value={form.birthDate}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                                {fieldErrors.birthDate.length > 0 &&
-                                <FormHelperText>{fieldErrors.birthDate[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
                     </Grid>
                 </DialogContent>
 
