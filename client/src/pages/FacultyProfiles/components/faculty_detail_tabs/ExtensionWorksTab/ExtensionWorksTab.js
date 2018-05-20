@@ -1,4 +1,6 @@
+import Chip from "@material-ui/core/Chip";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
@@ -16,19 +18,15 @@ import RemoveExtensionWorkModal from "../../modals/RemoveExtensionWorkModal";
 
 
 class ExtensionWorkRow extends Component {
-    extensionWorkRolesText = roles => {
-        if (roles.length === 0) {
-            return <i>No extension work roles</i>;
-        }
-
-        function reducer(accumulator, currentString) {
-            return `${accumulator}, ${currentString}`;
-        }
-
-        return roles
-            .map(roleCode => EXTENSION_WORK.ROLES[roleCode].name)
-            .reduce(reducer);
-    };
+    renderExtensionWorkRoles = roles => (
+        <Grid container spacing={8}>
+            {roles.map(role => (
+                <Grid item key={role}>
+                    <Chip label={EXTENSION_WORK.ROLES[role].name} />
+                </Grid>
+            ))}
+        </Grid>
+    );
 
     render() {
         const {extensionWork, onRemoveButtonClick, onUpdateButtonClick} = this.props;
@@ -44,8 +42,15 @@ class ExtensionWorkRow extends Component {
                     <FormDisplayListItem field="Venue"
                                          value={extensionWork.venue} />
 
+                    {extensionWork.roles.length > 0 &&
                     <FormDisplayListItem field="Roles"
-                                         value={this.extensionWorkRolesText(extensionWork.roles)} />
+                                         value={this.renderExtensionWorkRoles(extensionWork.roles)} />
+                    }
+
+                    {extensionWork.roles.length === 0 &&
+                    <FormDisplayListItem field="Roles"
+                                         value={<i>No roles</i>} />
+                    }
 
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
                                                 updateButtonTooltipTitle="Update instructional material details"
@@ -107,7 +112,6 @@ class ExtensionWorksTab extends Component {
         const {faculty, classes} = this.props;
         const extensionWorks = faculty.extensionWorks;
         const extensionWorksIsEmpty = extensionWorks.length === 0;
-
         const {extensionWorkModalIsShowing, activeExtensionWork, removeExtensionWorkModalIsShowing} = this.state;
 
         return (
