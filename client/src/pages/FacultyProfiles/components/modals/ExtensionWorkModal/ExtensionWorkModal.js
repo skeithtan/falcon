@@ -109,7 +109,7 @@ export default class ExtensionWorkModal extends ModalFormComponent {
                             <FormControl error={fieldErrors.title.length > 0} fullWidth>
                                 <TextField
                                     error={fieldErrors.title.length > 0}
-                                    label="Title"
+                                    label="Extension Work Title"
                                     disabled={isSubmitting}
                                     onChange={this.handleFormChange("title")}
                                     value={form.title}
