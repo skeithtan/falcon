@@ -19,7 +19,7 @@ export default class App extends Component {
         // If user is not signed in and trying to access any other page
         if (!isAuthenticated && !userIsSigningIn) {
             //Force them to sign in
-            history.replace(SIGN_IN_PAGE.path);
+            history.replace("/" + SIGN_IN_PAGE.path); // The slash is to specify that it's the root
             setActivePage(SIGN_IN_PAGE);
             return prevState;
         }
