@@ -8,6 +8,37 @@ import React, { Component } from "react";
 
 
 export default class ModalFormDialogActions extends Component {
+    renderSubmitting = () => (
+        <Grid item>
+            <Grid container spacing={8} alignItems="center" wrap="nowrap">
+                <Grid item>
+                    <CircularProgress size={24} />
+                </Grid>
+                <Grid item>
+                    <Typography color="primary">Submitting...</Typography>
+                </Grid>
+            </Grid>
+        </Grid>
+    );
+
+    renderError = error => (
+        <Grid item>
+            <Typography color="error">{error}</Typography>
+        </Grid>
+    );
+
+    renderKeepForm = () => (
+        <FormControlLabel
+            control={
+                <Checkbox
+                    checked={this.props.keepForm}
+                    onChange={this.props.handleKeepFormChange}
+                    color="primary"
+                />
+            }
+            label="Keep form after submission"
+        />
+    );
 
     render() {
         const {
@@ -17,50 +48,24 @@ export default class ModalFormDialogActions extends Component {
             buttonName,
             disabled,
             classes,
-            keepForm,
-            handleKeepFormChange,
             showKeepForm,
         } = this.props;
 
         return (
-            <Grid container justify="space-between" alignItems="center" className={classes.container}>
-
+            <Grid
+                container
+                justify="space-between"
+                alignItems="center"
+                className={classes.container}
+            >
                 <Grid item>
-
-                    {showKeepForm &&
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={keepForm}
-                                onChange={handleKeepFormChange}
-                                color="primary"
-                            />
-                        }
-                        label="Keep form after submission"
-                    />
-                    }
+                    {showKeepForm && this.renderKeepForm()}
                 </Grid>
 
                 <Grid item>
-                    <Grid container spacing={8} alignItems="center">
-                        {isSubmitting &&
-                        <Grid item>
-                            <CircularProgress size={24} />
-                        </Grid>
-                        }
-
-                        {isSubmitting &&
-                        <Grid item>
-                            <Typography color="primary">Submitting...</Typography>
-                        </Grid>
-                        }
-
-                        {error &&
-                        <Grid item>
-                            <Typography color="error">{error}</Typography>
-                        </Grid>
-                        }
-
+                    <Grid container spacing={8} alignItems="center" wrap="nowrap">
+                        {isSubmitting && this.renderSubmitting()}
+                        {error && this.renderError(error)}
                         <Grid item>
                             <Button color="primary" disabled={isSubmitting || disabled}
                                     onClick={handleSubmit}>{buttonName}</Button>
