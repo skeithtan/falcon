@@ -35,8 +35,8 @@ export default class FacultyList extends Component {
 
     constructor(props) {
         super(props);
-        const {faculties, fetchData} = props;
-        if (!faculties) {
+        const {faculties, isLoading, fetchData} = props;
+        if (!faculties && !isLoading) {
             fetchData();
         }
     }
