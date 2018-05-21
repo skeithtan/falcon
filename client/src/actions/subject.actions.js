@@ -10,24 +10,24 @@ export function subjectListIsLoading() {
     };
 }
 
-export function subjectListIsFetched(faculties) {
+export function subjectListIsFetched(subjects) {
     return {
         type: SUBJECT_LIST_IS_FETCHED,
-        faculties,
+        subjects,
     };
 }
 
-export function subjectIsAdded(faculty) {
+export function subjectIsAdded(subject) {
     return {
         type: SUBJECT_IS_ADDED,
-        faculty,
+        subject,
     };
 }
 
-export function subjectIsUpdated(faculty) {
+export function subjectIsUpdated(subject) {
     return {
         type: SUBJECT_IS_UPDATED,
-        faculty,
+        subject,
     };
 }
 
