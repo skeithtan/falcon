@@ -53,7 +53,7 @@ export default class SubjectsTab extends Component {
 
     renderErrors = errors => (
         <ErrorState
-            onRetruButtonClick={this.props.fetchData}
+            onRetryButtonClick={this.props.fetchData}
             message="An error occurred while trying to fetch list of subjects"
             debug={errors[0]}
         />
