@@ -64,6 +64,7 @@ export default class OverviewCard extends Component {
                     <FormDisplayListItem field="Sex" value={SEX[faculty.sex].name} />
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
+
                 <UpdateFacultyOverviewModal faculty={faculty} open={this.state.updateFacultyModalIsShowing}
                                             onClose={() => this.toggleUpdateFacultyModal(false)} />
             </DetailCard>
