@@ -1,3 +1,6 @@
+import { pageContainer } from "../../../../components/styles";
+
+
 export default theme => ({
     facultyDetail: {
         overflowY: "scroll",
@@ -18,19 +21,11 @@ export default theme => ({
     selectFacultyText: {
         color: theme.palette.grey["600"],
     },
-    cards: {
-        paddingTop: theme.spacing.unit * 5,
-        paddingBottom: theme.spacing.unit * 5,
-        display: "grid",
-        justifyItems: "center",
+    cardsContainer: {
+        ...pageContainer(theme),
         gridRowGap: `${theme.spacing.unit * 3}px`,
-        width: "100%",
     },
-    expansionCards: {
-        paddingTop: theme.spacing.unit * 5,
-        paddingBottom: theme.spacing.unit * 5,
-        justifyItems: "center",
-        display: "grid",
-        width: "100%",
+    expansionCardsContainer: {
+        ...pageContainer(theme),
     },
 });

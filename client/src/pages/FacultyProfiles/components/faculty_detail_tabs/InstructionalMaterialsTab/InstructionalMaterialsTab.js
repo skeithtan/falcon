@@ -108,7 +108,7 @@ export default class InstructionalMaterialsTab extends Component {
         } = this.state;
 
         return (
-            <div className={classes.expansionCards}>
+            <div className={classes.expansionCardsContainer}>
                 <DetailCard>
                     <TableToolbar tableTitle="Instructional Materials"
                                   addButtonTooltipTitle="Add an instructional material"

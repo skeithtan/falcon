@@ -24,7 +24,7 @@ export default class FacultyDetail extends Component {
     };
 
     renderErrors = errors => (
-        <div className={this.props.classes.cards}>
+        <div className={this.props.classes.cardsContainer}>
             <DetailCard>
                 <ErrorState onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
                             message="An error occurred while trying to fetch faculty details."

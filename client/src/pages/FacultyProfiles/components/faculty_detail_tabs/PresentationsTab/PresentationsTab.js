@@ -103,7 +103,7 @@ class PresentationsTab extends Component {
         const presentations = faculty.presentations;
         const presentationsIsEmpty = presentations.length === 0;
         return (
-            <div className={classes.expansionCards}>
+            <div className={classes.expansionCardsContainer}>
                 <DetailCard>
                     <TableToolbar tableTitle="Presentations"
                                   addButtonTooltipTitle="Add a presentation"

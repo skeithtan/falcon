@@ -115,7 +115,7 @@ class ExtensionWorksTab extends Component {
         const {extensionWorkModalIsShowing, activeExtensionWork, removeExtensionWorkModalIsShowing} = this.state;
 
         return (
-            <div className={classes.expansionCards}>
+            <div className={classes.expansionCardsContainer}>
                 <DetailCard>
                     <TableToolbar tableTitle="Extension Works"
                                   addButtonTooltipTitle="Add an extension work"

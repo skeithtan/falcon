@@ -8,7 +8,7 @@ import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard";
 class OverviewTab extends Component {
     render() {
         return (
-            <div className={this.props.classes.cards}>
+            <div className={this.props.classes.cardsContainer}>
                 <OverviewCard faculty={this.props.faculty} />
                 <DegreeCard faculty={this.props.faculty} />
                 <RecognitionsCard faculty={this.props.faculty} />

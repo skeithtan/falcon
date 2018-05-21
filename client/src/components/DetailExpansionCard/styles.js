@@ -1,7 +1,6 @@
+import { card } from "../styles";
+
+
 export default theme => ({
-    paper: {
-        width: "80%",
-        maxWidth: 1024,
-        position: "relative",
-    },
+    paper: {...card(theme)},
 })
