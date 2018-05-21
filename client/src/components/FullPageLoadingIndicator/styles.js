@@ -5,5 +5,7 @@ export default theme => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        padding: theme.spacing.unit * 5,
+        boxSizing: "border-box",
     },
 })
