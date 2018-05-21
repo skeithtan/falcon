@@ -1,6 +1,9 @@
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
+import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
+import AddIcon from "@material-ui/icons/Add";
 import React, { Component } from "react";
 import DetailCard from "../../../../../components/DetailCard";
 import FullPageLoadingIndicator from "../../../../../components/FullPageLoadingIndicator";
@@ -75,6 +78,18 @@ export default class SubjectsTab extends Component {
         );
     };
 
+    renderAddSubjectButton = () => (
+        <Tooltip title="Add a subject">
+            <Button
+                variant="fab"
+                color="primary"
+                className={classes.addButton}
+            >
+                <AddIcon />
+            </Button>
+        </Tooltip>
+    );
+
     render() {
         const {classes, subjects, isLoading, errors} = this.props;
         return (
@@ -91,6 +106,7 @@ export default class SubjectsTab extends Component {
                     </DetailCard>
 
                     {subjects && this.renderSubjects(subjects)}
+                    {subjects && this.renderAddSubjectButton()}
                 </Grid>
             </div>
         );
