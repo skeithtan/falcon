@@ -12,7 +12,6 @@ import FacultyChips from "../FacultyChips";
 export default class SubjectRow extends Component {
     render() {
         const {subject, onUpdateButtonClick} = this.props;
-        console.log(subject);
         return (
             <DetailExpansionCard>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
