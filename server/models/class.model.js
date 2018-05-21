@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const CourseSchema = new Schema({
     code: {
         type: String,
@@ -23,7 +24,7 @@ const SubjectSchema = new Schema({
     faculties: [{
         type: Schema.Types.ObjectId,
         ref: "Faculty",
-    }]
+    }],
 });
 
 const ClassSchema = new Schema({
@@ -58,8 +59,18 @@ const ClassSchema = new Schema({
     course: {
         type: Schema.Types.ObjectId,
         ref: "Course",
-        required: true
-    }
+        required: true,
+    },
+});
+
+const TermClasses = new Schema({
+    _id: false,
+    facultyPool: [{
+        type: Schema.Types.ObjectId,
+        ref: "Faculty",
+        required: true,
+    }],
+    classes: [ClassSchema],
 });
 
 const AcademicYearSchema = new Schema({
@@ -69,9 +80,9 @@ const AcademicYearSchema = new Schema({
         unique: true,
     },
     termsClasses: {
-        first: [ClassSchema],
-        second: [ClassSchema],
-        third: [ClassSchema],
+        first: [TermClasses],
+        second: [TermClasses],
+        third: [TermClasses],
     },
 });
 
