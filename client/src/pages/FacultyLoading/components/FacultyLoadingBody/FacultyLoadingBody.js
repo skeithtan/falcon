@@ -1,7 +1,6 @@
 import React, { Component, createElement } from "react";
-import SwipeableViews from "react-swipeable-views";
 import { FACULTY_LOADING_PAGE } from "../../../index";
-import { getTabFromPath, TABS } from "../tabs";
+import { getTabFromPath } from "../tabs";
 
 
 export default class FacultyLoadingBody extends Component {
@@ -34,28 +33,8 @@ export default class FacultyLoadingBody extends Component {
         return prevState;
     }
 
-    renderTabs = () => TABS.map(tab =>
-        createElement(tab.component, {key: tab.identifier}),
-    );
-
     render() {
-        const {activeTab, onTabChange} = this.props;
-        const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTab.identifier);
-
-        function handleChangeIndex(newIndex) {
-            onTabChange(TABS[newIndex]);
-        }
-
-        return (
-            <SwipeableViews
-                index={activeTabIndex}
-                onChangeIndex={handleChangeIndex}
-                style={{height: "100%"}}
-                containerStyle={{height: "100%"}}
-            >
-                {this.renderTabs()}
-            </SwipeableViews>
-        );
+        return createElement(this.props.activeTab.component);
     }
 
 }
