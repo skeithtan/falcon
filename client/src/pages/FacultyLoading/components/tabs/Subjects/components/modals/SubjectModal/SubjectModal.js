@@ -81,7 +81,7 @@ export default class SubjectModal extends ModalFormComponent {
     renderErrors = errors => (
         <ErrorState
             onRetryButtonClick={this.props.fetchData}
-            message="An error occurred while trying to fetch list of subjects"
+            message="An error occurred while trying to fetch list of faculties"
             debug={errors[0]}
         />
     );
@@ -171,6 +171,7 @@ export default class SubjectModal extends ModalFormComponent {
                             <FormControl className={classes.formControl} fullWidth>
                                 <InputLabel>Faculties that can teach this subject</InputLabel>
                                 <Select
+                                    disabled={isSubmitting}
                                     multiple
                                     value={this.state.form.faculties}
                                     onChange={this.handleFormChange("faculties")}
