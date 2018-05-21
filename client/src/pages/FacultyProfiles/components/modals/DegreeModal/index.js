@@ -1,10 +1,9 @@
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
-import { updateDegree } from "../../../../../services/faculty/degree";
-import { addDegree } from "../../../../../services/faculty/degree";
+import { addDegree, updateDegree } from "../../../../../services/faculty/degree";
 import DegreeModal from "./DegreeModal";
 
 
@@ -51,6 +50,5 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
     connect(null, mapDispatchToProps),
-    withTheme(),
     withStyles(genericModalStyle),
 )(DegreeModal);

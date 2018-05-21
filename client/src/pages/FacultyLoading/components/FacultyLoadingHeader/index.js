@@ -1,4 +1,4 @@
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
@@ -14,7 +14,6 @@ function mapStateToProps(state) {
 
 export default compose(
     connect(mapStateToProps, null),
-    withTheme(),
     withStyles(styles),
     withRouter,
 )(FacultyLoadingHeader);

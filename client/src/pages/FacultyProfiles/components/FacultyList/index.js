@@ -1,4 +1,4 @@
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { activeFacultyChanged, detailsIsLoading } from "../../../../actions/faculty_profiles.actions";
@@ -29,6 +29,5 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withTheme(),
     withStyles(style),
 )(FacultyList);

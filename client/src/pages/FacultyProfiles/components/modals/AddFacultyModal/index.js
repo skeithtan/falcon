@@ -1,10 +1,8 @@
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsAdded } from "../../../../../actions/faculty.actions";
-import {
-    activeFacultyChanged,
-    } from "../../../../../actions/faculty_profiles.actions";
+import { activeFacultyChanged } from "../../../../../actions/faculty_profiles.actions";
 import { addFaculty } from "../../../../../services/faculty/faculty";
 import AddFacultyModal from "./AddFacultyModal";
 import styles from "./styles";
@@ -48,5 +46,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
     connect(null, mapDispatchToProps),
     withStyles(styles),
-    withTheme(),
 )(AddFacultyModal);

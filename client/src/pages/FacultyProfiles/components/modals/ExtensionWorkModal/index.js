@@ -1,4 +1,4 @@
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
@@ -60,6 +60,5 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
     connect(null, mapDispatchToProps),
-    withTheme(),
     withStyles(genericModalStyle),
 )(ExtensionWorkModal);

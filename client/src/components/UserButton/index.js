@@ -1,4 +1,4 @@
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { signOutSuccess } from "../../actions/authentication.actions";
@@ -21,7 +21,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-    withTheme(),
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps),
 )(UserButton);
