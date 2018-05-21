@@ -9,8 +9,10 @@ function subjects() {
 function mutateSubject() {
     return {
         async create({newSubject}) {
-            const subject = Subject.create(newSubject).exec();
-            return subject.populate("faculties").execPopulate();
+            const subject = await Subject.create(newSubject);
+            return subject
+                .populate("faculties")
+                .execPopulate();
         },
 
         async update({_id, newSubject}) {
