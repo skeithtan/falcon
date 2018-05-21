@@ -18,10 +18,6 @@ export const pageContainer = theme => ({
     // Center the page container
     marginLeft: "auto",
     marginRight: "auto",
-
-    // Center the page items
-    display: "grid",
-    justifyItems: "center",
 });
 
 export const card = theme => ({
