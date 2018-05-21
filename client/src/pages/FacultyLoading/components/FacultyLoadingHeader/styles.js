@@ -4,6 +4,7 @@ export default theme => ({
         minHeight: 52,
         paddingLeft: theme.spacing.unit * 3,
         paddingRight: theme.spacing.unit * 3,
+        flexGrow: 0,
     },
     tabs: {
         color: "white",

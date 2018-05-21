@@ -6,9 +6,9 @@ import FacultyLoadingHeader from "./components/FacultyLoadingHeader";
 
 export default class FacultyLoadingPage extends Component {
     render() {
-        const match = this.props.match;
+        const {match, classes} = this.props;
         return (
-            <div>
+            <div className={classes.facultyLoadingContainer}>
                 <FacultyLoadingHeader />
                 <Route path={`${match.url}/:activeTab?`} component={FacultyLoadingBody} />
             </div>

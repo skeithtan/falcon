@@ -18,6 +18,9 @@ export const pageContainer = theme => ({
     // Center the page container
     marginLeft: "auto",
     marginRight: "auto",
+
+    // Do not allow padding to increase height
+    boxSizing: "border-box",
 });
 
 export const card = theme => ({

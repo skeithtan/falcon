@@ -82,7 +82,7 @@ export default class FacultyChips extends Component {
             message="An error occurred while trying to fetch faculties"
             debug={errors[0]}
         />
-    )
+    );
 
     render() {
         const {isLoading, errors, subjectFaculties, faculties} = this.props;

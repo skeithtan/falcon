@@ -47,7 +47,12 @@ export default class FacultyLoadingBody extends Component {
         }
 
         return (
-            <SwipeableViews index={activeTabIndex} onChangeIndex={handleChangeIndex}>
+            <SwipeableViews
+                index={activeTabIndex}
+                onChangeIndex={handleChangeIndex}
+                style={{height: "100%"}}
+                containerStyle={{height: "100%"}}
+            >
                 {this.renderTabs()}
             </SwipeableViews>
         );
