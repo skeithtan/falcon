@@ -2,8 +2,8 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
+import { genericModalStyle } from "../../../../../components/styles";
 import { addRecognition, updateRecognition } from "../../../../../services/faculty/recognition";
-import styles from "../generic_modal_style";
 import RecognitionModal from "./RecognitionModal";
 
 
@@ -65,5 +65,5 @@ function mapDispatchToProps(dispatch) {
 export default compose(
     connect(null, mapDispatchToProps),
     withTheme(),
-    withStyles(styles),
+    withStyles(genericModalStyle),
 )(RecognitionModal);

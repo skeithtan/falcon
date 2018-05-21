@@ -2,12 +2,12 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
+import { genericModalStyle } from "../../../../../components/styles";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import {
     addInstructionalMaterial,
     updateInstructionalMaterial,
 } from "../../../../../services/faculty/instructional_material";
-import styles from "../generic_modal_style";
 import InstructionalMaterialModal from "./InstructionalMaterialModal";
 
 
@@ -66,5 +66,5 @@ function mapDispatchToProps(dispatch) {
 export default compose(
     connect(null, mapDispatchToProps),
     withTheme(),
-    withStyles(styles),
+    withStyles(genericModalStyle),
 )(InstructionalMaterialModal);

@@ -26,3 +26,13 @@ export const pageContainer = theme => ({
 export const card = theme => ({
     width: "100%",
 });
+
+export const genericModalStyle = theme => ({
+    container: {
+        ...formContainer(theme),
+    },
+
+    form: {
+        ...form(theme),
+    },
+});
