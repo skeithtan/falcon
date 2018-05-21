@@ -6,22 +6,22 @@ import React, { Component } from "react";
 
 export default class EmptyState extends Component {
     render() {
-        const classes = this.props.classes;
+        const {classes, onAddButtonClick, addButtonText} = this.props;
         return (
             <div className={classes.blankState}>
                 <div className={classes.messageWrapper}>
 
                     <Folder className={`${classes.messageColor} ${classes.icon}`} />
-                     <Typography variant="headline" className={classes.messageColor}>
+                    <Typography variant="headline" className={classes.messageColor}>
                         {this.props.bigMessage}
                     </Typography>
                     <Typography variant="subheading" className={classes.messageColor}>
                         {this.props.smallMessage}
                     </Typography>
 
-                    {this.props.onAddButtonClick &&
+                    {onAddButtonClick &&
                     <Button color="primary" onClick={this.props.onAddButtonClick}>
-                        {this.props.addButtonText}
+                        {addButtonText}
                     </Button>
                     }
 
