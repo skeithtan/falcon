@@ -39,7 +39,7 @@ export default class FacultyChips extends Component {
         if (subjectFaculties.length === 0) {
             return (
                 <Typography>
-                    <i>No faculties are teaching this subject</i>
+                    <i>There are no faculties set to be capable of teaching this subject</i>
                 </Typography>
             );
         }
