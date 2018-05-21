@@ -36,3 +36,11 @@ export const genericModalStyle = theme => ({
         ...form(theme),
     },
 });
+
+export const activeItem = theme => ({
+    fontWeight: theme.typography.fontWeightMedium,
+    borderLeft: "6px solid",
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.main,
+    background: theme.palette.grey["100"],
+});

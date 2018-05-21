@@ -1,3 +1,6 @@
+import { activeItem } from "../styles";
+
+
 export default theme => ({
     drawer: {
         height: "100%",
@@ -29,9 +32,7 @@ export default theme => ({
         transition: "all 200ms",
 
         "&.active": {
-            background: theme.palette.grey["100"],
-            borderLeft: "6px solid",
-            borderLeftColor: theme.palette.primary.main,
+            ...activeItem(theme),
 
             "& h3": {
                 color: theme.palette.primary.main,

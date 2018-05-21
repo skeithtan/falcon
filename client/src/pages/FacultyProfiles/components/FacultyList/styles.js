@@ -1,3 +1,6 @@
+import { activeItem } from "../../../../components/styles";
+
+
 export default theme => ({
     facultyList: {
         background: theme.palette.background.paper,
@@ -22,9 +25,7 @@ export default theme => ({
         transition: "150ms",
     },
     activeListItem: {
-        background: theme.palette.grey["100"],
-        borderLeft: "4px solid",
-        borderColor: theme.palette.primary.main,
+        ...activeItem(theme),
 
         "& h3": {
             fontWeight: theme.typography.fontWeightMedium,
