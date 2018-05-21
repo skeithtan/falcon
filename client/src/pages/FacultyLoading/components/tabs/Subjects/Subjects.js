@@ -9,6 +9,7 @@ import DetailCard from "../../../../../components/DetailCard";
 import FullPageLoadingIndicator from "../../../../../components/FullPageLoadingIndicator";
 import EmptyState from "../../../../../components/states/EmptyState";
 import ErrorState from "../../../../../components/states/ErrorState";
+import SubjectModal from "./components/modals/SubjectModal";
 import SubjectRow from "./components/SubjectRow/SubjectRow";
 
 
@@ -30,16 +31,18 @@ export default class SubjectsTab extends Component {
         subjectModalIsShowing: shouldShow,
     });
 
-    onAddSubjectClick = () => this.setState({
+    onAddButtonClick = () => this.setState({
         activeSubject: null,
         subjectModalIsShowing: true,
     });
 
     renderEmptyState = () => (
-        <EmptyState bigMessage="There are no subjects found"
-                    smallMessage="Subjects added will be shown here"
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Add a subject" />
+        <DetailCard>
+            <EmptyState bigMessage="There are no subjects found"
+                        smallMessage="Subjects added will be shown here"
+                        onAddButtonClick={this.onAddButtonClick}
+                        addButtonText="Add a subject" />
+        </DetailCard>
     );
 
     renderLoadingIndicator = () => (
@@ -83,7 +86,8 @@ export default class SubjectsTab extends Component {
             <Button
                 variant="fab"
                 color="primary"
-                className={classes.addButton}
+                onClick={this.onAddButtonClick}
+                className={this.props.classes.addButton}
             >
                 <AddIcon />
             </Button>
@@ -92,6 +96,8 @@ export default class SubjectsTab extends Component {
 
     render() {
         const {classes, subjects, isLoading, errors} = this.props;
+        const {subjectModalIsShowing, activeSubject} = this.state;
+
         return (
             <div className={classes.pageContainer}>
                 <Grid
@@ -107,6 +113,14 @@ export default class SubjectsTab extends Component {
 
                     {subjects && this.renderSubjects(subjects)}
                     {subjects && this.renderAddSubjectButton()}
+                    {subjects &&
+                    <SubjectModal
+                        action={activeSubject ? "update" : "add"}
+                        subject={activeSubject}
+                        open={subjectModalIsShowing}
+                        onClose={() => this.toggleSubjectModal(false)}
+                    />
+                    }
                 </Grid>
             </div>
         );
