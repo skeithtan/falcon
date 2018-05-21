@@ -7,6 +7,7 @@ export function fetchAllSubjects() {
         query: gql`
             query {
                 subjects {
+                    _id
                     code
                     name
                     faculties {
