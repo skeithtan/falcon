@@ -1,27 +1,11 @@
-import Chip from "@material-ui/core/Chip";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
+import FacultyChip from "../../../../../../../components/FacultyChip";
 import ErrorState from "../../../../../../../components/states/ErrorState";
-import UserAvatar from "../../../../../../../components/UserAvatar";
-import { getFullName } from "../../../../../../../utils/user.util";
 
-
-class FacultyChip extends Component {
-    render() {
-        const faculty = this.props.faculty;
-        const avatar = <UserAvatar user={faculty.user} />;
-
-        return (
-            <Chip
-                avatar={avatar}
-                label={getFullName(faculty.user)}
-            />
-        );
-    }
-}
 
 export default class FacultyChips extends Component {
     constructor(props) {
