@@ -37,7 +37,7 @@ function getFormErrors(form) {
 
 function mapSubjectToForm(subject) {
     return {
-        title: subject.title,
+        name: subject.name,
         code: subject.code,
         faculties: subject.faculties.map(faculty => faculty._id),
     };
