@@ -1,10 +1,9 @@
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-
 import Paper from "@material-ui/core/Paper";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import Search from "@material-ui/icons/Search";
+import SearchIcon from "@material-ui/icons/Search";
 import React, { Component } from "react";
 import { TABS } from "../faculty_detail_tabs";
 
@@ -28,7 +27,7 @@ class FacultyProfilesHeader extends Component {
                                onChange={event => onSearchInputChange(event.target.value)}
                                startAdornment={
                                    <InputAdornment position="start" className={classes.searchAdornment}>
-                                       <Search />
+                                       <SearchIcon />
                                    </InputAdornment>
                                }
                                placeholder="Search faculties" />
