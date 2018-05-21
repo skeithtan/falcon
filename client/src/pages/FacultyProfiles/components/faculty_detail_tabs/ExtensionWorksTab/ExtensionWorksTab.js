@@ -18,15 +18,25 @@ import RemoveExtensionWorkModal from "../../modals/RemoveExtensionWorkModal";
 
 
 class ExtensionWorkRow extends Component {
-    renderExtensionWorkRoles = roles => (
-        <Grid container spacing={8}>
-            {roles.map(role => (
-                <Grid item key={role}>
-                    <Chip label={EXTENSION_WORK.ROLES[role].name} />
-                </Grid>
-            ))}
-        </Grid>
-    );
+    renderExtensionWorkRoles = roles => {
+        if (roles.length === 0) {
+            return (
+                <Typography>
+                    <i>There are no assigned roles</i>
+                </Typography>
+            )
+        }
+
+        return (
+            <Grid container spacing={8}>
+                {roles.map(role => (
+                    <Grid item key={role}>
+                        <Chip label={EXTENSION_WORK.ROLES[role].name} />
+                    </Grid>
+                ))}
+            </Grid>
+        );
+    };
 
     render() {
         const {extensionWork, onRemoveButtonClick, onUpdateButtonClick} = this.props;
@@ -42,15 +52,8 @@ class ExtensionWorkRow extends Component {
                     <FormDisplayListItem field="Venue"
                                          value={extensionWork.venue} />
 
-                    {extensionWork.roles.length > 0 &&
                     <FormDisplayListItem field="Roles"
                                          value={this.renderExtensionWorkRoles(extensionWork.roles)} />
-                    }
-
-                    {extensionWork.roles.length === 0 &&
-                    <FormDisplayListItem field="Roles"
-                                         value={<i>No roles</i>} />
-                    }
 
                     <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
                                                 updateButtonTooltipTitle="Update instructional material details"
