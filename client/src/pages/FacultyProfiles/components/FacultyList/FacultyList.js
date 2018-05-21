@@ -41,21 +41,6 @@ export default class FacultyList extends Component {
         }
     }
 
-    renderList = faculties => {
-        const {activeFacultyId, onFacultyClick, classes} = this.props;
-        return (
-            <List>
-                {faculties.map(faculty =>
-                    <FacultyItem classes={classes}
-                                 onClick={() => onFacultyClick(faculty)}
-                                 faculty={faculty}
-                                 active={activeFacultyId && activeFacultyId === faculty._id}
-                                 key={faculty._id} />,
-                )}
-            </List>
-        );
-    };
-
     renderLoadingIndicator = () => (
         <FullPageLoadingIndicator size={100} />
     );
@@ -98,28 +83,36 @@ export default class FacultyList extends Component {
         });
     };
 
-    render() {
-        const {classes, isLoading, errors, searchKeyword} = this.props;
-        const faculties = this.getFaculties();
+    renderList = faculties => {
+        const {activeFacultyId, onFacultyClick, classes, searchKeyword} = this.props;
         const isSearching = searchKeyword.length > 0;
-        let view;
-        if (faculties) {
-            if (faculties.length === 0) {
-                view = isSearching ? this.renderNoResultsState() : this.renderEmptyState();
-            } else {
-                view = this.renderList(faculties);
-            }
+
+        if (faculties.length === 0) {
+            return isSearching ? this.renderNoResultsState() : this.renderEmptyState();
         }
-        if (isLoading) {
-            view = this.renderLoadingIndicator();
-        }
-        if (errors) {
-            view = this.renderErrors(errors);
-        }
+
+        return (
+            <List>
+                {faculties.map(faculty =>
+                    <FacultyItem classes={classes}
+                                 onClick={() => onFacultyClick(faculty)}
+                                 faculty={faculty}
+                                 active={activeFacultyId && activeFacultyId === faculty._id}
+                                 key={faculty._id} />,
+                )}
+            </List>
+        );
+    };
+
+    render() {
+        const {classes, isLoading, errors} = this.props;
+        const faculties = this.getFaculties();
+
         return (
             <div className={classes.facultyList}>
-
-                {view}
+                {isLoading && this.renderLoadingIndicator()}
+                {errors && this.renderErrors(errors)}
+                {faculties && this.renderList(faculties)}
 
                 {faculties &&
                 <Tooltip title="Add a faculty" placement="top">
@@ -130,8 +123,10 @@ export default class FacultyList extends Component {
                 </Tooltip>
                 }
 
+                {faculties &&
                 <AddFacultyModal open={this.state.addFacultyModalIsShowing}
                                  onClose={() => this.toggleAddFacultyModal(false)} />
+                }
             </div>
         );
     }
