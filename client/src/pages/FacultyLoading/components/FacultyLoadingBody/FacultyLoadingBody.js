@@ -1,4 +1,4 @@
-import React, { Component, createElement } from "react";
+import { Component, createElement } from "react";
 import { FACULTY_LOADING_PAGE } from "../../../index";
 import { getTabFromPath } from "../tabs";
 
