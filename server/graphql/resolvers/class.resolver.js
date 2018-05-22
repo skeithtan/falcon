@@ -1,4 +1,11 @@
-import { AcademicYear, Course, Subject } from "../../models/class.model";
+import {
+    AcademicYear,
+    Course,
+    linkSubjectAndFaculty,
+    Subject,
+    unlinkSubjectAndFaculty,
+} from "../../models/class.model";
+import { getDifference } from "../../utils/difference";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 
 
@@ -9,15 +16,41 @@ function subjects() {
 function mutateSubject() {
     return {
         async create({newSubject}) {
-            const subject = await Subject.create(newSubject);
+            const {code, name, faculties} = newSubject;
+
+            // Do not add faculties yet -- use the linkSubjectAndFaculty function
+            const subject = await Subject.create({code, name, faculties: []});
+
+            // Link subject to all faculties found in list
+            faculties.forEach(async faculty => await linkSubjectAndFaculty(subject._id, faculty));
+
             return subject
                 .populate("faculties")
                 .execPopulate();
         },
 
         async update({_id, newSubject}) {
+            const subject = await Subject.findById(_id);
+            const newFaculties = newSubject.faculties;
+            const oldFaculties = subject.faculties;
+            const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
+
+            subject.set({
+                ...newSubject,
+                // Do not update faculties yet -- do with special link functions
+                faculties: oldFaculties,
+            });
+
+            await subject.save();
+
+            removedItems.forEach(async removedFaculty =>
+                await unlinkSubjectAndFaculty(subject._id, removedFaculty));
+
+            addedItems.forEach(async addedFaculty =>
+                await linkSubjectAndFaculty(subject._id, addedFaculty));
+
             return Subject
-                .findByIdAndUpdate(_id, newSubject, {new: true})
+                .findById(_id)
                 .populate("faculties");
         },
     };
