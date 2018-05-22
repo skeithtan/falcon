@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { Faculty } from "./faculty.model";
 
 
 const CourseSchema = new Schema({
@@ -90,3 +91,25 @@ const Subject = mongoose.model("Subject", SubjectSchema);
 const Course = mongoose.model("Course", CourseSchema);
 const AcademicYear = mongoose.model("AcademicYear", AcademicYearSchema);
 export { Subject, Course, AcademicYear };
+
+export async function linkSubjectAndFaculty(subjectId, facultyId) {
+    const subject = await Subject.findById(subjectId).exec();
+    const faculty = await Faculty.findById(facultyId).exec();
+
+    subject.faculties.push(facultyId);
+    faculty.teachingSubjects.push(subjectId);
+
+    await faculty.save();
+    await subject.save();
+}
+
+export async function unlinkSubjectAndFaculty(subjectId, facultyId) {
+    const subject = await Subject.findById(subjectId).exec();
+    const faculty = await Faculty.findById(facultyId).exec();
+
+    faculty.teachingSubjects.pull(subjectId);
+    subject.faculties.pull(facultyId);
+
+    await faculty.save();
+    await subject.save();
+}
