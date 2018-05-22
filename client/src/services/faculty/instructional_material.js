@@ -14,7 +14,7 @@ export const fields = `
 export function addInstructionalMaterial(facultyId, newInstructionalMaterial) {
     return client.mutate({
         mutation: gql`
-            mutation createInstructionalMaterial($facultyId: String!, $newInstructionalMaterial: InstructionalMaterialInput!) {
+            mutation createInstructionalMaterial($facultyId: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
                 instructionalMaterial(facultyId: $facultyId) {
                     create(newInstructionalMaterial: $newInstructionalMaterial) {
                         ${fields}
@@ -32,7 +32,7 @@ export function addInstructionalMaterial(facultyId, newInstructionalMaterial) {
 export function updateInstructionalMaterial(facultyId, _id, newInstructionalMaterial) {
     return client.mutate({
         mutation: gql`
-            mutation updateInstructionalMaterial($facultyId: String!, $_id: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
+            mutation updateInstructionalMaterial($facultyId: ID!, $_id: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
                 instructionalMaterial(facultyId: $facultyId) {
                     update(_id: $_id, newInstructionalMaterial: $newInstructionalMaterial) {
                         ${fields}
@@ -51,7 +51,7 @@ export function updateInstructionalMaterial(facultyId, _id, newInstructionalMate
 export function removeInstructionalMaterial(facultyId, _id) {
     return client.mutate({
         mutation: gql`
-            mutation removeInstructionalMaterial($facultyId: String!, $_id: ID!) {
+            mutation removeInstructionalMaterial($facultyId: ID!, $_id: ID!) {
                 instructionalMaterial(facultyId: $facultyId) {
                     remove(_id: $_id)
                 }

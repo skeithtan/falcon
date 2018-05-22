@@ -77,11 +77,17 @@ type DegreeMutations {
     remove(_id: ID!): Boolean!
 }
 
+type TeachingSubjectMutations {
+    update(newTeachingSubjects: [ID!]!): [ID!]!
+    remove(teachingSubject: ID!): Boolean!
+}
+
 extend type Mutation {
     faculty: FacultyMutations!
-    presentation(facultyId: String!): PresentationMutations!
-    recognition(facultyId: String!): RecognitionMutations!
-    instructionalMaterial(facultyId: String!): InstructionalMaterialMutations!
-    extensionWork(facultyId: String!): ExtensionWorkMutations!
-    degree(facultyId: String!): DegreeMutations!
+    presentation(facultyId: ID!): PresentationMutations!
+    recognition(facultyId: ID!): RecognitionMutations!
+    instructionalMaterial(facultyId: ID!): InstructionalMaterialMutations!
+    extensionWork(facultyId: ID!): ExtensionWorkMutations!
+    degree(facultyId: ID!): DegreeMutations!
+    teachingSubject(facultyId: ID!): TeachingSubjectMutations!
 }
