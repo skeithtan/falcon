@@ -1,5 +1,7 @@
+import { linkSubjectAndFaculty, unlinkSubjectAndFaculty } from "../../models/class.model";
 import { Faculty } from "../../models/faculty.model";
 import { FACULTY, User } from "../../models/user.model";
+import { getDifference } from "../../utils/difference";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { DoesNotExistError } from "../errors";
 import ValidationError from "../errors/validation.error";
@@ -240,6 +242,29 @@ async function mutateDegree(object, {facultyId}) {
     };
 }
 
+async function mutateTeachingSubject(object, {facultyId}) {
+    return {
+        async update({newTeachingSubjects}) {
+            const faculty = await Faculty.findById(facultyId);
+            const oldTeachingSubjects = faculty.teachingSubjects;
+            const {addedItems, removedItems} = getDifference(newTeachingSubjects, oldTeachingSubjects);
+
+            removedItems.forEach(async removedSubject =>
+                await unlinkSubjectAndFaculty(removedSubject, facultyId));
+
+            addedItems.forEach(async addedSubject =>
+                await linkSubjectAndFaculty(addedSubject, facultyId));
+
+            return await Faculty.findById(facultyId).teachingSubjects;
+        },
+
+        async remove({teachingSubject}) {
+            await unlinkSubjectAndFaculty(teachingSubject, facultyId);
+            return true;
+        },
+    };
+}
+
 export const queryResolvers = {
     faculties: limitAccess(faculties, {allowed: NO_FACULTY, action: "Get all faculties"}),
     faculty: limitAccess(faculty, {allowed: NO_FACULTY, action: "Get single faculty"}),
@@ -253,4 +278,5 @@ export const mutationResolvers = {
         {allowed: NO_FACULTY, action: "Mutate instructional materials"}),
     extensionWork: limitAccess(mutateExtensionWork, {allowed: NO_FACULTY, action: "Mutate extension work"}),
     degree: limitAccess(mutateDegree, {allowed: NO_FACULTY, action: "Mutate degrees"}),
+    teachingSubject: limitAccess(mutateTeachingSubject, {allowed: NO_FACULTY, action: "Mutate teaching subject"}),
 };
