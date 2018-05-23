@@ -2,12 +2,15 @@ import { activeItem } from "../../../../components/styles";
 
 
 export default theme => ({
-    facultyList: {
+    facultyListContainer: {
         background: theme.palette.background.paper,
         borderRight: "1px solid",
         borderColor: theme.palette.grey["300"],
         overflowY: "scroll",
         position: "relative",
+    },
+    facultyList: {
+        width: "100%",
     },
     listSection: {
         backgroundColor: "inherit",

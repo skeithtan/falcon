@@ -93,7 +93,7 @@ export default class FacultyList extends Component {
         }
 
         return (
-            <List>
+            <List className={classes.facultyList}>
                 {faculties.map(faculty =>
                     <FacultyItem classes={classes}
                                  onClick={() => onFacultyClick(faculty)}
@@ -110,7 +110,7 @@ export default class FacultyList extends Component {
         const faculties = this.getFaculties();
 
         return (
-            <Grid container className={classes.facultyList}>
+            <Grid container className={classes.facultyListContainer}>
                 {isLoading && this.renderLoadingIndicator()}
                 {errors && this.renderErrors(errors)}
                 {faculties && this.renderList(faculties)}
