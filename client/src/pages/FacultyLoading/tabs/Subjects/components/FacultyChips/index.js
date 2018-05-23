@@ -1,9 +1,7 @@
-import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { getFetchFacultyListThunk } from "../../../../../../../../utils/faculty.util";
-import styles from "./styles";
-import SubjectModal from "./SubjectModal";
+import { getFetchFacultyListThunk } from "../../../../../../utils/faculty.util";
+import FacultyChips from "./FacultyChips";
 
 
 function mapStateToProps(state) {
@@ -15,12 +13,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchData() {
-            return dispatch(getFetchFacultyListThunk());
+            dispatch(getFetchFacultyListThunk());
         },
     };
 }
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withStyles(styles),
-)(SubjectModal);
+)(FacultyChips);

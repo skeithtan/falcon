@@ -3,9 +3,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import DetailExpansionCard from "../../../../../../../components/DetailExpansionCard";
-import DetailExpansionCardActions from "../../../../../../../components/DetailExpansionCardActions";
-import FormDisplayExpansionPanelDetails from "../../../../../../../components/FormDisplayExpansionPanelDetails";
+import DetailExpansionCard from "../../../../../../components/DetailExpansionCard";
+import DetailExpansionCardActions from "../../../../../../components/DetailExpansionCardActions";
+import FormDisplayExpansionPanelDetails from "../../../../../../components/FormDisplayExpansionPanelDetails";
 import FacultyChips from "../FacultyChips";
 
 
@@ -27,7 +27,7 @@ export default class SubjectRow extends Component {
 
                 <FormDisplayExpansionPanelDetails>
 
-                    <FacultyChips subjectFaculties={subject.faculties}/>
+                    <FacultyChips subjectFaculties={subject.faculties} />
 
                     <DetailExpansionCardActions
                         updateButtonTooltipTitle="Update subject"

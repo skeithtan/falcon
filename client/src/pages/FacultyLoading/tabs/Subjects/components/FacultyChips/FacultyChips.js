@@ -3,8 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
-import FacultyChip from "../../../../../../../components/FacultyChip";
-import ErrorState from "../../../../../../../components/states/ErrorState";
+import FacultyChip from "../../../../../../components/FacultyChip";
+import ErrorState from "../../../../../../components/states/ErrorState";
 
 
 export default class FacultyChips extends Component {

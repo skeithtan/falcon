@@ -1,5 +1,5 @@
 import { FACULTY_LOADING_ACTIVE_TAB_CHANGED } from "../actions/faculty_loading.actions";
-import { TERMS_SCHEDULE_TAB } from "../pages/FacultyLoading/components/tabs";
+import { TERMS_SCHEDULE_TAB } from "../pages/FacultyLoading/tabs";
 
 
 const initialState = {

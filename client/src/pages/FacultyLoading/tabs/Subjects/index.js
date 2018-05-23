@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { getFetchSubjectListThunk } from "../../../../../utils/subject.util";
+import { getFetchSubjectListThunk } from "../../../../utils/subject.util";
 import styles from "./styles";
 import SubjectsTab from "./Subjects";
 

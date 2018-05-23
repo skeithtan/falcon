@@ -5,12 +5,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import FullPageLoadingIndicator from "../../../../../components/FullPageLoadingIndicator";
-import EmptyState from "../../../../../components/states/EmptyState";
-import ErrorState from "../../../../../components/states/ErrorState";
-import SubjectModal from "./components/modals/SubjectModal";
-import SubjectRow from "./components/SubjectRow/SubjectRow";
+import DetailCard from "../../../../components/DetailCard";
+import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator";
+import EmptyState from "../../../../components/states/EmptyState";
+import ErrorState from "../../../../components/states/ErrorState";
+import SubjectModal from "../../components/modals/SubjectModal";
+import SubjectRow from "./components/SubjectRow";
 
 
 export default class SubjectsTab extends Component {
@@ -99,29 +99,31 @@ export default class SubjectsTab extends Component {
         const {subjectModalIsShowing, activeSubject} = this.state;
 
         return (
-            <div className={classes.pageContainer}>
-                <Grid
-                    container
-                    direction="column"
-                    spacing={16}
-                >
-                    <DetailCard>
-                        {this.renderSubjectsHead()}
-                        {errors && this.renderErrors(errors)}
-                        {isLoading && this.renderLoadingIndicator()}
-                    </DetailCard>
+            <div className={classes.subjects}>
+                <div className={classes.pageContainer}>
+                    <Grid
+                        container
+                        direction="column"
+                        spacing={16}
+                    >
+                        <DetailCard>
+                            {this.renderSubjectsHead()}
+                            {errors && this.renderErrors(errors)}
+                            {isLoading && this.renderLoadingIndicator()}
+                        </DetailCard>
 
-                    {subjects && this.renderSubjects(subjects)}
-                    {subjects && this.renderAddSubjectButton()}
-                    {subjects &&
-                    <SubjectModal
-                        action={activeSubject ? "update" : "add"}
-                        subject={activeSubject}
-                        open={subjectModalIsShowing}
-                        onClose={() => this.toggleSubjectModal(false)}
-                    />
-                    }
-                </Grid>
+                        {subjects && this.renderSubjects(subjects)}
+                        {subjects && this.renderAddSubjectButton()}
+                        {subjects &&
+                        <SubjectModal
+                            action={activeSubject ? "update" : "add"}
+                            subject={activeSubject}
+                            open={subjectModalIsShowing}
+                            onClose={() => this.toggleSubjectModal(false)}
+                        />
+                        }
+                    </Grid>
+                </div>
             </div>
         );
     }

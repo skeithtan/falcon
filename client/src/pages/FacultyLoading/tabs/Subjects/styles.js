@@ -1,7 +1,11 @@
-import { pageContainer } from "../../../../../components/styles";
+import { pageContainer } from "../../../../components/styles";
 
 
 export default theme => ({
+    subjects: {
+        overflowY: "scroll",
+    },
+
     pageContainer: {
         ...pageContainer(theme),
     },

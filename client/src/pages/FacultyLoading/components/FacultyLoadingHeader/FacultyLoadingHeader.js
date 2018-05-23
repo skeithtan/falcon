@@ -1,7 +1,7 @@
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import React, { Component } from "react";
-import { TABS } from "../tabs";
+import { TABS } from "../../tabs";
 
 
 export default class FacultyLoadingHeader extends Component {
