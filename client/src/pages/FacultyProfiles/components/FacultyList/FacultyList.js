@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -109,7 +110,7 @@ export default class FacultyList extends Component {
         const faculties = this.getFaculties();
 
         return (
-            <div className={classes.facultyList}>
+            <Grid container className={classes.facultyList}>
                 {isLoading && this.renderLoadingIndicator()}
                 {errors && this.renderErrors(errors)}
                 {faculties && this.renderList(faculties)}
@@ -127,7 +128,7 @@ export default class FacultyList extends Component {
                 <AddFacultyModal open={this.state.addFacultyModalIsShowing}
                                  onClose={() => this.toggleAddFacultyModal(false)} />
                 }
-            </div>
+            </Grid>
         );
     }
 }
