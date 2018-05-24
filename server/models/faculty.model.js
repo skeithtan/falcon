@@ -142,7 +142,6 @@ const FacultySchema = new Schema({
     teachingSubjects: [{
         type: Schema.Types.ObjectId,
         ref: "Subject",
-        required: true,
     }],
     degrees: [DegreeSchema],
     presentations: [PresentationSchema],
