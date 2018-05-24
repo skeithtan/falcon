@@ -1,7 +1,7 @@
-import { linkSubjectAndFaculty, unlinkSubjectAndFaculty } from "../../models/class.model";
 import { Faculty } from "../../models/faculty.model";
 import { FACULTY, User } from "../../models/user.model";
 import { getDifference } from "../../utils/difference";
+import { addFacultyToSubjects, removeFacultyFromSubjects } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { DoesNotExistError } from "../errors";
 import ValidationError from "../errors/validation.error";
@@ -243,23 +243,26 @@ async function mutateDegree(object, {facultyId}) {
 }
 
 async function mutateTeachingSubject(object, {facultyId}) {
+    const faculty = await Faculty.findById(facultyId);
+
     return {
         async update({newTeachingSubjects}) {
-            const faculty = await Faculty.findById(facultyId);
             const oldTeachingSubjects = faculty.teachingSubjects;
             const {addedItems, removedItems} = getDifference(newTeachingSubjects, oldTeachingSubjects);
 
-            removedItems.forEach(async removedSubject =>
-                await unlinkSubjectAndFaculty(removedSubject, facultyId));
+            faculty.set({teachingSubjects: newTeachingSubjects});
 
-            addedItems.forEach(async addedSubject =>
-                await linkSubjectAndFaculty(addedSubject, facultyId));
+            addFacultyToSubjects(faculty, addedItems);
+            removeFacultyFromSubjects(faculty, removedItems);
 
+            await faculty.save();
             return await Faculty.findById(facultyId).teachingSubjects;
         },
 
-        async remove({teachingSubject}) {
-            await unlinkSubjectAndFaculty(teachingSubject, facultyId);
+        async remove({teachingSubjectId}) {
+            faculty.teachingSubjects.pull(teachingSubjectId);
+            removeFacultyFromSubjects(faculty, [teachingSubjectId]);
+            await faculty.save();
             return true;
         },
     };

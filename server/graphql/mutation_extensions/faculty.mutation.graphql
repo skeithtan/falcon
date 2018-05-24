@@ -79,7 +79,7 @@ type DegreeMutations {
 
 type TeachingSubjectMutations {
     update(newTeachingSubjects: [ID!]!): [ID!]!
-    remove(teachingSubject: ID!): Boolean!
+    remove(teachingSubjectId: ID!): Boolean!
 }
 
 extend type Mutation {
