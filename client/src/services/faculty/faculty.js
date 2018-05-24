@@ -38,13 +38,6 @@ const recognitions = `
     }
 `;
 
-const teachingSubjects = `
-    teachingSubjects {
-        _id
-        code
-        name
-    }
-`;
 const presentations = `
     presentations {
         ${presentationFields}
@@ -65,7 +58,6 @@ const fullFacultyDetails = [
     facultyOverview,
     degrees,
     recognitions,
-    teachingSubjects,
     presentations,
     instructionalMaterials,
     extensionWorks,
@@ -93,7 +85,7 @@ export function fetchFacultyDetails(_id) {
             }
         `,
         variables: {
-            _id
+            _id,
         },
     });
 }
