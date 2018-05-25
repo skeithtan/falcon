@@ -1,3 +1,4 @@
+import { lighten } from "@material-ui/core/styles/colorManipulator";
 import { activeItem } from "../styles";
 
 
@@ -8,18 +9,19 @@ export default theme => ({
     },
     drawerHeadWrapper: {
         padding: theme.spacing.unit * 3,
-        background: theme.palette.grey["100"],
+        background: lighten(theme.palette.primary.light, 0.95),
         boxSizing: "border-box",
         borderBottom: "1px solid",
-        borderBottomColor: theme.palette.grey["300"],
+        borderBottomColor: lighten(theme.palette.primary.light, 0.85),
     },
     falconLogo: {
         fontFamily: "Raleway",
         fontWeight: 600,
         fontSize: 20,
+        color: theme.palette.primary.dark,
     },
     subtitles: {
-        color: theme.palette.grey["600"],
+        color: lighten(theme.palette.primary.dark, 0.3),
     },
     pnuLogo: {
         width: 80,
@@ -42,7 +44,7 @@ export default theme => ({
     pageItemText: {
         "& h3": {
             fontWeight: theme.typography.fontWeightMedium,
-            fontSize: theme.typography.fontSize,
+            fontSize: "0.95rem",
             color: theme.palette.grey["700"],
         },
     },
