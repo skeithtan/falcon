@@ -98,7 +98,7 @@ export default class RecognitionsCard extends Component {
                             <TableCell>Basis</TableCell>
                             <TableCell>Sponsor</TableCell>
                             <TableCell>Date</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell padding="none">Actions</TableCell>
                         </TableRow>
                     </TableHead>
 

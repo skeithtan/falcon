@@ -104,7 +104,7 @@ export default class TeachingSubjectsCard extends Component {
                         <TableRow>
                             <TableCell>Code</TableCell>
                             <TableCell>Name</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell padding="none">Actions</TableCell>
                         </TableRow>
                     </TableHead>
 

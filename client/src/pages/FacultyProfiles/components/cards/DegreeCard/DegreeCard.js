@@ -98,7 +98,7 @@ export default class DegreeCard extends Component {
                             <TableCell>Title</TableCell>
                             <TableCell>Level</TableCell>
                             <TableCell numeric>Completion Year</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell padding="none">Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

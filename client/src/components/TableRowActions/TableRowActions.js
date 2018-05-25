@@ -17,7 +17,7 @@ class TableRowActions extends Component {
         } = this.props;
 
         return (
-            <TableCell>
+            <TableCell padding="none">
                 <Grid container wrap="nowrap">
                     {onUpdateButtonClick &&
                     <Grid item>
