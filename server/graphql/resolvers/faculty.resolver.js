@@ -246,20 +246,7 @@ async function mutateTeachingSubject(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId);
 
     return {
-        async update({newTeachingSubjects}) {
-            const oldTeachingSubjects = faculty.teachingSubjects;
-            const {addedItems, removedItems} = getDifference(newTeachingSubjects, oldTeachingSubjects);
-
-            faculty.set({teachingSubjects: newTeachingSubjects});
-
-            addFacultyToSubjects(faculty, addedItems);
-            removeFacultyFromSubjects(faculty, removedItems);
-
-            await faculty.save();
-            return await Faculty.findById(facultyId).teachingSubjects;
-        },
-
-        async remove({teachingSubjectId}) {
+        async unassign({teachingSubjectId}) {
             faculty.teachingSubjects.pull(teachingSubjectId);
             removeFacultyFromSubjects(faculty, [teachingSubjectId]);
             await faculty.save();
