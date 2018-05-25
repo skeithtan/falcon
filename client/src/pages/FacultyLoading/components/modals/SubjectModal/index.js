@@ -31,7 +31,6 @@ function mapDispatchToProps(dispatch) {
             return updateSubject(subject._id, form)
                 .then(result => {
                     const subject = result.data.subject.update;
-                    console.log("Returned subject", subject);
                     dispatch(subjectIsUpdated(subject));
                     return subject;
                 })
