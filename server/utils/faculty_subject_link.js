@@ -9,7 +9,7 @@ export function addSubjectToFaculties(subject, facultiesId) {
         // Resolve promise and push subject ID to teachingSubjects
         .forEach(query => query.then(faculty => {
             console.log(`Adding ${subject.name} to ${faculty._id}`);
-            faculty.teachingSubjects.push(subject._id);
+            faculty.teachingSubjects.addToSet(subject._id);
             faculty.save();
         }));
 }
@@ -27,7 +27,7 @@ export function addFacultyToSubjects(faculty, subjectsId) {
     subjectsId
         .map(subjectId => Subject.findById(subjectId).exec())
         .forEach(query => query.then(subject => {
-            subject.faculties.push(faculty._id);
+            subject.faculties.addToSet(faculty._id);
             subject.save();
         }));
 }
