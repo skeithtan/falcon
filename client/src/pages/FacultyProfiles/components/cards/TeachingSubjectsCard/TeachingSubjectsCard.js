@@ -12,22 +12,18 @@ import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { fetchTeachingSubjects } from "../../../../../services/faculty/teaching_subjects";
 import { getFullName } from "../../../../../utils/user.util";
+import UnassignSubjectModal from "../../modals/UnassignSubjectModal";
 
 
 class TeachingSubjectRow extends Component {
-    onRemoveButtonClick = subject => {
-        //TODO
-        console.log(`Subject ${subject._id} remove button clicked`);
-    };
-
     render() {
-        const subject = this.props.subject;
+        const {subject, onRemoveButtonClick} = this.props;
         return (
             <TableRow>
                 <TableCell>{subject.code}</TableCell>
                 <TableCell>{subject.name}</TableCell>
                 <TableRowActions removeButtonTooltipTitle="Remove this subject"
-                                 onRemoveButtonClick={() => this.onRemoveButtonClick(subject)} />
+                                 onRemoveButtonClick={onRemoveButtonClick} />
             </TableRow>
         );
     }
@@ -38,10 +34,19 @@ export default class TeachingSubjectsCard extends Component {
         teachingSubjects: null,
         errors: null,
         isLoading: true,
+        activeSubject: null,
+        removeSubjectModalIsShowing: false,
     };
 
     renderRows = teachingSubjects => teachingSubjects.map(subject =>
-        <TeachingSubjectRow subject={subject} key={subject._id} />,
+        <TeachingSubjectRow
+            subject={subject}
+            key={subject._id}
+            onRemoveButtonClick={() => this.setState({
+                activeSubject: subject,
+                removeSubjectModalIsShowing: true,
+            })}
+        />,
     );
 
     fetchData = () => {
@@ -77,8 +82,20 @@ export default class TeachingSubjectsCard extends Component {
         />
     );
 
+    // Not using redux means we have to take care of removals ourselves
+    onSubjectRemoved = subject => this.setState({
+        teachingSubjects: this.state.teachingSubjects.filter(teachingSubject => teachingSubject._id !== subject._id),
+    });
+
+    toggleRemoveSubjectModal = shouldShow => this.setState({
+        removeSubjectModalIsShowing: shouldShow,
+    });
+
     renderTeachingSubjects = teachingSubjects => {
         const teachingSubjectsIsEmpty = teachingSubjects.length === 0;
+        const {activeSubject, removeSubjectModalIsShowing} = this.state;
+        const {faculty} = this.props;
+
         return (
             <div>
                 {!teachingSubjectsIsEmpty &&
@@ -98,6 +115,15 @@ export default class TeachingSubjectsCard extends Component {
                 }
 
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
+                {activeSubject &&
+                <UnassignSubjectModal
+                    open={removeSubjectModalIsShowing}
+                    onClose={() => this.toggleRemoveSubjectModal(false)}
+                    subject={activeSubject}
+                    faculty={faculty}
+                    onSubjectRemoved={() => this.onSubjectRemoved(activeSubject)}
+                />
+                }
             </div>
         );
     };

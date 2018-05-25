@@ -25,3 +25,19 @@ export function fetchTeachingSubjects(facultyId) {
         },
     });
 }
+
+export function unassignFacultyFromSubject(facultyId, subjectId) {
+    return client.mutate({
+        mutation: gql`
+            mutation unassignTeachingSubject($facultyId: ID!, $subjectId: ID!) {
+                teachingSubject(facultyId: $facultyId) {
+                    unassign(teachingSubjectId: $subjectId)
+                }
+            }
+        `,
+        variables: {
+            facultyId,
+            subjectId,
+        },
+    });
+}
