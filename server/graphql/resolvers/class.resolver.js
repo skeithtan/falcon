@@ -18,8 +18,11 @@ function subjects() {
 function mutateSubject() {
     return {
         async create({newSubject}) {
-            // Do not add faculties yet -- use the linkSubjectAndFaculty function
+
+            // Link subject to faculties
             const subject = await Subject.create(newSubject);
+
+            // Link faculties to subject
             addSubjectToFaculties(subject, newSubject.faculties);
 
             return Subject
@@ -28,16 +31,21 @@ function mutateSubject() {
         },
 
         async update({_id, newSubject}) {
-            const subject = await Subject.findById(_id);
+            // Link subject to faculties
+            const subject = await Subject
+                .findByIdAndUpdate(_id, newSubject, {new: true})
+                .populate("faculties")
+                .exec();
+
             const newFaculties = newSubject.faculties;
             const oldFaculties = subject.faculties;
 
+            // Link faculties to subject
             const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
             addSubjectToFaculties(subject, addedItems);
             removeSubjectFromFaculties(subject, removedItems);
 
-            return Subject.findByIdAndUpdate(_id, newSubject, {new: true})
-                          .populate("faculties");
+            return subject;
         },
     };
 }
