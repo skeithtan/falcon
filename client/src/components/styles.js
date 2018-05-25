@@ -1,3 +1,6 @@
+import { lighten } from '@material-ui/core/styles/colorManipulator';
+
+
 export const formContainer = theme => ({
     width: 720,
 });
@@ -41,6 +44,6 @@ export const activeItem = theme => ({
     fontWeight: theme.typography.fontWeightMedium,
     borderLeft: "6px solid",
     borderColor: theme.palette.primary.main,
-    color: theme.palette.primary.main,
-    background: theme.palette.grey["100"],
+    color: theme.palette.primary.dark,
+    background: lighten(theme.palette.primary.light, 0.9),
 });
