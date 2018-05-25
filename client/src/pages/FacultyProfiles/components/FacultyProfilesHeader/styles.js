@@ -1,3 +1,5 @@
+import { lighten } from '@material-ui/core/styles/colorManipulator';
+
 export default theme => ({
     facultyProfilesHeader: {
         background: theme.palette.primary.main,
@@ -5,10 +7,10 @@ export default theme => ({
         flexGrow: 0,
     },
     searchPaper: {
-        opacity: 0.85,
+        background: lighten(theme.palette.primary.light, 0.7),
         transitionDuration: theme.transitions.duration.short,
         "&:focus-within": {
-            opacity: 1,
+            background: lighten(theme.palette.primary.light, 0.95),
         },
     },
     searchWrapper: {
