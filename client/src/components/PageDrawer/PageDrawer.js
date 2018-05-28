@@ -6,11 +6,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import pnuLogo from "../../images/pnu-logo.png";
-import { MODULE_PAGES } from "../../pages";
+import { getPagesForUserType } from "../../pages";
 
 
 export class PageDrawer extends Component {
-    renderPageItems = () => MODULE_PAGES.map(page => {
+    renderPageItems = pages => pages.map(page => {
         const {classes, onClose, history, activePageIdentifier} = this.props;
         const isActivePage = page.identifier === activePageIdentifier;
         let className = classes.pageItem;
@@ -34,7 +34,11 @@ export class PageDrawer extends Component {
     });
 
     render() {
-        const {open, onClose, classes} = this.props;
+        const {open, onClose, classes, user} = this.props;
+        const pages = getPagesForUserType(user.authorization);
+
+        console.log(user);
+
         return (
             <Drawer open={open} onClose={onClose}>
                 <div className={classes.drawer}>
@@ -74,7 +78,7 @@ export class PageDrawer extends Component {
                     </Grid>
 
                     <List className={classes.pageItemsContainer}>
-                        {this.renderPageItems()}
+                        {this.renderPageItems(pages)}
                     </List>
                 </div>
             </Drawer>

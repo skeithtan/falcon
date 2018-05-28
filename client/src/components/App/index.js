@@ -10,7 +10,7 @@ import { styles } from "./styles";
 
 function mapStateToProps(state) {
     return {
-        isAuthenticated: state.authentication.isAuthenticated,
+        user: state.authentication.user,
         activePage: getPageFromIdentifier(state.pages.activePageIdentifier),
     };
 }

@@ -2,7 +2,7 @@ import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { getPageFromPath, HOME_PAGE, PAGES, SIGN_IN_PAGE } from "../../pages";
+import { GENERAL_PAGES, getPageFromPath, getPagesForUserType, HOME_PAGE, PAGES, SIGN_IN_PAGE } from "../../pages";
 import { FalconAppBar } from "../FalconAppBar";
 
 
@@ -11,13 +11,14 @@ export class App extends Component {
     state = {};
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        const {isAuthenticated, match, history, setActivePage, activePage} = nextProps;
+        const {user, match, history, setActivePage, activePage} = nextProps;
+
         const currentPath = match.params.currentPage;
         // Is the user in the sign in page or any of its descendants?
         const userIsSigningIn = currentPath === SIGN_IN_PAGE.path;
 
         // If user is not signed in and trying to access any other page
-        if (!isAuthenticated && !userIsSigningIn) {
+        if (!user && !userIsSigningIn) {
             //Force them to sign in
             history.replace("/" + SIGN_IN_PAGE.path); // The slash is to specify that it's the root
             setActivePage(SIGN_IN_PAGE);
@@ -25,7 +26,7 @@ export class App extends Component {
         }
 
         // We can't let them sign in if they're already signed in
-        if (isAuthenticated && userIsSigningIn) {
+        if (user && userIsSigningIn) {
             history.replace(HOME_PAGE.path);
             setActivePage(HOME_PAGE);
             return prevState;
@@ -46,8 +47,23 @@ export class App extends Component {
         return prevState;
     }
 
+    renderRoutes = () => {
+        const {user} = this.props;
+        const pageToRoute = ({identifier, path, component}) => (
+            <Route key={identifier} path={"/" + path} component={component} />
+        );
+
+        // If we have a user, add the pages for the user type in the pages
+        const pages = [
+            ...GENERAL_PAGES,
+            ...user ? getPagesForUserType(user.authorization) : []
+        ];
+
+        return pages.map(pageToRoute);
+    };
+
     render() {
-        const {isAuthenticated, activePage, classes} = this.props;
+        const {user, activePage, classes} = this.props;
         const routes = PAGES.map(({identifier, path, component}) => (
             <Route key={identifier} path={"/" + path} component={component} />
         ));
@@ -60,7 +76,7 @@ export class App extends Component {
                     alignItems="stretch"
                     wrap="nowrap"
                 >
-                    {isAuthenticated &&
+                    {user &&
                     <Grid item>
                         <FalconAppBar />
                     </Grid>
@@ -70,7 +86,7 @@ export class App extends Component {
                         className={classes.pageContainer}
                     >
                         <Switch>
-                            {routes}
+                            {this.renderRoutes()}
                             <Redirect to="/404" />
                         </Switch>
                     </Grid>
