@@ -78,6 +78,7 @@ type DegreeMutations {
 }
 
 type TeachingSubjectMutations {
+    set(teachingSubjectsId: [ID!]!): [ID!]!
     unassign(teachingSubjectId: ID!): Boolean!
 }
 

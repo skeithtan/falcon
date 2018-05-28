@@ -18,7 +18,6 @@ function subjects() {
 function mutateSubject() {
     return {
         async create({newSubject}) {
-
             // Link subject to faculties
             const subject = await Subject.create(newSubject);
 

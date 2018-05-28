@@ -246,6 +246,21 @@ async function mutateTeachingSubject(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId);
 
     return {
+        async set({teachingSubjectsId}) {
+            const oldSubjects = [...faculty.teachingSubjects];
+
+            // Link faculty to subjects
+            faculty.teachingSubjects = teachingSubjectsId;
+            await faculty.save();
+
+            // Link subjects to faculty
+            const {addedItems, removedItems} = getDifference(teachingSubjectsId, oldSubjects);
+            addFacultyToSubjects(addedItems);
+            removeFacultyFromSubjects(removedItems);
+
+            return faculty.teachingSubjects;
+        },
+
         async unassign({teachingSubjectId}) {
             faculty.teachingSubjects.pull(teachingSubjectId);
             removeFacultyFromSubjects(faculty, [teachingSubjectId]);
