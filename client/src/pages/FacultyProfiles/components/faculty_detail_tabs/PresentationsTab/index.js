@@ -1,1 +1,3 @@
-export { default } from "./PresentationsTab";
+import { PresentationsTab } from "./PresentationsTab";
+
+export { PresentationsTab };

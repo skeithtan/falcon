@@ -8,7 +8,7 @@ import React, { Component } from "react";
 import { TABS } from "../faculty_detail_tabs";
 
 
-class FacultyProfilesHeader extends Component {
+export class FacultyProfilesHeader extends Component {
     renderTabs = () => TABS.map(tab =>
         <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.onTabClick(tab)} />,
     );
@@ -45,5 +45,3 @@ class FacultyProfilesHeader extends Component {
         );
     }
 }
-
-export default FacultyProfilesHeader;

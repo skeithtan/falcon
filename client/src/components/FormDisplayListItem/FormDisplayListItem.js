@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 
-export default class FormDisplayListItem extends Component {
+export class FormDisplayListItem extends Component {
     render() {
         const {classes, field, value} = this.props;
         return (

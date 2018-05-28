@@ -10,9 +10,9 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import ModalFormComponent from "../../../../../components/ModalFormComponent";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
-import validateForm from "../../../../../utils/forms.util";
+import { validateForm } from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {
@@ -41,7 +41,7 @@ const initialForm = {
     venue: "",
 };
 
-export default class ExtensionWorkModal extends ModalFormComponent {
+export class ExtensionWorkModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }

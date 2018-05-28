@@ -1,7 +1,7 @@
 import ExtensionWorksTab from "./ExtensionWorksTab";
-import InstructionalMaterialTab from "./InstructionalMaterialsTab";
-import OverviewTab from "./OverviewTab";
-import PresentationsTab from "./PresentationsTab";
+import { InstructionalMaterialsTab } from "./InstructionalMaterialsTab";
+import { OverviewTab } from "./OverviewTab";
+import { PresentationsTab } from "./PresentationsTab";
 
 
 export const OVERVIEW_TAB = {
@@ -17,7 +17,7 @@ export const PRESENTATIONS_TAB = {
 export const INSTRUCTIONAL_MATERIALS_TAB = {
     name: "Instructional Materials",
     identifier: "INSTRUCTIONAL_MATERIALS",
-    component: InstructionalMaterialTab,
+    component: InstructionalMaterialsTab,
 };
 export const EXTENSION_WORKS_TAB = {
     name: "Extension Works",

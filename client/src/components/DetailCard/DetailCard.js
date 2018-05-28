@@ -2,7 +2,7 @@ import Paper from "@material-ui/core/Paper";
 import React, { Component } from "react";
 
 
-class DetailCard extends Component {
+export class DetailCard extends Component {
     render() {
         const classes = this.props.classes;
         return (
@@ -12,5 +12,3 @@ class DetailCard extends Component {
         );
     }
 }
-
-export default DetailCard;

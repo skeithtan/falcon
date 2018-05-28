@@ -1,4 +1,4 @@
-import FacultyChip from "./FacultyChip";
+import { FacultyChip } from "./FacultyChip";
 
 
-export default FacultyChip;
+export { FacultyChip };

@@ -1,9 +1,9 @@
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
-import ModalFormDialogActions from "./ModalFormDialogActions";
-import styles from "./styles";
+import { ModalFormDialogActions as Component } from "./ModalFormDialogActions";
+import { styles } from "./styles";
 
 
-export default compose(
+export const ModalFormDialogActions = compose(
     withStyles(styles),
-)(ModalFormDialogActions);
+)(Component);

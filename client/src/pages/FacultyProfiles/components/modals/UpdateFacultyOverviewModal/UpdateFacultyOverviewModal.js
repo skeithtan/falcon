@@ -13,12 +13,12 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import ModalFormComponent from "../../../../../components/ModalFormComponent";
-import ModalFormDialogActions from "../../../../../components/ModalFormDialogActions";
-import Uploader from "../../../../../components/Uploader";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
+import { ModalFormDialogActions } from "../../../../../components/ModalFormDialogActions";
+import { Uploader } from "../../../../../components/Uploader";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getPossessivePronoun } from "../../../../../utils/faculty.util";
-import validateForm, { dateToFormInputValue } from "../../../../../utils/forms.util";
+import { validateForm,  dateToFormInputValue } from "../../../../../utils/forms.util";
 import { getFullName } from "../../../../../utils/user.util";
 
 
@@ -73,7 +73,7 @@ function mapFacultyToForm(faculty) {
     };
 }
 
-export default class UpdateFacultyOverviewModal extends ModalFormComponent {
+export class UpdateFacultyOverviewModal extends ModalFormComponent {
     get initialForm() {
         return {
             _id: "",

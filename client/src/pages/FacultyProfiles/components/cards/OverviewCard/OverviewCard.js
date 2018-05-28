@@ -6,15 +6,15 @@ import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment/moment";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
-import UserAvatar from "../../../../../components/UserAvatar/UserAvatar";
+import { DetailCard } from "../../../../../components/DetailCard";
+import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
+import { UserAvatar } from "../../../../../components/UserAvatar/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
-import UpdateFacultyOverviewModal from "../../modals/UpdateFacultyOverviewModal";
+import { UpdateFacultyOverviewModal } from "../../modals/UpdateFacultyOverviewModal";
 
 
-export default class OverviewCard extends Component {
+export class OverviewCard extends Component {
     state = {
         updateFacultyModalIsShowing: false,
     };

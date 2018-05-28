@@ -4,17 +4,17 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
-import DetailExpansionCardActions from "../../../../../components/DetailExpansionCardActions";
-import FormDisplayExpansionPanelDetails from "../../../../../components/FormDisplayExpansionPanelDetails";
-import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
-import EmptyState from "../../../../../components/states/EmptyState";
-import TableToolbar from "../../../../../components/TableToolbar";
+import { DetailCard } from "../../../../../components/DetailCard";
+import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
+import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
+import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
+import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
+import { EmptyState } from "../../../../../components/states/EmptyState";
+import { TableToolbar } from "../../../../../components/TableToolbar";
 import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
-import ExtensionWorkModal from "../../modals/ExtensionWorkModal";
-import RemoveExtensionWorkModal from "../../modals/RemoveExtensionWorkModal";
+import { ExtensionWorkModal } from "../../modals/ExtensionWorkModal";
+import { RemoveExtensionWorkModal } from "../../modals/RemoveExtensionWorkModal";
 
 
 class ExtensionWorkRow extends Component {
@@ -24,7 +24,7 @@ class ExtensionWorkRow extends Component {
                 <Typography>
                     <i>There are no assigned roles</i>
                 </Typography>
-            )
+            );
         }
 
         return (

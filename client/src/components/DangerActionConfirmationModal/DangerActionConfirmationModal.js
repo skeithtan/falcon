@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 
-export default class DangerActionConfirmationModal extends Component {
+export class DangerActionConfirmationModal extends Component {
     state = {
         isSubmitting: false,
         error: null,

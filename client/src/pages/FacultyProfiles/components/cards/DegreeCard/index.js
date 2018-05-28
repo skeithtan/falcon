@@ -1,1 +1,4 @@
-export { default } from "./DegreeCard";
+import { DegreeCard } from "./DegreeCard";
+
+
+export { DegreeCard };

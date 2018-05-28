@@ -4,15 +4,15 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import FullPageLoadingIndicator from "../../../../../components/FullPageLoadingIndicator";
-import EmptyState from "../../../../../components/states/EmptyState";
-import ErrorState from "../../../../../components/states/ErrorState";
-import TableRowActions from "../../../../../components/TableRowActions";
-import TableToolbar from "../../../../../components/TableToolbar";
+import { DetailCard } from "../../../../../components/DetailCard";
+import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
+import { EmptyState } from "../../../../../components/states/EmptyState";
+import { ErrorState } from "../../../../../components/states/ErrorState";
+import { TableRowActions } from "../../../../../components/TableRowActions";
+import { TableToolbar } from "../../../../../components/TableToolbar";
 import { fetchTeachingSubjects } from "../../../../../services/faculty/teaching_subjects";
 import { getFullName } from "../../../../../utils/user.util";
-import UnassignSubjectModal from "../../modals/UnassignSubjectModal";
+import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
 
 
 class TeachingSubjectRow extends Component {
@@ -29,7 +29,7 @@ class TeachingSubjectRow extends Component {
     }
 }
 
-export default class TeachingSubjectsCard extends Component {
+export class TeachingSubjectsCard extends Component {
     state = {
         teachingSubjects: null,
         errors: null,

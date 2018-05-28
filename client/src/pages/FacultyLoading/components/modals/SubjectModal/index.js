@@ -4,8 +4,8 @@ import compose from "recompose/compose";
 import { getFetchFacultyListThunk } from "../../../../../utils/faculty.util";
 import { subjectIsAdded, subjectIsUpdated } from "../../../../../actions/subject.actions";
 import { addSubject, updateSubject } from "../../../../../services/subjects.service";
-import styles from "./styles";
-import SubjectModal from "./SubjectModal";
+import { styles } from "./styles";
+import { SubjectModal as Component } from "./SubjectModal";
 
 
 function mapStateToProps(state) {
@@ -38,7 +38,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const SubjectModal = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles),
-)(SubjectModal);
+)(Component);

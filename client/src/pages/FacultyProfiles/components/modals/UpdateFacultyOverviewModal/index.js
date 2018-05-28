@@ -4,7 +4,7 @@ import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { updateFaculty } from "../../../../../services/faculty/faculty";
-import UpdateFacultyOverviewModal from "./UpdateFacultyOverviewModal";
+import { UpdateFacultyOverviewModal as Component } from "./UpdateFacultyOverviewModal";
 
 
 function mapFormToGraphQLParameters(form) {
@@ -46,7 +46,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const UpdateFacultyOverviewModal = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(genericModalStyle),
-)(UpdateFacultyOverviewModal);
+)(Component);

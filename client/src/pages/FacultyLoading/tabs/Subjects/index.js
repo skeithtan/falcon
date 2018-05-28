@@ -2,8 +2,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { getFetchSubjectListThunk } from "../../../../utils/subject.util";
-import styles from "./styles";
-import SubjectsTab from "./Subjects";
+import { styles } from "./styles";
+import { SubjectsTab as Component } from "./Subjects";
 
 
 function mapStateToProps(state) {
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const SubjectsTab = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles),
-)(SubjectsTab);
+)(Component);

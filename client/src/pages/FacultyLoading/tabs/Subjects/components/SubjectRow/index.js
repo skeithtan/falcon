@@ -1,4 +1,4 @@
-import SubjectRow from "./SubjectRow";
+import { SubjectRow } from "./SubjectRow";
 
 
-export default SubjectRow;
+export { SubjectRow };

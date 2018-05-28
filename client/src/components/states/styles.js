@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     blankState: {
         height: "100%",
         width: "100%",

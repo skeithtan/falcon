@@ -5,15 +5,15 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import React, { Component } from "react";
-import DetailCard from "../../../../components/DetailCard";
-import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator";
-import EmptyState from "../../../../components/states/EmptyState";
-import ErrorState from "../../../../components/states/ErrorState";
-import SubjectModal from "../../components/modals/SubjectModal";
-import SubjectRow from "./components/SubjectRow";
+import { DetailCard } from "../../../../components/DetailCard";
+import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
+import { EmptyState } from "../../../../components/states/EmptyState";
+import { ErrorState } from "../../../../components/states/ErrorState";
+import { SubjectModal } from "../../components/modals/SubjectModal";
+import { SubjectRow } from "./components/SubjectRow";
 
 
-export default class SubjectsTab extends Component {
+export class SubjectsTab extends Component {
     state = {
         activeSubject: null,
         subjectModalIsShowing: false,

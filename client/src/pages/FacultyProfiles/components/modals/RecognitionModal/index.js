@@ -4,7 +4,7 @@ import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { addRecognition, updateRecognition } from "../../../../../services/faculty/recognition";
-import RecognitionModal from "./RecognitionModal";
+import { RecognitionModal as Component } from "./RecognitionModal";
 
 
 function mapFormToRecognitionInput(form) {
@@ -62,7 +62,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const RecognitionModal = compose(
     connect(null, mapDispatchToProps),
     withStyles(genericModalStyle),
-)(RecognitionModal);
+)(Component);

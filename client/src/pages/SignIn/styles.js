@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     background: {
         height: "100vh",
         width: "100vw",

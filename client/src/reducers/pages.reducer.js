@@ -5,7 +5,7 @@ import { HOME_PAGE } from "../pages";
 const initialState = {
     activePageIdentifier: HOME_PAGE.identifier,
 };
-export default function pages(state = initialState, action = {}) {
+export function pages(state = initialState, action = {}) {
     switch (action.type) {
         case PAGE_IS_CHANGED:
             return {

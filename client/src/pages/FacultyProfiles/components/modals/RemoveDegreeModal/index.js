@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removeDegree } from "../../../../../services/faculty/degree";
-import RemoveDegreeModal from "./RemoveDegreeModal";
+import { RemoveDegreeModal as Component } from "./RemoveDegreeModal";
 
 
 function mapDispatchToProps(dispatch) {
@@ -21,6 +21,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const RemoveDegreeModal = compose(
     connect(null, mapDispatchToProps),
-)(RemoveDegreeModal);
+)(Component);

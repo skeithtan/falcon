@@ -1,11 +1,11 @@
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
-import FormDisplayListItem from "../../../../../../../components/FormDisplayListItem";
+import { FormDisplayListItem } from "../../../../../../../components/FormDisplayListItem";
 import { SEX } from "../../../../../../../enums/faculty.enums";
 
 
-export default class ReviewForm extends Component {
+export class ReviewForm extends Component {
     render() {
         const {firstName, lastName, email, password, sex} = this.props.form;
         const fullName = `${firstName} ${lastName}`;

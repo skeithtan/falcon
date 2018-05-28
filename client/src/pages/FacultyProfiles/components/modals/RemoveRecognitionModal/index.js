@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removeRecognition } from "../../../../../services/faculty/recognition";
-import RemoveRecognitionModal from "./RemoveRecognitionModal";
+import { RemoveRecognitionModal as Component } from "./RemoveRecognitionModal";
 
 
 function mapDispatchToProps(dispatch) {
@@ -21,6 +21,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const RemoveRecognitionModal = compose(
     connect(null, mapDispatchToProps),
-)(RemoveRecognitionModal);
+)(Component);

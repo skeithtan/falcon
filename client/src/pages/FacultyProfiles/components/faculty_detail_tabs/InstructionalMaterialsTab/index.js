@@ -1,1 +1,4 @@
-export { default } from "./InstructionalMaterialsTab";
+import { InstructionalMaterialsTab } from "./InstructionalMaterialsTab";
+
+
+export { InstructionalMaterialsTab };

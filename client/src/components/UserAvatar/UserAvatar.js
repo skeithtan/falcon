@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { getInitials, getFullName } from "../../utils/user.util";
 
 
-export default class UserAvatar extends Component {
+export class UserAvatar extends Component {
     renderInitials = (initials, fullName) => (
         <Avatar className={this.props.className} onClick={this.props.onClick} alt={fullName}>{initials}</Avatar>
     );

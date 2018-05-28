@@ -1,12 +1,12 @@
 import Grid from "@material-ui/core/Grid";
 import React, { Component } from "react";
-import DegreeCard from "../../cards/DegreeCard";
-import OverviewCard from "../../cards/OverviewCard";
-import RecognitionsCard from "../../cards/RecognitionsCard";
-import TeachingSubjectsCard from "../../cards/TeachingSubjectsCard";
+import { DegreeCard } from "../../cards/DegreeCard";
+import { OverviewCard } from "../../cards/OverviewCard";
+import { RecognitionsCard } from "../../cards/RecognitionsCard";
+import { TeachingSubjectsCard } from "../../cards/TeachingSubjectsCard";
 
 
-class OverviewTab extends Component {
+export class OverviewTab extends Component {
     render() {
         return (
             <div className={this.props.classes.cardsContainer}>
@@ -28,5 +28,3 @@ class OverviewTab extends Component {
         );
     }
 }
-
-export default OverviewTab;

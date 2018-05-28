@@ -1,6 +1,6 @@
-import CoursesTab from "./Courses";
-import SubjectsTab from "./Subjects";
-import TermsScheduleTab from "./TermsSchedule";
+import { CoursesTab } from "./Courses";
+import { SubjectsTab } from "./Subjects";
+import { TermsScheduleTab } from "./TermsSchedule";
 
 
 export const TERMS_SCHEDULE_TAB = {

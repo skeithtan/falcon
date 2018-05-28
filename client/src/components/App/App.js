@@ -3,10 +3,10 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { getPageFromPath, HOME_PAGE, PAGES, SIGN_IN_PAGE } from "../../pages";
-import FalconAppBar from "../FalconAppBar";
+import { FalconAppBar } from "../FalconAppBar";
 
 
-export default class App extends Component {
+export class App extends Component {
     // Required by getDerivedStateFromProps
     state = {};
 

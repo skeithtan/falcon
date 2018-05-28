@@ -2,7 +2,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
-import UserAvatar from "../UserAvatar";
+import { UserAvatar } from "../UserAvatar";
 
 
 class UserMenu extends Component {
@@ -28,7 +28,11 @@ class UserMenu extends Component {
     }
 }
 
-export default class UserButton extends Component {
+export class UserButton extends Component {
+    state = {
+        anchor: null,
+    };
+
     toggleMenu = (event) => {
         this.setState({
             anchor: event === null ? null : event.currentTarget,
@@ -59,8 +63,4 @@ export default class UserButton extends Component {
             </div>
         );
     }
-
-    state = {
-        anchor: null,
-    };
 }

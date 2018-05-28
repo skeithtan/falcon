@@ -1,13 +1,13 @@
 import Typography from "@material-ui/core/Typography";
 import React, { Component, createElement } from "react";
 import SwipeableViews from "react-swipeable-views";
-import DetailCard from "../../../../components/DetailCard";
-import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator";
-import ErrorState from "../../../../components/states/ErrorState";
+import { DetailCard } from "../../../../components/DetailCard";
+import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
+import { ErrorState } from "../../../../components/states/ErrorState";
 import { TABS } from "../faculty_detail_tabs";
 
 
-export default class FacultyDetail extends Component {
+export class FacultyDetail extends Component {
     // Fixes error in console, but not necessary
     state = {};
 

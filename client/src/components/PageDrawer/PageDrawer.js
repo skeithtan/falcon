@@ -9,7 +9,7 @@ import pnuLogo from "../../images/pnu-logo.png";
 import { MODULE_PAGES } from "../../pages";
 
 
-export default class PageDrawer extends Component {
+export class PageDrawer extends Component {
     renderPageItems = () => MODULE_PAGES.map(page => {
         const {classes, onClose, history, activePageIdentifier} = this.props;
         const isActivePage = page.identifier === activePageIdentifier;

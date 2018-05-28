@@ -6,7 +6,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import React, { Component } from "react";
 
 
-class DetailExpansionCardActions extends Component {
+export class DetailExpansionCardActions extends Component {
     render() {
         const {
             classes,
@@ -39,5 +39,3 @@ class DetailExpansionCardActions extends Component {
         );
     }
 }
-
-export default DetailExpansionCardActions;

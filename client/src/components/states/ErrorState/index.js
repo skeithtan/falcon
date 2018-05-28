@@ -1,9 +1,9 @@
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
-import style from "../styles";
-import ErrorState from "./ErrorState";
+import { styles } from "../styles";
+import { ErrorState as Component } from "./ErrorState";
 
 
-export default compose(
-    withStyles(style),
-)(ErrorState);
+export const ErrorState = compose(
+    withStyles(styles),
+)(Component);

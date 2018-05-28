@@ -8,7 +8,7 @@ import {
     addInstructionalMaterial,
     updateInstructionalMaterial,
 } from "../../../../../services/faculty/instructional_material";
-import InstructionalMaterialModal from "./InstructionalMaterialModal";
+import { InstructionalMaterialModal as Component } from "./InstructionalMaterialModal";
 
 
 function mapFormToInstructionalMaterialInput(form) {
@@ -63,7 +63,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const InstructionalMaterialModal = compose(
     connect(null, mapDispatchToProps),
     withStyles(genericModalStyle),
-)(InstructionalMaterialModal);
+)(Component);

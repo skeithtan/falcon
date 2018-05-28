@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { activeFacultyChanged, detailsIsLoading } from "../../../../actions/faculty_profiles.actions";
 import { getFetchFacultyListThunk } from "../../../../utils/faculty.util";
-import FacultyList from "./FacultyList";
-import style from "./styles";
+import { FacultyList as Component } from "./FacultyList";
+import { styles } from "./styles";
 
 
 function mapStateToProps(state) {
@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const FacultyList = compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withStyles(style),
-)(FacultyList);
+    withStyles(styles),
+)(Component);

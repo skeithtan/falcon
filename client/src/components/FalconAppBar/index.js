@@ -1,8 +1,8 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import FalconAppBar from "./FalconAppBar";
-import styles from "./styles";
+import { FalconAppBar as Component } from "./FalconAppBar";
+import { styles } from "./styles";
 
 
 function mapStateToProps(state) {
@@ -11,7 +11,7 @@ function mapStateToProps(state) {
     };
 }
 
-export default compose(
+export const FalconAppBar = compose(
     withStyles(styles),
     connect(mapStateToProps, null),
-)(FalconAppBar);
+)(Component);

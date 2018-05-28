@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { signOutSuccess } from "../../actions/authentication.actions";
 import userService from "../../services/user.service";
-import styles from "./styles";
-import UserButton from "./UserButton";
+import { styles } from "./styles";
+import { UserButton as Component } from "./UserButton";
 
 
 function mapStateToProps(state) {
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const UserButton = compose(
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps),
-)(UserButton);
+)(Component);

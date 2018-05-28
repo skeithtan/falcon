@@ -17,7 +17,7 @@ const months = [
     "December",
 ];
 
-export default class MonthPicker extends Component {
+export class MonthPicker extends Component {
     render() {
         return (
             <Select {...this.props}>

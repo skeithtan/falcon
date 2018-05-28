@@ -1,6 +1,6 @@
 import { card } from "../styles";
 
 
-export default theme => ({
+export const styles = theme => ({
     paper: {...card(theme)},
-})
+});

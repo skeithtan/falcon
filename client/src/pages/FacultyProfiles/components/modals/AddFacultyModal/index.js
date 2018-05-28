@@ -4,8 +4,8 @@ import compose from "recompose/compose";
 import { facultyIsAdded } from "../../../../../actions/faculty.actions";
 import { activeFacultyChanged } from "../../../../../actions/faculty_profiles.actions";
 import { addFaculty } from "../../../../../services/faculty/faculty";
-import AddFacultyModal from "./AddFacultyModal";
-import styles from "./styles";
+import { AddFacultyModal as Component } from "./AddFacultyModal";
+import { styles } from "./styles";
 
 
 function mapFormToGraphQLParameters(form) {
@@ -43,7 +43,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const AddFacultyModal = compose(
     connect(null, mapDispatchToProps),
     withStyles(styles),
-)(AddFacultyModal);
+)(Component);

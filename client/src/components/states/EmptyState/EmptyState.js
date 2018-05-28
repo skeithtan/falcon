@@ -4,7 +4,7 @@ import Folder from "@material-ui/icons/Folder";
 import React, { Component } from "react";
 
 
-export default class EmptyState extends Component {
+export class EmptyState extends Component {
     render() {
         const {classes, onAddButtonClick, addButtonText} = this.props;
         return (

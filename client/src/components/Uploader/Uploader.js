@@ -27,7 +27,7 @@ function getErrorMessageFromCode(code) {
     }
 }
 
-export default class Uploader extends Component {
+export class Uploader extends Component {
     state = {
         fileName: null,
         isUploading: false,

@@ -13,7 +13,7 @@ const initialState = {
     errors: null,
 };
 
-export default function subject(state = initialState, action) {
+export function subject(state = initialState, action) {
     switch (action.type) {
         case SUBJECT_LIST_IS_LOADING:
             return {

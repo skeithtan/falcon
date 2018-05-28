@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removeExtensionWork } from "../../../../../services/faculty/extension_work";
-import RemoveExtensionWorkModal from "./RemoveExtensionWorkModal";
+import { RemoveExtensionWorkModal as Component } from "./RemoveExtensionWorkModal";
 
 
 function mapDispatchToProps(dispatch) {
@@ -23,6 +23,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const RemoveExtensionWorkModal = compose(
     connect(null, mapDispatchToProps),
-)(RemoveExtensionWorkModal);
+)(Component);

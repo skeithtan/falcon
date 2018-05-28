@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import ModalFormDialogActions from "./ModalFormDialogActions";
+import { ModalFormDialogActions } from "./ModalFormDialogActions";
 
 
-export default class ModalFormComponent extends Component {
+export class ModalFormComponent extends Component {
     state = {...this.initialState};
 
     // To be implemented by subclass

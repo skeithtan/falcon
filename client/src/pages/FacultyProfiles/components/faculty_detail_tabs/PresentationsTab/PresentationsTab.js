@@ -2,18 +2,18 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
-import DetailExpansionCardActions from "../../../../../components/DetailExpansionCardActions";
-import FormDisplayExpansionPanelDetails from "../../../../../components/FormDisplayExpansionPanelDetails";
-import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
-import EmptyState from "../../../../../components/states/EmptyState";
-import TableToolbar from "../../../../../components/TableToolbar";
+import { DetailCard } from "../../../../../components/DetailCard";
+import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
+import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
+import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
+import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
+import { EmptyState } from "../../../../../components/states/EmptyState";
+import { TableToolbar } from "../../../../../components/TableToolbar";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../utils/faculty.util";
 import { getFullName } from "../../../../../utils/user.util";
-import PresentationModal from "../../modals/PresentationModal";
-import RemovePresentationModal from "../../modals/RemovePresentationModal";
+import { PresentationModal } from "../../modals/PresentationModal";
+import { RemovePresentationModal } from "../../modals/RemovePresentationModal";
 
 
 class PresentationRow extends Component {
@@ -53,7 +53,7 @@ class PresentationRow extends Component {
     }
 }
 
-class PresentationsTab extends Component {
+export class PresentationsTab extends Component {
     state = {
         presentationModalIsShowing: false,
         activePresentation: null,
@@ -133,5 +133,3 @@ class PresentationsTab extends Component {
         );
     }
 }
-
-export default PresentationsTab;

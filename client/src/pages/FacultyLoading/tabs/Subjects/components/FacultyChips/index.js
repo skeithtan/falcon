@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { getFetchFacultyListThunk } from "../../../../../../utils/faculty.util";
-import FacultyChips from "./FacultyChips";
+import { FacultyChips as Component } from "./FacultyChips";
 
 
 function mapStateToProps(state) {
@@ -18,6 +18,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const FacultyChips = compose(
     connect(mapStateToProps, mapDispatchToProps),
-)(FacultyChips);
+)(Component);

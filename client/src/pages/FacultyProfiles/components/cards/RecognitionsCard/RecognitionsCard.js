@@ -4,15 +4,15 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import EmptyState from "../../../../../components/states/EmptyState";
-import TableRowActions from "../../../../../components/TableRowActions";
-import TableToolbar from "../../../../../components/TableToolbar";
+import { DetailCard } from "../../../../../components/DetailCard";
+import { EmptyState } from "../../../../../components/states/EmptyState";
+import { TableRowActions } from "../../../../../components/TableRowActions";
+import { TableToolbar } from "../../../../../components/TableToolbar";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../utils/faculty.util";
 import { getFullName } from "../../../../../utils/user.util";
-import RecognitionModal from "../../modals/RecognitionModal";
-import RemoveRecognitionModal from "../../modals/RemoveRecognitionModal";
+import { RecognitionModal } from "../../modals/RecognitionModal";
+import { RemoveRecognitionModal } from "../../modals/RemoveRecognitionModal";
 
 
 class RecognitionRow extends Component {
@@ -33,7 +33,7 @@ class RecognitionRow extends Component {
     }
 }
 
-export default class RecognitionsCard extends Component {
+export class RecognitionsCard extends Component {
     state = {
         recognitionModalIsShowing: false,
         activeRecognition: null,

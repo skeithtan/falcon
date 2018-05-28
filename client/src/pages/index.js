@@ -1,8 +1,8 @@
-import FacultyProfilesPage from "./FacultyProfiles";
-import FacultyLoadingPage from "./FacultyLoading";
-import HomePage from "./Home";
-import NotFoundPage from "./NotFound";
-import SignInPage from "./SignIn";
+import { FacultyLoadingPage } from "./FacultyLoading";
+import { FacultyProfilesPage } from "./FacultyProfiles";
+import { HomePage } from "./Home";
+import { NotFoundPage } from "./NotFound";
+import { SignInPage } from "./SignIn";
 import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, PNU_THEME, TEAL_THEME } from "./themes";
 
 

@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import pnuLogo from "../../images/pnu-logo.png";
 
 
-export default class SignInPage extends Component {
+export class SignInPage extends Component {
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,

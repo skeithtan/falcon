@@ -14,7 +14,7 @@ import moment from "moment";
  *     },
  * };
  */
-export default function validateForm(formFields) {
+export function validateForm(formFields) {
     const formErrors = {
         hasErrors: false,
         fieldErrors: {},

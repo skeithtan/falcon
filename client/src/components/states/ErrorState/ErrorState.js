@@ -22,7 +22,7 @@ class ErrorDetailsDialog extends Component {
     }
 }
 
-export default class ErrorState extends Component {
+export class ErrorState extends Component {
     render() {
         const classes = this.props.classes;
         return (

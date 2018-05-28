@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removeInstructionalMaterial } from "../../../../../services/faculty/instructional_material";
-import RemoveInstructionalMaterialModal from "./RemoveInstructionalMaterialModal";
+import { RemoveInstructionalMaterialModal as Component } from "./RemoveInstructionalMaterialModal";
 
 
 function mapDispatchToProps(dispatch) {
@@ -23,6 +23,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const RemoveInstructionalMaterialModal = compose(
     connect(null, mapDispatchToProps),
-)(RemoveInstructionalMaterialModal);
+)(Component);

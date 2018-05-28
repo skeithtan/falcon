@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     avatar: {
         background: theme.palette.grey["800"],
     },

@@ -10,8 +10,8 @@ import {
 import { fetchFacultyDetails } from "../../../../services/faculty/faculty";
 import { updateFacultyFromState } from "../../../../utils/faculty.util";
 import { getTabFromIdentifier } from "../faculty_detail_tabs";
-import FacultyDetail from "./FacultyDetail";
-import styles from "./styles";
+import { FacultyDetail as Component } from "./FacultyDetail";
+import { styles } from "./styles";
 
 
 function getFacultyDetailsThunk(faculty) {
@@ -72,7 +72,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const FacultyDetail = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles),
-)(FacultyDetail);
+)(Component);

@@ -1,7 +1,7 @@
 import { formContainer } from "../../../../../components/styles";
 
 
-export default theme => ({
+export const styles = theme => ({
 
     container: {
         ...formContainer(theme),

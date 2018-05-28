@@ -4,14 +4,14 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import EmptyState from "../../../../../components/states/EmptyState";
-import TableRowActions from "../../../../../components/TableRowActions";
-import TableToolbar from "../../../../../components/TableToolbar";
+import { DetailCard } from "../../../../../components/DetailCard";
+import { EmptyState } from "../../../../../components/states/EmptyState";
+import { TableRowActions } from "../../../../../components/TableRowActions";
+import { TableToolbar } from "../../../../../components/TableToolbar";
 import { DEGREE } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
-import DegreeModal from "../../modals/DegreeModal";
-import RemoveDegreeModal from "../../modals/RemoveDegreeModal";
+import { DegreeModal } from "../../modals/DegreeModal";
+import { RemoveDegreeModal } from "../../modals/RemoveDegreeModal";
 
 
 class DegreeRow extends Component {
@@ -31,7 +31,7 @@ class DegreeRow extends Component {
     }
 }
 
-export default class DegreeCard extends Component {
+export class DegreeCard extends Component {
     state = {
         degreeModalIsShowing: false,
         activeDegree: null,

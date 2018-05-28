@@ -7,7 +7,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import React, { Component } from "react";
 
 
-class TableRowActions extends Component {
+export class TableRowActions extends Component {
     render() {
         const {
             onRemoveButtonClick,
@@ -43,5 +43,3 @@ class TableRowActions extends Component {
         );
     }
 }
-
-export default TableRowActions;

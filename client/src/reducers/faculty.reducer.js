@@ -13,7 +13,7 @@ const initialState = {
     errors: null,
 };
 
-export default function faculty(state = initialState, action) {
+export function faculty(state = initialState, action) {
     switch (action.type) {
         case FACULTY_LIST_IS_LOADING:
             return {

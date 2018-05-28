@@ -1,1 +1,4 @@
-export { default } from "./TeachingSubjectsCard";
+import { TeachingSubjectsCard } from "./TeachingSubjectsCard";
+
+
+export { TeachingSubjectsCard };

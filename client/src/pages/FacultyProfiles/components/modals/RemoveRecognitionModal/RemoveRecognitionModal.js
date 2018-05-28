@@ -1,11 +1,11 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import DangerActionConfirmationModal from "../../../../../components/DangerActionConfirmationModal";
+import { DangerActionConfirmationModal } from "../../../../../components/DangerActionConfirmationModal";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
 
 
-export default class RemoveRecognitionModal extends DangerActionConfirmationModal {
+export class RemoveRecognitionModal extends DangerActionConfirmationModal {
     get dialogTitle() {
         return "Are you sure you want to remove this recognition?";
     }
