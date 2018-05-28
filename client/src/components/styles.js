@@ -45,5 +45,5 @@ export const activeItem = theme => ({
     borderLeft: "6px solid",
     borderColor: theme.palette.primary.main,
     color: theme.palette.primary.dark,
-    background: lighten(theme.palette.primary.light, 0.9),
+    background: `${lighten(theme.palette.primary.light, 0.9)} !important`,
 });
