@@ -66,7 +66,7 @@ class ExtensionWorkRow extends Component {
     }
 }
 
-class ExtensionWorksTab extends Component {
+export class ExtensionWorksTab extends Component {
     state = {
         extensionWorkModalIsShowing: false,
         activeExtensionWork: null,
@@ -149,5 +149,3 @@ class ExtensionWorksTab extends Component {
         );
     }
 }
-
-export default ExtensionWorksTab;

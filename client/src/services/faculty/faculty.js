@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import client from "../../client";
+import { client } from "../../client";
 import { fields as degreeFields } from "./degree";
 import { fields as extensionWorkFields } from "./extension_work";
 import { fields as instructionalMaterialFields } from "./instructional_material";

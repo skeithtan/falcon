@@ -3,16 +3,13 @@ import "babel-polyfill"; //Needed for async/await operations
 import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
-import config from "./config";
-import schema from "./graphql/schema";
-
+import { database, server } from "./config";
+import { schema } from "./graphql/schema";
 
 // Format date properly on server responses
 Date.prototype.toString = function () {
     return this.toISOString();
 };
-
-const {server, database} = config;
 
 mongoose.connect(database.url)
         .then(onDatabaseConnect)

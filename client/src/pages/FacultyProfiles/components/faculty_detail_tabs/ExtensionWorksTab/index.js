@@ -1,1 +1,4 @@
-export { default } from "./ExtensionWorksTab";
+import { ExtensionWorksTab } from "./ExtensionWorksTab";
+
+
+export { ExtensionWorksTab };

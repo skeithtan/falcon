@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from "graphql-tools";
 import requireText from "require-text";
-import resolvers from "./resolvers";
+import { Query, Mutation } from "./resolvers";
 
 
 const rootQuery = requireText("./schema.graphql", require);
@@ -22,7 +22,7 @@ const mutationExtensions = extensionTypes
     .map(fileName => `./mutation_extensions/${fileName}`)
     .map(path => requireText(path, require));
 
-export default makeExecutableSchema({
+export const schema = makeExecutableSchema({
     typeDefs: [rootQuery, ...typeDefinitions, ...queryExtensions, ...mutationExtensions],
-    resolvers: resolvers,
+    resolvers: { Query, Mutation },
 });

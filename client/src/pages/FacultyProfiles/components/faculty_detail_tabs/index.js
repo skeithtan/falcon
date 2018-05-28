@@ -1,4 +1,4 @@
-import ExtensionWorksTab from "./ExtensionWorksTab";
+import { ExtensionWorksTab } from "./ExtensionWorksTab";
 import { InstructionalMaterialsTab } from "./InstructionalMaterialsTab";
 import { OverviewTab } from "./OverviewTab";
 import { PresentationsTab } from "./PresentationsTab";

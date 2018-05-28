@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import config from "../../config";
+import { server } from "../../config";
 import { User } from "../../models/user.model";
 import { requireSignIn } from "../../utils/user_decorator";
 import { getUserFromContext } from "../../utils/user_from_context";
@@ -24,7 +24,7 @@ async function signIn(object, {email, password}) {
 
     const token = jwt.sign({
         _id: user._id,
-    }, config.server.jwtSecret);
+    }, server.jwtSecret);
 
     return {
         token: token,
