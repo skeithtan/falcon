@@ -8,4 +8,4 @@ export const styles = theme => ({
         boxSizing: "border-box",
         flexGrow: 1,
     },
-})
+});

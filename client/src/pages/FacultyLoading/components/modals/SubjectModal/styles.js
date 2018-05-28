@@ -6,4 +6,4 @@ export const styles = theme => ({
     selectedFaculty: {
         ...activeItem(theme)
     },
-})
+});

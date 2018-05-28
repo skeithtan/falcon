@@ -35,4 +35,4 @@ export const styles = theme => ({
             color: theme.palette.primary.main,
         },
     },
-})
+});

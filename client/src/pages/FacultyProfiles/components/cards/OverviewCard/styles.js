@@ -17,4 +17,4 @@ export const styles = theme => ({
     buttonsWrapper: {
         marginLeft: "auto",
     },
-})
+});

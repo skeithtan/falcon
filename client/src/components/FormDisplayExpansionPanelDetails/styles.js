@@ -3,4 +3,4 @@ export const styles = theme => ({
         padding: 0,
         flexDirection: "column",
     },
-})
+});

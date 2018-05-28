@@ -15,4 +15,4 @@ export const styles = theme => ({
         bottom: theme.spacing.unit * 5,
         right: theme.spacing.unit * 5,
     },
-})
+});

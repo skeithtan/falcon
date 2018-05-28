@@ -13,4 +13,4 @@ export const styles = theme => ({
         display: "grid",
         gridTemplateColumns: "320px auto",
     },
-})
+});

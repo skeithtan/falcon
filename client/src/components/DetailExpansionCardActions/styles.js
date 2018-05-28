@@ -4,4 +4,4 @@ export const styles = theme => ({
         justifyContent: "flex-end",
         width: "100%",
     },
-})
+});

@@ -18,4 +18,4 @@ export const styles = theme => ({
     reviewForm: {
         width: "100%",
     },
-})
+});
