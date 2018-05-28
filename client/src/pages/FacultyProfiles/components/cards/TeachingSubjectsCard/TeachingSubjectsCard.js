@@ -12,6 +12,7 @@ import TableRowActions from "../../../../../components/TableRowActions";
 import TableToolbar from "../../../../../components/TableToolbar";
 import { fetchTeachingSubjects } from "../../../../../services/faculty/teaching_subjects";
 import { getFullName } from "../../../../../utils/user.util";
+import AssignSubjectModal from "../../modals/AssignSubjectModal";
 import UnassignSubjectModal from "../../modals/UnassignSubjectModal";
 
 
@@ -36,6 +37,7 @@ export default class TeachingSubjectsCard extends Component {
         isLoading: true,
         activeSubject: null,
         removeSubjectModalIsShowing: false,
+        assignSubjectModalIsShowing: false,
     };
 
     renderRows = teachingSubjects => teachingSubjects.map(subject =>
@@ -91,9 +93,13 @@ export default class TeachingSubjectsCard extends Component {
         removeSubjectModalIsShowing: shouldShow,
     });
 
+    toggleAssignSubjectModal = shouldShow => this.setState({
+        assignSubjectModalIsShowing: shouldShow,
+    });
+
     renderTeachingSubjects = teachingSubjects => {
         const teachingSubjectsIsEmpty = teachingSubjects.length === 0;
-        const {activeSubject, removeSubjectModalIsShowing} = this.state;
+        const {activeSubject, removeSubjectModalIsShowing, assignSubjectModalIsShowing} = this.state;
         const {faculty} = this.props;
 
         return (
@@ -115,6 +121,12 @@ export default class TeachingSubjectsCard extends Component {
                 }
 
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
+                <AssignSubjectModal
+                    open={assignSubjectModalIsShowing}
+                    onClose={() => this.toggleAssignSubjectModal(false)}
+                    faculty={faculty}
+                    facultySubjects={teachingSubjects}
+                />
                 {activeSubject &&
                 <UnassignSubjectModal
                     open={removeSubjectModalIsShowing}
@@ -128,10 +140,9 @@ export default class TeachingSubjectsCard extends Component {
         );
     };
 
-    onAddButtonClick = () => {
-        //TODO
-        console.log("Add teaching subject button clicked");
-    };
+    onAddButtonClick = () => this.setState({
+        assignSubjectModalIsShowing: true,
+    });
 
     componentDidMount() {
         this.fetchData();
