@@ -1,3 +1,4 @@
+import { USER_TYPES } from "../enums/user.enums";
 import { FacultyLoadingPage } from "./FacultyLoading";
 import { FacultyProfilesPage } from "./FacultyProfiles";
 import { HomePage } from "./Home";
@@ -58,7 +59,9 @@ export const NOT_FOUND_PAGE = {
     component: NotFoundPage,
 };
 
-export const MODULE_PAGES = [
+export const PAGES = [
+    SIGN_IN_PAGE,
+    NOT_FOUND_PAGE,
     HOME_PAGE,
     FACULTY_PROFILES_PAGE,
     FACULTY_LOADING_PAGE,
@@ -66,11 +69,33 @@ export const MODULE_PAGES = [
     USER_SETTINGS_PAGE,
 ];
 
-export const PAGES = [
-    SIGN_IN_PAGE,
+export const GENERAL_PAGES = [
     NOT_FOUND_PAGE,
-    ...MODULE_PAGES,
+    SIGN_IN_PAGE,
 ];
+
+export function getPagesForUserType(userType) {
+    const {DEAN, ASSOCIATE_DEAN, FACULTY, CLERK} = USER_TYPES;
+
+    switch (userType) {
+        case DEAN.identifier:
+        case ASSOCIATE_DEAN.identifier:
+        case CLERK.identifier:
+            return [
+                HOME_PAGE,
+                FACULTY_PROFILES_PAGE,
+                FACULTY_LOADING_PAGE,
+                TRACER_STUDY_PAGE,
+                USER_SETTINGS_PAGE,
+            ];
+        case FACULTY.identifier:
+        default:
+            return [
+                HOME_PAGE,
+                TRACER_STUDY_PAGE,
+            ];
+    }
+}
 
 export function getPageFromPath(candidatePath) {
     const page = PAGES.find(page => page.path === candidatePath);
