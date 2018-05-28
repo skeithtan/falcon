@@ -1,7 +1,4 @@
-import { GraphQLError } from "graphql/error";
-
-
-export class GuestAccessError extends GraphQLError {
+export class GuestAccessError extends Error {
     constructor() {
         super("GuestAccessError: This section of the API requires authentication");
     }

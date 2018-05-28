@@ -1,7 +1,4 @@
-import { GraphQLError } from "graphql/error";
-
-
-export class ValidationError extends GraphQLError {
+export class ValidationError extends Error {
     constructor(error) {
         super(`ValidationError: ${error}`);
     }

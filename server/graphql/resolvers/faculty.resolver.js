@@ -3,8 +3,8 @@ import { FACULTY, User } from "../../models/user.model";
 import { getDifference } from "../../utils/difference";
 import { addFacultyToSubjects, removeFacultyFromSubjects } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
-import { DoesNotExistError } from "../errors";
-import ValidationError from "../errors/validation.error";
+import { DoesNotExistError } from "../errors/does_not_exist.error";
+import { ValidationError } from "../errors/validation.error";
 
 
 function faculties() {

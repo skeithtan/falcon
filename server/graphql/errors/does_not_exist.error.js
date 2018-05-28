@@ -1,7 +1,4 @@
-import { GraphQLError } from "graphql/error";
-
-
-export class DoesNotExistError extends GraphQLError {
+export class DoesNotExistError extends Error {
     constructor(message) {
         super(`DoesNotExistError: ${message}`);
     }

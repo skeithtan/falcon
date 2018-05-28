@@ -3,7 +3,8 @@ import { server } from "../../config";
 import { User } from "../../models/user.model";
 import { requireSignIn } from "../../utils/user_decorator";
 import { getUserFromContext } from "../../utils/user_from_context";
-import { AuthenticationError, DoesNotExistError } from "../errors";
+import { AuthenticationError } from "../errors/authentication.error";
+import { DoesNotExistError } from "../errors/does_not_exist.error";
 
 
 function currentUser(object, args, context) {
@@ -14,12 +15,12 @@ async function signIn(object, {email, password}) {
     const user = await User.findOne({email: email}).exec();
 
     if (!user) {
-        return new AuthenticationError();
+        throw new AuthenticationError();
     }
 
     const isValidPassword = user.comparePassword(password);
     if (!isValidPassword) {
-        return new AuthenticationError();
+        throw new AuthenticationError();
     }
 
     const token = jwt.sign({
