@@ -46,4 +46,10 @@ export const activeItem = theme => ({
     borderColor: theme.palette.primary.main,
     color: theme.palette.primary.dark,
     background: `${lighten(theme.palette.primary.light, 0.9)} !important`,
+
+
+    "& span": {
+        color: theme.palette.primary.dark,
+        fontWeight: theme.typography.fontWeightMedium,
+    }
 });

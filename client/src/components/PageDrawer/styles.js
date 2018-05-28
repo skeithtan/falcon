@@ -35,14 +35,10 @@ export const styles = theme => ({
 
         "&.active": {
             ...activeItem(theme),
-
-            "& h3": {
-                color: theme.palette.primary.main,
-            },
         },
     },
     pageItemText: {
-        "& h3": {
+        "& span": {
             fontWeight: theme.typography.fontWeightMedium,
             fontSize: "0.95rem",
             color: theme.palette.grey["700"],
