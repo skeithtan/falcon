@@ -169,7 +169,7 @@ export const PRESENTATION = {
     },
 };
 
-export default {
+export const FACULTY_ENUMS = {
     EMPLOYMENT,
     SEX,
     DEGREE,

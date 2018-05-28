@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyLoadingActiveTabChanged } from "../../../../actions/faculty_loading.actions";
 import { getTabFromIdentifier } from "../../tabs";
-import FacultyLoadingBody from "./FacultyLoadingBody";
+import { FacultyLoadingBody as Component } from "./FacultyLoadingBody";
 
 
 function mapStateToProps(state) {
@@ -19,6 +19,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const FacultyLoadingBody = compose(
     connect(mapStateToProps, mapDispatchToProps),
-)(FacultyLoadingBody);
+)(Component);

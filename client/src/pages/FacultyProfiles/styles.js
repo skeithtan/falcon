@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     facultyProfiles: {
         height: "100%",
         display: "flex",

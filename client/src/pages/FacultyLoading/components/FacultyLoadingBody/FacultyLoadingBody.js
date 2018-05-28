@@ -3,7 +3,7 @@ import { FACULTY_LOADING_PAGE } from "../../../index";
 import { getTabFromPath } from "../../tabs";
 
 
-export default class FacultyLoadingBody extends Component {
+export class FacultyLoadingBody extends Component {
     state = {};
 
     static getDerivedStateFromProps(nextProps, prevState) {

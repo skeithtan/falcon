@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 
-export default class ModalFormDialogActions extends Component {
+export class ModalFormDialogActions extends Component {
     renderSubmitting = () => (
         <Grid item>
             <Grid container spacing={8} alignItems="center" wrap="nowrap">

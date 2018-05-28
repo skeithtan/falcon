@@ -10,9 +10,9 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import ModalFormComponent from "../../../../../components/ModalFormComponent";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { DEGREE } from "../../../../../enums/faculty.enums";
-import validateForm, { yearValidators } from "../../../../../utils/forms.util";
+import { validateForm,  yearValidators } from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {
@@ -42,7 +42,7 @@ const initialForm = {
     completionYear: "",
 };
 
-export default class DegreeModal extends ModalFormComponent {
+export class DegreeModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }

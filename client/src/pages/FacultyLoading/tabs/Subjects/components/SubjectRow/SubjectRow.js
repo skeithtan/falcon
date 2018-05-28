@@ -3,13 +3,13 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import DetailExpansionCard from "../../../../../../components/DetailExpansionCard";
-import DetailExpansionCardActions from "../../../../../../components/DetailExpansionCardActions";
-import FormDisplayExpansionPanelDetails from "../../../../../../components/FormDisplayExpansionPanelDetails";
-import FacultyChips from "../FacultyChips";
+import { DetailExpansionCard } from "../../../../../../components/DetailExpansionCard";
+import { DetailExpansionCardActions } from "../../../../../../components/DetailExpansionCardActions";
+import { FormDisplayExpansionPanelDetails } from "../../../../../../components/FormDisplayExpansionPanelDetails";
+import { FacultyChips } from "../FacultyChips";
 
 
-export default class SubjectRow extends Component {
+export class SubjectRow extends Component {
     render() {
         const {subject, onUpdateButtonClick} = this.props;
         return (

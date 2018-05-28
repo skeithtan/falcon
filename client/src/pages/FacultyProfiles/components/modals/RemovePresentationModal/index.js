@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { removePresentation } from "../../../../../services/faculty/presentation";
-import RemovePresentationModal from "./RemovePresentationModal";
+import { RemovePresentationModal as Component } from "./RemovePresentationModal";
 
 
 function mapDispatchToProps(dispatch) {
@@ -21,6 +21,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const RemovePresentationModal = compose(
     connect(null, mapDispatchToProps),
-)(RemovePresentationModal);
+)(Component);

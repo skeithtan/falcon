@@ -1,4 +1,4 @@
-import DangerActionConfirmationModal from "./DangerActionConfirmationModal";
+import { DangerActionConfirmationModal } from "./DangerActionConfirmationModal";
 
 
-export default DangerActionConfirmationModal;
+export { DangerActionConfirmationModal };

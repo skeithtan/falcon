@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     bigAvatar: {
         width: 80,
         height: 80,

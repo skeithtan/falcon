@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     actionButtonsWrapper: {
         display: "flex",
         justifyContent: "flex-end",

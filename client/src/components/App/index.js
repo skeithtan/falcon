@@ -1,11 +1,12 @@
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
 import { pageIsChanged } from "../../actions/pages.actions";
 import { getPageFromIdentifier } from "../../pages";
-import {withStyles} from "@material-ui/core/styles";
-import styles from "./styles";
-import App from "./App";
+import { App as Component } from "./App";
+import { styles } from "./styles";
+
 
 function mapStateToProps(state) {
     return {
@@ -22,8 +23,8 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const App = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withRouter,
-    withStyles(styles)
-)(App);
+    withStyles(styles),
+)(Component);

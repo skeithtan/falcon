@@ -1,1 +1,4 @@
-export { default } from "./TableRowActions";
+import { TableRowActions } from "./TableRowActions";
+
+
+export { TableRowActions };

@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 
-class TableToolbar extends Component {
+export class TableToolbar extends Component {
     render() {
         const {classes, tableTitle, onAddButtonClick, addButtonTooltipTitle} = this.props;
         return (
@@ -25,5 +25,3 @@ class TableToolbar extends Component {
         );
     }
 }
-
-export default TableToolbar;

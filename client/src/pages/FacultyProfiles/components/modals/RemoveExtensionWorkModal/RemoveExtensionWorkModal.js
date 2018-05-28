@@ -1,10 +1,10 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import DangerActionConfirmationModal from "../../../../../components/DangerActionConfirmationModal";
+import { DangerActionConfirmationModal } from "../../../../../components/DangerActionConfirmationModal";
 import { getFullName } from "../../../../../utils/user.util";
 
 
-export default class RemoveExtensionWorkModal extends DangerActionConfirmationModal {
+export class RemoveExtensionWorkModal extends DangerActionConfirmationModal {
     get dialogTitle() {
         return "Are you sure you want to remove this extension work?";
     }

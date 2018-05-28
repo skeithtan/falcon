@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { HOME_PAGE } from "../index";
 
 
-export default class NotFoundPage extends Component {
+export class NotFoundPage extends Component {
     render() {
         const {classes, history} = this.props;
         return (

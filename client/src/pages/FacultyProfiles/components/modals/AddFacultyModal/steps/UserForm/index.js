@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import UserForm from "./UserForm";
+import { UserForm as Component } from "./UserForm";
 
 
 function mapStateToProps(state) {
@@ -9,6 +9,6 @@ function mapStateToProps(state) {
     };
 }
 
-export default compose(
+export const UserForm = compose(
     connect(mapStateToProps, null),
-)(UserForm);
+)(Component);

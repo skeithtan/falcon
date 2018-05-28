@@ -11,10 +11,10 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import ModalFormComponent from "../../../../../components/ModalFormComponent";
-import MonthPicker from "../../../../../components/MonthPicker";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
+import { MonthPicker } from "../../../../../components/MonthPicker";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
-import validateForm, { mustBeNumberValidator, yearValidators } from "../../../../../utils/forms.util";
+import { validateForm,  mustBeNumberValidator, yearValidators } from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {
@@ -77,7 +77,7 @@ const initialForm = {
     daysDuration: "",
 };
 
-export default class PresentationModal extends ModalFormComponent {
+export class PresentationModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }

@@ -5,11 +5,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { getPageFromIdentifier } from "../../pages";
-import PageDrawer from "../PageDrawer";
-import UserMenu from "../UserButton";
+import { PageDrawer } from "../PageDrawer";
+import { UserButton } from "../UserButton";
 
 
-export default class FalconAppBar extends Component {
+export class FalconAppBar extends Component {
+    state = {
+        drawerOpen: false,
+    };
+
     pageTitle = () => {
         const activePage = getPageFromIdentifier(this.props.activePageIdentifier);
         return activePage.name;
@@ -30,7 +34,7 @@ export default class FalconAppBar extends Component {
                         <Typography color="inherit" className={classes.falconLogo}>Falcon</Typography>
                         <Typography color="inherit" className={classes.pageName}>{this.pageTitle()}</Typography>
                     </div>
-                    <UserMenu />
+                    <UserButton />
                 </Toolbar>
 
                 <PageDrawer open={this.state.drawerOpen}
@@ -39,8 +43,4 @@ export default class FalconAppBar extends Component {
             </AppBar>
         );
     }
-
-    state = {
-        drawerOpen: false,
-    };
 }

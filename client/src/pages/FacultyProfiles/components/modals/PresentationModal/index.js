@@ -4,7 +4,7 @@ import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { addPresentation, updatePresentation } from "../../../../../services/faculty/presentation";
-import PresentationModal from "./PresentationModal";
+import { PresentationModal as Component } from "./PresentationModal";
 
 
 function mapFormToPresentationInput(form) {
@@ -66,7 +66,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const PresentationModal = compose(
     connect(null, mapDispatchToProps),
     withStyles(genericModalStyle),
-)(PresentationModal);
+)(Component);

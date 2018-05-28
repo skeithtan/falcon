@@ -1,7 +1,7 @@
 import { activeItem } from "../../../../components/styles";
 
 
-export default theme => ({
+export const styles = theme => ({
     facultyListContainer: {
         background: theme.palette.background.paper,
         borderRight: "1px solid",

@@ -2,7 +2,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import React, { Component } from "react";
 
 
-class DetailExpansionCard extends Component {
+export class DetailExpansionCard extends Component {
     render() {
         const classes = this.props.classes;
         return (
@@ -12,5 +12,3 @@ class DetailExpansionCard extends Component {
         );
     }
 }
-
-export default DetailExpansionCard;

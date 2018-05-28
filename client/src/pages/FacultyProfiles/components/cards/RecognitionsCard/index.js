@@ -1,1 +1,4 @@
-export { default } from "./RecognitionsCard";
+import { RecognitionsCard } from "./RecognitionsCard";
+
+
+export { RecognitionsCard };

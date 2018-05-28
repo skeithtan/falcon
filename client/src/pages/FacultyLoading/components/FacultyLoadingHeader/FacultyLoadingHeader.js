@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { TABS } from "../../tabs";
 
 
-export default class FacultyLoadingHeader extends Component {
+export class FacultyLoadingHeader extends Component {
     renderTabs = () => TABS.map(tab =>
         <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.history.push(tab.path)} />,
     );

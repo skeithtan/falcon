@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import FacultyDetail from "./components/FacultyDetail";
-import FacultyList from "./components/FacultyList";
-import FacultyProfilesHeader from "./components/FacultyProfilesHeader";
+import { FacultyDetail } from "./components/FacultyDetail";
+import { FacultyList } from "./components/FacultyList";
+import { FacultyProfilesHeader } from "./components/FacultyProfilesHeader";
 
 
-export default class FacultyProfilesPage extends Component {
+export class FacultyProfilesPage extends Component {
     render() {
         const {classes} = this.props;
         return (

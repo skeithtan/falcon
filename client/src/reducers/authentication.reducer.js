@@ -14,7 +14,7 @@ const initialState = {
     signInError: null,
     user: hasUser ? JSON.parse(localStorage.user) : null,
 };
-export default function authentication(state = initialState, action) {
+export function authentication(state = initialState, action) {
     switch (action.type) {
         case SIGN_IN_SUCCESS:
             return {

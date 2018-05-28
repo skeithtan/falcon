@@ -1,9 +1,9 @@
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
-import FullPageLoadingIndicator from "./FullPageLoadingIndicator";
-import styles from "./styles";
+import { FullPageLoadingIndicator as Component } from "./FullPageLoadingIndicator";
+import { styles } from "./styles";
 
 
-export default compose(
+export const FullPageLoadingIndicator = compose(
     withStyles(styles),
-)(FullPageLoadingIndicator);
+)(Component);

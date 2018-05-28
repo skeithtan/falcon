@@ -6,11 +6,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import React, { Component } from "react";
-import FullPageLoadingIndicator from "../../../../components/FullPageLoadingIndicator/";
-import { EmptySearchResultsState, EmptyState, ErrorState } from "../../../../components/states";
-import UserAvatar from "../../../../components/UserAvatar";
+import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator/";
+import { EmptySearchResultsState } from "../../../../components/states/EmptySearchResultsState";
+import { EmptyState } from "../../../../components/states/EmptyState";
+import { ErrorState } from "../../../../components/states/ErrorState";
+import { UserAvatar } from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user.util";
-import AddFacultyModal from "../modals/AddFacultyModal";
+import { AddFacultyModal } from "../modals/AddFacultyModal";
 
 
 class FacultyItem extends Component {
@@ -29,7 +31,7 @@ class FacultyItem extends Component {
     }
 }
 
-export default class FacultyList extends Component {
+export class FacultyList extends Component {
     state = {
         addFacultyModalIsShowing: false,
     };

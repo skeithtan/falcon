@@ -2,17 +2,17 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import DetailCard from "../../../../../components/DetailCard";
-import DetailExpansionCard from "../../../../../components/DetailExpansionCard";
-import DetailExpansionCardActions from "../../../../../components/DetailExpansionCardActions";
-import FormDisplayExpansionPanelDetails from "../../../../../components/FormDisplayExpansionPanelDetails";
-import FormDisplayListItem from "../../../../../components/FormDisplayListItem";
-import EmptyState from "../../../../../components/states/EmptyState";
-import TableToolbar from "../../../../../components/TableToolbar";
+import { DetailCard } from "../../../../../components/DetailCard";
+import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
+import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
+import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
+import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
+import { EmptyState } from "../../../../../components/states/EmptyState";
+import { TableToolbar } from "../../../../../components/TableToolbar";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
-import InstructionalMaterialModal from "../../modals/InstructionalMaterialModal";
-import RemoveInstructionalMaterialModal from "../../modals/RemoveInstructionalMaterialModal";
+import { InstructionalMaterialModal } from "../../modals/InstructionalMaterialModal";
+import { RemoveInstructionalMaterialModal } from "../../modals/RemoveInstructionalMaterialModal";
 
 
 class InstructionalMaterialRow extends Component {
@@ -51,7 +51,7 @@ class InstructionalMaterialRow extends Component {
     }
 }
 
-export default class InstructionalMaterialsTab extends Component {
+export class InstructionalMaterialsTab extends Component {
     state = {
         instructionalMaterialModalIsShowing: false,
         activeInstructionalMaterial: null,

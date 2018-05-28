@@ -2,7 +2,7 @@ import { lighten } from "@material-ui/core/styles/colorManipulator";
 import { activeItem } from "../styles";
 
 
-export default theme => ({
+export const styles = theme => ({
     drawer: {
         height: "100%",
         minWidth: 240,

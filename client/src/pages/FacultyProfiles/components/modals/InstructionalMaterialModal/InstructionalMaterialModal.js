@@ -12,9 +12,9 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import ModalFormComponent from "../../../../../components/ModalFormComponent";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
-import validateForm, { yearValidators } from "../../../../../utils/forms.util";
+import { validateForm,  yearValidators } from "../../../../../utils/forms.util";
 
 
 function isForStudents(form) {
@@ -66,7 +66,7 @@ const initialForm = {
     level: "",
 };
 
-export default class InstructionalMaterialModal extends ModalFormComponent {
+export class InstructionalMaterialModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }

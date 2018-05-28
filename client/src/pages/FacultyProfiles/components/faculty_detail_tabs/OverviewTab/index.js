@@ -1,5 +1,4 @@
-import compose from "recompose/compose";
-import OverviewTab from "./OverviewTab";
+import { OverviewTab } from "./OverviewTab";
 
 
-export default compose()(OverviewTab);
+export { OverviewTab };

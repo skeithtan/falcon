@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 
-class EmptySearchResultsState extends Component {
+export class EmptySearchResultsState extends Component {
     render() {
         const classes = this.props.classes;
         return (
@@ -27,5 +27,3 @@ class EmptySearchResultsState extends Component {
         );
     }
 }
-
-export default EmptySearchResultsState;

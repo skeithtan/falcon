@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     loadingIndicatorWrapper: {
         width: "100%",
         display: "flex",

@@ -26,7 +26,7 @@ const errorMiddleware = onError(({graphQLErrors, networkError}) => {
         console.log("Network Error: ", networkError);
     }
 });
-const client = new ApolloClient({
+export const client = new ApolloClient({
     //httpLink MUST be the last in the array otherwise it won't work
     link: from([authMiddleware, errorMiddleware, httpLink]),
     cache: new InMemoryCache(),
@@ -41,4 +41,3 @@ const client = new ApolloClient({
         },
     },
 });
-export default client;

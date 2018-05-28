@@ -2,7 +2,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import React, { Component } from "react";
 
 
-class FormDisplayExpansionPanelDetails extends Component {
+export class FormDisplayExpansionPanelDetails extends Component {
     render() {
         return (
             <ExpansionPanelDetails className={this.props.classes.expansionPanelDetails}>
@@ -11,5 +11,3 @@ class FormDisplayExpansionPanelDetails extends Component {
         );
     }
 }
-
-export default FormDisplayExpansionPanelDetails;

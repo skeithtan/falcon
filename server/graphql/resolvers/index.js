@@ -4,17 +4,17 @@ import { mutationResolvers as userMutations, queryResolvers as userQueries } fro
 
 
 const helloWorldResolver = () => "World";
-export default {
-    Query: {
-        hello: helloWorldResolver,
-        ...userQueries,
-        ...classQueries,
-        ...facultyQueries,
-    },
-    Mutation: {
-        hello: helloWorldResolver,
-        ...userMutations,
-        ...classMutations,
-        ...facultyMutations,
-    },
+
+export const Query = {
+    hello: helloWorldResolver,
+    ...userQueries,
+    ...classQueries,
+    ...facultyQueries,
+};
+
+export const Mutation = {
+    hello: helloWorldResolver,
+    ...userMutations,
+    ...classMutations,
+    ...facultyMutations,
 };

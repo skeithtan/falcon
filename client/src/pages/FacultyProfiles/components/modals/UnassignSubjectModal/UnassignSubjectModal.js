@@ -1,11 +1,11 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import DangerActionConfirmationModal from "../../../../../components/DangerActionConfirmationModal";
+import { DangerActionConfirmationModal } from "../../../../../components/DangerActionConfirmationModal";
 import { unassignFacultyFromSubject } from "../../../../../services/faculty/teaching_subjects";
 import { getFullName } from "../../../../../utils/user.util";
 
 
-export default class UnassignSubjectModal extends DangerActionConfirmationModal {
+export class UnassignSubjectModal extends DangerActionConfirmationModal {
     get dialogTitle() {
         return "Are you sure you want to unassign this subject?";
     }

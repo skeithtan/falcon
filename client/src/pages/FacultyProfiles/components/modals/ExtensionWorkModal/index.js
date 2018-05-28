@@ -4,7 +4,7 @@ import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { addExtensionWork, updateExtensionWork } from "../../../../../services/faculty/extension_work";
-import ExtensionWorkModal from "./ExtensionWorkModal";
+import { ExtensionWorkModal as Component } from "./ExtensionWorkModal";
 
 
 function mapFormToExtensionWorkInput(form) {
@@ -58,7 +58,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const ExtensionWorkModal = compose(
     connect(null, mapDispatchToProps),
     withStyles(genericModalStyle),
-)(ExtensionWorkModal);
+)(Component);

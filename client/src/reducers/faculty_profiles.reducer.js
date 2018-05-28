@@ -19,7 +19,7 @@ const initialState = {
         errors: null,
     },
 };
-export default function facultyProfiles(state = initialState, action) {
+export function facultyProfiles(state = initialState, action) {
     switch (action.type) {
         case ACTIVE_FACULTY_CHANGED:
             return {

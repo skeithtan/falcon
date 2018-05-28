@@ -1,4 +1,4 @@
-export default theme => ({
+export const styles = theme => ({
     header: {
         background: theme.palette.primary.main,
         minHeight: 52,

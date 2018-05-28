@@ -1,4 +1,4 @@
-import MonthPicker from "./MonthPicker";
+import { MonthPicker } from "./MonthPicker";
 
 
-export default MonthPicker;
+export { MonthPicker };

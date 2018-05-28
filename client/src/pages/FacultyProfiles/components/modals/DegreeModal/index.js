@@ -4,7 +4,7 @@ import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { addDegree, updateDegree } from "../../../../../services/faculty/degree";
-import DegreeModal from "./DegreeModal";
+import { DegreeModal as Component } from "./DegreeModal";
 
 
 function mapDispatchToProps(dispatch) {
@@ -48,7 +48,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const DegreeModal = compose(
     connect(null, mapDispatchToProps),
     withStyles(genericModalStyle),
-)(DegreeModal);
+)(Component);

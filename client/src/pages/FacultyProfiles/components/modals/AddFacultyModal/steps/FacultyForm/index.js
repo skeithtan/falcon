@@ -1,4 +1,4 @@
-import FacultyForm from "./FacultyForm";
+import { FacultyForm } from "./FacultyForm";
 
 
-export default FacultyForm;
+export { FacultyForm };

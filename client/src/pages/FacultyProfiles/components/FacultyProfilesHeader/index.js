@@ -2,8 +2,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { detailActiveTabChanged, searchKeywordChanged } from "../../../../actions/faculty_profiles.actions";
-import FacultyProfilesHeader from "./FacultyProfilesHeader";
-import styles from "./styles";
+import { FacultyProfilesHeader as Component } from "./FacultyProfilesHeader";
+import { styles } from "./styles";
 
 
 function mapStateToProps(state) {
@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default compose(
+export const FacultyProfilesHeader = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles),
-)(FacultyProfilesHeader);
+)(Component);

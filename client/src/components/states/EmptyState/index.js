@@ -1,9 +1,9 @@
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
-import style from "../styles";
-import EmptyState from "./EmptyState";
+import { styles } from "../styles";
+import { EmptyState as Component } from "./EmptyState";
 
 
-export default compose(
-    withStyles(style),
-)(EmptyState);
+export const EmptyState = compose(
+    withStyles(styles),
+)(Component);

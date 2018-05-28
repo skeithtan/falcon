@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import config from "../config";
+import { server } from "../config";
 import { GuestAccessError } from "../graphql/errors";
 import { User } from "../models/user.model";
 
@@ -17,7 +17,7 @@ function getAuthorizationFromContext(context) {
 function getUserIdFromAuthorization(authorization) {
     // Remove bearer from authorization header to retrieve token
     const token = authorization.replace("Bearer ", "");
-    const jwtSecret = config.server.jwtSecret;
+    const jwtSecret = server.jwtSecret;
     return new Promise((resolve, reject) => {
         try {
             const {_id} = jwt.verify(token, jwtSecret);

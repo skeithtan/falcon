@@ -1,6 +1,6 @@
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
-export default theme => ({
+export const styles = theme => ({
     facultyProfilesHeader: {
         background: theme.palette.primary.main,
         minHeight: 52,

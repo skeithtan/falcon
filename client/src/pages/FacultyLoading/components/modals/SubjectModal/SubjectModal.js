@@ -10,11 +10,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import FacultyChip from "../../../../../components/FacultyChip";
-import FullPageLoadingIndicator from "../../../../../components/FullPageLoadingIndicator";
-import ModalFormComponent from "../../../../../components/ModalFormComponent";
-import ErrorState from "../../../../../components/states/ErrorState";
-import validateForm from "../../../../../utils/forms.util";
+import { FacultyChip } from "../../../../../components/FacultyChip";
+import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
+import { ErrorState } from "../../../../../components/states/ErrorState";
+import { validateForm } from "../../../../../utils/forms.util";
 import { getFullName } from "../../../../../utils/user.util";
 
 
@@ -43,7 +43,7 @@ function mapSubjectToForm(subject) {
     };
 }
 
-export default class SubjectModal extends ModalFormComponent {
+export class SubjectModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }

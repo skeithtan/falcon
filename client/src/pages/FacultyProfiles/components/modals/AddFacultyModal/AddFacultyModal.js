@@ -32,7 +32,7 @@ const initialState = {
     error: null,
 };
 
-export default class AddFacultyModal extends Component {
+export class AddFacultyModal extends Component {
     state = {...initialState};
 
     resetForm = () => this.setState({...initialState, form: {...initialForm}});
