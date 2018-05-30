@@ -14,7 +14,7 @@ import TextField from "@material-ui/core/TextField";
 import React from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
-import { validateForm,  yearValidators } from "../../../../../utils/forms.util";
+import { validateForm, yearValidators } from "../../../../../utils/forms.util";
 
 
 function isForStudents(form) {
@@ -41,48 +41,33 @@ function getFormErrors(form) {
     return validateForm(toValidate);
 }
 
-function mapInstructionalMaterialToForm(instructionalMaterial) {
-    const form = {
-        title: instructionalMaterial.title,
-        medium: instructionalMaterial.medium,
-        audience: instructionalMaterial.audience,
-        usageYear: instructionalMaterial.usageYear,
-        level: "",
-    };
-
-    const forStudents = instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier;
-    if (forStudents) {
-        form.level = instructionalMaterial.level;
-    }
-
-    return form;
-}
-
-const initialForm = {
-    title: "",
-    medium: INSTRUCTIONAL_MATERIAL.MEDIUM.PRINT.identifier,
-    audience: INSTRUCTIONAL_MATERIAL.AUDIENCE.TEACHER.identifier,
-    usageYear: "",
-    level: "",
-};
-
 export class InstructionalMaterialModal extends ModalFormComponent {
     get initialForm() {
-        return initialForm;
+        return {
+            title: "",
+            medium: INSTRUCTIONAL_MATERIAL.MEDIUM.PRINT.identifier,
+            audience: INSTRUCTIONAL_MATERIAL.AUDIENCE.TEACHER.identifier,
+            usageYear: "",
+            level: "",
+        };
     }
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.action === "add") {
-            this.setState({
-                form: {...initialForm},
-            });
-            
-            return;
+
+    mapPropsToForm = ({instructionalMaterial}) => {
+        const form = {
+            title: instructionalMaterial.title,
+            medium: instructionalMaterial.medium,
+            audience: instructionalMaterial.audience,
+            usageYear: instructionalMaterial.usageYear,
+            level: "",
+        };
+
+        const forStudents = instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier;
+        if (forStudents) {
+            form.level = instructionalMaterial.level;
         }
 
-        this.setState({
-            form: mapInstructionalMaterialToForm(nextProps.instructionalMaterial),
-        });
-    }
+        return form;
+    };
 
     get buttonName() {
         return this.props.action === "add" ? "Add Instructional Material" : "Update Instructional Material";

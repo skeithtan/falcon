@@ -14,7 +14,7 @@ import React from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { MonthPicker } from "../../../../../components/MonthPicker";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
-import { validateForm,  yearValidators } from "../../../../../utils/forms.util";
+import { validateForm, yearValidators } from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {
@@ -32,42 +32,24 @@ function getFormErrors(form) {
     });
 }
 
-function mapRecognitionToForm(recognition) {
-    return {
+export class RecognitionModal extends ModalFormComponent {
+    get initialForm() {
+        return {
+            title: "",
+            basis: RECOGNITION.BASIS.RESEARCH.identifier,
+            month: 1,
+            year: "",
+            sponsor: "",
+        };
+    }
+
+    mapPropsToForm = ({recognition}) => ({
         title: recognition.title,
         basis: recognition.basis,
         sponsor: recognition.sponsor,
         year: recognition.date.year,
         month: recognition.date.month,
-    };
-}
-
-const initialForm = {
-    title: "",
-    basis: RECOGNITION.BASIS.RESEARCH.identifier,
-    month: 1,
-    year: "",
-    sponsor: "",
-};
-
-export class RecognitionModal extends ModalFormComponent {
-
-    get initialForm() {
-        return initialForm;
-    }
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.action === "add") {
-            this.setState({
-                form: {...initialForm},
-            });
-            
-            return;
-        }
-
-        this.setState({
-            form: mapRecognitionToForm(nextProps.recognition),
-        });
-    }
+    });
 
     get buttonName() {
         return this.props.action === "add" ? "Add Recognition" : "Update Recognition";

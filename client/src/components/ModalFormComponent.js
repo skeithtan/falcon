@@ -6,6 +6,17 @@ export class ModalFormComponent extends Component {
     state = {...this.initialState};
 
     // To be implemented by subclass
+    mapPropsToForm = props => ({});
+
+    componentDidMount() {
+        if (this.props.action === "update") {
+            this.setState({
+                form: this.mapPropsToForm(this.props),
+            });
+        }
+    }
+
+    // To be implemented by subclass
     get initialForm() {
         return {};
     };

@@ -26,38 +26,21 @@ function getFormErrors(form) {
     });
 }
 
-function mapExtensionWorkToForm(extensionWork) {
-    return {
+export class ExtensionWorkModal extends ModalFormComponent {
+    get initialForm() {
+        return {
+            title: "",
+            roles: [],
+            venue: "",
+        };
+    }
+
+    mapPropsToForm = ({extensionWork}) => ({
         title: extensionWork.title,
         // Copy the array to avoid manipulating state in form
         roles: [...extensionWork.roles],
         venue: extensionWork.venue,
-    };
-}
-
-const initialForm = {
-    title: "",
-    roles: [],
-    venue: "",
-};
-
-export class ExtensionWorkModal extends ModalFormComponent {
-    get initialForm() {
-        return initialForm;
-    }
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.action === "add") {
-            this.setState({
-                form: {...initialForm},
-            });
-            
-            return;
-        }
-
-        this.setState({
-            form: mapExtensionWorkToForm(nextProps.extensionWork),
-        });
-    }
+    });
 
     get submitAddAction() {
         const form = this.state.form;

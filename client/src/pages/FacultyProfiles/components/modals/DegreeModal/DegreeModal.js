@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import React from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { DEGREE } from "../../../../../enums/faculty.enums";
-import { validateForm,  yearValidators } from "../../../../../utils/forms.util";
+import { validateForm, yearValidators } from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {
@@ -27,38 +27,19 @@ function getFormErrors(form) {
     });
 }
 
-// Removes unwanted details like _id and __typename
-function mapDegreeToForm(degree) {
-    return {
+export class DegreeModal extends ModalFormComponent {
+    mapPropsToForm = ({degree}) => ({
         title: degree.title,
         completionYear: degree.completionYear,
         level: degree.level,
-    };
-}
+    });
 
-const initialForm = {
-    title: "",
-    level: DEGREE.LEVEL.ASSOCIATE.identifier,
-    completionYear: "",
-};
-
-export class DegreeModal extends ModalFormComponent {
     get initialForm() {
-        return initialForm;
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.action === "add") {
-            this.setState({
-                form: {...initialForm},
-            });
-            
-            return;
-        }
-
-        this.setState({
-            form: mapDegreeToForm(nextProps.degree),
-        });
+        return {
+            title: "",
+            level: DEGREE.LEVEL.ASSOCIATE.identifier,
+            completionYear: "",
+        };
     }
 
     get submitAddAction() {

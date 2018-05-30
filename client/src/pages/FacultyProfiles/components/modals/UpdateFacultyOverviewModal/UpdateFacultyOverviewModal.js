@@ -18,7 +18,7 @@ import { ModalFormDialogActions } from "../../../../../components/ModalFormDialo
 import { Uploader } from "../../../../../components/Uploader";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getPossessivePronoun } from "../../../../../utils/faculty.util";
-import { validateForm,  dateToFormInputValue } from "../../../../../utils/forms.util";
+import { dateToFormInputValue, validateForm } from "../../../../../utils/forms.util";
 import { getFullName } from "../../../../../utils/user.util";
 
 
@@ -60,8 +60,8 @@ function getFormErrors(form, existingFaculties, currentFaculty) {
     });
 }
 
-function mapFacultyToForm(faculty) {
-    return {
+export class UpdateFacultyOverviewModal extends ModalFormComponent {
+    mapPropsToForm = ({faculty}) => ({
         _id: faculty._id,
         firstName: faculty.user.name.first,
         lastName: faculty.user.name.last,
@@ -70,10 +70,8 @@ function mapFacultyToForm(faculty) {
         sex: faculty.sex,
         employment: faculty.employment,
         birthDate: dateToFormInputValue(faculty.birthDate),
-    };
-}
+    });
 
-export class UpdateFacultyOverviewModal extends ModalFormComponent {
     get initialForm() {
         return {
             _id: "",
@@ -87,26 +85,11 @@ export class UpdateFacultyOverviewModal extends ModalFormComponent {
         };
 
     }
-    componentWillReceiveProps(nextProps, nextContext) {
-        this.setState({
-            form: mapFacultyToForm(nextProps.faculty),
-        });
-    }
 
-    handleSubmit = () => {
+    get submitUpdateAction() {
         const form = this.state.form;
-        this.setState({isSubmitting: true, error: null});
-
-        this.props.submitForm(form)
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred while updating faculty", error);
-                this.setState({
-                    isSubmitting: false,
-                    error: "An error occurred",
-                });
-            });
-    };
+        return () => this.props.submitForm(form);
+    }
 
     render() {
         const {open, faculties, faculty, classes} = this.props;

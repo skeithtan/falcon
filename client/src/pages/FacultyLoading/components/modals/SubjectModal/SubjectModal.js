@@ -18,12 +18,6 @@ import { validateForm } from "../../../../../utils/forms.util";
 import { getFullName } from "../../../../../utils/user.util";
 
 
-const initialForm = {
-    name: "",
-    code: "",
-    faculties: [],
-};
-
 function getFormErrors(form) {
     return validateForm({
         name: {
@@ -35,31 +29,20 @@ function getFormErrors(form) {
     });
 }
 
-function mapSubjectToForm(subject) {
-    return {
+export class SubjectModal extends ModalFormComponent {
+    get initialForm() {
+        return {
+            name: "",
+            code: "",
+            faculties: [],
+        };
+    }
+
+    mapPropsToForm = ({subject}) => ({
         name: subject.name,
         code: subject.code,
         faculties: subject.faculties.map(faculty => faculty._id),
-    };
-}
-
-export class SubjectModal extends ModalFormComponent {
-    get initialForm() {
-        return initialForm;
-    }
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.action === "add") {
-            this.setState({
-                form: {...initialForm},
-            });
-            
-            return;
-        }
-
-        this.setState({
-            form: mapSubjectToForm(nextProps.subject),
-        });
-    }
+    });
 
     get submitAddAction() {
         const {form} = this.state;

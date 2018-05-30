@@ -110,6 +110,7 @@ export class FacultyList extends Component {
     render() {
         const {classes, isLoading, errors} = this.props;
         const faculties = this.getFaculties();
+        const {addFacultyModalIsShowing} = this.state;
 
         return (
             <Grid container className={classes.facultyListContainer}>
@@ -126,8 +127,8 @@ export class FacultyList extends Component {
                 </Tooltip>
                 }
 
-                {faculties &&
-                <AddFacultyModal open={this.state.addFacultyModalIsShowing}
+                {addFacultyModalIsShowing &&
+                <AddFacultyModal open={addFacultyModalIsShowing}
                                  onClose={() => this.toggleAddFacultyModal(false)} />
                 }
             </Grid>

@@ -14,7 +14,7 @@ import React from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { MonthPicker } from "../../../../../components/MonthPicker";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
-import { validateForm,  mustBeNumberValidator, yearValidators } from "../../../../../utils/forms.util";
+import { mustBeNumberValidator, validateForm, yearValidators } from "../../../../../utils/forms.util";
 
 
 function getFormErrors(form) {
@@ -51,8 +51,22 @@ function getFormErrors(form) {
     });
 }
 
-function mapPresentationToForm(presentation) {
-    return {
+export class PresentationModal extends ModalFormComponent {
+    get initialForm() {
+        return {
+            title: "",
+            category: PRESENTATION.CATEGORY.INSTITUTIONAL.identifier,
+            month: 1,
+            year: "",
+            sponsor: "",
+            venue: "",
+            conference: "",
+            medium: PRESENTATION.MEDIUM.PAPER.identifier,
+            daysDuration: "",
+        };
+    }
+
+    mapPropsToForm = ({presentation}) => ({
         title: presentation.title,
         category: presentation.category,
         month: presentation.date.month,
@@ -62,38 +76,7 @@ function mapPresentationToForm(presentation) {
         conference: presentation.conference,
         medium: presentation.medium,
         daysDuration: presentation.daysDuration,
-    };
-}
-
-const initialForm = {
-    title: "",
-    category: PRESENTATION.CATEGORY.INSTITUTIONAL.identifier,
-    month: 1,
-    year: "",
-    sponsor: "",
-    venue: "",
-    conference: "",
-    medium: PRESENTATION.MEDIUM.PAPER.identifier,
-    daysDuration: "",
-};
-
-export class PresentationModal extends ModalFormComponent {
-    get initialForm() {
-        return initialForm;
-    }
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.action === "add") {
-            this.setState({
-                form: {...initialForm},
-            });
-            
-            return;
-        }
-
-        this.setState({
-            form: mapPresentationToForm(nextProps.presentation),
-        });
-    }
+    });
 
     get buttonName() {
         return this.props.action === "add" ? "Add Presentation" : "Update Presentation";

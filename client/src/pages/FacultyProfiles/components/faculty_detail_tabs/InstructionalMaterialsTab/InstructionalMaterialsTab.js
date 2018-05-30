@@ -118,6 +118,7 @@ export class InstructionalMaterialsTab extends Component {
 
                 {!instructionalMaterialsIsEmpty && this.renderRows(instructionalMaterials)}
 
+                {instructionalMaterialModalIsShowing &&
                 <InstructionalMaterialModal
                     action={activeInstructionalMaterial ? "update" : "add"}
                     open={instructionalMaterialModalIsShowing}
@@ -125,8 +126,9 @@ export class InstructionalMaterialsTab extends Component {
                     instructionalMaterial={activeInstructionalMaterial}
                     faculty={faculty}
                 />
+                }
 
-                {activeInstructionalMaterial &&
+                {removeInstructionalMaterialModalIsShowing &&
                 <RemoveInstructionalMaterialModal
                     open={removeInstructionalMaterialModalIsShowing}
                     onClose={() => this.toggleRemoveInstructionalMaterialModal(false)}
