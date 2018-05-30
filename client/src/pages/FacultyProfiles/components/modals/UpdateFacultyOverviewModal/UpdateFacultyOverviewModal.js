@@ -87,14 +87,10 @@ export class UpdateFacultyOverviewModal extends ModalFormComponent {
         };
 
     }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const {faculty} = nextProps;
-
-        return {
-            ...prevState,
-            form: mapFacultyToForm(faculty),
-        };
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.setState({
+            form: mapFacultyToForm(nextProps.faculty),
+        });
     }
 
     handleSubmit = () => {

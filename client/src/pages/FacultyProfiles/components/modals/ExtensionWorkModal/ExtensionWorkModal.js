@@ -45,19 +45,18 @@ export class ExtensionWorkModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.action === "add") {
-            return {
-                ...prevState,
+            this.setState({
                 form: {...initialForm},
-            };
+            });
+            
+            return;
         }
 
-        return {
-            ...prevState,
+        this.setState({
             form: mapExtensionWorkToForm(nextProps.extensionWork),
-        };
+        });
     }
 
     get submitAddAction() {

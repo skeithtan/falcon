@@ -55,19 +55,18 @@ export class RecognitionModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.action === "add") {
-            return {
-                ...prevState,
+            this.setState({
                 form: {...initialForm},
-            };
+            });
+            
+            return;
         }
 
-        return {
-            ...prevState,
+        this.setState({
             form: mapRecognitionToForm(nextProps.recognition),
-        };
+        });
     }
 
     get buttonName() {

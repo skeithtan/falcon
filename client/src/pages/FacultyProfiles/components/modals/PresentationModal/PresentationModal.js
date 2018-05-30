@@ -81,19 +81,18 @@ export class PresentationModal extends ModalFormComponent {
     get initialForm() {
         return initialForm;
     }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.action === "add") {
-            return {
-                ...prevState,
+            this.setState({
                 form: {...initialForm},
-            };
+            });
+            
+            return;
         }
 
-        return {
-            ...prevState,
+        this.setState({
             form: mapPresentationToForm(nextProps.presentation),
-        };
+        });
     }
 
     get buttonName() {

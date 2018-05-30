@@ -47,18 +47,18 @@ export class DegreeModal extends ModalFormComponent {
         return initialForm;
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.action === "add") {
-            return {
-                ...prevState,
+            this.setState({
                 form: {...initialForm},
-            };
+            });
+            
+            return;
         }
 
-        return {
-            ...prevState,
+        this.setState({
             form: mapDegreeToForm(nextProps.degree),
-        };
+        });
     }
 
     get submitAddAction() {
