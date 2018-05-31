@@ -1,10 +1,10 @@
-import MenuIcon from "@material-ui/icons/Menu";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
-import { getPageFromIdentifier } from "../../pages";
+import { getPageFromIdentifier, getPageFromPath } from "../../pages";
 import { PageDrawer } from "../PageDrawer";
 import { UserButton } from "../UserButton";
 
@@ -14,13 +14,11 @@ export class FalconAppBar extends Component {
         drawerOpen: false,
     };
 
-    pageTitle = () => {
-        const activePage = getPageFromIdentifier(this.props.activePageIdentifier);
-        return activePage.name;
-    };
+    getActivePage = match => getPageFromPath(match.params.currentPage);
 
     render() {
-        const {classes} = this.props;
+        const {classes, match} = this.props;
+        const activePage = this.getActivePage(match);
         return (
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
@@ -32,7 +30,7 @@ export class FalconAppBar extends Component {
                     </IconButton>
                     <div className={classes.pageTitle}>
                         <Typography color="inherit" className={classes.falconLogo}>Falcon</Typography>
-                        <Typography color="inherit" className={classes.pageName}>{this.pageTitle()}</Typography>
+                        <Typography color="inherit" className={classes.pageName}>{activePage.name}</Typography>
                     </div>
                     <UserButton />
                 </Toolbar>

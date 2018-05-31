@@ -8,8 +8,7 @@ import { styles } from "./styles";
 
 function mapStateToProps(state) {
     return {
-        activePageIdentifier: state.pages.activePageIdentifier,
-        user: state.authentication.user
+        user: state.authentication.user,
     };
 }
 

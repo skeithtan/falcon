@@ -7,11 +7,8 @@ import { FalconAppBar } from "../FalconAppBar";
 
 
 export class App extends Component {
-    // Required by getDerivedStateFromProps
-    state = {};
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const {user, match, history, setActivePage, activePage} = nextProps;
+    componentDidUpdate() {
+        const {user, match, history} = this.props;
 
         const currentPath = match.params.currentPage;
         // Is the user in the sign in page or any of its descendants?
@@ -21,31 +18,20 @@ export class App extends Component {
         if (!user && !userIsSigningIn) {
             //Force them to sign in
             history.replace("/" + SIGN_IN_PAGE.path); // The slash is to specify that it's the root
-            setActivePage(SIGN_IN_PAGE);
-            return prevState;
         }
 
         // We can't let them sign in if they're already signed in
         if (user && userIsSigningIn) {
             history.replace(HOME_PAGE.path);
-            setActivePage(HOME_PAGE);
-            return prevState;
         }
 
         // Our homepage is in /home, redirect anyone authenticated to it
         if (!currentPath) {
             history.replace(HOME_PAGE.path);
-            setActivePage(HOME_PAGE);
-            return prevState;
         }
-
-        // If current path is not the same path as the active page in Redux
-        if (activePage.path !== currentPath) {
-            // Reflect the current path to Redux
-            setActivePage(getPageFromPath(currentPath));
-        }
-        return prevState;
     }
+
+    getActivePage = match => getPageFromPath(match.params.currentPage);
 
     renderRoutes = () => {
         const {user} = this.props;
@@ -56,14 +42,16 @@ export class App extends Component {
         // If we have a user, add the pages for the user type in the pages
         const pages = [
             ...GENERAL_PAGES,
-            ...user ? getPagesForUserType(user.authorization) : []
+            ...user ? getPagesForUserType(user.authorization) : [],
         ];
 
         return pages.map(pageToRoute);
     };
 
     render() {
-        const {user, activePage, classes} = this.props;
+        const {user, match, classes} = this.props;
+        const activePage = this.getActivePage(match);
+        console.log(activePage);
         const routes = PAGES.map(({identifier, path, component}) => (
             <Route key={identifier} path={"/" + path} component={component} />
         ));

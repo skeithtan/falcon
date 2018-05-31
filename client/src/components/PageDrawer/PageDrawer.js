@@ -6,13 +6,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import pnuLogo from "../../images/pnu-logo.png";
-import { getPagesForUserType } from "../../pages";
+import { getPageFromPath, getPagesForUserType } from "../../pages";
 
 
 export class PageDrawer extends Component {
     renderPageItems = pages => pages.map(page => {
-        const {classes, onClose, history, activePageIdentifier} = this.props;
-        const isActivePage = page.identifier === activePageIdentifier;
+        const {classes, onClose, history, match} = this.props;
+        const activePage = getPageFromPath(match.params.currentPage);
+        const isActivePage = page.identifier === activePage.identifier;
         let className = classes.pageItem;
 
         if (isActivePage) {
