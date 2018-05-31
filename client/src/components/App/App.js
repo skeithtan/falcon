@@ -51,7 +51,6 @@ export class App extends Component {
     render() {
         const {user, match, classes} = this.props;
         const activePage = this.getActivePage(match);
-        console.log(activePage);
         const routes = PAGES.map(({identifier, path, component}) => (
             <Route key={identifier} path={"/" + path} component={component} />
         ));

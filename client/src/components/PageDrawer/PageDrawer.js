@@ -38,8 +38,6 @@ export class PageDrawer extends Component {
         const {open, onClose, classes, user} = this.props;
         const pages = getPagesForUserType(user.authorization);
 
-        console.log(user);
-
         return (
             <Drawer open={open} onClose={onClose}>
                 <div className={classes.drawer}>
