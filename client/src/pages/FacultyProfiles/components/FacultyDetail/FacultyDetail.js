@@ -1,6 +1,5 @@
 import Typography from "@material-ui/core/Typography";
 import React, { Component, createElement } from "react";
-import SwipeableViews from "react-swipeable-views";
 import { DetailCard } from "../../../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
@@ -33,22 +32,16 @@ export class FacultyDetail extends Component {
         </div>
     );
 
-    renderTabs = () => {
-        const {activeTab, classes, onTabChange, activeFaculty} = this.props;
-        const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTab.identifier);
-        const handleChangeIndex = newIndex => onTabChange(TABS[newIndex]);
-        const tabComponents = TABS.map(tab =>
-            createElement(tab.component, {faculty: activeFaculty, classes: classes, key: tab.identifier}),
-        );
+    renderTab = () => React.createElement(this.props.activeTab.component, {
+        faculty: this.props.activeFaculty,
+        classes: this.props.classes
+    });
 
-        return (
-            <div className={classes.facultyDetail}>
-                <SwipeableViews index={activeTabIndex} onChangeIndex={handleChangeIndex}>
-                    {tabComponents}
-                </SwipeableViews>
-            </div>
-        );
-    };
+    renderTabs = () => (
+        <div className={this.props.classes.facultyDetail}>
+            {this.renderTab()}
+        </div>
+    );
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const {activeFaculty, getFacultyDetails, setDetailsFetched, errors} = nextProps;

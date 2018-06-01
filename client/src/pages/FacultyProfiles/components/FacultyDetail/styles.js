@@ -4,13 +4,6 @@ import { pageContainer } from "../../../../components/styles";
 export const styles = theme => ({
     facultyDetail: {
         overflowY: "scroll",
-
-        "& > div": {
-            height: "100%",
-        },
-        "& .react-swipeable-view-container": {
-            height: "100%",
-        },
     },
     selectFacultyState: {
         display: "flex",
