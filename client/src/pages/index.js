@@ -5,6 +5,7 @@ import { HomePage } from "./Home";
 import { NotFoundPage } from "./NotFound";
 import { SignInPage } from "./SignIn";
 import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, PNU_THEME, TEAL_THEME } from "./themes";
+import { MyProfilePage } from "./MyProfile";
 
 
 export const SIGN_IN_PAGE = {
@@ -20,6 +21,14 @@ export const FACULTY_PROFILES_PAGE = {
     component: FacultyProfilesPage,
     name: "Faculty Profiles",
     theme: TEAL_THEME,
+};
+
+export const MY_PROFILE = {
+    identifier: "MY_PROFILE_PAGE",
+    path: "my-profile",
+    component: MyProfilePage,
+    name: "My Profile",
+    theme: TEAL_THEME
 };
 
 export const HOME_PAGE = {
@@ -67,6 +76,7 @@ export const PAGES = [
     FACULTY_LOADING_PAGE,
     TRACER_STUDY_PAGE,
     USER_SETTINGS_PAGE,
+    MY_PROFILE
 ];
 
 export const GENERAL_PAGES = [
@@ -89,11 +99,15 @@ export function getPagesForUserType(userType) {
                 USER_SETTINGS_PAGE,
             ];
         case FACULTY.identifier:
-        default:
             return [
                 HOME_PAGE,
                 TRACER_STUDY_PAGE,
+                MY_PROFILE,
             ];
+        default:
+            console.log(`Attempted to retrieve pages for unknown user type ${userType}`);
+            return [];
+
     }
 }
 
