@@ -10,7 +10,6 @@ const initialState = {
     searchKeyword: "",
     facultyDetails: {
         isLoading: false,
-        isFetched: false,
         errors: null,
     },
 };
@@ -27,7 +26,6 @@ export function facultyProfiles(state = initialState, action) {
                 ...state,
                 facultyDetails: {
                     isLoading: true,
-                    isFetched: false,
                     errors: null,
                 },
             };
@@ -36,7 +34,6 @@ export function facultyProfiles(state = initialState, action) {
                 ...state,
                 facultyDetails: {
                     isLoading: false,
-                    isFetched: true,
                     errors: null,
                 },
             };
@@ -45,7 +42,6 @@ export function facultyProfiles(state = initialState, action) {
                 ...state,
                 facultyDetails: {
                     isLoading: false,
-                    isFetched: false,
                     errors: action.errors,
                 },
             };
