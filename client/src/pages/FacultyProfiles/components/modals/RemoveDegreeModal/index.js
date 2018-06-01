@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
+import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { removeDegree } from "../../../../../services/faculty/degree";
 import { RemoveDegreeModal as Component } from "./RemoveDegreeModal";
 

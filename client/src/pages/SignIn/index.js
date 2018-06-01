@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { signInError, signInIsLoading, signInSuccess } from "../../actions/authentication.actions";
+import { signInError, signInIsLoading, signInSuccess } from "../../redux/actions/authentication.actions";
 import { signIn } from "../../services/user.service";
 import { SignInPage as Component } from "./SignIn";
 import { styles } from "./styles";

@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
+import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import {

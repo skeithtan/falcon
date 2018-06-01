@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../actions/faculty.actions";
+import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { addExtensionWork, updateExtensionWork } from "../../../../../services/faculty/extension_work";
 import { ExtensionWorkModal as Component } from "./ExtensionWorkModal";

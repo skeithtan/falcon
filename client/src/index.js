@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-d
 import { App } from "./components/App";
 import { HOME_PAGE } from "./pages";
 import registerServiceWorker from "./registerServiceWorker";
-import { store } from "./store";
+import { store } from "./redux/store";
 
 
 const app = (
