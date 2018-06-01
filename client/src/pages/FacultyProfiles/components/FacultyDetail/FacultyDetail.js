@@ -57,6 +57,8 @@ export class FacultyDetail extends Component {
         if (!facultyIsFetched(activeFaculty)) {
             getFacultyDetails(activeFaculty)
                 .then(() => setDetailsFetched());
+        } else {
+            setDetailsFetched();
         }
     }
 
