@@ -1,23 +1,12 @@
 import moment from "moment";
-import { facultyListFetchError, facultyListIsFetched, facultyListIsLoading } from "../actions/faculty.actions";
+import { facultyListFetchError, facultyListIsFetched, facultyListIsLoading } from "../redux/actions/faculty.actions";
 import { SEX } from "../enums/faculty.enums";
 import { fetchAllFacultiesSummary } from "../services/faculty/faculty";
 
 
-export function updateFacultyFromState(newFaculty, dispatch, getState) {
-    // Update without mutating
-    const faculties = getState().faculty.faculties;
-    dispatch(facultyListIsFetched(faculties.map(faculty => {
-        if (faculty._id === newFaculty._id) {
-            return newFaculty;
-        }
-        return faculty;
-    })));
-}
-
-export const getFetchFacultyListThunk = () => dispatch => {
+export const fetchAllFaculties = dispatch => {
     dispatch(facultyListIsLoading());
-    fetchAllFacultiesSummary()
+    return fetchAllFacultiesSummary()
         .then(result => {
             if (result.data) {
                 dispatch(facultyListIsFetched(result.data.faculties));
