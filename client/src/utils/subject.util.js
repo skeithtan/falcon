@@ -2,7 +2,7 @@ import { subjectListFetchError, subjectListIsFetched, subjectListIsLoading } fro
 import { fetchAllSubjects } from "../services/subjects.service";
 
 
-export const getFetchSubjectListThunk = () => dispatch => {
+export const fetchSubjectList = dispatch => {
     dispatch(subjectListIsLoading());
     fetchAllSubjects()
         .then(result => {
