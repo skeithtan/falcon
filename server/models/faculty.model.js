@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+import { PRESENTATION_CATEGORIES, PRESENTATION_MEDIUMS } from "./enums/faculty.enums";
 
 const MonthYearDate = {
     month: {
@@ -15,7 +15,7 @@ const PresentationSchema = new Schema({
     title: String,
     category: {
         type: String,
-        enum: ["INSTITUTIONAL", "REGIONAL", "NATIONAL", "INTERNATIONAL"],
+        enum: PRESENTATION_CATEGORIES,
         required: true,
     },
     date: MonthYearDate,
@@ -33,7 +33,7 @@ const PresentationSchema = new Schema({
     },
     medium: {
         type: String,
-        enum: ["PAPER", "POSTER", "RESEARCH"],
+        enum: PRESENTATION_MEDIUMS,
         required: true,
     },
     daysDuration: {
@@ -82,14 +82,7 @@ const InstructionalMaterialSchema = new Schema({
         },
     },
 });
-export const EXTENSION_WORK_ROLES = [
-    "LECTURER",
-    "TRAINER",
-    "RESOURCE_SPEAKER",
-    "FACILITATOR",
-    "COACH",
-    "MATERIAL_WRITER",
-];
+
 const ExtensionWorkSchema = new Schema({
     title: {
         type: String,
