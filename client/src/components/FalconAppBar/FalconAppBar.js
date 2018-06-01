@@ -4,7 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
-import { getPageFromIdentifier, getPageFromPath } from "../../pages";
+import { getPageFromPath } from "../../pages";
 import { PageDrawer } from "../PageDrawer";
 import { UserButton } from "../UserButton";
 

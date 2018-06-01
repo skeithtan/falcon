@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { getFetchFacultyListThunk } from "../../../../../../utils/faculty.util";
+import { fetchAllFaculties } from "../../../../../../utils/faculty.util";
 import { FacultyChips as Component } from "./FacultyChips";
 
 
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchData() {
-            dispatch(getFetchFacultyListThunk());
+            fetchAllFaculties(dispatch);
         },
     };
 }
