@@ -9,9 +9,8 @@ import { FacultyProfilesHeader } from "./components/FacultyProfilesHeader";
 
 
 export class FacultyProfilesPage extends Component {
-    constructor(props) {
-        super(props);
-        const {faculties, isLoading, fetchData} = props;
+    componentDidMount() {
+        const {faculties, isLoading, fetchData} = this.props;
         if (!faculties && !isLoading) {
             fetchData();
         }
