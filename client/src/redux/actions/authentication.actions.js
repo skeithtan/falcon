@@ -25,6 +25,6 @@ export function signInIsLoading() {
 
 export function signOutSuccess() {
     return {
-        type: "SIGN_OUT_SUCCESS",
+        type: SIGN_OUT_SUCCESS,
     };
 }

@@ -6,13 +6,13 @@ import {
 } from "../actions/authentication.actions";
 
 
-const hasToken = localStorage.hasOwnProperty("token");
 const hasUser = localStorage.hasOwnProperty("user");
 const initialState = {
     isLoading: false,
     signInError: null,
     user: hasUser ? JSON.parse(localStorage.user) : null,
 };
+
 export function authentication(state = initialState, action) {
     switch (action.type) {
         case SIGN_IN_SUCCESS:
