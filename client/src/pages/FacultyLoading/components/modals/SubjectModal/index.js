@@ -1,9 +1,9 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { getFetchFacultyListThunk } from "../../../../../utils/faculty.util";
-import { subjectIsAdded, subjectIsUpdated } from "../../../../../actions/subject.actions";
+import { subjectIsAdded, subjectIsUpdated } from "../../../../../redux/actions/subject.actions";
 import { addSubject, updateSubject } from "../../../../../services/subjects.service";
+import { fetchAllFaculties } from "../../../../../utils/faculty.util";
 import { styles } from "./styles";
 import { SubjectModal as Component } from "./SubjectModal";
 
@@ -17,7 +17,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchData() {
-            return dispatch(getFetchFacultyListThunk());
+            fetchAllFaculties(dispatch);
         },
         submitAddSubject(form) {
             return addSubject(form)
@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
                     const subject = result.data.subject.create;
                     dispatch(subjectIsAdded(subject));
                     return subject;
-                })
+                });
         },
         submitUpdateSubject(subject, form) {
             return updateSubject(subject._id, form)
@@ -33,8 +33,8 @@ function mapDispatchToProps(dispatch) {
                     const subject = result.data.subject.update;
                     dispatch(subjectIsUpdated(subject));
                     return subject;
-                })
-        }
+                });
+        },
     };
 }
 

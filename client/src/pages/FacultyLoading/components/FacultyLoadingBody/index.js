@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { facultyLoadingActiveTabChanged } from "../../../../actions/faculty_loading.actions";
+import { facultyLoadingActiveTabChanged } from "../../../../redux/actions/faculty_loading.actions";
 import { getTabFromIdentifier } from "../../tabs";
 import { FacultyLoadingBody as Component } from "./FacultyLoadingBody";
 

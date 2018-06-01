@@ -1,16 +1,20 @@
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import React, { Component, createElement } from "react";
-import SwipeableViews from "react-swipeable-views";
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { DetailCard } from "../../../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
-import { TABS } from "../faculty_detail_tabs";
+import { FACULTY_PROFILES_PAGE } from "../../../index";
+import { OVERVIEW_TAB, TABS } from "../faculty_detail_tabs";
 
+
+function facultyIsFetched(faculty) {
+    // Birth date should be present if faculty is fetched
+    return Boolean(faculty.birthDate);
+}
 
 export class FacultyDetail extends Component {
-    // Fixes error in console, but not necessary
-    state = {};
-
     renderSelectFacultyState = () => (
         <div className={this.props.classes.selectFacultyState}>
             <Typography variant="headline" className={this.props.classes.selectFacultyText}>
@@ -19,9 +23,50 @@ export class FacultyDetail extends Component {
         </div>
     );
 
-    renderLoading = () => {
-        return <FullPageLoadingIndicator size={100} />;
+    renderTabs = activeFaculty => {
+        const {classes} = this.props;
+        return TABS.map(tab => (
+            <Route
+                key={tab.identifier}
+                path={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${tab.path}`}
+                render={() => React.createElement(tab.component, {
+                    faculty: activeFaculty,
+                    classes: classes,
+                })} />
+        ));
     };
+
+    componentDidMount() {
+        this.fetchFacultyDetails();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.fetchFacultyDetails();
+    }
+
+    fetchFacultyDetails() {
+        const activeFaculty = this.getActiveFaculty();
+        const {getFacultyDetails, setDetailsFetched} = this.props;
+
+        if (!activeFaculty) {
+            // There's nothing to fetch when the faculty doesn't exist
+            setDetailsFetched();
+            return;
+        }
+
+        if (!facultyIsFetched(activeFaculty)) {
+            getFacultyDetails(activeFaculty)
+                .then(() => setDetailsFetched());
+        } else {
+            setDetailsFetched();
+        }
+    }
+
+    renderLoading = () => (
+        <Grid container style={{height: "100%"}}>
+            <FullPageLoadingIndicator size={100} />
+        </Grid>
+    );
 
     renderErrors = errors => (
         <div className={this.props.classes.cardsContainer}>
@@ -33,57 +78,48 @@ export class FacultyDetail extends Component {
         </div>
     );
 
-    renderTabs = () => {
-        const {activeTab, classes, onTabChange, activeFaculty} = this.props;
-        const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTab.identifier);
-        const handleChangeIndex = newIndex => onTabChange(TABS[newIndex]);
-        const tabComponents = TABS.map(tab =>
-            createElement(tab.component, {faculty: activeFaculty, classes: classes, key: tab.identifier}),
-        );
+    getActiveFaculty = () => {
+        const {match: {params: {facultyId}}, faculty} = this.props;
 
-        return (
-            <div className={classes.facultyDetail}>
-                <SwipeableViews index={activeTabIndex} onChangeIndex={handleChangeIndex}>
-                    {tabComponents}
-                </SwipeableViews>
-            </div>
+        return !facultyId ? null : faculty.faculties.find(faculty =>
+            faculty._id === facultyId,
         );
     };
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const {activeFaculty, getFacultyDetails, setDetailsFetched, errors} = nextProps;
-        if (!activeFaculty) {
-            return prevState;
-        }
-        // Do not fetch if there is an error showing
-        if (errors) {
-            return prevState;
-        }
-
-        // Overview would have been fetched if birthDate exists
-        if (!activeFaculty.birthDate) {
-            getFacultyDetails(activeFaculty);
-            return prevState;
-        }
-        setDetailsFetched();
-        return prevState;
-    }
-
     render() {
-        const {isLoading, errors, activeFaculty, isFetched} = this.props;
-        if (!activeFaculty) {
-            return this.renderSelectFacultyState();
-        }
-        if (isLoading) {
-            return this.renderLoading();
-        }
-        if (errors) {
-            return this.renderErrors(errors);
-        }
-        if (isFetched) {
-            return this.renderTabs();
-        }
-        return null;
+        const {match: {params: {facultyId}}, classes, isLoading, errors} = this.props;
+
+        // We don't have a selected faculty if the URL has no facultyID
+        const noSelectedFaculty = !facultyId;
+
+        const activeFaculty = this.getActiveFaculty();
+
+        // Faculty is not found when we have a faculty ID in the URL but null is the result of array search
+        const facultyNotFound = !activeFaculty && facultyId;
+
+        const isFetched = activeFaculty ? facultyIsFetched(activeFaculty) : false;
+
+        return (
+            <div className={classes.facultyDetail}>
+                {activeFaculty && isFetched &&
+                <Switch>
+                    {this.renderTabs(activeFaculty)}
+                    <Route render={() => (
+                        <Redirect to={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${OVERVIEW_TAB.path}`} />
+                    )} />
+                </Switch>
+                }
+
+                {facultyNotFound &&
+                <Redirect to={`/${FACULTY_PROFILES_PAGE.path}`} />
+                }
+
+                {noSelectedFaculty && this.renderSelectFacultyState()}
+
+                {isLoading && this.renderLoading()}
+                {errors && this.renderErrors(errors)}
+            </div>
+        );
     }
 }
 

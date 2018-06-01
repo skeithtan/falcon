@@ -5,17 +5,30 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { Component } from "react";
+import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { TABS } from "../faculty_detail_tabs";
 
 
 export class FacultyProfilesHeader extends Component {
-    renderTabs = () => TABS.map(tab =>
-        <Tab key={tab.identifier} label={tab.name} onClick={() => this.props.onTabClick(tab)} />,
+    renderTabs = facultyId => TABS.map(tab =>
+        <Tab
+            key={tab.identifier}
+            label={tab.name}
+            onClick={() => this.props.history.push(`/${FACULTY_PROFILES_PAGE.path}/${facultyId}/${tab.path}`)}
+        />,
     );
 
     render() {
-        const {classes, searchKeyword, onSearchInputChange, activeFacultyId, activeTabIdentifier} = this.props;
-        const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTabIdentifier);
+        const {
+            match,
+            classes,
+            searchKeyword,
+            onSearchInputChange,
+        } = this.props;
+
+        const activeFacultyId = match.params.facultyId;
+        const activeTabIndex = TABS.findIndex(tab => tab.path === match.params.activeTab);
+
         return (
             <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
                 <div className={classes.searchWrapper}>
@@ -38,7 +51,7 @@ export class FacultyProfilesHeader extends Component {
                 <Tabs value={activeTabIndex}
                       classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
                       scrollable>
-                    {this.renderTabs()}
+                    {this.renderTabs(match.params.facultyId)}
                 </Tabs>
                 }
             </div>

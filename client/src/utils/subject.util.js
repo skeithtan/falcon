@@ -1,8 +1,8 @@
-import { subjectListFetchError, subjectListIsFetched, subjectListIsLoading } from "../actions/subject.actions";
+import { subjectListFetchError, subjectListIsFetched, subjectListIsLoading } from "../redux/actions/subject.actions";
 import { fetchAllSubjects } from "../services/subjects.service";
 
 
-export const getFetchSubjectListThunk = () => dispatch => {
+export const fetchSubjectList = dispatch => {
     dispatch(subjectListIsLoading());
     fetchAllSubjects()
         .then(result => {

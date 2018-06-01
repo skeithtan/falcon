@@ -11,6 +11,8 @@ import Stepper from "@material-ui/core/Stepper";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
+import { FACULTY_PROFILES_PAGE } from "../../../../index";
+import { OVERVIEW_TAB } from "../../faculty_detail_tabs";
 import { FacultyForm, ReviewForm, UserForm } from "./steps";
 
 
@@ -52,7 +54,10 @@ export class AddFacultyModal extends Component {
         });
 
         this.props.submitForm(this.state.form)
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
+            .then(faculty => {
+                this.setState({isSubmitting: false}, this.closeModal);
+                this.props.history.push(`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${OVERVIEW_TAB.path}`);
+            })
             .catch(error => {
                 console.log("An error occurred while adding faculty", error);
                 if (error.graphQLErrors &&

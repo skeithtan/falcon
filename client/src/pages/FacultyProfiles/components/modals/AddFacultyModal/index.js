@@ -1,8 +1,8 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
-import { facultyIsAdded } from "../../../../../actions/faculty.actions";
-import { activeFacultyChanged } from "../../../../../actions/faculty_profiles.actions";
+import { facultyIsAdded } from "../../../../../redux/actions/faculty.actions";
 import { addFaculty } from "../../../../../services/faculty/faculty";
 import { AddFacultyModal as Component } from "./AddFacultyModal";
 import { styles } from "./styles";
@@ -35,8 +35,6 @@ function mapDispatchToProps(dispatch) {
                 .then(result => {
                     const faculty = result.data.faculty.createFaculty;
                     dispatch(facultyIsAdded(faculty));
-                    dispatch(activeFacultyChanged(faculty));
-
                     return faculty;
                 });
         },
@@ -46,4 +44,5 @@ function mapDispatchToProps(dispatch) {
 export const AddFacultyModal = compose(
     connect(null, mapDispatchToProps),
     withStyles(styles),
+    withRouter,
 )(Component);
