@@ -5,6 +5,10 @@ import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 
 
 export class FacultyLoadingPage extends Component {
+    componentDidMount() {
+        document.title = "Faculty Loading - Falcon";
+    }
+
     render() {
         const {match, classes} = this.props;
         return (

@@ -1,5 +1,17 @@
 import mongoose, { Schema } from "mongoose";
-import { PRESENTATION_CATEGORIES, PRESENTATION_MEDIUMS } from "./enums/faculty.enums";
+import {
+    DEGREE_LEVELS,
+    EMPLOYMENTS,
+    EXTENSION_WORK_ROLES,
+    INSTRUCTIONAL_MATERIAL_AUDIENCE,
+    INSTRUCTIONAL_MATERIAL_MEDIA,
+    PRESENTATION_CATEGORIES,
+    PRESENTATION_MEDIUMS,
+    RECOGNITION_BASES,
+    SEXES,
+    STUDENT_LEVELS,
+} from "./enums/faculty.enums";
+
 
 const MonthYearDate = {
     month: {
@@ -11,7 +23,7 @@ const MonthYearDate = {
         required: true,
     },
 };
-const PresentationSchema = new Schema({
+export const PresentationSchema = {
     title: String,
     category: {
         type: String,
@@ -40,15 +52,15 @@ const PresentationSchema = new Schema({
         type: Number,
         required: true,
     },
-});
-const RecognitionSchema = new Schema({
+};
+export const RecognitionSchema = {
     title: {
         type: String,
         required: true,
     },
     basis: {
         type: String,
-        enum: ["RESEARCH", "SCHOLARSHIP", "EXTENSION_WORK", "CIVIC"],
+        enum: RECOGNITION_BASES,
         required: true,
     },
     date: MonthYearDate,
@@ -56,17 +68,17 @@ const RecognitionSchema = new Schema({
         type: String,
         required: true,
     },
-});
-const InstructionalMaterialSchema = new Schema({
+};
+export const InstructionalMaterialSchema = {
     title: String,
     medium: {
         type: String,
-        enum: ["PRINT", "MODULE", "VIDEO", "SLIDE", "DIGITAL_FILE", "AUDIO"],
+        enum: INSTRUCTIONAL_MATERIAL_MEDIA,
         required: true,
     },
     audience: {
         type: String,
-        enum: ["STUDENT", "TEACHER"],
+        enum: INSTRUCTIONAL_MATERIAL_AUDIENCE,
         required: true,
     },
     usageYear: {
@@ -76,14 +88,14 @@ const InstructionalMaterialSchema = new Schema({
     // Student only fields
     level: {
         type: String,
-        enum: ["1", "2", "3", "4"],
+        enum: STUDENT_LEVELS,
         required: function () {
             return this.audience === "STUDENT";
         },
     },
-});
+};
 
-const ExtensionWorkSchema = new Schema({
+export const ExtensionWorkSchema = {
     title: {
         type: String,
         required: true,
@@ -96,8 +108,8 @@ const ExtensionWorkSchema = new Schema({
         type: String,
         required: true,
     },
-});
-const DegreeSchema = new Schema({
+};
+export const DegreeSchema = {
     title: {
         type: String,
         required: true,
@@ -105,13 +117,13 @@ const DegreeSchema = new Schema({
     level: {
         type: String,
         required: true,
-        enum: ["ASSOCIATE", "BACHELOR", "MASTER", "DOCTORATE"],
+        enum: DEGREE_LEVELS,
     },
     completionYear: {
         type: Number,
         required: true,
     },
-});
+};
 const FacultySchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -120,12 +132,12 @@ const FacultySchema = new Schema({
     },
     sex: {
         type: String,
-        enum: ["M", "F"],
+        enum: SEXES,
         required: true,
     },
     employment: {
         type: String,
-        enum: ["FULL_TIME_PERMANENT", "FULL_TIME_TEMPORARY", "PART_TIME"],
+        enum: EMPLOYMENTS,
         required: true,
     },
     birthDate: {

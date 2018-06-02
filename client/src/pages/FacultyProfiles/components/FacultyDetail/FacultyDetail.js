@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { DetailCard } from "../../../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
+import { getFullName } from "../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { OVERVIEW_TAB, TABS } from "../faculty_detail_tabs";
 
@@ -37,15 +38,24 @@ export class FacultyDetail extends Component {
     };
 
     componentDidMount() {
-        this.fetchFacultyDetails();
+        this.onNewFacultySelect();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.fetchFacultyDetails();
+        this.onNewFacultySelect();
     }
 
-    fetchFacultyDetails() {
+    onNewFacultySelect() {
         const activeFaculty = this.getActiveFaculty();
+        this.fetchFacultyDetails(activeFaculty);
+
+        if (activeFaculty) {
+            const fullName = getFullName(activeFaculty.user);
+            document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`;
+        }
+    }
+
+    fetchFacultyDetails(activeFaculty) {
         const {getFacultyDetails, setDetailsFetched} = this.props;
 
         if (!activeFaculty) {

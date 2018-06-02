@@ -4,6 +4,10 @@ import { HOME_PAGE } from "../index";
 
 
 export class NotFoundPage extends Component {
+    componentDidMount() {
+        document.title = "Page Not Found - Falcon";
+    }
+
     render() {
         const {classes, history} = this.props;
         return (

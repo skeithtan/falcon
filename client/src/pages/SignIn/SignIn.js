@@ -8,6 +8,10 @@ import pnuLogo from "../../images/pnu-logo.png";
 
 
 export class SignInPage extends Component {
+    componentDidMount() {
+        document.title = "Sign In - Falcon";
+    }
+
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,

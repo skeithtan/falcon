@@ -10,6 +10,8 @@ import { FacultyProfilesHeader } from "./components/FacultyProfilesHeader";
 
 export class FacultyProfilesPage extends Component {
     componentDidMount() {
+        document.title = "Faculty Profiles - Falcon";
+
         const {faculties, isLoading, fetchData} = this.props;
         if (!faculties && !isLoading) {
             fetchData();

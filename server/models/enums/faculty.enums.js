@@ -1,19 +1,19 @@
 export const SEXES = [
     "M",
-    "F"
+    "F",
 ];
 
-export const EMPLOYEMNTS = [
+export const EMPLOYMENTS = [
     "FULL_TIME_PERMANENT",
     "FULL_TIME_TEMPORARY",
-    "PART_TIME"
+    "PART_TIME",
 ];
 
 export const DEGREE_LEVELS = [
     "ASSOCIATE",
     "BACHELOR",
     "MASTER",
-    "DOCTORATE"
+    "DOCTORATE",
 ];
 
 export const EXTENSION_WORK_ROLES = [
@@ -29,11 +29,40 @@ export const PRESENTATION_CATEGORIES = [
     "INSTITUTIONAL",
     "REGIONAL",
     "NATIONAL",
-    "INTERNATIONAL"
+    "INTERNATIONAL",
 ];
 
 export const PRESENTATION_MEDIUMS = [
     "PAPER",
     "POSTER",
     "RESEARCH",
-] 
+];
+
+export const RECOGNITION_BASES = [
+    "RESEARCH",
+    "SCHOLARSHIP",
+    "EXTENSION_WORK",
+    "CIVIC",
+];
+
+export const INSTRUCTIONAL_MATERIAL_MEDIA = [
+    "PRINT",
+    "MODULE",
+    "VIDEO",
+    "SLIDE",
+    "DIGITAL_FILE",
+    "AUDIO",
+];
+
+export const INSTRUCTIONAL_MATERIAL_AUDIENCE = [
+    "STUDENT",
+    "TEACHER",
+];
+
+export const STUDENT_LEVELS = [
+    "1",
+    "2",
+    "3",
+    "4"
+];
+
