@@ -1,0 +1,46 @@
+# Change Requests
+# To be performed by faculties
+input OverviewChangeInput {
+    submitted: String!
+    sex: Sex!
+    name: Name!
+    employment: Employment!
+    birthDate: String!
+}
+
+type OverviewChanges {
+    update(newOverview: OverviewChangeInput!): OverviewChange!
+}
+
+type DegreeChanges {
+    update(_id: ID!, newDegree: DegreeInput!): DegreeChange!
+    add(newDegree: DegreeInput!): DegreeChange!
+    remove(_id: ID!): DegreeChange!
+}
+
+type ExtensionWorkChanges {
+    update(_id: ID!, newExtensionWork: ExtensionWorkInput!): ExtensionWorkChange!
+}
+
+type ChangeRequests {
+    overview: OverviewChanges!
+}
+
+
+
+
+# Change Request Actions
+# To be performed by administrative user types
+type OverviewRequestReview {
+    approve: Boolean!
+    reject: Boolean!
+}
+
+type ChangeRequestReview {
+    overview: OverviewRequestAction
+}
+
+extend type Mutation {
+    submitChangeRequests: ChangeRequests!
+    reviewChangeRequests(facultyId: ID!): ChangeRequestReview!
+}
