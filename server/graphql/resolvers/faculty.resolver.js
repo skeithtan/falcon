@@ -1,6 +1,6 @@
 import { Faculty } from "../../models/faculty.model";
 import { FACULTY, User } from "../../models/user.model";
-import { getDifference } from "../../utils/difference";
+import { getDifference, getLastElement } from "../../utils/array";
 import { addFacultyToSubjects, removeFacultyFromSubjects } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { DoesNotExistError } from "../errors/does_not_exist.error";
@@ -84,9 +84,10 @@ function mutateFaculty() {
 
 async function mutatePresentation(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId).exec();
+    const {presentations} = faculty;
 
     function getPresentation(_id) {
-        const presentation = faculty.presentations.id(_id);
+        const presentation = presentations.id(_id);
         if (presentation === null) {
             throw new DoesNotExistError(`Presentation of id ${_id} does not exist`);
         }
@@ -95,9 +96,9 @@ async function mutatePresentation(object, {facultyId}) {
 
     return {
         async add({newPresentation}) {
-            faculty.presentations.push(newPresentation);
+            presentations.push(newPresentation);
             await faculty.save();
-            return faculty.presentations[faculty.presentations.length - 1];
+            return getLastElement(presentations);
         },
         async update({_id, newPresentation}) {
             const presentation = getPresentation(_id);
@@ -109,16 +110,17 @@ async function mutatePresentation(object, {facultyId}) {
             const presentation = getPresentation(_id);
             presentation.remove();
             await faculty.save();
-            return faculty.presentations.id(_id) === null;
+            return presentations.id(_id) === null;
         },
     };
 }
 
 async function mutateRecognition(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId).exec();
+    const {recognitions} = faculty;
 
     function getRecognition(_id) {
-        const recognition = faculty.recognitions.id(_id);
+        const recognition = recognitions.id(_id);
         if (recognition === null) {
             throw new DoesNotExistError(`Recognition of id ${_id} does not exist`);
         }
@@ -127,9 +129,9 @@ async function mutateRecognition(object, {facultyId}) {
 
     return {
         async add({newRecognition}) {
-            faculty.recognitions.push(newRecognition);
+            recognitions.push(newRecognition);
             await faculty.save();
-            return faculty.recognitions[faculty.recognitions.length - 1];
+            return getLastElement(recognitions);
         },
         async update({_id, newRecognition}) {
             const recognition = getRecognition(_id);
@@ -141,16 +143,17 @@ async function mutateRecognition(object, {facultyId}) {
             const recognition = getRecognition(_id);
             recognition.remove();
             await faculty.save();
-            return faculty.recognitions.id(_id) === null;
+            return recognitions.id(_id) === null;
         },
     };
 }
 
 async function mutateInstructionalMaterial(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId).exec();
+    const {instructionalMaterials} = faculty;
 
     function getInstructionalMaterial(_id) {
-        const instructionalMaterial = faculty.instructionalMaterials.id(_id);
+        const instructionalMaterial = instructionalMaterials.id(_id);
         if (instructionalMaterial === null) {
             throw new DoesNotExistError(`Instructional material of id ${_id} does not exist`);
         }
@@ -159,9 +162,9 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
 
     return {
         async add({newInstructionalMaterial}) {
-            faculty.instructionalMaterials.push(newInstructionalMaterial);
+            instructionalMaterials.push(newInstructionalMaterial);
             await faculty.save();
-            return faculty.instructionalMaterials[faculty.instructionalMaterials.length - 1];
+            return getLastElement(instructionalMaterials);
         },
         async update({_id, newInstructionalMaterial}) {
             const instructionalMaterial = getInstructionalMaterial(_id);
@@ -173,16 +176,17 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
             const instructionalMaterial = getInstructionalMaterial(_id);
             instructionalMaterial.remove();
             await faculty.save();
-            return faculty.instructionalMaterials.id(_id) === null;
+            return instructionalMaterials.id(_id) === null;
         },
     };
 }
 
 async function mutateExtensionWork(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId).exec();
+    const {extensionWorks} = faculty;
 
     function getExtensionWork(_id) {
-        const extensionWork = faculty.extensionWorks.id(_id);
+        const extensionWork = extensionWorks.id(_id);
         if (extensionWork === null) {
             throw new DoesNotExistError(`Extension work of id ${_id} does not exist`);
         }
@@ -191,9 +195,9 @@ async function mutateExtensionWork(object, {facultyId}) {
 
     return {
         async add({newExtensionWork}) {
-            faculty.extensionWorks.push(newExtensionWork);
+            extensionWorks.push(newExtensionWork);
             await faculty.save();
-            return faculty.extensionWorks[faculty.extensionWorks.length - 1];
+            return getLastElement(extensionWorks);
         },
         async update({_id, newExtensionWork}) {
             const extensionWork = getExtensionWork(_id);
@@ -205,16 +209,17 @@ async function mutateExtensionWork(object, {facultyId}) {
             const extensionWork = getExtensionWork(_id);
             extensionWork.remove();
             await faculty.save();
-            return faculty.extensionWorks.id(_id) === null;
+            return extensionWorks.id(_id) === null;
         },
     };
 }
 
 async function mutateDegree(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId).exec();
+    const {degrees} = faculty;
 
     function getDegree(_id) {
-        const degree = faculty.degrees.id(_id);
+        const degree = degrees.id(_id);
         if (degree === null) {
             throw new DoesNotExistError(`Degree of id ${_id} does not exist`);
         }
@@ -223,9 +228,9 @@ async function mutateDegree(object, {facultyId}) {
 
     return {
         async add({newDegree}) {
-            faculty.degrees.push(newDegree);
+            degrees.push(newDegree);
             await faculty.save();
-            return faculty.degrees[faculty.degrees.length - 1];
+            return getLastElement(degrees);
         },
         async update({_id, newDegree}) {
             const degree = getDegree(_id);
@@ -237,7 +242,7 @@ async function mutateDegree(object, {facultyId}) {
             const degree = getDegree(_id);
             degree.remove();
             await faculty.save();
-            return faculty.degrees.id(_id) === null;
+            return degrees.id(_id) === null;
         },
     };
 }

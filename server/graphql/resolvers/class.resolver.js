@@ -1,5 +1,5 @@
 import { AcademicYear, Course, Subject } from "../../models/class.model";
-import { getDifference } from "../../utils/difference";
+import { getDifference } from "../../utils/array";
 import {
     addSubjectToFaculties,
     linkSubjectAndFaculty,
