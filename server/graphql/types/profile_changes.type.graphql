@@ -1,0 +1,49 @@
+enum ChangeAction {
+    ADD,
+    UPDATE,
+    REMOVE
+}
+
+interface ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
+}
+
+type DegreeChange implements ChangeRequest {
+    object: Degree
+}
+
+type ExtensionWorkChange implements ChangeRequest {
+    object: ExtensionWork
+}
+
+type InstructionalMaterialChange implements ChangeRequest {
+    object: InstructionalMaterial
+}
+
+type RecognitionChange implements ChangeRequest {
+    object: Recognition
+}
+
+type PresentationChange implements ChangeRequest {
+    object: Presentation
+}
+
+type OverviewChange {
+    submitted: String!
+    sex: Sex!
+    name: Name!
+    employment: Employment!
+    birthDate: String!
+}
+
+type ProfileChangeRequest {
+    overview: OverviewChange
+    degrees: [DegreeChange!]!
+    extensionWorks: [ExtensionWorkChange!]!
+    instructionalMaterials: [InstructionalMaterialChange!]!
+    recognitions: [RecognitionChange!]!
+    presentations: [PresentationChange!]!
+}

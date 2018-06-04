@@ -12,7 +12,7 @@ enum PresentationMedium {
 }
 
 type Presentation {
-    _id: ID!
+    _id: ID
     title: String!
     category: PresentationCategory!
     date: MonthYearDate!
@@ -31,7 +31,7 @@ enum RecognitionBasis {
 }
 
 type Recognition {
-    _id: ID!
+    _id: ID
     title: String!
     basis: RecognitionBasis!
     date: MonthYearDate!
@@ -53,7 +53,7 @@ enum InstructionalMaterialAudience {
 }
 
 type InstructionalMaterial {
-    _id: ID!
+    _id: ID
     title: String!
     medium: InstructionalMaterialMedium!
     audience: InstructionalMaterialAudience!
@@ -62,10 +62,10 @@ type InstructionalMaterial {
 }
 
 type ExtensionWork {
-    _id: ID!
-    title: String
+    _id: ID
+    title: String!
     roles: [String!]!
-    venue: String
+    venue: String!
 }
 
 enum DegreeLevel {
@@ -76,9 +76,9 @@ enum DegreeLevel {
 }
 
 type Degree {
-    _id: ID!
+    _id: ID
     title: String!
-    level: DegreeLevel,
+    level: DegreeLevel!
     completionYear: Int!
 }
 
@@ -105,4 +105,5 @@ type Faculty {
     instructionalMaterials: [InstructionalMaterial!]!
     extensionWorks: [ExtensionWork!]!
     teachingSubjects: [Subject!]!
+    changeRequests: ProfileChangeRequest
 }
