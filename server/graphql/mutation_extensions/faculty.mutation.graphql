@@ -71,7 +71,7 @@ type ExtensionWorkMutations {
     remove(_id: ID!): Boolean!
 }
 
-type DegreeMutationreate()s {
+type DegreeMutations {
     add(newDegree: DegreeInput!): Degree!
     update(_id: ID!, newDegree: DegreeInput!): Degree!
     remove(_id: ID!): Boolean!
