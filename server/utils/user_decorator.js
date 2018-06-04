@@ -6,17 +6,15 @@ import { getUserFromContext } from "./user_from_context";
 export const NO_FACULTY = [DEAN, ASSOCIATE_DEAN, CLERK];
 
 export function requireSignIn(resolver) {
-    function protectResolver(object, args, context) {
-        return getUserFromContext(context)
+    return (object, args, context) =>
+        getUserFromContext(context)
             .then(() => resolver(object, args, context));
-    }
 
-    return protectResolver;
 }
 
 export function limitAccess(resolver, {allowed, action}) {
-    function protectResolver(object, args, context) {
-        return getUserFromContext(context)
+    return (object, args, context) =>
+        getUserFromContext(context)
             .then(user => {
                 const authorization = user.authorization;
                 if (!allowed.includes(authorization)) {
@@ -24,7 +22,4 @@ export function limitAccess(resolver, {allowed, action}) {
                 }
             })
             .then(() => resolver(object, args, context));
-    }
-
-    return protectResolver;
 }
