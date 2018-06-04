@@ -1,7 +1,6 @@
 # Change Requests
 # To be performed by faculties
 input OverviewChangeInput {
-    submitted: String!
     sex: Sex!
     name: NameInput!
     employment: Employment!
@@ -68,6 +67,6 @@ type ChangeRequestReview {
 }
 
 extend type Mutation {
-    submitChangeRequests: ChangeRequests!
-    reviewChangeRequests(facultyId: ID!): ChangeRequestReview!
+    submitChangeRequest: ChangeRequests!
+    reviewChangeRequest(facultyId: ID!): ChangeRequestReview!
 }

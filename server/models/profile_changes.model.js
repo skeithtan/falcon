@@ -12,7 +12,6 @@ import {
 const ChangeTemplate = {
     submitted: {
         type: Date,
-        required: true,
         default: Date.now,
     },
     action: {
@@ -32,7 +31,7 @@ function makeChangeSchema({reference, schema}) {
     const mutationChangeSchema = {...ChangeTemplate};
     mutationChangeSchema.changeObjectId.ref = reference;
     mutationChangeSchema.object = {...schema};
-    return mutationChangeSchema;
+    return new Schema(mutationChangeSchema);
 }
 
 const DegreeChange = makeChangeSchema({
@@ -60,18 +59,25 @@ const PresentationChange = makeChangeSchema({
     schema: PresentationSchema,
 });
 
-const OverviewChange = {
+const OverviewChange = new Schema({
     submitted: {
         type: Date,
-        required: true,
         default: Date.now,
     },
     sex: {
         type: String,
     },
     name: {
-        first: String,
-        last: String,
+        first: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        last: {
+            type: String,
+            required: true,
+            trim: true,
+        },
     },
     employment: {
         type: String,
@@ -82,10 +88,14 @@ const OverviewChange = {
         type: Date,
         required: true,
     },
-};
+});
 
 export const ProfileChangeRequestSchema = new Schema({
-    overview: OverviewChange,
+    _id: false,
+    overview: {
+        type: OverviewChange,
+        required: false,
+    },
     degrees: [DegreeChange],
     extensionWorks: [ExtensionWorkChange],
     instructionalMaterials: [InstructionalMaterialChange],
