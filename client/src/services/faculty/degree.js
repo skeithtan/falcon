@@ -14,7 +14,7 @@ export function addDegree(facultyId, newDegree) {
         mutation: gql`
             mutation createDegree($facultyId: ID!, $newDegree: DegreeInput!) {
                 degree(facultyId: $facultyId) {
-                    create(newDegree: $newDegree) {
+                    add(newDegree: $newDegree) {
                         ${fields}
                     }
                 }

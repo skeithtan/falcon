@@ -16,7 +16,7 @@ export function addInstructionalMaterial(facultyId, newInstructionalMaterial) {
         mutation: gql`
             mutation createInstructionalMaterial($facultyId: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
                 instructionalMaterial(facultyId: $facultyId) {
-                    create(newInstructionalMaterial: $newInstructionalMaterial) {
+                    add(newInstructionalMaterial: $newInstructionalMaterial) {
                         ${fields}
                     }
                 }

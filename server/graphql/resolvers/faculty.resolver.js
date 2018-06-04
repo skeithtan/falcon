@@ -34,7 +34,7 @@ function faculty(object, {_id}) {
 
 function mutateFaculty() {
     return {
-        async createFaculty({newFaculty, newUser, temporaryPassword}) {
+        async add({newFaculty, newUser, temporaryPassword}) {
             newUser.authorization = FACULTY;
             newUser.password = {
                 secret: temporaryPassword,
@@ -68,7 +68,7 @@ function mutateFaculty() {
             }
         },
 
-        async updateFaculty({_id, newFaculty, newUser}) {
+        async update({_id, newFaculty, newUser}) {
             const faculty = await Faculty.findByIdAndUpdate(_id, newFaculty, {new: true})
                                          .populate("teachingSubjects")
                                          .exec();
@@ -94,7 +94,7 @@ async function mutatePresentation(object, {facultyId}) {
     }
 
     return {
-        async create({newPresentation}) {
+        async add({newPresentation}) {
             faculty.presentations.push(newPresentation);
             await faculty.save();
             return faculty.presentations[faculty.presentations.length - 1];
@@ -126,7 +126,7 @@ async function mutateRecognition(object, {facultyId}) {
     }
 
     return {
-        async create({newRecognition}) {
+        async add({newRecognition}) {
             faculty.recognitions.push(newRecognition);
             await faculty.save();
             return faculty.recognitions[faculty.recognitions.length - 1];
@@ -158,7 +158,7 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
     }
 
     return {
-        async create({newInstructionalMaterial}) {
+        async add({newInstructionalMaterial}) {
             faculty.instructionalMaterials.push(newInstructionalMaterial);
             await faculty.save();
             return faculty.instructionalMaterials[faculty.instructionalMaterials.length - 1];
@@ -190,7 +190,7 @@ async function mutateExtensionWork(object, {facultyId}) {
     }
 
     return {
-        async create({newExtensionWork}) {
+        async add({newExtensionWork}) {
             faculty.extensionWorks.push(newExtensionWork);
             await faculty.save();
             return faculty.extensionWorks[faculty.extensionWorks.length - 1];
@@ -222,7 +222,7 @@ async function mutateDegree(object, {facultyId}) {
     }
 
     return {
-        async create({newDegree}) {
+        async add({newDegree}) {
             faculty.degrees.push(newDegree);
             await faculty.save();
             return faculty.degrees[faculty.degrees.length - 1];

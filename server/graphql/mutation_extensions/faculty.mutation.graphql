@@ -43,36 +43,36 @@ input DegreeInput {
 }
 
 type FacultyMutations {
-    createFaculty(newFaculty: FacultyInput!, newUser: UserInput!, temporaryPassword: String!): Faculty!
-    updateFaculty(_id: ID!, newFaculty: FacultyInput!, newUser: UserInput): Faculty!
+    add(newFaculty: FacultyInput!, newUser: UserInput!, temporaryPassword: String!): Faculty!
+    update(_id: ID!, newFaculty: FacultyInput!, newUser: UserInput): Faculty!
 }
 
 type PresentationMutations {
-    create(newPresentation: PresentationInput!): Presentation!
+    add(newPresentation: PresentationInput!): Presentation!
     update(_id: ID!, newPresentation: PresentationInput!): Presentation!
     remove(_id: ID!): Boolean!
 }
 
 type RecognitionMutations {
-    create(newRecognition: RecognitionInput!): Recognition!
+    add(newRecognition: RecognitionInput!): Recognition!
     update(_id: ID!, newRecognition: RecognitionInput!): Recognition!
     remove(_id: ID!): Boolean!
 }
 
 type InstructionalMaterialMutations {
-    create(newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
+    add(newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
     update(_id: ID!, newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterial!
     remove(_id: ID!): Boolean!
 }
 
 type ExtensionWorkMutations {
-    create(newExtensionWork: ExtensionWorkInput!): ExtensionWork!
+    add(newExtensionWork: ExtensionWorkInput!): ExtensionWork!
     update(_id: ID!, newExtensionWork: ExtensionWorkInput!): ExtensionWork!
     remove(_id: ID!): Boolean!
 }
 
-type DegreeMutations {
-    create(newDegree: DegreeInput!): Degree!
+type DegreeMutationreate()s {
+    add(newDegree: DegreeInput!): Degree!
     update(_id: ID!, newDegree: DegreeInput!): Degree!
     remove(_id: ID!): Boolean!
 }

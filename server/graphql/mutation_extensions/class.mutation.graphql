@@ -19,22 +19,22 @@ input ClassInput {
 }
 
 type SubjectMutations {
-    create(newSubject: SubjectInput!): Subject!
+    add(newSubject: SubjectInput!): Subject!
     update(_id: ID!, newSubject: SubjectInput!): Subject!
 }
 
 type CourseMutations {
-    create(newCourse: CourseInput!): Course!
+    add(newCourse: CourseInput!): Course!
     update(_id: ID!, newCourse: CourseInput!): Course!
 }
 
 type AcademicYearMutations {
-    create(startYear: Int!): AcademicYear!
+    add(startYear: Int!): AcademicYear!
     setTermClasses(academicYearId: ID!, term: YearTerm!, classes: [ClassInput!]!): [Class!]!
 }
 
 type ClassMutations {
-    create(newClass: ClassInput!): Class!
+    add(newClass: ClassInput!): Class!
     remove(classId: ID!): Boolean!
 }
 

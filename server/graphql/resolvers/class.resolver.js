@@ -17,7 +17,7 @@ function subjects() {
 
 function mutateSubject() {
     return {
-        async create({newSubject}) {
+        async add({newSubject}) {
             // Link subject to faculties
             const subject = await Subject.create(newSubject);
 
@@ -51,7 +51,7 @@ function mutateSubject() {
 
 function mutateCourse() {
     return {
-        async create({newCourse}) {
+        async add({newCourse}) {
             return Course.create(newCourse);
         },
 
@@ -81,7 +81,7 @@ async function mutateClass(object, {academicYearId, term}) {
     }
 
     return {
-        async create({newClass}) {
+        async add({newClass}) {
             termClasses().append(newClass);
             await academicYear.save();
 

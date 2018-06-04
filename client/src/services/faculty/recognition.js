@@ -18,7 +18,7 @@ export function addRecognition(facultyId, newRecognition) {
         mutation: gql`
             mutation createRecognition($facultyId: ID!, $newRecognition: RecognitionInput!) {
                 recognition(facultyId: $facultyId) {
-                    create(newRecognition: $newRecognition) {
+                    add(newRecognition: $newRecognition) {
                         ${fields}
                     }
                 }

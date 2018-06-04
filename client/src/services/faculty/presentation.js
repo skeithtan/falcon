@@ -22,7 +22,7 @@ export function addPresentation(facultyId, newPresentation) {
         mutation: gql`
             mutation createPresentation($facultyId: ID!, $newPresentation: PresentationInput!) {
                 presentation(facultyId: $facultyId) {
-                    create(newPresentation: $newPresentation) {
+                    add(newPresentation: $newPresentation) {
                         ${fields}
                     }
                 }
