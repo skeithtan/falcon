@@ -1,4 +1,4 @@
-import { AuthorizationError } from "../graphql/errors";
+import { AuthorizationError } from "../graphql/errors/authorization.error";
 import { ASSOCIATE_DEAN, CLERK, DEAN } from "../models/user.model";
 import { getUserFromContext } from "./user_from_context";
 
