@@ -2,4 +2,9 @@ extend type Query {
     subjects: [Subject]!
     academicYears: [AcademicYear]!
     classes(term: Int!, year: Int!): [Class]!
+
+    faculties: [Faculty]!
+    faculty(_id: ID!): Faculty!
+
+    currentUser: User
 }

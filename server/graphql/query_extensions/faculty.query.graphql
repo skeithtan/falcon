@@ -1,4 +1,0 @@
-extend type Query {
-    faculties: [Faculty]!
-    faculty(_id: ID!): Faculty!
-}
