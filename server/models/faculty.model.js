@@ -11,6 +11,7 @@ import {
     SEXES,
     STUDENT_LEVELS,
 } from "./enums/faculty.enums";
+import { ProfileChangeRequestSchema } from "./profile_changes.model";
 
 
 const MonthYearDate = {
@@ -153,5 +154,6 @@ const FacultySchema = new Schema({
     recognitions: [RecognitionSchema],
     instructionalMaterials: [InstructionalMaterialSchema],
     extensionWorks: [ExtensionWorkSchema],
+    changeRequests: ProfileChangeRequestSchema,
 });
 export const Faculty = mongoose.model("Faculty", FacultySchema);
