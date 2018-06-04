@@ -13,31 +13,58 @@ type OverviewChanges {
 }
 
 type DegreeChanges {
-    update(_id: ID!, newDegree: DegreeInput!): DegreeChange!
     add(newDegree: DegreeInput!): DegreeChange!
+    update(_id: ID!, newDegree: DegreeInput!): DegreeChange!
     remove(_id: ID!): DegreeChange!
 }
 
 type ExtensionWorkChanges {
+    add(newExtensionWork: ExtensionWorkInput!): ExtensionWorkChange!
     update(_id: ID!, newExtensionWork: ExtensionWorkInput!): ExtensionWorkChange!
+    remove(_id: ID!): ExtensionWorkChange!
+}
+
+type InstructionalMaterialChanges {
+    add(newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterialChange!
+    update(_id: ID!, newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterialChange!
+    remove(_id: ID!): InstructionalMaterialChange!
+}
+
+type RecognitionChanges {
+    add(newRecognition: RecognitionInput!): RecognitionChange!
+    update(_id: ID!, newRecognition: RecognitionInput!): RecognitionChange!
+    remove(_id: ID!): RecognitionChange!
+}
+
+type PresentationChanges {
+    add(newPresentation: PresentationInput!): PresentationChange!
+    update(_id: ID!, newPresentation: PresentationInput!): PresentationChange!
+    remove(_id: ID!): PresentationChange!
 }
 
 type ChangeRequests {
     overview: OverviewChanges!
+    degrees: DegreeChanges!
+    extensionWorks: ExtensionWorkChanges!
+    instructionalMaterials: InstructionalMaterialChanges!
+    recognitions: RecognitionChanges!
+    presentations: PresentationChanges!
 }
-
-
-
 
 # Change Request Actions
 # To be performed by administrative user types
-type OverviewRequestReview {
+type RequestReviewAction {
     approve: Boolean!
     reject: Boolean!
 }
 
 type ChangeRequestReview {
-    overview: OverviewRequestAction
+    overview: RequestReviewAction!
+    degrees(_id: ID!): RequestReviewAction!
+    extensionWorks(_id: ID!): RequestReviewAction!
+    instructionalMaterials(_id: ID!): RequestReviewAction!
+    recognitions(_id: ID!): RequestReviewAction!
+    presentations(_id: ID!): RequestReviewAction!
 }
 
 extend type Mutation {
