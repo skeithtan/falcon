@@ -95,7 +95,7 @@ export function addFaculty(newFaculty, newUser, temporaryPassword) {
         mutation: gql`
             mutation createFaculty($newFaculty: FacultyInput!, $newUser: UserInput!, $temporaryPassword: String!) {
                 faculty {
-                    createFaculty(newFaculty: $newFaculty, newUser: $newUser, temporaryPassword: $temporaryPassword) {
+                    add(newFaculty: $newFaculty, newUser: $newUser, temporaryPassword: $temporaryPassword) {
                         ${fullFacultyDetails}
                     }
                 }
@@ -114,7 +114,7 @@ export function updateFaculty(_id, newFaculty, newUser) {
         mutation: gql`
             mutation updateFaculty($_id: ID!, $newFaculty: FacultyInput!, $newUser: UserInput) {
                 faculty {
-                    updateFaculty(_id: $_id, newFaculty: $newFaculty, newUser: $newUser) {
+                    update(_id: $_id, newFaculty: $newFaculty, newUser: $newUser) {
                         ${fullFacultyDetails}
                     }
                 }

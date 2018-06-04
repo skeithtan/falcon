@@ -28,7 +28,7 @@ export function addSubject(newSubject) {
         mutation: gql`
             mutation addSubject($newSubject: SubjectInput!) {
                 subject {
-                    create(newSubject: $newSubject) {
+                    add(newSubject: $newSubject) {
                         ${subjectFields}
                     }
                 }

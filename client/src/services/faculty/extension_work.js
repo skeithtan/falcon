@@ -14,7 +14,7 @@ export function addExtensionWork(facultyId, newExtensionWork) {
         mutation: gql`
             mutation createExtensionWork($facultyId: ID!, $newExtensionWork: ExtensionWorkInput!) {
                 extensionWork(facultyId: $facultyId) {
-                    create(newExtensionWork: $newExtensionWork) {
+                    add(newExtensionWork: $newExtensionWork) {
                         ${fields}
                     }
                 }
