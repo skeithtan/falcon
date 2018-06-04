@@ -12,7 +12,7 @@ function mapDispatchToProps(dispatch) {
         submitAddDegreeForm(form, faculty) {
             return addDegree(faculty._id, form)
                 .then(result => {
-                    const newDegree = result.data.degree.create;
+                    const newDegree = result.data.degree.add;
                     const newFaculty = {
                         ...faculty,
                         degrees: [

@@ -21,7 +21,7 @@ function mapDispatchToProps(dispatch) {
             const extensionWork = mapFormToExtensionWorkInput(form);
             return addExtensionWork(faculty._id, extensionWork)
                 .then(result => {
-                    const newExtensionWork = result.data.extensionWork.create;
+                    const newExtensionWork = result.data.extensionWork.add;
                     const newFaculty = {
                         ...faculty,
                         extensionWorks: [

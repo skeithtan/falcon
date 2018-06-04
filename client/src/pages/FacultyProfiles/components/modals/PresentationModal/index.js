@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch) {
             const presentation = mapFormToPresentationInput(form);
             return addPresentation(faculty._id, presentation)
                 .then(result => {
-                    const newPresentation = result.data.presentation.create;
+                    const newPresentation = result.data.presentation.add;
                     const newFaculty = {
                         ...faculty,
                         presentations: [

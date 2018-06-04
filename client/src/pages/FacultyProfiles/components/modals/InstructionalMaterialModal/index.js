@@ -26,7 +26,7 @@ function mapDispatchToProps(dispatch) {
             const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
             return addInstructionalMaterial(faculty._id, instructionalMaterial)
                 .then(result => {
-                    const newInstructionalMaterial = result.data.instructionalMaterial.create;
+                    const newInstructionalMaterial = result.data.instructionalMaterial.add;
                     const newFaculty = {
                         ...faculty,
                         instructionalMaterials: [
