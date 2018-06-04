@@ -3,7 +3,7 @@
 input OverviewChangeInput {
     submitted: String!
     sex: Sex!
-    name: Name!
+    name: NameInput!
     employment: Employment!
     birthDate: String!
 }
