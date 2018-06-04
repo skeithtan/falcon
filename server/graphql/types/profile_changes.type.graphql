@@ -12,22 +12,42 @@ interface ChangeRequest {
 }
 
 type DegreeChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
     object: Degree
 }
 
 type ExtensionWorkChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
     object: ExtensionWork
 }
 
 type InstructionalMaterialChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
     object: InstructionalMaterial
 }
 
 type RecognitionChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
     object: Recognition
 }
 
 type PresentationChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
     object: Presentation
 }
 
