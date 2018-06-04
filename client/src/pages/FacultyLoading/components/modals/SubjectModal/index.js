@@ -22,7 +22,7 @@ function mapDispatchToProps(dispatch) {
         submitAddSubject(form) {
             return addSubject(form)
                 .then(result => {
-                    const subject = result.data.subject.create;
+                    const subject = result.data.subject.add;
                     dispatch(subjectIsAdded(subject));
                     return subject;
                 });

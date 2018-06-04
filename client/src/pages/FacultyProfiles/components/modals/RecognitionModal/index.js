@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
             const recognition = mapFormToRecognitionInput(form);
             return addRecognition(faculty._id, recognition)
                 .then(result => {
-                    const newRecognition = result.data.recognition.create;
+                    const newRecognition = result.data.recognition.add;
                     const newFaculty = {
                         ...faculty,
                         recognitions: [
