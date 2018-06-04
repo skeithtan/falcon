@@ -1,28 +1,35 @@
 import { makeExecutableSchema } from "graphql-tools";
 import requireText from "require-text";
-import { Query, Mutation } from "./resolvers";
+import { Mutation, Query } from "./resolvers";
 
 
-const rootQuery = requireText("./schema.graphql", require);
-const extensionTypes = ["user", "class", "faculty"];
+function fileToText(path) {
+    // Insert new line to avoid merging last line of previous file to first line of next file
+    return requireText(path, require) + "\n";
+}
+
+const schemaDefinition = fileToText("./schema.graphql");
+const queries = fileToText("./queries.graphql");
+const extensionTypes = ["user", "class", "faculty", "profile_changes"];
 const types = ["date", ...extensionTypes];
 
 const typeDefinitions = types
     .map(type => `${type}.type.graphql`) // Transform type to fileName
     .map(fileName => `./types/${fileName}`) // Transform fileName to path
-    .map(path => requireText(path, require)); // Get file contents as string
-
-const queryExtensions = extensionTypes
-    .map(type => `${type}.query.graphql`)
-    .map(fileName => `./query_extensions/${fileName}`)
-    .map(path => requireText(path, require));
+    .map(path => fileToText(path)) // Get file contents as string
+    .join("\n"); // Merge array to one string
 
 const mutationExtensions = extensionTypes
     .map(type => `${type}.mutation.graphql`)
     .map(fileName => `./mutation_extensions/${fileName}`)
-    .map(path => requireText(path, require));
+    .map(path => fileToText(path))
+    .join("\n");
 
 export const schema = makeExecutableSchema({
-    typeDefs: [rootQuery, ...typeDefinitions, ...queryExtensions, ...mutationExtensions],
-    resolvers: { Query, Mutation },
+    typeDefs: [schemaDefinition, queries, typeDefinitions, mutationExtensions],
+    resolvers: {Query, Mutation},
+    resolverValidationOptions :{
+        // Removes resolveType warning from console
+        requireResolversForResolveType: false
+    },
 });
