@@ -1,7 +1,7 @@
 import { Faculty } from "../../models/faculty.model";
 import { FACULTY } from "../../models/user.model";
 import { getLastElement } from "../../utils/array";
-import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
+import { limitAccess } from "../../utils/user_decorator";
 import { getUserFromContext } from "../../utils/user_from_context";
 import { DoesNotExistError } from "../errors/does_not_exist.error";
 
@@ -107,7 +107,7 @@ const instructionalMaterialsChanges = faculty => {
 
             await faculty.save();
             return getLastElement(instructionalMaterialChanges);
-        }
+        },
     };
 
 };
@@ -195,7 +195,7 @@ const recognitionsChanges = faculty => {
         },
 
         async remove({_id}) {
-            const oldRecognition = getRecognition(_iid);
+            const oldRecognition = getRecognition(_id);
             recognitionChanges.push({
                 action: "REMOVE",
                 changeObjectId: oldRecognition._id,
@@ -255,7 +255,7 @@ const presentationsChanges = faculty => {
     };
 };
 
-async function submitChangeRequest(object, args, context) {
+async function requestProfileChanges(object, args, context) {
     const user = await getUserFromContext(context);
     const faculty = await Faculty.findOne({user: user._id}).exec();
 
@@ -265,15 +265,10 @@ async function submitChangeRequest(object, args, context) {
         extensionWorks: extensionWorksChanges(faculty),
         recognitions: recognitionsChanges(faculty),
         instructionalMaterials: instructionalMaterialsChanges(faculty),
-        presentations: presentationChanges(faculty),
+        presentations: presentationsChanges(faculty),
     };
 }
 
-async function reviewChangeRequest(object, {facultyId}) {
-    // TODO
-}
-
 export const mutationResolvers = {
-    submitChangeRequest: limitAccess(submitChangeRequest, {allowed: FACULTY, action: "Submit change request"}),
-    reviewChangeRequest: limitAccess(reviewChangeRequest, {allowed: NO_FACULTY, action: "Review change requests"}),
+    requestProfileChanges: limitAccess(requestProfileChanges, {allowed: FACULTY, action: "Submit change request"}),
 };

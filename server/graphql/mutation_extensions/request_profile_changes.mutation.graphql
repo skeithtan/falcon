@@ -1,5 +1,3 @@
-# Change Requests
-# To be performed by faculties
 input OverviewChangeInput {
     sex: Sex!
     name: NameInput!
@@ -41,7 +39,7 @@ type PresentationChanges {
     remove(_id: ID!): PresentationChange!
 }
 
-type ChangeRequests {
+type RequestChange {
     overview: OverviewChanges!
     degrees: DegreeChanges!
     extensionWorks: ExtensionWorkChanges!
@@ -50,23 +48,6 @@ type ChangeRequests {
     presentations: PresentationChanges!
 }
 
-# Change Request Actions
-# To be performed by administrative user types
-type RequestReviewAction {
-    approve: Boolean!
-    reject: Boolean!
-}
-
-type ChangeRequestReview {
-    overview: RequestReviewAction!
-    degrees(_id: ID!): RequestReviewAction!
-    extensionWorks(_id: ID!): RequestReviewAction!
-    instructionalMaterials(_id: ID!): RequestReviewAction!
-    recognitions(_id: ID!): RequestReviewAction!
-    presentations(_id: ID!): RequestReviewAction!
-}
-
 extend type Mutation {
-    submitChangeRequest: ChangeRequests!
-    reviewChangeRequest(facultyId: ID!): ChangeRequestReview!
+    requestProfileChanges: RequestChange!
 }

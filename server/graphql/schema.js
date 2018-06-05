@@ -10,8 +10,22 @@ function fileToText(path) {
 
 const schemaDefinition = fileToText("./schema.graphql");
 const queries = fileToText("./queries.graphql");
-const extensionTypes = ["user", "class", "faculty", "profile_changes"];
-const types = ["date", ...extensionTypes];
+
+const types = [
+    "class",
+    "date",
+    "faculty",
+    "profile_changes",
+    "user",
+];
+
+const mutations = [
+    "class",
+    "faculty",
+    "request_profile_changes",
+    "review_profile_changes",
+    "user",
+];
 
 const typeDefinitions = types
     .map(type => `${type}.type.graphql`) // Transform type to fileName
@@ -19,17 +33,17 @@ const typeDefinitions = types
     .map(path => fileToText(path)) // Get file contents as string
     .join("\n"); // Merge array to one string
 
-const mutationExtensions = extensionTypes
+const mutationDefinitions = mutations
     .map(type => `${type}.mutation.graphql`)
     .map(fileName => `./mutation_extensions/${fileName}`)
     .map(path => fileToText(path))
     .join("\n");
 
 export const schema = makeExecutableSchema({
-    typeDefs: [schemaDefinition, queries, typeDefinitions, mutationExtensions],
+    typeDefs: [schemaDefinition, queries, typeDefinitions, mutationDefinitions],
     resolvers: {Query, Mutation},
-    resolverValidationOptions :{
+    resolverValidationOptions: {
         // Removes resolveType warning from console
-        requireResolversForResolveType: false
+        requireResolversForResolveType: false,
     },
 });

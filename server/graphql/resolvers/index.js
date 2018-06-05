@@ -1,6 +1,7 @@
 import { mutationResolvers as classMutations, queryResolvers as classQueries } from "./class.resolver";
 import { mutationResolvers as facultyMutations, queryResolvers as facultyQueries } from "./faculty.resolver";
-import { mutationResolvers as profileChangesMutations } from "./profile_changes";
+import { mutationResolvers as requestProfileChangesMutations } from "./request_profile_changes.resolver";
+import { mutationResolvers as reviewProfileChangesMutations } from "./review_profile_changes.resolver";
 import { mutationResolvers as userMutations, queryResolvers as userQueries } from "./user.resolver";
 
 
@@ -18,5 +19,6 @@ export const Mutation = {
     ...userMutations,
     ...classMutations,
     ...facultyMutations,
-    ...profileChangesMutations,
+    ...requestProfileChangesMutations,
+    ...reviewProfileChangesMutations,
 };
