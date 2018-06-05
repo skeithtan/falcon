@@ -15,7 +15,7 @@ const overviewChangeFields = `
 export function updateOverview(newOverview) {
     return client.mutate({
         mutation: gql`
-            mutation {
+            mutation updateOverview($newOverview: OverviewChangeInput!){
                 requestProfileChanges {
                     overview {
                         update(newOverview: $newOverview) {
@@ -29,4 +29,4 @@ export function updateOverview(newOverview) {
             newOverview,
         },
     });
-};
+}
