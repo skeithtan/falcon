@@ -9,8 +9,7 @@ import pnuLogo from "../../images/pnu-logo.png";
 import { getPageFromPath, getPagesForUserType } from "../../pages";
 
 
-const PageDrawerPageItems = ({pages}) => pages.map(page => {
-    const {classes, onClose, history, match} = this.props;
+const PageDrawerPageItems = ({pages, classes, onClose, history, match}) => pages.map(page => {
     const activePage = getPageFromPath(match.params.currentPage);
     const isActivePage = page.identifier === activePage.identifier;
     let className = classes.pageItem;
@@ -33,7 +32,7 @@ const PageDrawerPageItems = ({pages}) => pages.map(page => {
     );
 });
 
-export const PageDrawer = ({open, onClose, classes, user}) => (
+export const PageDrawer = ({open, onClose, classes, user, match, history}) => (
     <Drawer open={open} onClose={onClose}>
         <div className={classes.drawer}>
 
@@ -72,7 +71,13 @@ export const PageDrawer = ({open, onClose, classes, user}) => (
             </Grid>
 
             <List className={classes.pageItemsContainer}>
-                <PageDrawerPageItems pages={getPagesForUserType(user.authorization)} />
+                <PageDrawerPageItems
+                    pages={getPagesForUserType(user.authorization)}
+                    match={match}
+                    classes={classes}
+                    history={history}
+                    onClose={onClose}
+                />
             </List>
         </div>
     </Drawer>
