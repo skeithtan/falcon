@@ -17,13 +17,6 @@ import { RemovePresentationModal } from "../../modals/RemovePresentationModal";
 
 
 class PresentationRow extends Component {
-    componentDidMount() {
-        const {faculty} = this.props;
-        const fullName = getFullName(faculty.user);
-
-        document.title = `${fullName}'s Presentations - Faculty Profiles - Falcon`;
-    }
-
     render() {
         const {presentation, onUpdateButtonClick, onRemoveButtonClick} = this.props;
         return (
