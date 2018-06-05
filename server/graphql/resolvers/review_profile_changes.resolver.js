@@ -149,7 +149,7 @@ const reviewPresentations = faculty => ({_id}) => {
     // TODO: This
 };
 
-async function reviewChangeRequest(object, {facultyId}) {
+async function reviewProfileChanges(object, {facultyId}) {
     const faculty = await Faculty.findById(facultyId).exec();
     return {
         overview: reviewOverview(faculty),
@@ -162,5 +162,5 @@ async function reviewChangeRequest(object, {facultyId}) {
 }
 
 export const mutationResolvers = {
-    reviewChangeRequest: limitAccess(reviewChangeRequest, {allowed: NO_FACULTY, action: "Review change requests"}),
+    reviewProfileChanges: limitAccess(reviewProfileChanges, {allowed: NO_FACULTY, action: "Review change requests"}),
 };
