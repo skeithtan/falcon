@@ -9,8 +9,7 @@ import { styles } from "./styles";
 
 function mapStateToProps(state) {
     return {
-        faculty: state.faculty,
-        ...state.facultyProfiles.facultyDetails,
+        ...state.faculty,
     };
 }
 
