@@ -1,17 +1,69 @@
-type RequestReviewAction {
-    approve: Boolean!
-    reject: Boolean!
+enum ChangeAction {
+    ADD,
+    UPDATE,
+    REMOVE
 }
 
-type ReviewChangeRequest {
-    overview: RequestReviewAction!
-    degrees(_id: ID!): RequestReviewAction!
-    extensionWorks(_id: ID!): RequestReviewAction!
-    instructionalMaterials(_id: ID!): RequestReviewAction!
-    recognitions(_id: ID!): RequestReviewAction!
-    presentations(_id: ID!): RequestReviewAction!
+interface ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
 }
 
-extend type Mutation {
-    reviewProfileChanges(facultyId: ID!): ReviewChangeRequest!
+type DegreeChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
+    object: Degree
+}
+
+type ExtensionWorkChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
+    object: ExtensionWork
+}
+
+type InstructionalMaterialChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
+    object: InstructionalMaterial
+}
+
+type RecognitionChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
+    object: Recognition
+}
+
+type PresentationChange implements ChangeRequest {
+    _id: ID!
+    submitted: String!
+    action: ChangeAction!
+    changeObjectId: ID
+    object: Presentation
+}
+
+type OverviewChange {
+    submitted: String!
+    sex: Sex!
+    name: Name!
+    employment: Employment!
+    birthDate: String!
+}
+
+type ProfileChangeRequest {
+    overview: OverviewChange
+    degrees: [DegreeChange!]!
+    extensionWorks: [ExtensionWorkChange!]!
+    instructionalMaterials: [InstructionalMaterialChange!]!
+    recognitions: [RecognitionChange!]!
+    presentations: [PresentationChange!]!
 }
