@@ -15,41 +15,36 @@ import { InstructionalMaterialModal } from "../../modals/InstructionalMaterialMo
 import { RemoveInstructionalMaterialModal } from "../../modals/RemoveInstructionalMaterialModal";
 
 
-class InstructionalMaterialRow extends Component {
-    render() {
-        const {instructionalMaterial, onRemoveButtonClick, onUpdateButtonClick} = this.props;
-        return (
-            <DetailExpansionCard>
+const InstructionalMaterialRow = ({instructionalMaterial, onRemoveButtonClick, onUpdateButtonClick}) => (
+    <DetailExpansionCard>
 
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{instructionalMaterial.title}</Typography>
-                </ExpansionPanelSummary>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>{instructionalMaterial.title}</Typography>
+        </ExpansionPanelSummary>
 
-                <FormDisplayExpansionPanelDetails>
+        <FormDisplayExpansionPanelDetails>
 
-                    <FormDisplayListItem field="Medium"
-                                         value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium].name} />
-                    <FormDisplayListItem field="Audience"
-                                         value={INSTRUCTIONAL_MATERIAL.AUDIENCE[instructionalMaterial.audience].name} />
-                    <FormDisplayListItem field="Usage Year"
-                                         value={instructionalMaterial.usageYear} />
+            <FormDisplayListItem field="Medium"
+                                 value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium].name} />
+            <FormDisplayListItem field="Audience"
+                                 value={INSTRUCTIONAL_MATERIAL.AUDIENCE[instructionalMaterial.audience].name} />
+            <FormDisplayListItem field="Usage Year"
+                                 value={instructionalMaterial.usageYear} />
 
-                    {/*Student exclusive stuff*/}
-                    {instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier &&
-                    <FormDisplayListItem field="Student Level"
-                                         value={instructionalMaterial.level} />
-                    }
+            {/*Student exclusive stuff*/}
+            {instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier &&
+            <FormDisplayListItem field="Student Level"
+                                 value={instructionalMaterial.level} />
+            }
 
-                    <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
-                                                updateButtonTooltipTitle="Update instructional material details"
-                                                onRemoveButtonClick={onRemoveButtonClick}
-                                                onUpdateButtonClick={onUpdateButtonClick} />
+            <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
+                                        updateButtonTooltipTitle="Update instructional material details"
+                                        onRemoveButtonClick={onRemoveButtonClick}
+                                        onUpdateButtonClick={onUpdateButtonClick} />
 
-                </FormDisplayExpansionPanelDetails>
-            </DetailExpansionCard>
-        );
-    }
-}
+        </FormDisplayExpansionPanelDetails>
+    </DetailExpansionCard>
+);
 
 export class InstructionalMaterialsTab extends Component {
     state = {

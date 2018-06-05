@@ -14,22 +14,17 @@ import { DegreeModal } from "../../modals/DegreeModal";
 import { RemoveDegreeModal } from "../../modals/RemoveDegreeModal";
 
 
-class DegreeRow extends Component {
-    render() {
-        const {degree, onUpdateButtonClick, onRemoveButtonClick} = this.props;
-        return (
-            <TableRow>
-                <TableCell>{degree.title}</TableCell>
-                <TableCell>{DEGREE.LEVEL[degree.level].name}</TableCell>
-                <TableCell numeric>{degree.completionYear}</TableCell>
-                <TableRowActions removeButtonTooltipTitle="Remove this degree"
-                                 updateButtonTooltipTitle="Update this degree"
-                                 onRemoveButtonClick={onRemoveButtonClick}
-                                 onUpdateButtonClick={onUpdateButtonClick} />
-            </TableRow>
-        );
-    }
-}
+const DegreeRow = ({degree, onUpdateButtonClick, onRemoveButtonClick}) => (
+    <TableRow>
+        <TableCell>{degree.title}</TableCell>
+        <TableCell>{DEGREE.LEVEL[degree.level].name}</TableCell>
+        <TableCell numeric>{degree.completionYear}</TableCell>
+        <TableRowActions removeButtonTooltipTitle="Remove this degree"
+                         updateButtonTooltipTitle="Update this degree"
+                         onRemoveButtonClick={onRemoveButtonClick}
+                         onUpdateButtonClick={onUpdateButtonClick} />
+    </TableRow>
+);
 
 export class DegreeCard extends Component {
     state = {

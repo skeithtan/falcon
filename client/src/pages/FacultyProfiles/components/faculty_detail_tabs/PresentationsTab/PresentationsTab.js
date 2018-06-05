@@ -16,42 +16,37 @@ import { PresentationModal } from "../../modals/PresentationModal";
 import { RemovePresentationModal } from "../../modals/RemovePresentationModal";
 
 
-class PresentationRow extends Component {
-    render() {
-        const {presentation, onUpdateButtonClick, onRemoveButtonClick} = this.props;
-        return (
-            <DetailExpansionCard>
+const PresentationRow = ({presentation, onUpdateButtonClick, onRemoveButtonClick}) => (
+    <DetailExpansionCard>
 
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{presentation.title}</Typography>
-                </ExpansionPanelSummary>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>{presentation.title}</Typography>
+        </ExpansionPanelSummary>
 
-                <FormDisplayExpansionPanelDetails>
+        <FormDisplayExpansionPanelDetails>
 
-                    <FormDisplayListItem field="Category"
-                                         value={PRESENTATION.CATEGORY[presentation.category].name} />
-                    <FormDisplayListItem field="Date"
-                                         value={formatMonthYearDate(presentation.date)} />
-                    <FormDisplayListItem field="Sponsor"
-                                         value={presentation.sponsor} />
-                    <FormDisplayListItem field="Venue"
-                                         value={presentation.venue} />
-                    <FormDisplayListItem field="Conference"
-                                         value={presentation.conference} />
-                    <FormDisplayListItem field="Medium"
-                                         value={PRESENTATION.MEDIUM[presentation.medium].name} />
-                    <FormDisplayListItem field="Duration"
-                                         value={`${presentation.daysDuration} Days`} />
-                    <DetailExpansionCardActions removeButtonTooltipTitle="Remove presentation"
-                                                updateButtonTooltipTitle="Update presentation details"
-                                                onRemoveButtonClick={onRemoveButtonClick}
-                                                onUpdateButtonClick={onUpdateButtonClick} />
+            <FormDisplayListItem field="Category"
+                                 value={PRESENTATION.CATEGORY[presentation.category].name} />
+            <FormDisplayListItem field="Date"
+                                 value={formatMonthYearDate(presentation.date)} />
+            <FormDisplayListItem field="Sponsor"
+                                 value={presentation.sponsor} />
+            <FormDisplayListItem field="Venue"
+                                 value={presentation.venue} />
+            <FormDisplayListItem field="Conference"
+                                 value={presentation.conference} />
+            <FormDisplayListItem field="Medium"
+                                 value={PRESENTATION.MEDIUM[presentation.medium].name} />
+            <FormDisplayListItem field="Duration"
+                                 value={`${presentation.daysDuration} Days`} />
+            <DetailExpansionCardActions removeButtonTooltipTitle="Remove presentation"
+                                        updateButtonTooltipTitle="Update presentation details"
+                                        onRemoveButtonClick={onRemoveButtonClick}
+                                        onUpdateButtonClick={onUpdateButtonClick} />
 
-                </FormDisplayExpansionPanelDetails>
-            </DetailExpansionCard>
-        );
-    }
-}
+        </FormDisplayExpansionPanelDetails>
+    </DetailExpansionCard>
+);
 
 export class PresentationsTab extends Component {
     state = {

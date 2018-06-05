@@ -15,19 +15,14 @@ import { getFullName } from "../../../../../utils/user.util";
 import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
 
 
-class TeachingSubjectRow extends Component {
-    render() {
-        const {subject, onRemoveButtonClick} = this.props;
-        return (
-            <TableRow>
-                <TableCell>{subject.code}</TableCell>
-                <TableCell>{subject.name}</TableCell>
-                <TableRowActions removeButtonTooltipTitle="Remove this subject"
-                                 onRemoveButtonClick={onRemoveButtonClick} />
-            </TableRow>
-        );
-    }
-}
+const TeachingSubjectRow = ({subject, onRemoveButtonClick}) => (
+    <TableRow>
+        <TableCell>{subject.code}</TableCell>
+        <TableCell>{subject.name}</TableCell>
+        <TableRowActions removeButtonTooltipTitle="Remove this subject"
+                         onRemoveButtonClick={onRemoveButtonClick} />
+    </TableRow>
+);
 
 export class TeachingSubjectsCard extends Component {
     state = {

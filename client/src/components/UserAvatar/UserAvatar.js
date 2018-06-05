@@ -1,27 +1,22 @@
 import Avatar from "@material-ui/core/Avatar";
-import React, { Component } from "react";
-import { getInitials, getFullName } from "../../utils/user.util";
+import React from "react";
+import { getFullName, getInitials } from "../../utils/user.util";
 
 
-export class UserAvatar extends Component {
-    renderInitials = (initials, fullName) => (
-        <Avatar className={this.props.className} onClick={this.props.onClick} alt={fullName}>{initials}</Avatar>
-    );
+const UserAvatarInitials = ({initials, fullName, className, onClick}) => (
+    <Avatar className={className} onClick={onClick} alt={fullName}>{initials}</Avatar>
+);
 
-    renderPhoto = (photo, fullName) => (
-        <Avatar className={this.props.className} onClick={this.props.onClick} alt={fullName} src={photo} />
-    );
+const UserAvatarPhoto = ({photo, fullName, className, onClick}) => (
+    <Avatar className={className} onClick={onClick} alt={fullName} src={photo} />
+);
 
-    render() {
-        const user = this.props.user;
-        const fullName = getFullName(user);
-        const initials = getInitials(user);
-        const photo = user.photo;
+export const UserAvatar = ({user, className, onClick}) => {
+    const fullName = getFullName(user);
+    const initials = getInitials(user);
+    const photo = user.photo;
 
-        if (photo) {
-            return this.renderPhoto(photo, fullName);
-        }
-
-        return this.renderInitials(initials, fullName);
-    }
-}
+    return photo ?
+        <UserAvatarPhoto photo={photo} fullName={fullName} className={className} onClick={onClick} /> :
+        <UserAvatarInitials initials={initials} fullName={fullName} className={className} onClick={onClick} />;
+};

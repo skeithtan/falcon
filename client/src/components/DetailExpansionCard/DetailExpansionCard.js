@@ -1,14 +1,9 @@
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import React, { Component } from "react";
+import React from "react";
 
 
-export class DetailExpansionCard extends Component {
-    render() {
-        const classes = this.props.classes;
-        return (
-            <ExpansionPanel className={classes.paper}>
-                {this.props.children}
-            </ExpansionPanel>
-        );
-    }
-}
+export const DetailExpansionCard = ({classes, children}) => (
+    <ExpansionPanel className={classes.paper}>
+        {children}
+    </ExpansionPanel>
+);

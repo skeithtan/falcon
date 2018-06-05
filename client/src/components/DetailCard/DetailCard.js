@@ -1,14 +1,9 @@
 import Paper from "@material-ui/core/Paper";
-import React, { Component } from "react";
+import React from "react";
 
 
-export class DetailCard extends Component {
-    render() {
-        const classes = this.props.classes;
-        return (
-            <Paper className={classes.paper}>
-                {this.props.children}
-            </Paper>
-        );
-    }
-}
+export const DetailCard = ({classes, children}) => (
+    <Paper className={classes.paper}>
+        {children}
+    </Paper>
+);

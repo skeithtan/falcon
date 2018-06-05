@@ -1,6 +1,7 @@
-import React, {Component} from "react";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import React from "react";
+
 
 const months = [
     "January",
@@ -17,18 +18,10 @@ const months = [
     "December",
 ];
 
-export class MonthPicker extends Component {
-    render() {
-        return (
-            <Select {...this.props}>
-                {/*<MenuItem value="">*/}
-                    {/*<em>Select a month</em>*/}
-                {/*</MenuItem>*/}
-
-                {months.map((month, index) =>
-                    <MenuItem key={index} value={index + 1}>{month}</MenuItem>
-                )}
-            </Select>
-        )
-    }
-}
+export const MonthPicker = props => (
+    <Select {...props}>
+        {months.map((month, index) =>
+            <MenuItem key={index} value={index + 1}>{month}</MenuItem>,
+        )}
+    </Select>
+);
