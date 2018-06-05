@@ -138,15 +138,146 @@ const reviewExtensionWorks = faculty => ({_id}) => {
 };
 
 const reviewInstructionalMaterials = faculty => ({_id}) => {
-    // TODO: This
+    const instructionalMaterialRequest = faculty.changeRequests.instructionalMaterials.id(_id);
+    if (!instructionalMaterialRequest) {
+        throw new DoesNotExistError(`Instructional Material change request ${_id} for faculty ${faculty._id} does not exist`);
+    }
+
+    async function removeRequest() {
+        faculty.changeRequests.instructionalMaterials.pull(instructionalMaterialRequest);
+        await faculty.save();
+    }
+
+    return {
+        async approve() {
+            const oldInstructionalMaterial = faculty.instructionalMaterials.id(instructionalMaterialRequest.objectId);
+            const newInstructionalMaterial = instructionalMaterialRequest.object;
+
+            if (isUpdateOrRemove(instructionalMaterialRequest) && !oldInstructionalMaterial) {
+                await removeRequest();
+                throw new DoesNotExistError(`Instructional Material of ID ${instructionalMaterialRequest.objectId} does not exist.`);
+            }
+
+            switch (instructionalMaterialRequest.action) {
+                case "ADD":
+                    faculty.instructionalMaterials.push(newInstructionalMaterial);
+                    break;
+                case "UPDATE":
+                    oldInstructionalMaterial.set(newInstructionalMaterial);
+                    break;
+                case "REMOVE":
+                    faculty.instructionalMaterials.pull(oldInstructionalMaterial);
+                    break;
+                default:
+                    await removeRequest();
+                    onUnknownRequestAction(instructionalMaterialRequest);
+            }
+
+            await removeRequest();
+            await faculty.save();
+            return true;
+        },
+        
+        async reject() {
+            await removeRequest();
+            return true;
+        },
+    };
 };
 
 const reviewRecognitions = faculty => ({_id}) => {
-    // TODO: This
+    const recognitionRequest = faculty.changeRequests.recognitions.id(_id);
+    if (!recognitionRequest) {
+        throw new DoesNotExistError(`Recognition change request ${_id} for faculty ${faculty._id} does not exist`);
+    }
+
+    async function removeRequest() {
+        faculty.changeRequests.recognitions.pull(recognitionRequest);
+        await faculty.save();
+    }
+
+    return {
+        async approve() {
+            const oldRecognition = faculty.recognitions.id(recognitionRequest.objectId);
+            const newRecognition = recognitionRequest.object;
+
+            if (isUpdateOrRemove(recognitionRequest) && !oldRecognition) {
+                await removeRequest();
+                throw new DoesNotExistError(`Recognition of ID ${recognitionRequest.objectId} does not exist.`);
+            }
+
+            switch (recognitionRequest.action) {
+                case "ADD":
+                    faculty.recognitions.push(newRecognition);
+                    break;
+                case "UPDATE":
+                    oldRecognition.set(newRecognition);
+                    break;
+                case "REMOVE":
+                    faculty.recognitions.pull(oldRecognition);
+                    break;
+                default:
+                    await removeRequest();
+                    onUnknownRequestAction(recognitionRequest);
+            }
+
+            await removeRequest();
+            await faculty.save();
+            return true;
+        },
+
+        async reject(){
+            await removeRequest();
+            return true;
+        },
+    };
 };
 
 const reviewPresentations = faculty => ({_id}) => {
-    // TODO: This
+    const presentationRequest = faculty.changeRequests.presentations.id(_id);
+    if (!presentationRequest) {
+        throw new DoesNotExistError(`Presentation change request ${_id} for faculty ${faculty._id} does not exist`);
+    }
+
+    async function removeRequest() {
+        faculty.changeRequests.presentations.pull(presentationRequest);
+        await faculty.save();
+    }
+
+    return {
+        async approve() {
+            const oldPresentation = faculty.presentations.id(presentationRequest.objectId);
+            const newPresentation = presentationRequest.object;
+
+            if (isUpdateOrRemove(presentationRequest) && !oldPresentation){
+                await removeRequest();
+                throw new DoesNotExistError(`Presentation of ID ${presentationRequest.objectId} does not exist.`);
+            }
+            
+            switch (presentationRequest.action) {
+                case "ADD":
+                    faculty.presentations.push(newPresentation);
+                    break;
+                case "UPDATE":
+                    oldPresentation.set(newPresentation);
+                    break;
+                case "REMOVE":
+                    faculty.presentations.pull(oldPresentation);
+                    break;
+                default:
+                    await removeRequest();
+                    onUnknownRequestAction(presentationRequest);
+            }
+            await removeRequest();
+            await faculty.save();
+            return true;
+        },
+
+        async reject() {
+            await removeRequest();
+            return true;
+        },
+    }
 };
 
 async function reviewProfileChanges(object, {facultyId}) {
