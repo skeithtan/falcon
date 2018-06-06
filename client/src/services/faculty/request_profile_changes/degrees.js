@@ -1,14 +1,10 @@
 import gql from "graphql-tag";
 import { client } from "../../../client";
+import { getChangeRequestFields } from "../../../utils/change_request.util";
+import { fields as degreeFields } from "../degree";
 
 
-const degreeChangeFields = `
-    _id
-    submitted
-    action
-    changeObjectId
-    object
-`;
+const degreeChangeFields = getChangeRequestFields(degreeFields);
 
 export function addDegree(newDegree) {
     return client.mutate({
