@@ -5,7 +5,10 @@ import { FormDisplayListItem } from "../../../../../../../components/FormDisplay
 import { SEX } from "../../../../../../../enums/faculty.enums";
 
 
-export const ReviewForm = ({firstName, lastName, email, password, sex, classes}) => {
+export const ReviewForm = ({
+    form: {firstName, lastName, email, password, sex},
+    classes,
+}) => {
     const fullName = `${firstName} ${lastName}`;
     const pronoun = sex === SEX.M.identifier ? "his" : "her";
 
