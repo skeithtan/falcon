@@ -15,23 +15,18 @@ import { RecognitionModal } from "../../modals/RecognitionModal";
 import { RemoveRecognitionModal } from "../../modals/RemoveRecognitionModal";
 
 
-class RecognitionRow extends Component {
-    render() {
-        const {recognition, onRemoveButtonClick, onUpdateButtonClick} = this.props;
-        return (
-            <TableRow>
-                <TableCell>{recognition.title}</TableCell>
-                <TableCell>{RECOGNITION.BASIS[recognition.basis].name}</TableCell>
-                <TableCell>{recognition.sponsor}</TableCell>
-                <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
-                <TableRowActions removeButtonTooltipTitle="Remove this recognition"
-                                 updateButtonTooltipTitle="Update this recognition"
-                                 onRemoveButtonClick={onRemoveButtonClick}
-                                 onUpdateButtonClick={onUpdateButtonClick} />
-            </TableRow>
-        );
-    }
-}
+const RecognitionRow = ({recognition, onRemoveButtonClick, onUpdateButtonClick}) => (
+    <TableRow>
+        <TableCell>{recognition.title}</TableCell>
+        <TableCell>{RECOGNITION.BASIS[recognition.basis].name}</TableCell>
+        <TableCell>{recognition.sponsor}</TableCell>
+        <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
+        <TableRowActions removeButtonTooltipTitle="Remove this recognition"
+                         updateButtonTooltipTitle="Update this recognition"
+                         onRemoveButtonClick={onRemoveButtonClick}
+                         onUpdateButtonClick={onUpdateButtonClick} />
+    </TableRow>
+);
 
 export class RecognitionsCard extends Component {
     state = {

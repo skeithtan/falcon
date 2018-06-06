@@ -1,19 +1,12 @@
 import Chip from "@material-ui/core/Chip";
-import React, { Component } from "react";
+import React from "react";
 import { getFullName } from "../../utils/user.util";
 import { UserAvatar } from "../UserAvatar";
 
 
-export class FacultyChip extends Component {
-    render() {
-        const faculty = this.props.faculty;
-        const avatar = <UserAvatar user={faculty.user} />;
-
-        return (
-            <Chip
-                avatar={avatar}
-                label={getFullName(faculty.user)}
-            />
-        );
-    }
-}
+export const FacultyChip = ({faculty}) => (
+    <Chip
+        avatar={<UserAvatar user={faculty.user} />}
+        label={getFullName(faculty.user)}
+    />
+);

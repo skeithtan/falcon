@@ -5,28 +5,33 @@ import React, { Component } from "react";
 import { UserAvatar } from "../UserAvatar";
 
 
-class UserMenu extends Component {
-    render() {
-        const {open, onClose, anchorEl, avatar, classes} = this.props;
-        const {name: {first, last}, email} = this.props.user;
-        return (
-            <Menu open={open} onClose={onClose} anchorEl={anchorEl} MenuListProps={{disablePadding: true}}>
+const UserMenu = ({
+    open,
+    onClose,
+    anchorEl,
+    avatar,
+    classes,
+    signOut,
+    user: {name: {first, last}, email},
+}) => (
+    <Menu
+        open={open}
+        onClose={onClose}
+        anchorEl={anchorEl}
+        MenuListProps={{disablePadding: true}}>
+        <div className={classes.currentUserDisplay}>
+            {avatar}
 
-                <div className={classes.currentUserDisplay}>
-                    {avatar}
+            <div className={classes.userDetails}>
+                <Typography className={classes.userFullName}>{first} {last}</Typography>
+                <Typography className={classes.userEmail}>{email}</Typography>
+            </div>
+        </div>
 
-                    <div className={classes.userDetails}>
-                        <Typography className={classes.userFullName}>{first} {last}</Typography>
-                        <Typography className={classes.userEmail}>{email}</Typography>
-                    </div>
-                </div>
-
-                <MenuItem>Change Password</MenuItem>
-                <MenuItem onClick={this.props.signOut}>Sign Out</MenuItem>
-            </Menu>
-        );
-    }
-}
+        <MenuItem>Change Password</MenuItem>
+        <MenuItem onClick={signOut}>Sign Out</MenuItem>
+    </Menu>
+);
 
 export class UserButton extends Component {
     state = {

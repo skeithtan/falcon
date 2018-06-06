@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Route } from "react-router-dom";
 import { FacultyLoadingBody } from "./components/FacultyLoadingBody";
 import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 
 
-export class FacultyLoadingPage extends Component {
+export class FacultyLoadingPage extends PureComponent {
     componentDidMount() {
         document.title = "Faculty Loading - Falcon";
     }

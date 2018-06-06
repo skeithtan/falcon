@@ -15,19 +15,14 @@ import { getFullName } from "../../../../../utils/user.util";
 import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
 
 
-class TeachingSubjectRow extends Component {
-    render() {
-        const {subject, onRemoveButtonClick} = this.props;
-        return (
-            <TableRow>
-                <TableCell>{subject.code}</TableCell>
-                <TableCell>{subject.name}</TableCell>
-                <TableRowActions removeButtonTooltipTitle="Remove this subject"
-                                 onRemoveButtonClick={onRemoveButtonClick} />
-            </TableRow>
-        );
-    }
-}
+const TeachingSubjectRow = ({subject, onRemoveButtonClick}) => (
+    <TableRow>
+        <TableCell>{subject.code}</TableCell>
+        <TableCell>{subject.name}</TableCell>
+        <TableRowActions removeButtonTooltipTitle="Remove this subject"
+                         onRemoveButtonClick={onRemoveButtonClick} />
+    </TableRow>
+);
 
 export class TeachingSubjectsCard extends Component {
     state = {
@@ -52,6 +47,7 @@ export class TeachingSubjectsCard extends Component {
     fetchData = () => {
         this.setState({errors: null, isLoading: true});
         fetchTeachingSubjects(this.props.faculty._id)
+        // FIXME: Memory leak in this.setState when different faculty is selected before results arrive
             .then(result => this.setState({
                 teachingSubjects: result.data.faculty.teachingSubjects,
                 errors: null,

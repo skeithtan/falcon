@@ -16,29 +16,26 @@ import { OVERVIEW_TAB } from "../faculty_detail_tabs";
 import { AddFacultyModal } from "../modals/AddFacultyModal";
 
 
-class FacultyItem extends Component {
-    render() {
-        const {activeTab, classes, faculty, active} = this.props;
-        const {activeListItem, listItem} = classes;
-        const className = active ? [activeListItem, listItem].join(" ") : listItem;
+const FacultyItem = ({activeTab, classes, faculty, active, onClick}) => {
+    const {activeListItem, listItem} = classes;
+    const className = active ? [activeListItem, listItem].join(" ") : listItem;
 
-        // Go to where the active tab is if any. If none, go to default overview tab
-        const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
+    // Go to where the active tab is if any. If none, go to default overview tab
+    const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
 
-        return (
-            <ListItem
-                button
-                component={Link}
-                to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${tabPath}`}
-                className={className}
-                onClick={this.props.onClick}
-            >
-                <UserAvatar user={faculty.user} />
-                <ListItemText primary={getFullName(faculty.user)} />
-            </ListItem>
-        );
-    }
-}
+    return (
+        <ListItem
+            button
+            component={Link}
+            to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${tabPath}`}
+            className={className}
+            onClick={onClick}
+        >
+            <UserAvatar user={faculty.user} />
+            <ListItemText primary={getFullName(faculty.user)} />
+        </ListItem>
+    );
+};
 
 export class FacultyList extends Component {
     state = {

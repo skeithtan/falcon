@@ -8,23 +8,23 @@ import Error from "@material-ui/icons/Error";
 import React, { Component } from "react";
 
 
-class ErrorDetailsDialog extends Component {
-    render() {
-        return (
-            <Dialog open={this.props.open}
-                    onClose={this.props.onClose}>
-                <DialogTitle id="alert-dialog-title">Error details</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>{String(this.props.debug)}</DialogContentText>
-                </DialogContent>
-            </Dialog>
-        );
-    }
-}
+const ErrorDetailsDialog = ({open, onClose, debug}) => (
+    <Dialog open={open}
+            onClose={onClose}>
+        <DialogTitle id="alert-dialog-title">Error details</DialogTitle>
+        <DialogContent>
+            <DialogContentText>{String(debug)}</DialogContentText>
+        </DialogContent>
+    </Dialog>
+);
 
 export class ErrorState extends Component {
+    state = {
+        detailsOpen: false,
+    };
+
     render() {
-        const classes = this.props.classes;
+        const {classes, debug, onRetryButtonClick, message} = this.props;
         return (
             <div className={classes.blankState}>
 
@@ -34,7 +34,7 @@ export class ErrorState extends Component {
                         An Error Occurred
                     </Typography>
                     <Typography variant="subheading" className={classes.messageColor}>
-                        {this.props.message}
+                        {message}
                     </Typography>
 
                     <Typography variant="caption" className={classes.messageColor}>
@@ -42,13 +42,13 @@ export class ErrorState extends Component {
                         internet connection and try again.
                     </Typography>
 
-                    {this.props.onRetryButtonClick &&
-                    <Button color="primary" onClick={this.props.onRetryButtonClick} variant="raised">
+                    {onRetryButtonClick &&
+                    <Button color="primary" onClick={onRetryButtonClick} variant="raised">
                         Retry
                     </Button>
                     }
 
-                    {this.props.debug &&
+                    {debug &&
                     <Button color="primary" onClick={() => this.setState({detailsOpen: true})}>
                         View error details
                     </Button>
@@ -56,14 +56,10 @@ export class ErrorState extends Component {
 
                     <ErrorDetailsDialog open={this.state.detailsOpen}
                                         onClose={() => this.setState({detailsOpen: false})}
-                                        debug={this.props.debug} />
+                                        debug={debug} />
                 </div>
 
             </div>
         );
     }
-
-    state = {
-        detailsOpen: false,
-    };
 }
