@@ -17,55 +17,49 @@ export const fields = `
     }
 `;
 
-export function addPresentation(facultyId, newPresentation) {
-    return client.mutate({
-        mutation: gql`
-            mutation createPresentation($facultyId: ID!, $newPresentation: PresentationInput!) {
-                presentation(facultyId: $facultyId) {
-                    add(newPresentation: $newPresentation) {
-                        ${fields}
-                    }
+export const addPresentation = (facultyId, newPresentation) => client.mutate({
+    mutation: gql`
+        mutation createPresentation($facultyId: ID!, $newPresentation: PresentationInput!) {
+            presentation(facultyId: $facultyId) {
+                add(newPresentation: $newPresentation) {
+                    ${fields}
                 }
             }
-        `,
-        variables: {
-            facultyId,
-            newPresentation,
-        },
-    });
-}
-
-export function updatePresentation(facultyId, _id, newPresentation) {
-    return client.mutate({
-        mutation: gql`
-            mutation updatePresentation($facultyId: ID!, $_id: ID!, $newPresentation: PresentationInput!) {
-                presentation(facultyId: $facultyId) {
-                    update(_id: $_id, newPresentation: $newPresentation) {
-                        ${fields}
-                    }
-                }
-            }
-        `,
-        variables: {
-            facultyId,
-            _id,
-            newPresentation,
-        },
-    });
-}
-
-export function removePresentation(facultyId, _id) {
-    return client.mutate({
-        mutation: gql`
-            mutation removePresentation($facultyId: ID!, $_id: ID!) {
-                presentation(facultyId: $facultyId) {
-                    remove(_id: $_id)
-                }
-            }
-        `,
-        variables: {
-            facultyId,
-            _id
         }
-    })
-}
+    `,
+    variables: {
+        facultyId,
+        newPresentation,
+    },
+});
+
+export const updatePresentation = (facultyId, _id, newPresentation) => client.mutate({
+    mutation: gql`
+        mutation updatePresentation($facultyId: ID!, $_id: ID!, $newPresentation: PresentationInput!) {
+            presentation(facultyId: $facultyId) {
+                update(_id: $_id, newPresentation: $newPresentation) {
+                    ${fields}
+                }
+            }
+        }
+    `,
+    variables: {
+        facultyId,
+        _id,
+        newPresentation,
+    },
+});
+
+export const removePresentation = (facultyId, _id) => client.mutate({
+    mutation: gql`
+        mutation removePresentation($facultyId: ID!, $_id: ID!) {
+            presentation(facultyId: $facultyId) {
+                remove(_id: $_id)
+            }
+        }
+    `,
+    variables: {
+        facultyId,
+        _id,
+    },
+});

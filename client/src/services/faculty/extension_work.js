@@ -9,55 +9,49 @@ export const fields = `
     venue
 `;
 
-export function addExtensionWork(facultyId, newExtensionWork) {
-    return client.mutate({
-        mutation: gql`
-            mutation createExtensionWork($facultyId: ID!, $newExtensionWork: ExtensionWorkInput!) {
-                extensionWork(facultyId: $facultyId) {
-                    add(newExtensionWork: $newExtensionWork) {
-                        ${fields}
-                    }
+export const addExtensionWork = (facultyId, newExtensionWork) => client.mutate({
+    mutation: gql`
+        mutation createExtensionWork($facultyId: ID!, $newExtensionWork: ExtensionWorkInput!) {
+            extensionWork(facultyId: $facultyId) {
+                add(newExtensionWork: $newExtensionWork) {
+                    ${fields}
                 }
             }
-        `,
-        variables: {
-            facultyId,
-            newExtensionWork,
-        },
-    });
-}
+        }
+    `,
+    variables: {
+        facultyId,
+        newExtensionWork,
+    },
+});
 
-export function updateExtensionWork(facultyId, _id, newExtensionWork) {
-    return client.mutate({
-        mutation: gql`
-            mutation updateExtensionWork($facultyId: ID!, $_id: ID!, $newExtensionWork: ExtensionWorkInput!) {
-                extensionWork(facultyId: $facultyId) {
-                    update(_id: $_id, newExtensionWork: $newExtensionWork) {
-                        ${fields}
-                    }
+export const updateExtensionWork = (facultyId, _id, newExtensionWork) => client.mutate({
+    mutation: gql`
+        mutation updateExtensionWork($facultyId: ID!, $_id: ID!, $newExtensionWork: ExtensionWorkInput!) {
+            extensionWork(facultyId: $facultyId) {
+                update(_id: $_id, newExtensionWork: $newExtensionWork) {
+                    ${fields}
                 }
             }
-        `,
-        variables: {
-            facultyId,
-            _id,
-            newExtensionWork,
-        },
-    });
-}
+        }
+    `,
+    variables: {
+        facultyId,
+        _id,
+        newExtensionWork,
+    },
+});
 
-export function removeExtensionWork(facultyId, _id) {
-    return client.mutate({
-        mutation: gql`
-            mutation removeExtensionWork($facultyId: ID!, $_id: ID!) {
-                extensionWork(facultyId: $facultyId) {
-                    remove(_id: $_id)
-                }
+export const removeExtensionWork = (facultyId, _id) => client.mutate({
+    mutation: gql`
+        mutation removeExtensionWork($facultyId: ID!, $_id: ID!) {
+            extensionWork(facultyId: $facultyId) {
+                remove(_id: $_id)
             }
-        `,
-        variables: {
-            facultyId,
-            _id,
-        },
-    });
-}
+        }
+    `,
+    variables: {
+        facultyId,
+        _id,
+    },
+});

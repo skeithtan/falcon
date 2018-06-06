@@ -1,5 +1,6 @@
-import { client } from "../../../client";
 import gql from "graphql-tag";
+import { client } from "../../../client";
+
 
 const overviewChangeFields = `
     submitted
@@ -12,21 +13,19 @@ const overviewChangeFields = `
     }
 `;
 
-export function updateOverview(newOverview) {
-    return client.mutate({
-        mutation: gql`
-            mutation updateOverview($newOverview: OverviewChangeInput!){
-                requestProfileChanges {
-                    overview {
-                        update(newOverview: $newOverview) {
-                            ${overviewChangeFields}
-                        }
+export const updateOverview = newOverview => client.mutate({
+    mutation: gql`
+        mutation updateOverview($newOverview: OverviewChangeInput!){
+            requestProfileChanges {
+                overview {
+                    update(newOverview: $newOverview) {
+                        ${overviewChangeFields}
                     }
                 }
             }
-        `,
-        variables: {
-            newOverview,
-        },
-    });
-}
+        }
+    `,
+    variables: {
+        newOverview,
+    },
+});

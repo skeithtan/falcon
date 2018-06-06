@@ -11,55 +11,49 @@ export const fields = `
     level
 `;
 
-export function addInstructionalMaterial(facultyId, newInstructionalMaterial) {
-    return client.mutate({
-        mutation: gql`
-            mutation createInstructionalMaterial($facultyId: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
-                instructionalMaterial(facultyId: $facultyId) {
-                    add(newInstructionalMaterial: $newInstructionalMaterial) {
-                        ${fields}
-                    }
+export const addInstructionalMaterial = (facultyId, newInstructionalMaterial) => client.mutate({
+    mutation: gql`
+        mutation createInstructionalMaterial($facultyId: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
+            instructionalMaterial(facultyId: $facultyId) {
+                add(newInstructionalMaterial: $newInstructionalMaterial) {
+                    ${fields}
                 }
             }
-        `,
-        variables: {
-            facultyId,
-            newInstructionalMaterial,
-        },
-    });
-}
+        }
+    `,
+    variables: {
+        facultyId,
+        newInstructionalMaterial,
+    },
+});
 
-export function updateInstructionalMaterial(facultyId, _id, newInstructionalMaterial) {
-    return client.mutate({
-        mutation: gql`
-            mutation updateInstructionalMaterial($facultyId: ID!, $_id: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
-                instructionalMaterial(facultyId: $facultyId) {
-                    update(_id: $_id, newInstructionalMaterial: $newInstructionalMaterial) {
-                        ${fields}
-                    }
+export const updateInstructionalMaterial = (facultyId, _id, newInstructionalMaterial) => client.mutate({
+    mutation: gql`
+        mutation updateInstructionalMaterial($facultyId: ID!, $_id: ID!, $newInstructionalMaterial: InstructionalMaterialInput!) {
+            instructionalMaterial(facultyId: $facultyId) {
+                update(_id: $_id, newInstructionalMaterial: $newInstructionalMaterial) {
+                    ${fields}
                 }
             }
-        `,
-        variables: {
-            facultyId,
-            _id,
-            newInstructionalMaterial,
-        },
-    });
-}
+        }
+    `,
+    variables: {
+        facultyId,
+        _id,
+        newInstructionalMaterial,
+    },
+});
 
-export function removeInstructionalMaterial(facultyId, _id) {
-    return client.mutate({
-        mutation: gql`
-            mutation removeInstructionalMaterial($facultyId: ID!, $_id: ID!) {
-                instructionalMaterial(facultyId: $facultyId) {
-                    remove(_id: $_id)
-                }
+export const removeInstructionalMaterial = (facultyId, _id) => client.mutate({
+    mutation: gql`
+        mutation removeInstructionalMaterial($facultyId: ID!, $_id: ID!) {
+            instructionalMaterial(facultyId: $facultyId) {
+                remove(_id: $_id)
             }
-        `,
-        variables: {
-            facultyId,
-            _id,
-        },
-    });
-}
+        }
+    `,
+    variables: {
+        facultyId,
+        _id,
+    },
+});
