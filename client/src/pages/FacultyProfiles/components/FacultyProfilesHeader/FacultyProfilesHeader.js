@@ -9,7 +9,7 @@ import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { TABS } from "../faculty_detail_tabs";
 
 
-const FacultyProfilesTabs = ({facultyId, history}) => TABS.map(tab => (
+const renderFacultyProfilesTabs = ({facultyId, history}) => TABS.map(tab => (
     <Tab
         key={tab.identifier}
         label={tab.name}
@@ -49,7 +49,10 @@ export const FacultyProfilesHeader = ({
             <Tabs value={activeTabIndex}
                   classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
                   scrollable>
-                <FacultyProfilesTabs facultyId={activeFacultyId} history={history} />
+                {renderFacultyProfilesTabs({
+                    facultyId: activeFacultyId,
+                    history: history,
+                })}
             </Tabs>
             }
         </div>
