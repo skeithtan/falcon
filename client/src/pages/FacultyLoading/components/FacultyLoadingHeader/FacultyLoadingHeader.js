@@ -4,7 +4,7 @@ import React from "react";
 import { TABS } from "../../tabs";
 
 
-const FacultyLoadingHeaderTabs = ({history}) => TABS.map(({identifier, name, path}) => (
+const renderFacultyLoadingTabs = ({history}) => TABS.map(({identifier, name, path}) => (
     <Tab key={identifier} label={name} onClick={() => history.push(path)} />
 ));
 
@@ -16,7 +16,7 @@ export const FacultyLoadingHeader = ({classes, activeTabIdentifier, history}) =>
                 value={activeTabIndex}
                 classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
             >
-                <FacultyLoadingHeaderTabs history={history} />
+                {renderFacultyLoadingTabs({history})}
             </Tabs>
         </div>
     );
