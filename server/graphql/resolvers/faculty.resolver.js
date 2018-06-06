@@ -3,6 +3,7 @@ import { FACULTY, User } from "../../models/user.model";
 import { getDifference, getLastElement } from "../../utils/array";
 import { addFacultyToSubjects, removeFacultyFromSubjects } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
+import { getUserFromContext } from "../../utils/user_from_context";
 import { DoesNotExistError } from "../errors/does_not_exist.error";
 import { ValidationError } from "../errors/validation.error";
 
@@ -30,6 +31,13 @@ function faculty(object, {_id}) {
                       }
                       throw error;
                   });
+}
+
+async function myProfile(object, args, context) {
+    const user = await getUserFromContext(context);
+    return Faculty.findOne({user: user._id})
+                  .populate("user")
+                  .populate("teachingSubjects");
 }
 
 function mutateFaculty() {
@@ -278,6 +286,7 @@ async function mutateTeachingSubject(object, {facultyId}) {
 export const queryResolvers = {
     faculties: limitAccess(faculties, {allowed: NO_FACULTY, action: "Get all faculties"}),
     faculty: limitAccess(faculty, {allowed: NO_FACULTY, action: "Get single faculty"}),
+    myProfile: limitAccess(myProfile, {allowed: FACULTY, action: "Get current faculty profile"}),
 };
 
 export const mutationResolvers = {

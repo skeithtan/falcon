@@ -7,4 +7,5 @@ extend type Query {
     faculty(_id: ID!): Faculty!
 
     currentUser: User
+    myProfile: Faculty!
 }
