@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {MyProfileHeader} from "./components/MyProfileHeader";
+import React, { Component } from "react";
+import { MyProfileHeader } from "./components/MyProfileHeader";
 
 
 export class MyProfilePage extends Component {
@@ -8,10 +8,11 @@ export class MyProfilePage extends Component {
     }
 
     render() {
+        const {classes} = this.props;
         return (
-            <div>
-                <MyProfileHeader/>
+            <div className={classes.myProfileContainer}>
+                <MyProfileHeader />
             </div>
-        )
+        );
     }
 }
