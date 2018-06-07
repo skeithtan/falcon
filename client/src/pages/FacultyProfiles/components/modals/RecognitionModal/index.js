@@ -7,17 +7,15 @@ import { addRecognition, updateRecognition } from "../../../../../services/facul
 import { RecognitionModal as Component } from "./RecognitionModal";
 
 
-function mapFormToRecognitionInput(form) {
-    return {
-        title: form.title,
-        basis: form.basis,
-        sponsor: form.sponsor,
-        date: {
-            month: form.month,
-            year: form.year,
-        },
-    };
-}
+const mapFormToRecognitionInput = form => ({
+    title: form.title,
+    basis: form.basis,
+    sponsor: form.sponsor,
+    date: {
+        month: form.month,
+        year: form.year,
+    },
+});
 
 const mapDispatchToProps = dispatch => ({
     submitAddRecognitionForm(form, faculty) {

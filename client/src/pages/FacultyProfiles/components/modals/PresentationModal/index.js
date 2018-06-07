@@ -7,21 +7,19 @@ import { addPresentation, updatePresentation } from "../../../../../services/fac
 import { PresentationModal as Component } from "./PresentationModal";
 
 
-function mapFormToPresentationInput(form) {
-    return {
-        title: form.title,
-        category: form.category,
-        date: {
-            month: form.month,
-            year: form.year,
-        },
-        sponsor: form.sponsor,
-        venue: form.venue,
-        conference: form.conference,
-        medium: form.medium,
-        daysDuration: form.daysDuration,
-    };
-}
+const mapFormToPresentationInput = form => ({
+    title: form.title,
+    category: form.category,
+    date: {
+        month: form.month,
+        year: form.year,
+    },
+    sponsor: form.sponsor,
+    venue: form.venue,
+    conference: form.conference,
+    medium: form.medium,
+    daysDuration: form.daysDuration,
+});
 
 const mapDispatchToProps = dispatch => ({
     submitAddPresentationForm(form, faculty) {

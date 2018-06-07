@@ -7,13 +7,11 @@ import { addExtensionWork, updateExtensionWork } from "../../../../../services/f
 import { ExtensionWorkModal as Component } from "./ExtensionWorkModal";
 
 
-function mapFormToExtensionWorkInput(form) {
-    return {
-        title: form.title,
-        roles: form.roles,
-        venue: form.venue,
-    };
-}
+const mapFormToExtensionWorkInput = form => ({
+    title: form.title,
+    roles: form.roles,
+    venue: form.venue,
+});
 
 const mapDispatchToProps = dispatch => ({
     submitAddExtensionWorkForm(form, faculty) {

@@ -7,24 +7,22 @@ import { updateFaculty } from "../../../../../services/faculty/faculty";
 import { UpdateFacultyOverviewModal as Component } from "./UpdateFacultyOverviewModal";
 
 
-function mapFormToGraphQLParameters(form) {
-    return {
-        _id: form._id,
-        newFaculty: {
-            sex: form.sex,
-            employment: form.employment,
-            birthDate: form.birthDate,
+const mapFormToGraphQLParameters = form => ({
+    _id: form._id,
+    newFaculty: {
+        sex: form.sex,
+        employment: form.employment,
+        birthDate: form.birthDate,
+    },
+    newUser: {
+        name: {
+            first: form.firstName,
+            last: form.lastName,
         },
-        newUser: {
-            name: {
-                first: form.firstName,
-                last: form.lastName,
-            },
-            email: form.email,
-            photo: form.photo,
-        },
-    };
-}
+        email: form.email,
+        photo: form.photo,
+    },
+});
 
 const mapStateToProps = state => ({
     faculties: state.faculty.faculties,

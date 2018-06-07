@@ -11,14 +11,14 @@ import {
 import { InstructionalMaterialModal as Component } from "./InstructionalMaterialModal";
 
 
-function mapFormToInstructionalMaterialInput(form) {
+const mapFormToInstructionalMaterialInput = form => {
     const instructionalMaterial = {...form};
     if (instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.TEACHER.identifier) {
         delete instructionalMaterial.level;
     }
 
     return instructionalMaterial;
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     submitAddInstructionalMaterialForm(form, faculty) {
