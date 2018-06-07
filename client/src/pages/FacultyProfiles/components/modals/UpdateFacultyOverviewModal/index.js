@@ -1,8 +1,8 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
+import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { updateFaculty } from "../../../../../services/faculty/faculty";
 import { UpdateFacultyOverviewModal as Component } from "./UpdateFacultyOverviewModal";
 
@@ -26,25 +26,21 @@ function mapFormToGraphQLParameters(form) {
     };
 }
 
-function mapStateToProps(state) {
-    return {
-        faculties: state.faculty.faculties,
-    };
-}
+const mapStateToProps = state => ({
+    faculties: state.faculty.faculties,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        submitForm(form) {
-            const {_id, newFaculty, newUser} = mapFormToGraphQLParameters(form);
-            return updateFaculty(_id, newFaculty, newUser)
-                .then(result => {
-                    const faculty = result.data.faculty.updateFaculty;
-                    dispatch(facultyIsUpdated(faculty));
-                    return faculty;
-                });
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    submitForm(form) {
+        const {_id, newFaculty, newUser} = mapFormToGraphQLParameters(form);
+        return updateFaculty(_id, newFaculty, newUser)
+            .then(result => {
+                const faculty = result.data.faculty.updateFaculty;
+                dispatch(facultyIsUpdated(faculty));
+                return faculty;
+            });
+    },
+});
 
 export const UpdateFacultyOverviewModal = compose(
     connect(mapStateToProps, mapDispatchToProps),

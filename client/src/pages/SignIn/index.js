@@ -17,26 +17,22 @@ function getMessageFromError(error) {
     return "An unknown error occurred";
 }
 
-function mapStateToProps(state) {
-    return state.authentication;
-}
+const mapStateToProps = state => state.authentication;
 
-function mapDispatchToProps(dispatch) {
-    return {
-        attemptSignIn(email, password) {
-            dispatch(signInIsLoading());
-            signIn(email, password)
-                .then(user => {
-                    dispatch(signInSuccess(user));
-                    //TODO: If password is temporary, show tour
-                })
-                .catch(error => {
-                    const errorMessage = getMessageFromError(error);
-                    dispatch(signInError(errorMessage));
-                });
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    attemptSignIn(email, password) {
+        dispatch(signInIsLoading());
+        signIn(email, password)
+            .then(user => {
+                dispatch(signInSuccess(user));
+                //TODO: If password is temporary, show tour
+            })
+            .catch(error => {
+                const errorMessage = getMessageFromError(error);
+                dispatch(signInError(errorMessage));
+            });
+    },
+});
 
 export const SignInPage = compose(
     connect(mapStateToProps, mapDispatchToProps),

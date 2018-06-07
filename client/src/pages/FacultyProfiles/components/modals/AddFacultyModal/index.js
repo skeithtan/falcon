@@ -27,19 +27,17 @@ function mapFormToGraphQLParameters(form) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        submitForm(form) {
-            const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(form);
-            return addFaculty(newFaculty, newUser, temporaryPassword)
-                .then(result => {
-                    const faculty = result.data.faculty.createFaculty;
-                    dispatch(facultyIsAdded(faculty));
-                    return faculty;
-                });
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    submitForm(form) {
+        const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(form);
+        return addFaculty(newFaculty, newUser, temporaryPassword)
+            .then(result => {
+                const faculty = result.data.faculty.createFaculty;
+                dispatch(facultyIsAdded(faculty));
+                return faculty;
+            });
+    },
+});
 
 export const AddFacultyModal = compose(
     connect(null, mapDispatchToProps),

@@ -5,23 +5,21 @@ import { removeInstructionalMaterial } from "../../../../../services/faculty/ins
 import { RemoveInstructionalMaterialModal as Component } from "./RemoveInstructionalMaterialModal";
 
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onConfirmRemove(faculty, _id) {
-            return removeInstructionalMaterial(faculty._id, _id)
-                .then(() => {
-                    const newFaculty = {
-                        ...faculty,
-                        instructionalMaterials: faculty.instructionalMaterials.filter(
-                            instructionalMaterial => instructionalMaterial._id !== _id,
-                        ),
-                    };
+const mapDispatchToProps = dispatch => ({
+    onConfirmRemove(faculty, _id) {
+        return removeInstructionalMaterial(faculty._id, _id)
+            .then(() => {
+                const newFaculty = {
+                    ...faculty,
+                    instructionalMaterials: faculty.instructionalMaterials.filter(
+                        instructionalMaterial => instructionalMaterial._id !== _id,
+                    ),
+                };
 
-                    dispatch(facultyIsUpdated(newFaculty));
-                });
-        },
-    };
-}
+                dispatch(facultyIsUpdated(newFaculty));
+            });
+    },
+});
 
 export const RemoveInstructionalMaterialModal = compose(
     connect(null, mapDispatchToProps),

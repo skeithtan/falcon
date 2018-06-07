@@ -1,9 +1,9 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { genericModalStyle } from "../../../../../components/styles";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
+import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import {
     addInstructionalMaterial,
     updateInstructionalMaterial,
@@ -20,48 +20,46 @@ function mapFormToInstructionalMaterialInput(form) {
     return instructionalMaterial;
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        submitAddInstructionalMaterialForm(form, faculty) {
-            const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
-            return addInstructionalMaterial(faculty._id, instructionalMaterial)
-                .then(result => {
-                    const newInstructionalMaterial = result.data.instructionalMaterial.add;
-                    const newFaculty = {
-                        ...faculty,
-                        instructionalMaterials: [
-                            ...faculty.instructionalMaterials,
-                            newInstructionalMaterial,
-                        ],
-                    };
+const mapDispatchToProps = dispatch => ({
+    submitAddInstructionalMaterialForm(form, faculty) {
+        const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
+        return addInstructionalMaterial(faculty._id, instructionalMaterial)
+            .then(result => {
+                const newInstructionalMaterial = result.data.instructionalMaterial.add;
+                const newFaculty = {
+                    ...faculty,
+                    instructionalMaterials: [
+                        ...faculty.instructionalMaterials,
+                        newInstructionalMaterial,
+                    ],
+                };
 
-                    dispatch(facultyIsUpdated(newFaculty));
-                    return newInstructionalMaterial;
-                });
-        },
+                dispatch(facultyIsUpdated(newFaculty));
+                return newInstructionalMaterial;
+            });
+    },
 
-        submitUpdateInstructionalMaterialForm(form, instructionalMaterialId, faculty) {
-            const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
-            return updateInstructionalMaterial(faculty._id, instructionalMaterialId, instructionalMaterial)
-                .then(result => {
-                    const newInstructionalMaterial = result.data.instructionalMaterial.update;
-                    const newFaculty = {
-                        ...faculty,
-                        instructionalMaterials: faculty.instructionalMaterials.map(instructionalMaterial => {
-                            if (instructionalMaterial._id === instructionalMaterialId) {
-                                return newInstructionalMaterial;
-                            }
+    submitUpdateInstructionalMaterialForm(form, instructionalMaterialId, faculty) {
+        const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
+        return updateInstructionalMaterial(faculty._id, instructionalMaterialId, instructionalMaterial)
+            .then(result => {
+                const newInstructionalMaterial = result.data.instructionalMaterial.update;
+                const newFaculty = {
+                    ...faculty,
+                    instructionalMaterials: faculty.instructionalMaterials.map(instructionalMaterial => {
+                        if (instructionalMaterial._id === instructionalMaterialId) {
+                            return newInstructionalMaterial;
+                        }
 
-                            return instructionalMaterial;
-                        }),
-                    };
+                        return instructionalMaterial;
+                    }),
+                };
 
-                    dispatch(facultyIsUpdated(newFaculty));
-                    return newInstructionalMaterial;
-                });
-        },
-    };
-}
+                dispatch(facultyIsUpdated(newFaculty));
+                return newInstructionalMaterial;
+            });
+    },
+});
 
 export const InstructionalMaterialModal = compose(
     connect(null, mapDispatchToProps),

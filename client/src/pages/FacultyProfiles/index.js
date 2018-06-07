@@ -7,20 +7,15 @@ import { FacultyProfilesPage as Component } from "./FacultyProfiles";
 import { styles } from "./styles";
 
 
-function mapStateToProps(state) {
-    return {
-        faculty: state.faculty,
-        ...state.facultyProfiles.facultyDetails,
-    };
-}
+const mapStateToProps = state => ({
+    ...state.faculty,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchData() {
-            fetchAllFaculties(dispatch);
-        },
-    }
-}
+const mapDispatchToProps = dispatch => ({
+    fetchData() {
+        fetchAllFaculties(dispatch);
+    },
+});
 
 export const FacultyProfilesPage = compose(
     connect(mapStateToProps, mapDispatchToProps),

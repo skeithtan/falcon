@@ -7,18 +7,14 @@ import { styles } from "./styles";
 import { UserButton as Component } from "./UserButton";
 
 
-function mapStateToProps(state) {
-    return state.authentication;
-}
+const mapStateToProps = state => state.authentication;
 
-function mapDispatchToProps(dispatch) {
-    return {
-        signOut() {
-            signOut();
-            dispatch(signOutSuccess());
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    signOut() {
+        signOut();
+        dispatch(signOutSuccess());
+    },
+});
 
 export const UserButton = compose(
     withStyles(styles),

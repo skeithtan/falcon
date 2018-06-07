@@ -6,19 +6,15 @@ import { styles } from "./styles";
 import { SubjectsTab as Component } from "./Subjects";
 
 
-function mapStateToProps(state) {
-    return {
-        ...state.subject,
-    };
-}
+const mapStateToProps = state => ({
+    ...state.subject,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchData() {
-            fetchSubjectList(dispatch);
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    fetchData() {
+        fetchSubjectList(dispatch);
+    },
+});
 
 export const SubjectsTab = compose(
     connect(mapStateToProps, mapDispatchToProps),

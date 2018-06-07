@@ -6,11 +6,9 @@ import { FacultyLoadingHeader as Component } from "./FacultyLoadingHeader";
 import { styles } from "./styles";
 
 
-function mapStateToProps(state) {
-    return {
-        activeTabIdentifier: state.facultyLoading.activeTabIdentifier,
-    };
-}
+const mapStateToProps = state => ({
+    activeTabIdentifier: state.facultyLoading.activeTabIdentifier,
+});
 
 export const FacultyLoadingHeader = compose(
     connect(mapStateToProps, null),
