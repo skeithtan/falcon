@@ -14,11 +14,4 @@ export const styles = theme => ({
     selectFacultyText: {
         color: theme.palette.grey["600"],
     },
-    cardsContainer: {
-        ...pageContainer(theme),
-        gridRowGap: `${theme.spacing.unit * 3}px`,
-    },
-    expansionCardsContainer: {
-        ...pageContainer(theme),
-    },
 });

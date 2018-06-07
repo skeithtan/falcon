@@ -31,7 +31,6 @@ export class FacultyDetail extends Component {
                 path={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${tab.path}`}
                 render={() => React.createElement(tab.component, {
                     faculty: activeFaculty,
-                    classes: classes,
                 })} />
         ));
     };
