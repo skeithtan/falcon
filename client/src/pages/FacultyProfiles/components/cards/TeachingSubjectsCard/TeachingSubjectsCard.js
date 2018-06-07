@@ -10,7 +10,7 @@ import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
 import { TableRowActions } from "../../../../../components/TableRowActions";
 import { TableToolbar } from "../../../../../components/TableToolbar";
-import { fetchTeachingSubjects } from "../../../../../services/faculty/teaching_subjects";
+import { fetchTeachingSubjects } from "../../../../../services/faculty/teaching_subject";
 import { getFullName } from "../../../../../utils/user.util";
 import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
 
