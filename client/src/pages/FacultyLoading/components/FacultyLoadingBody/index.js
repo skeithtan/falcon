@@ -5,19 +5,15 @@ import { getTabFromIdentifier } from "../../tabs";
 import { FacultyLoadingBody as Component } from "./FacultyLoadingBody";
 
 
-function mapStateToProps(state) {
-    return {
-        activeTab: getTabFromIdentifier(state.facultyLoading.activeTabIdentifier),
-    };
-}
+const mapStateToProps = state => ({
+    activeTab: getTabFromIdentifier(state.facultyLoading.activeTabIdentifier),
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onTabChange(tab) {
-            dispatch(facultyLoadingActiveTabChanged(tab));
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    onTabChange(tab) {
+        dispatch(facultyLoadingActiveTabChanged(tab));
+    },
+});
 
 export const FacultyLoadingBody = compose(
     connect(mapStateToProps, mapDispatchToProps),

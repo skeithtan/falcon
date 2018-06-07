@@ -9,38 +9,34 @@ import { FacultyDetail as Component } from "./FacultyDetail";
 import { styles } from "./styles";
 
 
-function mapStateToProps(state) {
-    return {
-        activeTab: getTabFromIdentifier(state.facultyProfiles.activeTabIdentifier),
-        faculty: state.faculty,
-        ...state.facultyProfiles.facultyDetails,
-    };
-}
+const mapStateToProps = state => ({
+    activeTab: getTabFromIdentifier(state.facultyProfiles.activeTabIdentifier),
+    faculty: state.faculty,
+    ...state.facultyProfiles.facultyDetails,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        getFacultyDetails(faculty) {
-            dispatch(detailsIsLoading());
-            return fetchFacultyDetails(faculty._id)
-                .then(result => {
-                    const overview = result.data.faculty;
-                    const newFaculty = {
-                        ...faculty,
-                        ...overview,
-                    };
+const mapDispatchToProps = dispatch => ({
+    getFacultyDetails(faculty) {
+        dispatch(detailsIsLoading());
+        return fetchFacultyDetails(faculty._id)
+            .then(result => {
+                const overview = result.data.faculty;
+                const newFaculty = {
+                    ...faculty,
+                    ...overview,
+                };
 
-                    dispatch(facultyIsUpdated(newFaculty));
-                })
-                .catch(error => {
-                    dispatch(detailFetchError([error.message]))
-                });
+                dispatch(facultyIsUpdated(newFaculty));
+            })
+            .catch(error => {
+                dispatch(detailFetchError([error.message]));
+            });
 
-        },
-        setDetailsFetched() {
-            dispatch(detailFetched());
-        },
-    };
-}
+    },
+    setDetailsFetched() {
+        dispatch(detailFetched());
+    },
+});
 
 export const FacultyDetail = compose(
     connect(mapStateToProps, mapDispatchToProps),

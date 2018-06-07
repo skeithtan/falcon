@@ -6,11 +6,9 @@ import { PageDrawer as Component } from "./PageDrawer";
 import { styles } from "./styles";
 
 
-function mapStateToProps(state) {
-    return {
-        user: state.authentication.user,
-    };
-}
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
 
 export const PageDrawer = compose(
     connect(mapStateToProps, null),

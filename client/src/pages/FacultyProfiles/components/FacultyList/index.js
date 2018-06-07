@@ -6,21 +6,17 @@ import { FacultyList as Component } from "./FacultyList";
 import { styles } from "./styles";
 
 
-function mapStateToProps(state) {
-    return {
-        activeFacultyId: state.facultyProfiles.activeFacultyId,
-        searchKeyword: state.facultyProfiles.searchKeyword,
-        ...state.faculty,
-    };
-}
+const mapStateToProps = state => ({
+    activeFacultyId: state.facultyProfiles.activeFacultyId,
+    searchKeyword: state.facultyProfiles.searchKeyword,
+    ...state.faculty,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onFacultyClick(faculty) {
-            dispatch(detailsIsLoading());
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    onFacultyClick(faculty) {
+        dispatch(detailsIsLoading());
+    },
+});
 
 export const FacultyList = compose(
     connect(mapStateToProps, mapDispatchToProps),

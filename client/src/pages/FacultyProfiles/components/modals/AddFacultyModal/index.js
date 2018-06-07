@@ -8,38 +8,34 @@ import { AddFacultyModal as Component } from "./AddFacultyModal";
 import { styles } from "./styles";
 
 
-function mapFormToGraphQLParameters(form) {
-    return {
-        newUser: {
-            name: {
-                first: form.firstName,
-                last: form.lastName,
-            },
-            email: form.email,
-            photo: form.photo,
+const mapFormToGraphQLParameters = form => ({
+    newUser: {
+        name: {
+            first: form.firstName,
+            last: form.lastName,
         },
-        temporaryPassword: form.password,
-        newFaculty: {
-            sex: form.sex,
-            employment: form.employment,
-            birthDate: form.birthDate,
-        },
-    };
-}
+        email: form.email,
+        photo: form.photo,
+    },
+    temporaryPassword: form.password,
+    newFaculty: {
+        sex: form.sex,
+        employment: form.employment,
+        birthDate: form.birthDate,
+    },
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        submitForm(form) {
-            const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(form);
-            return addFaculty(newFaculty, newUser, temporaryPassword)
-                .then(result => {
-                    const faculty = result.data.faculty.createFaculty;
-                    dispatch(facultyIsAdded(faculty));
-                    return faculty;
-                });
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    submitForm(form) {
+        const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(form);
+        return addFaculty(newFaculty, newUser, temporaryPassword)
+            .then(result => {
+                const faculty = result.data.faculty.createFaculty;
+                dispatch(facultyIsAdded(faculty));
+                return faculty;
+            });
+    },
+});
 
 export const AddFacultyModal = compose(
     connect(null, mapDispatchToProps),

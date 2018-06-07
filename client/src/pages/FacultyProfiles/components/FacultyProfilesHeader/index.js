@@ -7,21 +7,17 @@ import { FacultyProfilesHeader as Component } from "./FacultyProfilesHeader";
 import { styles } from "./styles";
 
 
-function mapStateToProps(state) {
-    return {
-        searchKeyword: state.facultyProfiles.searchKeyword,
-        activeFacultyId: state.facultyProfiles.activeFacultyId,
-        activeTabIdentifier: state.facultyProfiles.activeTabIdentifier,
-    };
-}
+const mapStateToProps = state => ({
+    searchKeyword: state.facultyProfiles.searchKeyword,
+    activeFacultyId: state.facultyProfiles.activeFacultyId,
+    activeTabIdentifier: state.facultyProfiles.activeTabIdentifier,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onSearchInputChange(searchKeyword) {
-            dispatch(searchKeywordChanged(searchKeyword));
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    onSearchInputChange(searchKeyword) {
+        dispatch(searchKeywordChanged(searchKeyword));
+    },
+});
 
 export const FacultyProfilesHeader = compose(
     connect(mapStateToProps, mapDispatchToProps),

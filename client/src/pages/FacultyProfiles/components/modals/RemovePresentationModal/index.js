@@ -5,21 +5,19 @@ import { removePresentation } from "../../../../../services/faculty/presentation
 import { RemovePresentationModal as Component } from "./RemovePresentationModal";
 
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onConfirmRemove(faculty, _id) {
-            return removePresentation(faculty._id, _id)
-                .then(() => {
-                    const newFaculty = {
-                        ...faculty,
-                        presentations: faculty.presentations.filter(presentation => presentation._id !== _id),
-                    };
+const mapDispatchToProps = dispatch => ({
+    onConfirmRemove(faculty, _id) {
+        return removePresentation(faculty._id, _id)
+            .then(() => {
+                const newFaculty = {
+                    ...faculty,
+                    presentations: faculty.presentations.filter(presentation => presentation._id !== _id),
+                };
 
-                    dispatch(facultyIsUpdated(newFaculty));
-                });
-        },
-    };
-}
+                dispatch(facultyIsUpdated(newFaculty));
+            });
+    },
+});
 
 export const RemovePresentationModal = compose(
     connect(null, mapDispatchToProps),

@@ -5,23 +5,21 @@ import { removeExtensionWork } from "../../../../../services/faculty/extension_w
 import { RemoveExtensionWorkModal as Component } from "./RemoveExtensionWorkModal";
 
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onConfirmRemove(faculty, _id) {
-            return removeExtensionWork(faculty._id, _id)
-                .then(() => {
-                    const newFaculty = {
-                        ...faculty,
-                        extensionWorks: faculty.extensionWorks.filter(
-                            extensionWork => extensionWork._id !== _id,
-                        ),
-                    };
+const mapDispatchToProps = dispatch => ({
+    onConfirmRemove(faculty, _id) {
+        return removeExtensionWork(faculty._id, _id)
+            .then(() => {
+                const newFaculty = {
+                    ...faculty,
+                    extensionWorks: faculty.extensionWorks.filter(
+                        extensionWork => extensionWork._id !== _id,
+                    ),
+                };
 
-                    dispatch(facultyIsUpdated(newFaculty));
-                });
-        },
-    };
-}
+                dispatch(facultyIsUpdated(newFaculty));
+            });
+    },
+});
 
 export const RemoveExtensionWorkModal = compose(
     connect(null, mapDispatchToProps),

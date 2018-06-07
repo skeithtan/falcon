@@ -5,21 +5,19 @@ import { removeRecognition } from "../../../../../services/faculty/recognition";
 import { RemoveRecognitionModal as Component } from "./RemoveRecognitionModal";
 
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onConfirmRemove(faculty, _id) {
-            return removeRecognition(faculty._id, _id)
-                .then(() => {
-                    const newFaculty = {
-                        ...faculty,
-                        recognitions: faculty.recognitions.filter(recognition => recognition._id !== _id),
-                    };
+const mapDispatchToProps = dispatch => ({
+    onConfirmRemove(faculty, _id) {
+        return removeRecognition(faculty._id, _id)
+            .then(() => {
+                const newFaculty = {
+                    ...faculty,
+                    recognitions: faculty.recognitions.filter(recognition => recognition._id !== _id),
+                };
 
-                    dispatch(facultyIsUpdated(newFaculty));
-                });
-        },
-    };
-}
+                dispatch(facultyIsUpdated(newFaculty));
+            });
+    },
+});
 
 export const RemoveRecognitionModal = compose(
     connect(null, mapDispatchToProps),

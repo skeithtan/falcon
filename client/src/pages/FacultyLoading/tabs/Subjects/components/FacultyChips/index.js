@@ -4,19 +4,15 @@ import { fetchAllFaculties } from "../../../../../../utils/faculty.util";
 import { FacultyChips as Component } from "./FacultyChips";
 
 
-function mapStateToProps(state) {
-    return {
-        ...state.faculty,
-    };
-}
+const mapStateToProps = state => ({
+    ...state.faculty,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchData() {
-            fetchAllFaculties(dispatch);
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    fetchData() {
+        fetchAllFaculties(dispatch);
+    },
+});
 
 export const FacultyChips = compose(
     connect(mapStateToProps, mapDispatchToProps),

@@ -8,35 +8,31 @@ import { styles } from "./styles";
 import { SubjectModal as Component } from "./SubjectModal";
 
 
-function mapStateToProps(state) {
-    return {
-        ...state.faculty,
-    };
-}
+const mapStateToProps = state => ({
+    ...state.faculty,
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchData() {
-            fetchAllFaculties(dispatch);
-        },
-        submitAddSubject(form) {
-            return addSubject(form)
-                .then(result => {
-                    const subject = result.data.subject.add;
-                    dispatch(subjectIsAdded(subject));
-                    return subject;
-                });
-        },
-        submitUpdateSubject(subject, form) {
-            return updateSubject(subject._id, form)
-                .then(result => {
-                    const subject = result.data.subject.update;
-                    dispatch(subjectIsUpdated(subject));
-                    return subject;
-                });
-        },
-    };
-}
+const mapDispatchToProps = dispatch => ({
+    fetchData() {
+        fetchAllFaculties(dispatch);
+    },
+    submitAddSubject(form) {
+        return addSubject(form)
+            .then(result => {
+                const subject = result.data.subject.add;
+                dispatch(subjectIsAdded(subject));
+                return subject;
+            });
+    },
+    submitUpdateSubject(subject, form) {
+        return updateSubject(subject._id, form)
+            .then(result => {
+                const subject = result.data.subject.update;
+                dispatch(subjectIsUpdated(subject));
+                return subject;
+            });
+    },
+});
 
 export const SubjectModal = compose(
     connect(mapStateToProps, mapDispatchToProps),

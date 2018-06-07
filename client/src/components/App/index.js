@@ -6,11 +6,9 @@ import { App as Component } from "./App";
 import { styles } from "./styles";
 
 
-function mapStateToProps(state) {
-    return {
-        user: state.authentication.user,
-    };
-}
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
 
 export const App = compose(
     connect(mapStateToProps, null),
