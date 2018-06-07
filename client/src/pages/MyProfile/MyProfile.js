@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import {MyProfileHeader} from "./components/MyProfileHeader";
+
 
 export class MyProfilePage extends Component {
     componentDidMount() {
@@ -7,7 +9,9 @@ export class MyProfilePage extends Component {
 
     render() {
         return (
-            <h1>Hello, MyProfile</h1>
+            <div>
+                <MyProfileHeader/>
+            </div>
         )
     }
 }
