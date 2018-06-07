@@ -4,6 +4,7 @@ import { authentication } from "./authentication.reducer";
 import { faculty } from "./faculty.reducer";
 import { facultyLoading } from "./faculty_loading.reducer";
 import { facultyProfiles } from "./faculty_profiles.reducer";
+import { myProfile } from "./my_profile.reducer";
 import { subject } from "./subject.reducer";
 
 
@@ -13,6 +14,7 @@ const appReducer = combineReducers({
     facultyLoading,
     faculty,
     subject,
+    myProfile,
 });
 
 export const reducer = (state, action) => {
