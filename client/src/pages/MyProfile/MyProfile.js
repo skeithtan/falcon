@@ -12,6 +12,11 @@ import { MyProfileHeader } from "./components/MyProfileHeader";
 export class MyProfilePage extends Component {
     componentDidMount() {
         document.title = "My Profile - Falcon";
+
+        const {profile, fetchData} = this.props;
+        if (!profile) {
+            fetchData();
+        }
     }
 
     renderTabs = faculty => TABS.map(tab => (
@@ -41,23 +46,22 @@ export class MyProfilePage extends Component {
     );
 
     render() {
-        const {classes} = this.props;
-        let faculty = null; // TODO: Redux
-        let errors = null; // TODO: Redux
-
+        const {classes, profile, isLoading, errors, match} = this.props;
         return (
             <div className={classes.myProfileContainer}>
-                <MyProfileHeader />
-                {!faculty && this.renderLoading()}
+                <Route path={`${match.url}/:activeTab?`} component={MyProfileHeader} />
+                {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
 
-                {faculty &&
-                <Switch>
-                    {this.renderTabs(faculty)}
-                    <Route render={() => (
-                        <Redirect to={`/${MY_PROFILE.path}/${OVERVIEW_TAB.path}`} />
-                    )} />
-                </Switch>
+                {profile &&
+                <div className={classes.myProfileBodyContainer}>
+                    <Switch>
+                        {this.renderTabs(profile)}
+                        <Route render={() => (
+                            <Redirect to={`/${MY_PROFILE.path}/${OVERVIEW_TAB.path}`} />
+                        )} />
+                    </Switch>
+                </div>
                 }
             </div>
         );

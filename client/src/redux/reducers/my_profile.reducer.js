@@ -2,7 +2,7 @@ import { MY_PROFILE_FETCH_ERROR, MY_PROFILE_IS_FETCHED, MY_PROFILE_IS_LOADING } 
 
 
 const initialState = {
-    myProfile: null,
+    profile: null,
     isLoading: false,
     errors: null,
 };
@@ -11,19 +11,19 @@ export function myProfile(state = initialState, action) {
     switch (action.type) {
         case MY_PROFILE_IS_LOADING:
             return {
-                myProfile: null,
+                profile: null,
                 isLoading: true,
                 errors: null,
             };
         case MY_PROFILE_FETCH_ERROR:
             return {
-                myProfile: null,
+                profile: null,
                 isLoading: false,
                 errors: action.errors,
             };
         case MY_PROFILE_IS_FETCHED:
             return {
-                myProfile: action.profile,
+                profile: action.profile,
                 isLoading: false,
                 errors: action.errors,
             };

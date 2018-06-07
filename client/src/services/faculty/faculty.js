@@ -86,6 +86,16 @@ export const fetchFacultyDetails = _id => client.query({
     },
 });
 
+export const fetchMyProfile = () => client.query({
+    query: gql`
+        query {
+            myProfile {
+                ${fullFacultyDetails}
+            }
+        }
+    `
+});
+
 export const addFaculty = (newFaculty, newUser, temporaryPassword) => client.mutate({
     mutation: gql`
         mutation createFaculty($newFaculty: FacultyInput!, $newUser: UserInput!, $temporaryPassword: String!) {

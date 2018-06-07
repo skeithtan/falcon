@@ -1,14 +1,15 @@
-import React from "react";
-import { TABS} from "../../../FacultyProfiles/components/faculty_detail_tabs";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import React from "react";
+import { TABS } from "../../../FacultyProfiles/components/faculty_detail_tabs";
+
 
 const renderMyProfileTabs = ({history}) => TABS.map(({identifier, name, path}) => (
     <Tab key={identifier} label={name} onClick={() => history.push(path)} />
 ));
 
-export const MyProfileHeader = ({classes, activeTabIdentifier, history}) => {
-    const activeTabIndex = TABS.findIndex(tab => tab.identifier === activeTabIdentifier);
+export const MyProfileHeader = ({classes, match, history}) => {
+    const activeTabIndex = TABS.findIndex(tab => tab.path === match.params.activeTab) || 0;
     return (
         <div className={classes.header}>
             <Tabs
