@@ -1,5 +1,10 @@
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
+export const page = theme => ({
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+});
 
 export const formContainer = theme => ({
     width: 720,
