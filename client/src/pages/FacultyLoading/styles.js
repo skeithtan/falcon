@@ -1,7 +1,6 @@
+import { page } from "../../components/styles";
+
+
 export const styles = theme => ({
-    facultyLoadingContainer: {
-        display: "flex",
-        flexDirection: "column",
-        height: "100%"
-    }
+    facultyLoadingContainer: page(theme),
 });
