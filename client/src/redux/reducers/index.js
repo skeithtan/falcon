@@ -18,6 +18,7 @@ const appReducer = combineReducers({
 });
 
 export const reducer = (state, action) => {
+    // Clear state on sign out
     if (action.type === SIGN_OUT_SUCCESS) {
         state = undefined;
     }
