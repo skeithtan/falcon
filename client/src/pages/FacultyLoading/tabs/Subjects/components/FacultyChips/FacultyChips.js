@@ -35,7 +35,7 @@ export class FacultyChips extends Component {
             // Make a chip
             .map(faculty => (
                 <Grid item key={faculty._id}>
-                    <FacultyChip faculty={faculty} />
+                    <FacultyChip clickable faculty={faculty}/>
                 </Grid>
             ));
 
