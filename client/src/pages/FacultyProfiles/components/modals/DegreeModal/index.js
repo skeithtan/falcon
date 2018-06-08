@@ -54,11 +54,13 @@ const mapDispatchToProps = dispatch => ({
     },
 
     submitRequestAddDegreeForm(form) {
-        return requestAddDegree(form);
+        return requestAddDegree(form)
+            .then(result => result.data.requestProfileChanges.degrees.add);
     },
 
     submitRequestUpdateDegreeForm(form, degreeId) {
-        return requestUpdateDegree(degreeId, form);
+        return requestUpdateDegree(degreeId, form)
+            .then(result => result.data.requestProfileChanges.degrees.update);
     },
 });
 
