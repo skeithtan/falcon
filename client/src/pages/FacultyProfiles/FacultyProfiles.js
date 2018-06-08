@@ -30,17 +30,17 @@ export class FacultyProfilesPage extends Component {
     );
 
     render() {
-        const {classes, match, faculty} = this.props;
+        const {classes, match, isLoading, errors, faculties} = this.props;
 
-        if (faculty.isLoading) {
+        if (isLoading) {
             return this.renderLoading();
         }
 
-        if (faculty.errors) {
-            return this.renderErrors(faculty.errors);
+        if (errors) {
+            return this.renderErrors(errors);
         }
 
-        if (!faculty.faculties) {
+        if (!faculties) {
             return null;
         }
 
