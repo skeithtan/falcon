@@ -6,7 +6,7 @@ import {
     InstructionalMaterialSchema,
     PresentationSchema,
     RecognitionSchema,
-} from "./faculty.model";
+} from "./faculty_subdocuments.model";
 
 
 const ChangeTemplate = {
@@ -30,7 +30,11 @@ const ChangeTemplate = {
 function makeChangeSchema({reference, schema}) {
     const mutationChangeSchema = {...ChangeTemplate};
     mutationChangeSchema.changeObjectId.ref = reference;
-    mutationChangeSchema.object = {...schema};
+    mutationChangeSchema.object = {
+        ...schema,
+        _id: false,
+    };
+
     return new Schema(mutationChangeSchema);
 }
 
