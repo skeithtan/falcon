@@ -2,7 +2,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
-import { facultyListFetchError } from "../../redux/actions/faculty.actions";
 import { myProfileFetchError, myProfileIsFetched, myProfileIsLoading } from "../../redux/actions/my_profile.actions";
 import { fetchMyProfile } from "../../services/faculty/faculty";
 import { MyProfilePage as Component } from "./MyProfile";
@@ -25,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
                 }
             })
             .catch(error => {
-                dispatch(facultyListFetchError([error.message]));
+                dispatch(myProfileFetchError([error.message]));
             });
     },
 });
