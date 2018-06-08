@@ -13,13 +13,13 @@ export const OverviewTab = ({classes, faculty}) => (
                 <OverviewCard faculty={faculty} />
             </Grid>
             <Grid item>
+                <TeachingSubjectsCard faculty={faculty} />
+            </Grid>
+            <Grid item>
                 <DegreeCard faculty={faculty} />
             </Grid>
             <Grid item>
                 <RecognitionsCard faculty={faculty} />
-            </Grid>
-            <Grid item>
-                <TeachingSubjectsCard faculty={faculty} />
             </Grid>
         </Grid>
     </div>

@@ -89,7 +89,7 @@ export class SubjectModal extends ModalFormComponent {
     );
 
     renderMenuItems = faculties => faculties.map(faculty => {
-        const selected = this.state.form.faculties.indexOf(faculty._id) !== -1;
+        const selected = this.state.form.faculties.includes(faculty._id);
         const className = selected ? this.props.classes.selectedFaculty : "";
 
         return (

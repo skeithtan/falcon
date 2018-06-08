@@ -37,7 +37,7 @@ export class FacultyProfilesPage extends Component {
             match,
             isLoading,
             errors,
-            faculties
+            faculties,
         } = this.props;
 
         if (isLoading) {
