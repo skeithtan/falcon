@@ -1,28 +1,16 @@
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import Grid from "@material-ui/core/Grid";
+import ListItem from "@material-ui/core/ListItem";
 import React, { Component } from "react";
 import { DetailCard } from "../../../../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
-import { TableRowActions } from "../../../../../components/TableRowActions";
+import { SubjectChip } from "../../../../../components/SubjectChip";
 import { TableToolbar } from "../../../../../components/TableToolbar";
 import { fetchTeachingSubjects } from "../../../../../services/faculty/teaching_subjects";
 import { getFullName } from "../../../../../utils/user.util";
 import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
 
-
-const TeachingSubjectRow = ({subject, onRemoveButtonClick}) => (
-    <TableRow>
-        <TableCell>{subject.code}</TableCell>
-        <TableCell>{subject.name}</TableCell>
-        <TableRowActions removeButtonTooltipTitle="Remove this subject"
-                         onRemoveButtonClick={onRemoveButtonClick} />
-    </TableRow>
-);
 
 export class TeachingSubjectsCard extends Component {
     state = {
@@ -33,19 +21,8 @@ export class TeachingSubjectsCard extends Component {
         removeSubjectModalIsShowing: false,
     };
 
-    renderRows = teachingSubjects => teachingSubjects.map(subject =>
-        <TeachingSubjectRow
-            subject={subject}
-            key={subject._id}
-            onRemoveButtonClick={() => this.setState({
-                activeSubject: subject,
-                removeSubjectModalIsShowing: true,
-            })}
-        />,
-    );
-
     fetchData = () => {
-        this.setState({errors: null, isLoading: true});
+        this.setState({errors: null, isLoading: true, teachingSubjects: null});
         fetchTeachingSubjects(this.props.faculty._id)
         // FIXME: Memory leak in this.setState when different faculty is selected before results arrive
             .then(result => this.setState({
@@ -90,24 +67,26 @@ export class TeachingSubjectsCard extends Component {
     renderTeachingSubjects = teachingSubjects => {
         const teachingSubjectsIsEmpty = teachingSubjects.length === 0;
         const {activeSubject, removeSubjectModalIsShowing} = this.state;
-        const {faculty} = this.props;
+        const {faculty, classes} = this.props;
 
         return (
-            <div>
+            <ListItem>
                 {!teachingSubjectsIsEmpty &&
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Code</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell padding="none">Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
+                <Grid container spacing={8} className={classes.subjectList}>
+                    {teachingSubjects.map(subject => (
+                        <Grid item key={subject._id}>
+                            <SubjectChip
+                                clickable
+                                subject={subject}
+                                handleDelete={() => this.setState({
+                                    activeSubject: subject,
+                                    removeSubjectModalIsShowing: true,
+                                })}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
 
-                    <TableBody>
-                        {this.renderRows(teachingSubjects)}
-                    </TableBody>
-                </Table>
                 }
 
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
@@ -120,7 +99,7 @@ export class TeachingSubjectsCard extends Component {
                     onSubjectRemoved={() => this.onSubjectRemoved(activeSubject)}
                 />
                 }
-            </div>
+            </ListItem>
         );
     };
 
@@ -133,13 +112,19 @@ export class TeachingSubjectsCard extends Component {
         this.fetchData();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.faculty._id !== this.props.faculty._id && !this.state.isLoading) {
+            this.fetchData();
+        }
+    }
+
     render() {
         const {isLoading, errors, teachingSubjects} = this.state;
 
         return (
             <DetailCard>
-                <TableToolbar tableTitle="Teaching Subjects Assignment"
-                              addButtonTooltipTitle="Assign a teaching subject"
+                <TableToolbar tableTitle="Subjects of Expertise"
+                              addButtonTooltipTitle="Assign a subject"
                               onAddButtonClick={this.onAddButtonClick} />
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
