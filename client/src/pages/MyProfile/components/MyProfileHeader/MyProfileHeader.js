@@ -2,10 +2,11 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import React from "react";
 import { TABS } from "../../../FacultyProfiles/components/faculty_detail_tabs";
+import { MY_PROFILE } from "../../../index";
 
 
 const renderMyProfileTabs = ({history}) => TABS.map(({identifier, name, path}) => (
-    <Tab key={identifier} label={name} onClick={() => history.push(path)} />
+    <Tab key={identifier} label={name} onClick={() => history.push(`/${MY_PROFILE.path}/${path}`)} />
 ));
 
 export const MyProfileHeader = ({classes, match, history}) => {
