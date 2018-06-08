@@ -13,6 +13,7 @@ import React from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { DEGREE } from "../../../../../enums/faculty.enums";
 import { validateForm, yearValidators } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
 
 
 function getFormErrors(form) {
@@ -44,22 +45,42 @@ export class DegreeModal extends ModalFormComponent {
 
     get submitAddAction() {
         const form = this.state.form;
-        const {faculty, submitAddDegreeForm} = this.props;
-        return () => submitAddDegreeForm(form, faculty);
+        const {faculty, submitAddDegreeForm, user, submitRequestAddDegreeForm} = this.props;
+
+        return getObjectForUserType({
+            user: user,
+            ifAdministrative: () => submitAddDegreeForm(form, faculty),
+            ifFaculty: () => submitRequestAddDegreeForm(form),
+        });
     }
 
     get submitUpdateAction() {
         const form = this.state.form;
-        const {faculty, degree, submitUpdateDegreeForm} = this.props;
-        return () => submitUpdateDegreeForm(form, degree._id, faculty);
+        const {faculty, degree, submitUpdateDegreeForm, submitRequestUpdateDegreeForm, user} = this.props;
+
+        return getObjectForUserType({
+            user: user,
+            ifAdministrative: () => submitUpdateDegreeForm(form, degree._id, faculty),
+            ifFaculty: () => submitRequestUpdateDegreeForm(form, degree._id),
+        });
     }
 
     get buttonName() {
-        return this.props.action === "add" ? "Add Degree" : "Update Degree";
+        const {action, user} = this.props;
+        return getObjectForUserType({
+            user: user,
+            ifAdministrative: action === "add" ? "Add Degree" : "Update Degree",
+            ifFaculty: action === "add" ? "Request Add Degree" : "Request Update Degree",
+        });
     };
 
     get modalTitle() {
-        return this.props.action === "add" ? "Add a Degree" : "Update Degree";
+        const {action, user} = this.props;
+        return getObjectForUserType({
+            user: user,
+            ifAdministrative: action === "add" ? "Add a Degree" : "Update Degree",
+            ifFaculty: action === "add" ? "Request Add Degree" : "Request Update Degree",
+        });
     }
 
     render() {

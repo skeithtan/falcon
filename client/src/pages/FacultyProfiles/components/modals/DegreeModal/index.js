@@ -4,8 +4,16 @@ import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { addDegree, updateDegree } from "../../../../../services/faculty/degree";
+import {
+    addDegree as requestAddDegree,
+    updateDegree as requestUpdateDegree,
+} from "../../../../../services/faculty/request_profile_changes/degree";
 import { DegreeModal as Component } from "./DegreeModal";
 
+
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
 
 const mapDispatchToProps = dispatch => ({
     submitAddDegreeForm(form, faculty) {
@@ -44,9 +52,17 @@ const mapDispatchToProps = dispatch => ({
                 return newDegree;
             });
     },
+
+    submitRequestAddDegreeForm(form) {
+        return requestAddDegree(form);
+    },
+
+    submitRequestUpdateDegreeForm(form, degreeId) {
+        return requestUpdateDegree(degreeId, form);
+    },
 });
 
 export const DegreeModal = compose(
-    connect(null, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     withStyles(genericModalStyle),
 )(Component);
