@@ -17,11 +17,12 @@ const overviewChanges = faculty => ({
 
 const degreeChanges = faculty => {
     function getDegree(_id) {
-        const degree = faculty.degrees.id(_id);
+        let degree = faculty.degrees.id(_id);
         if (degree === null) {
             throw new DoesNotExistError(`Degree with id ${_id} for faculty ${faculty._id} was not found`);
         }
-        return degree;
+
+        return degree.toObject();
     }
 
     const degreeChanges = faculty.changeRequests.degrees;
@@ -69,7 +70,7 @@ const instructionalMaterialsChanges = faculty => {
         if (instructionalMaterial === null) {
             throw new DoesNotExistError(`Instructional Material with id ${_id} for faculty ${faculty._id} was not found`);
         }
-        return instructionalMaterial;
+        return instructionalMaterial.toObject();
     }
 
     const instructionalMaterialChanges = faculty.changeRequests.instructionalMaterials;
@@ -119,7 +120,7 @@ const extensionWorksChanges = faculty => {
             throw DoesNotExistError(`Extension work with id ${id} for faculty ${faculty._id} was not found`);
         }
 
-        return extensionWork;
+        return extensionWork.toObject();
     }
 
     const extensionWorkChanges = faculty.changeRequests.extensionWorks;
@@ -168,7 +169,7 @@ const recognitionsChanges = faculty => {
         if (recognition === null) {
             throw new DoesNotExistError(`Recognition with id ${_id} for faculty ${faculty._id} was not found`);
         }
-        return recognition;
+        return recognition.toObject();
     }
 
     const recognitionChanges = faculty.changeRequests.recognitions;
@@ -213,7 +214,7 @@ const presentationsChanges = faculty => {
         if (presentation === null) {
             throw new DoesNotExistError(`Presentation with id ${_id} for faculty ${faculty._id} was not found`);
         }
-        return presentation;
+        return presentation.toObject();
     }
 
     const presentationChanges = faculty.changeRequests.presentations;
