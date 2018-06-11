@@ -21,12 +21,15 @@ export class TeachingSubjectsCard extends Component {
         removeSubjectModalIsShowing: false,
     };
 
-    fetchData = () => {
+    fetchFacultyTeachingSubjects = faculty => {
         this.setState({errors: null, isLoading: true, teachingSubjects: null});
-        fetchTeachingSubjects(this.props.faculty._id)
+        fetchTeachingSubjects(faculty._id)
         // FIXME: Memory leak in this.setState when different faculty is selected before results arrive
-            .then(result => this.setState({
-                teachingSubjects: result.data.faculty.teachingSubjects,
+            .then(result => result.data.faculty.teachingSubjects)
+            // Transform teachingSubjects object array to plain teachingSubjects id array
+            .then(teachingSubjects => teachingSubjects.map(teachingSubject => teachingSubject._id))
+            .then(teachingSubjectsId => this.setState({
+                teachingSubjects: teachingSubjectsId,
                 errors: null,
                 isLoading: false,
             }))
@@ -47,9 +50,28 @@ export class TeachingSubjectsCard extends Component {
         <FullPageLoadingIndicator size={100} />
     );
 
+    get errorStateRetry() {
+        const teachingSubjectErrors = this.state.errors;
+        const faculty = this.props.faculty;
+        const subjectListErrors = this.props.subjects.errors;
+        const fetchSubjectList = this.props.fetchSubjectList;
+        let fetches = [];
+
+        if (teachingSubjectErrors) {
+            fetches.push(() => this.fetchFacultyTeachingSubjects(faculty));
+        }
+
+        if (subjectListErrors) {
+            fetches.push(fetchSubjectList);
+        }
+
+        // Retry one, or both fetches depending on which had an error
+        return () => fetches.forEach(executeFetch => executeFetch());
+    }
+
     renderErrors = errors => (
         <ErrorState
-            onRetryButtonClick={this.fetchData}
+            onRetryButtonClick={this.errorStateRetry}
             message="An error occurred while trying to fetch list of teaching subjects"
             debug={errors[0]}
         />
@@ -64,10 +86,13 @@ export class TeachingSubjectsCard extends Component {
         removeSubjectModalIsShowing: shouldShow,
     });
 
-    renderTeachingSubjects = teachingSubjects => {
-        const teachingSubjectsIsEmpty = teachingSubjects.length === 0;
+    renderTeachingSubjects = teachingSubjectsIds => {
+        const teachingSubjectsIsEmpty = teachingSubjectsIds.length === 0;
         const {activeSubject, removeSubjectModalIsShowing} = this.state;
-        const {faculty, classes} = this.props;
+        const {faculty, classes, subjects: {subjects: subjectList}} = this.props;
+
+        // Transform faculty teaching subject ID to actual subject using subjectList from redux
+        const teachingSubjects = teachingSubjectsIds.map(id => subjectList.find(subject => subject._id === id));
 
         return (
             <ListItem>
@@ -109,17 +134,42 @@ export class TeachingSubjectsCard extends Component {
     };
 
     componentDidMount() {
-        this.fetchData();
+        const {
+            fetchSubjectList,
+            subjects: {isLoading, subjects},
+            faculty,
+        } = this.props;
+
+        if (!subjects && !isLoading) {
+            fetchSubjectList();
+        }
+
+        this.fetchFacultyTeachingSubjects(faculty);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.faculty._id !== this.props.faculty._id && !this.state.isLoading) {
-            this.fetchData();
+            this.fetchFacultyTeachingSubjects(this.props.faculty);
         }
     }
 
     render() {
-        const {isLoading, errors, teachingSubjects} = this.state;
+        const {
+            isLoading: teachingSubjectsIsLoading,
+            errors: teachingSubjectsErrors,
+            teachingSubjects,
+        } = this.state;
+
+        const {
+            subjects: {
+                isLoading: subjectListIsLoading,
+                errors: subjectListErrors,
+                subjects,
+            },
+        } = this.props;
+
+        const errors = teachingSubjectsErrors || subjectListErrors;
+        const isLoading = teachingSubjectsIsLoading || subjectListIsLoading;
 
         return (
             <DetailCard>
@@ -128,7 +178,7 @@ export class TeachingSubjectsCard extends Component {
                               onAddButtonClick={this.onAddButtonClick} />
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
-                {teachingSubjects && this.renderTeachingSubjects(teachingSubjects)}
+                {teachingSubjects && subjects && this.renderTeachingSubjects(teachingSubjects)}
             </DetailCard>
         );
     }

@@ -15,7 +15,7 @@ export function fetchTeachingSubjects(facultyId) {
                 faculty(_id: $_id) {
                     _id
                     teachingSubjects {
-                        ${fields}
+                        _id
                     }
                 }
             }
