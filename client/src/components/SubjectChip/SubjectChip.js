@@ -1,6 +1,7 @@
 import Chip from "@material-ui/core/Chip";
 import Tooltip from "@material-ui/core/Tooltip";
 import React from "react";
+import { SUBJECTS_PAGE } from "../../pages";
 
 
 function onChipClick({subject, clickable, history}) {
@@ -8,7 +9,7 @@ function onChipClick({subject, clickable, history}) {
         return null;
     }
 
-    return null; // TODO
+    return history.push(`/${SUBJECTS_PAGE.path}/${subject._id}`);
 }
 
 export const SubjectChip = ({subject, clickable, history, handleDelete}) => (
