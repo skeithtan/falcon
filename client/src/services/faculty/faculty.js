@@ -53,6 +53,12 @@ const extensionWorks = `
         ${extensionWorkFields}
     }
 `;
+
+// TeachingSubjects is [ID!]!
+const teachingSubjects = `
+    teachingSubjects
+`;
+
 const fullFacultyDetails = [
     facultySummary,
     facultyOverview,
@@ -61,6 +67,7 @@ const fullFacultyDetails = [
     presentations,
     instructionalMaterials,
     extensionWorks,
+    teachingSubjects,
 ].join("");
 
 export function fetchAllFacultiesSummary() {
