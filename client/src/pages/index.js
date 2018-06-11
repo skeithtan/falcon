@@ -4,6 +4,7 @@ import { FacultyProfilesPage } from "./FacultyProfiles";
 import { HomePage } from "./Home";
 import { NotFoundPage } from "./NotFound";
 import { SignInPage } from "./SignIn";
+import { SubjectsPage } from "./Subjects";
 import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, PNU_THEME, TEAL_THEME } from "./themes";
 
 
@@ -22,6 +23,14 @@ export const FACULTY_PROFILES_PAGE = {
     theme: TEAL_THEME,
 };
 
+export const SUBJECTS_PAGE = {
+    identifier: "SUBJECTS_PAGE",
+    path: "subjects",
+    component: SubjectsPage,
+    name: "Subjects",
+    theme: BLUE_THEME,
+};
+
 export const HOME_PAGE = {
     identifier: "HOME_PAGE",
     path: "home",
@@ -36,13 +45,6 @@ export const FACULTY_LOADING_PAGE = {
     component: FacultyLoadingPage,
     name: "Faculty Loading",
     theme: INDIGO_THEME,
-};
-
-export const TRACER_STUDY_PAGE = {
-    identifier: "TRACER_STUDY_PAGE",
-    path: "tracer-study",
-    name: "Tracer Study",
-    theme: BLUE_THEME,
 };
 
 export const USER_SETTINGS_PAGE = {
@@ -65,8 +67,8 @@ export const PAGES = [
     HOME_PAGE,
     FACULTY_PROFILES_PAGE,
     FACULTY_LOADING_PAGE,
-    TRACER_STUDY_PAGE,
     USER_SETTINGS_PAGE,
+    SUBJECTS_PAGE,
 ];
 
 export const GENERAL_PAGES = [
@@ -85,14 +87,13 @@ export function getPagesForUserType(userType) {
                 HOME_PAGE,
                 FACULTY_PROFILES_PAGE,
                 FACULTY_LOADING_PAGE,
-                TRACER_STUDY_PAGE,
                 USER_SETTINGS_PAGE,
+                SUBJECTS_PAGE,
             ];
         case FACULTY.identifier:
         default:
             return [
                 HOME_PAGE,
-                TRACER_STUDY_PAGE,
             ];
     }
 }
