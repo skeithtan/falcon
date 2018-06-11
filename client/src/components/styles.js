@@ -1,4 +1,5 @@
-import { lighten } from '@material-ui/core/styles/colorManipulator';
+import { lighten } from "@material-ui/core/styles/colorManipulator";
+
 
 export const page = theme => ({
     height: "100%",
@@ -52,9 +53,13 @@ export const activeItem = theme => ({
     color: theme.palette.primary.dark,
     background: `${lighten(theme.palette.primary.light, 0.9)} !important`,
 
-
     "& span": {
         color: theme.palette.primary.dark,
         fontWeight: theme.typography.fontWeightMedium,
-    }
+    },
+});
+
+export const split = theme => ({
+    display: "grid",
+    gridTemplateColumns: "320px auto",
 });
