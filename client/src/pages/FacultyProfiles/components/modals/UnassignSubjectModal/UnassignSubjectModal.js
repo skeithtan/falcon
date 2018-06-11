@@ -1,7 +1,6 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 import { DangerActionConfirmationModal } from "../../../../../components/DangerActionConfirmationModal";
-import { unassignFacultyFromSubject } from "../../../../../services/faculty/teaching_subjects";
 import { getFullName } from "../../../../../utils/user.util";
 
 
