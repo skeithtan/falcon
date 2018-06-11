@@ -23,17 +23,14 @@ export class FacultyDetail extends Component {
         </div>
     );
 
-    renderTabs = activeFaculty => {
-        const {classes} = this.props;
-        return TABS.map(tab => (
-            <Route
-                key={tab.identifier}
-                path={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${tab.path}`}
-                render={() => React.createElement(tab.component, {
-                    faculty: activeFaculty,
-                })} />
-        ));
-    };
+    renderTabs = activeFaculty => TABS.map(tab => (
+        <Route
+            key={tab.identifier}
+            path={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${tab.path}`}
+            render={() => React.createElement(tab.component, {
+                faculty: activeFaculty,
+            })} />
+    ));
 
     componentDidMount() {
         this.fetchFacultyDetails();
@@ -44,8 +41,8 @@ export class FacultyDetail extends Component {
     }
 
     fetchFacultyDetails() {
-        const activeFaculty = this.getActiveFaculty();
-        const {getFacultyDetails, setDetailsFetched} = this.props;
+        const { getFacultyDetails, setDetailsFetched, match: { params: { facultyId } } } = this.props;
+        const activeFaculty = this.getActiveFaculty(facultyId);
 
         if (!activeFaculty) {
             // There's nothing to fetch when the faculty doesn't exist
@@ -62,7 +59,7 @@ export class FacultyDetail extends Component {
     }
 
     renderLoading = () => (
-        <Grid container style={{height: "100%"}}>
+        <Grid container style={{ height: "100%" }}>
             <FullPageLoadingIndicator size={100} />
         </Grid>
     );
@@ -71,27 +68,24 @@ export class FacultyDetail extends Component {
         <div className={this.props.classes.cardsContainer}>
             <DetailCard>
                 <ErrorState onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
-                            message="An error occurred while trying to fetch faculty details."
-                            debug={errors[0]} />
+                    message="An error occurred while trying to fetch faculty details."
+                    debug={errors[0]} />
             </DetailCard>
         </div>
     );
 
-    getActiveFaculty = () => {
-        const {match: {params: {facultyId}}, faculty} = this.props;
-
-        return !facultyId ? null : faculty.faculties.find(faculty =>
-            faculty._id === facultyId,
-        );
+    getActiveFaculty = facultyId => {
+        const { faculty : {faculties} } = this.props;
+        return !facultyId ? null : faculties.find(faculty => faculty._id === facultyId,);
     };
 
     render() {
-        const {match: {params: {facultyId}}, classes, isLoading, errors} = this.props;
+        const { match: { params: { facultyId } }, classes, isLoading, errors } = this.props;
 
         // We don't have a selected faculty if the URL has no facultyID
         const noSelectedFaculty = !facultyId;
 
-        const activeFaculty = this.getActiveFaculty();
+        const activeFaculty = this.getActiveFaculty(facultyId);
 
         // Faculty is not found when we have a faculty ID in the URL but null is the result of array search
         const facultyNotFound = !activeFaculty && facultyId;
@@ -101,16 +95,16 @@ export class FacultyDetail extends Component {
         return (
             <div className={classes.facultyDetail}>
                 {activeFaculty && isFetched &&
-                <Switch>
-                    {this.renderTabs(activeFaculty)}
-                    <Route render={() => (
-                        <Redirect to={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${OVERVIEW_TAB.path}`} />
-                    )} />
-                </Switch>
+                    <Switch>
+                        {this.renderTabs(activeFaculty)}
+                        <Route render={() => (
+                            <Redirect to={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${OVERVIEW_TAB.path}`} />
+                        )} />
+                    </Switch>
                 }
 
                 {facultyNotFound &&
-                <Redirect to={`/${FACULTY_PROFILES_PAGE.path}`} />
+                    <Redirect to={`/${FACULTY_PROFILES_PAGE.path}`} />
                 }
 
                 {noSelectedFaculty && this.renderSelectFacultyState()}
