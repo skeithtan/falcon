@@ -16,7 +16,7 @@ import { OVERVIEW_TAB } from "../faculty_detail_tabs";
 import { AddFacultyModal } from "../modals/AddFacultyModal";
 
 
-const FacultyItem = ({activeTab, classes, faculty, active, onClick}) => {
+const FacultyItem = ({activeTab, classes, faculty, active}) => {
     const {activeListItem, listItem} = classes;
     const className = active ? [activeListItem, listItem].join(" ") : listItem;
 
@@ -29,7 +29,6 @@ const FacultyItem = ({activeTab, classes, faculty, active, onClick}) => {
             component={Link}
             to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${tabPath}`}
             className={className}
-            onClick={onClick}
         >
             <UserAvatar user={faculty.user} />
             <ListItemText primary={getFullName(faculty.user)} />
