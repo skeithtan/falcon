@@ -104,6 +104,6 @@ type Faculty {
     recognitions: [Recognition!]!
     instructionalMaterials: [InstructionalMaterial!]!
     extensionWorks: [ExtensionWork!]!
-    teachingSubjects: [Subject!]!
     changeRequests: ProfileChangeRequest
+    teachingSubjects: [ID!]!
 }

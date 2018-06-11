@@ -1,4 +1,5 @@
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import { split } from "../../../../components/styles";
 
 export const styles = theme => ({
     facultyProfilesHeader: {
@@ -33,8 +34,5 @@ export const styles = theme => ({
     tabsIndicator: {
         background: "white",
     },
-    split: {
-        display: "grid",
-        gridTemplateColumns: "320px auto",
-    },
+    split: split(theme),
 });

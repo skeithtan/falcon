@@ -1,4 +1,4 @@
-import { page } from "../../components/styles";
+import { page, split } from "../../components/styles";
 
 
 export const styles = theme => ({
@@ -8,9 +8,6 @@ export const styles = theme => ({
         height: "100%",
         minHeight: 0,
     },
-    split: {
-        display: "grid",
-        gridTemplateColumns: "320px auto",
-    },
+    split: split(theme),
 });
 

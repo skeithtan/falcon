@@ -7,33 +7,16 @@ import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
 import { SubjectChip } from "../../../../../components/SubjectChip";
 import { TableToolbar } from "../../../../../components/TableToolbar";
-import { fetchTeachingSubjects } from "../../../../../services/faculty/teaching_subject";
 import { getFullName } from "../../../../../utils/user.util";
+import { TeachingSubjectModal } from "../../modals/TeachingSubjectModal";
 import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
 
 
 export class TeachingSubjectsCard extends Component {
     state = {
-        teachingSubjects: null,
-        errors: null,
-        isLoading: true,
         activeSubject: null,
         removeSubjectModalIsShowing: false,
-    };
-
-    fetchData = () => {
-        this.setState({errors: null, isLoading: true, teachingSubjects: null});
-        fetchTeachingSubjects(this.props.faculty._id)
-        // FIXME: Memory leak in this.setState when different faculty is selected before results arrive
-            .then(result => this.setState({
-                teachingSubjects: result.data.faculty.teachingSubjects,
-                errors: null,
-                isLoading: false,
-            }))
-            .catch(errors => this.setState({
-                errors: errors,
-                isLoading: false,
-            }));
+        teachingSubjectsModalIsShowing: false,
     };
 
     renderEmptyState = () => (
@@ -47,27 +30,31 @@ export class TeachingSubjectsCard extends Component {
         <FullPageLoadingIndicator size={100} />
     );
 
+
     renderErrors = errors => (
         <ErrorState
-            onRetryButtonClick={this.fetchData}
-            message="An error occurred while trying to fetch list of teaching subjects"
+            onRetryButtonClick={this.props.fetchSubjectList}
+            message="An error occurred while trying to fetch list of subjects"
             debug={errors[0]}
         />
     );
-
-    // Not using redux means we have to take care of removals ourselves
-    onSubjectRemoved = subject => this.setState({
-        teachingSubjects: this.state.teachingSubjects.filter(teachingSubject => teachingSubject._id !== subject._id),
-    });
 
     toggleRemoveSubjectModal = shouldShow => this.setState({
         removeSubjectModalIsShowing: shouldShow,
     });
 
-    renderTeachingSubjects = teachingSubjects => {
-        const teachingSubjectsIsEmpty = teachingSubjects.length === 0;
-        const {activeSubject, removeSubjectModalIsShowing} = this.state;
-        const {faculty, classes} = this.props;
+    toggleTeachingSubjectsModal = shouldShow => this.setState({
+        teachingSubjectsModalIsShowing: shouldShow,
+    });
+
+    renderTeachingSubjects = faculty => {
+        const teachingSubjectsIds = faculty.teachingSubjects;
+        const teachingSubjectsIsEmpty = teachingSubjectsIds.length === 0;
+        const {activeSubject, removeSubjectModalIsShowing, teachingSubjectsModalIsShowing} = this.state;
+        const {classes, subjects: {subjects: subjectList}} = this.props;
+
+        // Transform faculty teaching subject ID to actual subject using subjectList from redux
+        const teachingSubjects = teachingSubjectsIds.map(id => subjectList.find(subject => subject._id === id));
 
         return (
             <ListItem>
@@ -90,13 +77,23 @@ export class TeachingSubjectsCard extends Component {
                 }
 
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
-                {activeSubject &&
+                {activeSubject && removeSubjectModalIsShowing &&
                 <UnassignSubjectModal
                     open={removeSubjectModalIsShowing}
                     onClose={() => this.toggleRemoveSubjectModal(false)}
                     subject={activeSubject}
                     faculty={faculty}
-                    onSubjectRemoved={() => this.onSubjectRemoved(activeSubject)}
+                />
+                }
+
+                {teachingSubjectsModalIsShowing &&
+                <TeachingSubjectModal
+                    action="update"
+                    open={teachingSubjectsModalIsShowing}
+                    onClose={() => this.toggleTeachingSubjectsModal(false)}
+                    allSubjects={subjectList}
+                    faculty={faculty}
+                    teachingSubjects={teachingSubjectsIds}
                 />
                 }
             </ListItem>
@@ -104,22 +101,34 @@ export class TeachingSubjectsCard extends Component {
     };
 
     onAddButtonClick = () => {
-        //TODO
-        console.log("Add teaching subject button clicked");
+        const {subjects: {subjects}} = this.props;
+
+        if (subjects) {
+            // Do not show modal if neither is ready
+            this.toggleTeachingSubjectsModal(true);
+        }
     };
 
     componentDidMount() {
-        this.fetchData();
-    }
+        const {
+            fetchSubjectList,
+            subjects: {isLoading, subjects},
+        } = this.props;
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.faculty._id !== this.props.faculty._id && !this.state.isLoading) {
-            this.fetchData();
+        if (!subjects && !isLoading) {
+            fetchSubjectList();
         }
     }
 
     render() {
-        const {isLoading, errors, teachingSubjects} = this.state;
+        const {
+            subjects: {
+                isLoading,
+                errors,
+                subjects,
+            },
+            faculty
+        } = this.props;
 
         return (
             <DetailCard>
@@ -128,7 +137,7 @@ export class TeachingSubjectsCard extends Component {
                               onAddButtonClick={this.onAddButtonClick} />
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
-                {teachingSubjects && this.renderTeachingSubjects(teachingSubjects)}
+                {subjects && this.renderTeachingSubjects(faculty)}
             </DetailCard>
         );
     }

@@ -12,13 +12,7 @@ const mapStateToProps = state => ({
     ...state.faculty,
 });
 
-const mapDispatchToProps = dispatch => ({
-    onFacultyClick(faculty) {
-        dispatch(detailsIsLoading());
-    },
-});
-
 export const FacultyList = compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, null),
     withStyles(styles),
 )(Component);

@@ -11,13 +11,11 @@ import { ValidationError } from "../errors/validation.error";
 function faculties() {
     return Faculty.find({})
                   .populate("user")
-                  .populate("teachingSubjects");
 }
 
 function faculty(object, {_id}) {
     return Faculty.findById(_id)
                   .populate("user")
-                  .populate("teachingSubjects")
                   .then(faculty => {
                       if (!faculty) {
                           return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
@@ -77,15 +75,10 @@ function mutateFaculty() {
         },
 
         async update({_id, newFaculty, newUser}) {
-            const faculty = await Faculty.findByIdAndUpdate(_id, newFaculty, {new: true})
-                                         .populate("teachingSubjects")
-                                         .exec();
-
+            const faculty = await Faculty.findByIdAndUpdate(_id, newFaculty, {new: true}).exec();
             const user = await User.findByIdAndUpdate(faculty.user, newUser, {new: true}).exec();
-
             faculty.user = user;
             return faculty;
-
         },
     };
 }
@@ -268,8 +261,9 @@ async function mutateTeachingSubject(object, {facultyId}) {
 
             // Link subjects to faculty
             const {addedItems, removedItems} = getDifference(teachingSubjectsId, oldSubjects);
-            addFacultyToSubjects(addedItems);
-            removeFacultyFromSubjects(removedItems);
+
+            addFacultyToSubjects(faculty, addedItems);
+            removeFacultyFromSubjects(faculty, removedItems);
 
             return faculty.teachingSubjects;
         },
