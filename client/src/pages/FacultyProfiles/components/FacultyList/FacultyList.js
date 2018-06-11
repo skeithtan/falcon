@@ -75,7 +75,6 @@ export class FacultyList extends Component {
             match: {params: {facultyId, activeTab}},
             classes,
             searchKeyword,
-            onFacultyClick,
         } = this.props;
 
         const isSearching = searchKeyword.length > 0;
@@ -90,7 +89,6 @@ export class FacultyList extends Component {
                     <FacultyItem
                         activeTab={activeTab}
                         classes={classes}
-                        onClick={() => onFacultyClick(faculty)}
                         faculty={faculty}
                         active={facultyId === faculty._id}
                         key={faculty._id} />,
