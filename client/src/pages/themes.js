@@ -41,7 +41,7 @@ export const INDIGO_THEME = makeTheme({
 export const BLUE_THEME = makeTheme({
     primary: blue,
     secondary: grey,
-    primaryShade: 700,
+    primaryShade: 800,
     secondaryShade: 300,
 });
 export const GREY_THEME = makeTheme({
@@ -54,4 +54,3 @@ export const PINK_THEME = makeTheme({
     primary: pink,
     secondary: pink,
 });
-
