@@ -22,6 +22,7 @@ const FacultyItem = ({activeTab, classes, faculty, active}) => {
 
     // Go to where the active tab is if any. If none, go to default overview tab
     const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
+    const fullName = getFullName(faculty.user);
 
     return (
         <ListItem
@@ -29,6 +30,7 @@ const FacultyItem = ({activeTab, classes, faculty, active}) => {
             component={Link}
             to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${tabPath}`}
             className={className}
+            onClick={() => document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`}
         >
             <UserAvatar user={faculty.user} />
             <ListItemText primary={getFullName(faculty.user)} />

@@ -44,11 +44,6 @@ export class FacultyDetail extends Component {
     onNewFacultySelect() {
         const activeFaculty = this.getActiveFaculty();
         this.fetchFacultyDetails(activeFaculty);
-
-        if (activeFaculty) {
-            const fullName = getFullName(activeFaculty.user);
-            document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`;
-        }
     }
 
     fetchFacultyDetails() {
