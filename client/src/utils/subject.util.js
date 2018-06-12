@@ -24,17 +24,18 @@ export const fetchSubjectList = dispatch => {
         });
 };
 
-export const addSubjectToFaculties = ({dispatch, subject, faculties}) => faculties.forEach(faculty =>
+export const addSubjectToFaculties = ({dispatch, subject, faculties}) => faculties.forEach(faculty => {
+    const currentTeachingSubjects = faculty.teachingSubjects ? faculty.teachingSubjects : [];
     dispatch(
         facultyIsUpdated({
             ...faculty,
             teachingSubjects: [
-                ...faculty.teachingSubjects,
+                ...currentTeachingSubjects,
                 subject._id,
             ],
         }),
-    ),
-);
+    );
+});
 
 export const addFacultyToSubjects = ({dispatch, faculty, subjects}) => subjects.forEach(subject =>
     dispatch(
@@ -48,7 +49,13 @@ export const addFacultyToSubjects = ({dispatch, faculty, subjects}) => subjects.
     ),
 );
 
-export const removeSubjectFromFaculties = ({dispatch, subject, faculties}) => faculties.forEach(faculty =>
+export const removeSubjectFromFaculties = ({dispatch, subject, faculties}) => faculties.forEach(faculty => {
+    if (!faculty.teachingSubjects) {
+        // If this hasn't been fetched yet, do nothing
+        // The teachingSubjects bit will be updated when user goes to profile
+        return;
+    }
+
     dispatch(
         facultyIsUpdated({
             ...faculty,
@@ -56,8 +63,8 @@ export const removeSubjectFromFaculties = ({dispatch, subject, faculties}) => fa
                 subjectId !== subject._id,
             ),
         }),
-    ),
-);
+    );
+});
 
 export const removeFacultyFromSubjects = ({dispatch, faculty, subjects}) => subjects.forEach(subject =>
     dispatch(
