@@ -24,14 +24,18 @@ function mutateSubject() {
         async update({_id, newSubject}) {
             // Link subject to faculties
             const subject = await Subject
-                .findByIdAndUpdate(_id, newSubject, {new: true})
+                .findById(_id)
                 .exec();
 
-            const newFaculties = newSubject.faculties;
-            const oldFaculties = subject.faculties;
+            const newFaculties = [...newSubject.faculties];
+            const oldFaculties = [...subject.faculties];
+
+            subject.set(newSubject);
+            await subject.save();
 
             // Link faculties to subject
             const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
+
             addSubjectToFaculties(subject, addedItems);
             removeSubjectFromFaculties(subject, removedItems);
 
