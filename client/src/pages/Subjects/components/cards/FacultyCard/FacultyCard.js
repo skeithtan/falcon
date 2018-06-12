@@ -18,13 +18,13 @@ export class FacultyCard extends Component {
                     addButtonText="Add an expert faculty" />
     );
 
-    renderBody = faculties => {
-        if (faculties.length === 0) {
+    renderBody = subject => {
+        if (subject.faculties.length === 0) {
             return this.renderEmptyState();
         }
 
         return (
-            <FacultyChips subjectFaculties={faculties} />
+            <FacultyChips subject={subject} />
         );
     };
 
@@ -37,7 +37,7 @@ export class FacultyCard extends Component {
                               addButtonTooltipTitle="Add an expert faculty"
                               onAddButtonClick={this.onAddButtonClick} />
 
-                {this.renderBody(subject.faculties)}
+                {this.renderBody(subject)}
             </DetailCard>
         );
     }

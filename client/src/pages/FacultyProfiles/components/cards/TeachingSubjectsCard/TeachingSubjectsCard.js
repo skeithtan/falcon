@@ -9,7 +9,7 @@ import { SubjectChip } from "../../../../../components/SubjectChip";
 import { TableToolbar } from "../../../../../components/TableToolbar";
 import { getFullName } from "../../../../../utils/user.util";
 import { TeachingSubjectModal } from "../../modals/TeachingSubjectModal";
-import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
+import { UnassignSubjectModal } from "../../../../../components/UnassignSubjectModal";
 
 
 export class TeachingSubjectsCard extends Component {
@@ -79,6 +79,7 @@ export class TeachingSubjectsCard extends Component {
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
                 {activeSubject && removeSubjectModalIsShowing &&
                 <UnassignSubjectModal
+                    perspective="faculty"
                     open={removeSubjectModalIsShowing}
                     onClose={() => this.toggleRemoveSubjectModal(false)}
                     subject={activeSubject}

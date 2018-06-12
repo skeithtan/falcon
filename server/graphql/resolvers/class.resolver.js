@@ -1,9 +1,6 @@
 import { AcademicYear, Course, Subject } from "../../models/class.model";
 import { getDifference } from "../../utils/difference";
-import {
-    addSubjectToFaculties,
-    removeSubjectFromFaculties,
-} from "../../utils/faculty_subject_link";
+import { addSubjectToFaculties, removeSubjectFromFaculties } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 
 
@@ -21,7 +18,7 @@ function mutateSubject() {
             addSubjectToFaculties(subject, newSubject.faculties);
 
             return Subject
-                .findById(subject._id)
+                .findById(subject._id);
         },
 
         async update({_id, newSubject}) {

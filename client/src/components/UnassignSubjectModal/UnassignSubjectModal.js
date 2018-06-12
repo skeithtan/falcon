@@ -1,12 +1,14 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import { DangerActionConfirmationModal } from "../../../../../components/DangerActionConfirmationModal";
-import { getFullName } from "../../../../../utils/user.util";
+import { DangerActionConfirmationModal } from "../DangerActionConfirmationModal/index";
+import { getFullName } from "../../utils/user.util";
 
 
 export class UnassignSubjectModal extends DangerActionConfirmationModal {
     get dialogTitle() {
-        return "Are you sure you want to unassign this subject?";
+        return this.props.perspective === "faculty" ?
+            "Are you sure you want to unassign this subject?" :
+            "Are you sure you want to unassign this faculty?";
     }
 
     get dialogContent() {
@@ -21,7 +23,7 @@ export class UnassignSubjectModal extends DangerActionConfirmationModal {
     }
 
     get buttonName() {
-        return "Unassign subject";
+        return this.props.perspective === "faculty" ? "Unassign subject" : "Unassign faculty";
     }
 
     onConfirmAction = () => {

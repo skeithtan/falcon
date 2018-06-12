@@ -1,16 +1,24 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
-import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { FacultyChip } from "../../../../components/FacultyChip/index";
 import { ErrorState } from "../../../../components/states/ErrorState/index";
+import { UnassignSubjectModal } from "../../../../components/UnassignSubjectModal";
 
 
 export class FacultyChips extends Component {
-    constructor(props) {
-        super(props);
-        const {faculties, isLoading, fetchData} = props;
+    state = {
+        activeFaculty: null,
+        unassignFacultyModalIsShowing: false,
+    };
+
+    toggleUnassignFacultyModal = shouldShow => this.setState({
+        unassignFacultyModalIsShowing: shouldShow,
+    });
+
+    componentDidMount() {
+        const {faculties, isLoading, fetchData} = this.props;
         if (!faculties && !isLoading) {
             fetchData();
         }
@@ -25,7 +33,14 @@ export class FacultyChips extends Component {
             // Make a chip
             .map(faculty => (
                 <Grid item key={faculty._id}>
-                    <FacultyChip clickable faculty={faculty} />
+                    <FacultyChip
+                        clickable
+                        faculty={faculty}
+                        handleDelete={() => this.setState({
+                            unassignFacultyModalIsShowing: true,
+                            activeFaculty: faculty,
+                        })}
+                    />
                 </Grid>
             ));
 
@@ -49,17 +64,28 @@ export class FacultyChips extends Component {
     );
 
     render() {
-        const {isLoading, errors, subjectFaculties, faculties} = this.props;
+        const {isLoading, errors, subject, faculties} = this.props;
+        const {activeFaculty, unassignFacultyModalIsShowing} = this.state;
         return (
             <ListItem divider>
                 {
                     // Note faculties && subjectFaculties:
                     // Do not render chips when faculties is not fetched
-                    faculties && subjectFaculties &&
-                    this.renderChips(subjectFaculties)
+                    faculties && subject &&
+                    this.renderChips(subject.faculties)
                 }
                 {errors && this.renderErrors(errors)}
                 {isLoading && this.renderLoadingIndicator()}
+
+                {unassignFacultyModalIsShowing &&
+                <UnassignSubjectModal
+                    open={unassignFacultyModalIsShowing}
+                    onClose={() => this.toggleUnassignFacultyModal(false)}
+                    perspective="subject"
+                    faculty={activeFaculty}
+                    subject={subject}
+                />
+                }
             </ListItem>
         );
     }

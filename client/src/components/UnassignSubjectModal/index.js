@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { unassignFacultyFromSubject } from "../../../../../services/faculty/teaching_subjects";
-import { removeFacultyFromSubjects } from "../../../../../utils/subject.util";
+import { facultyIsUpdated } from "../../redux/actions/faculty.actions";
+import { unassignFacultyFromSubject } from "../../services/faculty/teaching_subjects";
+import { removeFacultyFromSubjects } from "../../utils/subject.util";
 import { UnassignSubjectModal as Component } from "./UnassignSubjectModal";
 
 
