@@ -19,11 +19,9 @@ export class TeachingSubjectModal extends ModalFormComponent {
         };
     }
 
-    mapPropsToForm = ({teachingSubjects}) => {
-        return ({
-            selectedSubjects: [...teachingSubjects],
-        });
-    };
+    mapPropsToForm = ({ teachingSubjects }) => ({
+        selectedSubjects: [...teachingSubjects],
+    });
 
     renderSubjectChips = selectedSubjects => (
         <Grid container spacing={8}>
@@ -56,11 +54,13 @@ export class TeachingSubjectModal extends ModalFormComponent {
     });
 
     get submitUpdateAction() {
-        const {form: {selectedSubjects: selectedSubjectsId}} = this.state;
-        const {faculty, onSubmitForm, allSubjects} = this.props;
-        const selectedSubjects = selectedSubjectsId.map(id => allSubjects.find(subject => subject._id === id));
+        const { form: { selectedSubjects: selectedSubjectsId } } = this.state;
+        const { faculty, onSubmitForm, allSubjects } = this.props;
+        const idToSubject = id => allSubjects.find(subject => subject._id === id);
+        const selectedSubjects = selectedSubjectsId.map(idToSubject);
+        const oldSubjects = faculty.teachingSubjects.map(idToSubject)
 
-        return () => onSubmitForm(faculty, selectedSubjects);
+        return () => onSubmitForm(faculty, selectedSubjects, oldSubjects);
     }
 
     get buttonName() {
@@ -68,8 +68,8 @@ export class TeachingSubjectModal extends ModalFormComponent {
     }
 
     render() {
-        const {open, classes, allSubjects} = this.props;
-        const {isSubmitting, form} = this.state;
+        const { open, classes, allSubjects } = this.props;
+        const { isSubmitting, form } = this.state;
         const selectedSubjects = form.selectedSubjects.map(id => allSubjects.find(subject => subject._id === id));
 
         return (
