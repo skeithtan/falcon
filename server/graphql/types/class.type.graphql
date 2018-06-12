@@ -2,7 +2,7 @@ type Subject {
     _id: ID!
     code: String!
     name: String!
-    faculties: [Faculty!]!
+    faculties: [ID!]!
 }
 
 type Course {

@@ -6,9 +6,7 @@ const subjectFields = `
     _id
     code
     name
-    faculties {
-        _id
-    }
+    faculties
 `;
 
 export function fetchAllSubjects() {

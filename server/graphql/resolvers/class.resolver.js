@@ -2,17 +2,13 @@ import { AcademicYear, Course, Subject } from "../../models/class.model";
 import { getDifference } from "../../utils/difference";
 import {
     addSubjectToFaculties,
-    linkSubjectAndFaculty,
-    linkSubjectToFaculties,
     removeSubjectFromFaculties,
-    unlinkSubjectAndFaculty,
-    unlinkSubjectFromFaculties,
 } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 
 
 function subjects() {
-    return Subject.find().populate("faculties");
+    return Subject.find();
 }
 
 function mutateSubject() {
@@ -26,14 +22,12 @@ function mutateSubject() {
 
             return Subject
                 .findById(subject._id)
-                .populate("faculties");
         },
 
         async update({_id, newSubject}) {
             // Link subject to faculties
             const subject = await Subject
                 .findByIdAndUpdate(_id, newSubject, {new: true})
-                .populate("faculties")
                 .exec();
 
             const newFaculties = newSubject.faculties;
