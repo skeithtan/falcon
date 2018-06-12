@@ -1,8 +1,11 @@
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
-import {Redirect} from "react-router-dom"
+import { Redirect } from "react-router-dom";
 import { SUBJECTS_PAGE } from "../../../index";
+import { FacultyCard } from "../cards/FacultyCard";
 import { OverviewCard } from "../cards/OverviewCard";
+
 
 export class SubjectsDetail extends Component {
     renderSelectSubjectState = () => (
@@ -25,12 +28,19 @@ export class SubjectsDetail extends Component {
         return (
             <div>
                 {subjectNotFound &&
-                <Redirect to={`/${SUBJECTS_PAGE.path}`}/>
+                <Redirect to={`/${SUBJECTS_PAGE.path}`} />
                 }
 
                 {activeSubject &&
                 <div className={classes.cardsContainer}>
-                    <OverviewCard subject={activeSubject}/>
+                    <Grid container spacing={16} alignItems="stretch" direction="column">
+                        <Grid item>
+                            <OverviewCard subject={activeSubject} />
+                        </Grid>
+                        <Grid item>
+                            <FacultyCard subject={activeSubject} />
+                        </Grid>
+                    </Grid>
                 </div>
                 }
 
