@@ -51,8 +51,10 @@ export class TeachingSubjectModal extends ModalFormComponent {
     });
 
     get submitUpdateAction() {
-        const {form: {selectedSubjects}} = this.state;
-        const {faculty, onSubmitForm} = this.props;
+        const {form: {selectedSubjects: selectedSubjectsId}} = this.state;
+        const {faculty, onSubmitForm, allSubjects} = this.props;
+        const selectedSubjects = selectedSubjectsId.map(id => allSubjects.find(subject => subject._id === id));
+
         return () => onSubmitForm(faculty, selectedSubjects);
     }
 

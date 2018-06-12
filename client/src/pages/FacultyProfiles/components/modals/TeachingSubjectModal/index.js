@@ -4,17 +4,29 @@ import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { setTeachingSubjects } from "../../../../../services/faculty/teaching_subjects";
+import { addFacultyToSubjects } from "../../../../../utils/subject.util";
 import { TeachingSubjectModal as Component } from "./TeachingSubjectModal";
 
 
 const mapDispatchToProps = dispatch => ({
     onSubmitForm(faculty, selectedSubjects) {
-        return setTeachingSubjects(faculty._id, selectedSubjects)
+        const selectedSubjectsId = selectedSubjects.map(subject => subject._id);
+        return setTeachingSubjects(faculty._id, selectedSubjectsId)
             .then(result => result.data.teachingSubject.set)
-            .then(newTeachingSubjects => dispatch(facultyIsUpdated({
-                ...faculty,
-                teachingSubjects: newTeachingSubjects,
-            })));
+            .then(newTeachingSubjects => {
+                dispatch(facultyIsUpdated({
+                    ...faculty,
+                    teachingSubjects: newTeachingSubjects,
+                }));
+
+                addFacultyToSubjects({
+                    dispatch,
+                    faculty,
+                    subjects: selectedSubjects,
+                });
+
+                return newTeachingSubjects;
+            });
     },
 });
 

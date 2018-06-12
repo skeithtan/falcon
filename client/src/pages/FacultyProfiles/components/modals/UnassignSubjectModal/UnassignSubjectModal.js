@@ -28,7 +28,7 @@ export class UnassignSubjectModal extends DangerActionConfirmationModal {
         this.setState({isSubmitting: true, error: null});
         const {subject, faculty, onConfirmRemove} = this.props;
 
-        onConfirmRemove(faculty, subject._id)
+        onConfirmRemove(faculty, subject)
             .then(() => this.setState({isSubmitting: false}, this.closeModal))
             .catch(error => {
                 console.log("An error occurred while unassigning subject", error);
