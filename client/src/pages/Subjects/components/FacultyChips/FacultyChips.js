@@ -3,8 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
-import { FacultyChip } from "../../../../../../components/FacultyChip";
-import { ErrorState } from "../../../../../../components/states/ErrorState";
+import { FacultyChip } from "../../../../components/FacultyChip/index";
+import { ErrorState } from "../../../../components/states/ErrorState/index";
 
 
 export class FacultyChips extends Component {
@@ -19,38 +19,19 @@ export class FacultyChips extends Component {
     getFacultyFromId = _id => this.props.faculties.find(faculty => faculty._id === _id);
 
     renderChips = subjectFaculties => {
-        if (subjectFaculties.length === 0) {
-            return (
-                <Typography>
-                    <i>There are no faculties set to be capable of teaching this subject</i>
-                </Typography>
-            );
-        }
-
         const chips = subjectFaculties
-        // Get ID from faculty skeleton
-            .map(faculty => faculty._id)
-            // Get full faculty details from cached faculties in redux
+        // Get full faculty details from cached faculties in redux
             .map(facultyId => this.getFacultyFromId(facultyId))
             // Make a chip
             .map(faculty => (
                 <Grid item key={faculty._id}>
-                    <FacultyChip clickable faculty={faculty}/>
+                    <FacultyChip clickable faculty={faculty} />
                 </Grid>
             ));
 
         return (
-            <Grid container spacing={8} direction="column">
-                <Grid item>
-                    <Typography variant="body2">
-                        Faculties that can teach this subject
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    <Grid container spacing={8}>
-                        {chips}
-                    </Grid>
-                </Grid>
+            <Grid container spacing={8}>
+                {chips}
             </Grid>
         );
     };
@@ -69,7 +50,6 @@ export class FacultyChips extends Component {
 
     render() {
         const {isLoading, errors, subjectFaculties, faculties} = this.props;
-
         return (
             <ListItem divider>
                 {
