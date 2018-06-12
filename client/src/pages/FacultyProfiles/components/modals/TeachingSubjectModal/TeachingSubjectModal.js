@@ -29,7 +29,12 @@ export class TeachingSubjectModal extends ModalFormComponent {
         <Grid container spacing={8}>
             {selectedSubjects.map(subject => (
                 <Grid item key={subject._id}>
-                    <SubjectChip subject={subject} />
+                    <SubjectChip subject={subject} handleDelete={() => this.setState({
+                        form: {
+                            selectedSubjects: this.state.form.selectedSubjects.filter(id => id !== subject._id),
+                        },
+                    })}
+                    />
                 </Grid>
             ))}
         </Grid>
