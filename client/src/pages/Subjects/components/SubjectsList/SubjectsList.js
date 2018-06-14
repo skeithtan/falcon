@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { EmptySearchResultsState } from "../../../../components/states/EmptySearchResultsState";
 import { EmptyState } from "../../../../components/states/EmptyState";
 import { SUBJECTS_PAGE } from "../../../index";
+import { SubjectModal } from "../modals/SubjectModal";
 
 
 const SubjectItem = ({classes, subject, active}) => {
@@ -61,7 +62,7 @@ export class SubjectsList extends Component {
 
         return subjects.filter(subject =>
             subject.code.toLowerCase().includes(searchKeyword) ||
-            subject.name.toLowerCase().includes(searchKeyword)
+            subject.name.toLowerCase().includes(searchKeyword),
         );
     };
 
@@ -93,7 +94,7 @@ export class SubjectsList extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, user} = this.props;
         const subjects = this.getSubjects();
         const {addSubjectModalIsShowing} = this.state;
 
@@ -101,12 +102,22 @@ export class SubjectsList extends Component {
             <Grid container className={classes.subjectsListContainer}>
                 {this.renderList(subjects)}
 
+                {user.permissions.MUTATE_FACULTY_PROFILES &&
                 <Tooltip title="Add a subject" placement="top">
                     <Button variant="fab" color="primary" className={classes.addButton}
                             onClick={() => this.toggleAddSubjectModal(true)}>
                         <AddIcon />
                     </Button>
                 </Tooltip>
+                }
+
+                {addSubjectModalIsShowing &&
+                <SubjectModal
+                    action="add"
+                    open={addSubjectModalIsShowing}
+                    onClose={() => this.toggleAddSubjectModal(false)}
+                />
+                }
             </Grid>
         );
 

@@ -6,6 +6,7 @@ import { FacultyCard as Component } from "./FacultyCard";
 
 const mapStateToProps = state => ({
     ...state.faculty,
+    user: state.authentication.user
 });
 
 const mapDispatchToProps = dispatch => ({

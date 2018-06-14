@@ -23,9 +23,10 @@ export class SubjectsPage extends Component {
     );
 
     renderErrors = errors => (
-        <ErrorState onRetryButtonClick={this.props.fetchData}
-                    message="An error occurred while trying to fetch list of faculties."
-                    debug={errors[0]}
+        <ErrorState
+            onRetryButtonClick={this.props.fetchData}
+            message="An error occurred while trying to fetch list of faculties."
+            debug={errors[0]}
         />
     );
 

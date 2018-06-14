@@ -43,10 +43,13 @@ export class FacultyCard extends Component {
     };
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`This subject does not have expert faculties`}
-                    smallMessage="Faculties that can teach this subject will be shown here"
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Add an expert faculty" />
+        <EmptyState
+            bigMessage={`This subject does not have expert faculties`}
+            smallMessage="Faculties that can teach this subject will be shown here"
+            onAddButtonClick={this.onAddButtonClick}
+            addButtonText="Add an expert faculty"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     renderBody = subject => subject.faculties.length === 0 ?
@@ -59,9 +62,12 @@ export class FacultyCard extends Component {
 
         return (
             <DetailCard>
-                <TableToolbar tableTitle="Expert Faculties"
-                              addButtonTooltipTitle="Add an expert faculty"
-                              onAddButtonClick={this.onAddButtonClick} />
+                <TableToolbar
+                    tableTitle="Expert Faculties"
+                    addButtonTooltipTitle="Add an expert faculty"
+                    onAddButtonClick={this.onAddButtonClick}
+                    showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                />
 
                 {faculties && this.renderBody(subject)}
                 {errors && this.renderErrors(errors)}
