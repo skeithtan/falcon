@@ -8,7 +8,7 @@ import moment from "moment/moment";
 import React, { Component } from "react";
 import { DetailCard } from "../../../../../components/DetailCard";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
-import { UserAvatar } from "../../../../../components/UserAvatar/UserAvatar";
+import { UserAvatar } from "../../../../../components/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
 import { UpdateFacultyOverviewModal } from "../../modals/UpdateFacultyOverviewModal";
