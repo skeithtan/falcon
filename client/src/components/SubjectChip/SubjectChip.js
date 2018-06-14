@@ -12,11 +12,11 @@ function onChipClick({subject, clickable, history}) {
     return history.push(`/${SUBJECTS_PAGE.path}/${subject._id}`);
 }
 
-export const SubjectChip = ({subject, clickable, history, handleDelete}) => (
+export const SubjectChip = ({subject, clickable, history, handleDelete, showDeleteButton}) => (
     <Tooltip title={subject.name}>
         <Chip
             onClick={() => onChipClick({subject, clickable, history})}
-            onDelete={handleDelete}
+            onDelete={showDeleteButton ? handleDelete : null}
             label={subject.code}
         />
     </Tooltip>

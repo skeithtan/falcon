@@ -13,11 +13,11 @@ function onChipClick({faculty, clickable, history}) {
     return history.push(`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/overview`);
 }
 
-export const FacultyChip = ({faculty, clickable, history, handleDelete}) => (
+export const FacultyChip = ({faculty, clickable, history, handleDelete, showDeleteButton}) => (
     <Chip
         avatar={<UserAvatar user={faculty.user} />}
         onClick={() => onChipClick({faculty, clickable, history})}
-        onDelete={handleDelete}
+        onDelete={showDeleteButton ? handleDelete : null}
         label={getFullName(faculty.user)}
     />
 );

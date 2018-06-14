@@ -9,7 +9,8 @@ export const EmptyState = ({
     onAddButtonClick,
     addButtonText,
     bigMessage,
-    smallMessage
+    smallMessage,
+    showAddButton,
 }) => (
     <div className={classes.blankState}>
         <div className={classes.messageWrapper}>
@@ -21,7 +22,7 @@ export const EmptyState = ({
                 {smallMessage}
             </Typography>
 
-            {onAddButtonClick &&
+            {onAddButtonClick && showAddButton &&
             <Button color="primary" onClick={onAddButtonClick}>
                 {addButtonText}
             </Button>
