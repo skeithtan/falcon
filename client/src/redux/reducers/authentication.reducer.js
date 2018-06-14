@@ -1,3 +1,4 @@
+import { getPermissions } from "../../utils/user.util";
 import {
     SIGN_IN_ERROR,
     SIGN_IN_IS_LOADING,
@@ -6,11 +7,20 @@ import {
 } from "../actions/authentication.actions";
 
 
-const hasUser = localStorage.hasOwnProperty("user");
+const getUser = () => {
+    if (!localStorage.hasOwnProperty("user")) {
+        return null;
+    }
+
+    const user = JSON.parse(localStorage.user);
+    user.permissions = getPermissions(user);
+    return user;
+};
+
 const initialState = {
     isLoading: false,
     signInError: null,
-    user: hasUser ? JSON.parse(localStorage.user) : null,
+    user: getUser(),
 };
 
 export function authentication(state = initialState, action) {
