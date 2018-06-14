@@ -1,4 +1,5 @@
 import { AcademicYear, Course, Subject } from "../../models/class.model";
+import { CLERK } from "../../models/user.model";
 import { getDifference } from "../../utils/difference";
 import { addSubjectToFaculties, removeSubjectFromFaculties } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
@@ -113,8 +114,8 @@ export const queryResolvers = {
 };
 
 export const mutationResolvers = {
-    subject: limitAccess(mutateSubject, {allowed: NO_FACULTY, action: "Mutate subject"}),
-    academicYear: limitAccess(mutateAcademicYear, {allowed: NO_FACULTY, action: "Mutate academic year"}),
-    course: limitAccess(mutateCourse, {allowed: NO_FACULTY, action: "Mutate course"}),
-    class: limitAccess(mutateClass, {allowed: NO_FACULTY, action: "Mutate class"}),
+    subject: limitAccess(mutateSubject, {allowed: CLERK, action: "Mutate subject"}),
+    academicYear: limitAccess(mutateAcademicYear, {allowed: CLERK, action: "Mutate academic year"}),
+    course: limitAccess(mutateCourse, {allowed: CLERK, action: "Mutate course"}),
+    class: limitAccess(mutateClass, {allowed: CLERK, action: "Mutate class"}),
 };
