@@ -8,6 +8,7 @@ import { TeachingSubjectsCard as Component } from "./TeachingSubjectsCard";
 
 const mapStateToProps = state => ({
     subjects: state.subject,
+    user: state.authentication.user,
 });
 
 const mapDispatchToProps = dispatch => ({

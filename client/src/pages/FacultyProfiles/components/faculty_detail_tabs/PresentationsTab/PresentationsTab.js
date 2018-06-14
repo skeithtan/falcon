@@ -16,38 +16,6 @@ import { PresentationModal } from "../../modals/PresentationModal";
 import { RemovePresentationModal } from "../../modals/RemovePresentationModal";
 
 
-const PresentationRow = ({presentation, onUpdateButtonClick, onRemoveButtonClick}) => (
-    <DetailExpansionCard>
-
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{presentation.title}</Typography>
-        </ExpansionPanelSummary>
-
-        <FormDisplayExpansionPanelDetails>
-
-            <FormDisplayListItem field="Category"
-                                 value={PRESENTATION.CATEGORY[presentation.category].name} />
-            <FormDisplayListItem field="Date"
-                                 value={formatMonthYearDate(presentation.date)} />
-            <FormDisplayListItem field="Sponsor"
-                                 value={presentation.sponsor} />
-            <FormDisplayListItem field="Venue"
-                                 value={presentation.venue} />
-            <FormDisplayListItem field="Conference"
-                                 value={presentation.conference} />
-            <FormDisplayListItem field="Medium"
-                                 value={PRESENTATION.MEDIUM[presentation.medium].name} />
-            <FormDisplayListItem field="Duration"
-                                 value={`${presentation.daysDuration} Days`} />
-            <DetailExpansionCardActions removeButtonTooltipTitle="Remove presentation"
-                                        updateButtonTooltipTitle="Update presentation details"
-                                        onRemoveButtonClick={onRemoveButtonClick}
-                                        onUpdateButtonClick={onUpdateButtonClick} />
-
-        </FormDisplayExpansionPanelDetails>
-    </DetailExpansionCard>
-);
-
 export class PresentationsTab extends Component {
     state = {
         presentationModalIsShowing: false,
@@ -69,27 +37,56 @@ export class PresentationsTab extends Component {
     });
 
     renderRows = presentations => presentations.map(presentation =>
-        <PresentationRow
-            presentation={presentation}
-            key={presentation._id}
+        <DetailExpansionCard key={presentation._id}>
 
-            onUpdateButtonClick={() => this.setState({
-                activePresentation: presentation,
-                presentationModalIsShowing: true,
-            })}
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="body2" color="primary">{presentation.title}</Typography>
+            </ExpansionPanelSummary>
 
-            onRemoveButtonClick={() => this.setState({
-                activePresentation: presentation,
-                removePresentationModalIsShowing: true,
-            })}
-        />,
+            <FormDisplayExpansionPanelDetails>
+
+                <FormDisplayListItem field="Category"
+                                     value={PRESENTATION.CATEGORY[presentation.category].name} />
+                <FormDisplayListItem field="Date"
+                                     value={formatMonthYearDate(presentation.date)} />
+                <FormDisplayListItem field="Sponsor"
+                                     value={presentation.sponsor} />
+                <FormDisplayListItem field="Venue"
+                                     value={presentation.venue} />
+                <FormDisplayListItem field="Conference"
+                                     value={presentation.conference} />
+                <FormDisplayListItem field="Medium"
+                                     value={PRESENTATION.MEDIUM[presentation.medium].name} />
+                <FormDisplayListItem field="Duration"
+                                     value={`${presentation.daysDuration} Days`} />
+
+                {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
+                <DetailExpansionCardActions
+                    removeButtonTooltipTitle="Remove presentation"
+                    updateButtonTooltipTitle="Update presentation details"
+                    onUpdateButtonClick={() => this.setState({
+                        activePresentation: presentation,
+                        presentationModalIsShowing: true,
+                    })}
+
+                    onRemoveButtonClick={() => this.setState({
+                        activePresentation: presentation,
+                        removePresentationModalIsShowing: true,
+                    })}
+                />
+                }
+            </FormDisplayExpansionPanelDetails>
+        </DetailExpansionCard>,
     );
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded presentations`}
-                    smallMessage="Presentations added will be shown here"
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Add a presentation" />
+        <EmptyState
+            bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded presentations`}
+            smallMessage="Presentations added will be shown here"
+            onAddButtonClick={this.onAddButtonClick}
+            addButtonText="Add a presentation"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     render() {
@@ -100,9 +97,12 @@ export class PresentationsTab extends Component {
         return (
             <div className={classes.expansionCardsContainer}>
                 <DetailCard>
-                    <TableToolbar tableTitle="Presentations"
-                                  addButtonTooltipTitle="Add a presentation"
-                                  onAddButtonClick={this.onAddButtonClick} />
+                    <TableToolbar
+                        tableTitle="Presentations"
+                        addButtonTooltipTitle="Add a presentation"
+                        onAddButtonClick={this.onAddButtonClick}
+                        showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                    />
                     {presentationsIsEmpty && this.renderEmptyState()}
                 </DetailCard>
 

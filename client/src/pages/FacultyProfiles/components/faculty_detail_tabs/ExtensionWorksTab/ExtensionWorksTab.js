@@ -37,30 +37,6 @@ const ExtensionWorkRoles = ({roles}) => {
     );
 };
 
-const ExtensionWorkRow = ({extensionWork, onRemoveButtonClick, onUpdateButtonClick}) => (
-    <DetailExpansionCard>
-
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{extensionWork.title}</Typography>
-        </ExpansionPanelSummary>
-
-        <FormDisplayExpansionPanelDetails>
-
-            <FormDisplayListItem field="Venue"
-                                 value={extensionWork.venue} />
-
-            <FormDisplayListItem field="Roles"
-                                 value={<ExtensionWorkRoles roles={extensionWork.roles}/>} />
-
-            <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
-                                        updateButtonTooltipTitle="Update instructional material details"
-                                        onRemoveButtonClick={onRemoveButtonClick}
-                                        onUpdateButtonClick={onUpdateButtonClick} />
-
-        </FormDisplayExpansionPanelDetails>
-    </DetailExpansionCard>
-);
-
 export class ExtensionWorksTab extends Component {
     state = {
         extensionWorkModalIsShowing: false,
@@ -77,21 +53,39 @@ export class ExtensionWorksTab extends Component {
     });
 
     renderRows = extensionWorks => extensionWorks.map(extensionWork =>
-        <ExtensionWorkRow
-            extensionWork={extensionWork}
-            key={extensionWork._id}
-            classes={this.props.classes}
+        <DetailExpansionCard key={extensionWork._id}>
 
-            onUpdateButtonClick={() => this.setState({
-                activeExtensionWork: extensionWork,
-                extensionWorkModalIsShowing: true,
-            })}
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="body2" color="primary">{extensionWork.title}</Typography>
+            </ExpansionPanelSummary>
 
-            onRemoveButtonClick={() => this.setState({
-                activeExtensionWork: extensionWork,
-                removeExtensionWorkModalIsShowing: true,
-            })}
-        />,
+            <FormDisplayExpansionPanelDetails>
+
+                <FormDisplayListItem field="Venue"
+                                     value={extensionWork.venue} />
+
+                <FormDisplayListItem field="Roles"
+                                     value={<ExtensionWorkRoles roles={extensionWork.roles} />} />
+
+                {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
+                <DetailExpansionCardActions
+                    removeButtonTooltipTitle="Remove instructional material"
+                    updateButtonTooltipTitle="Update instructional material details"
+
+                    onUpdateButtonClick={() => this.setState({
+                        activeExtensionWork: extensionWork,
+                        extensionWorkModalIsShowing: true,
+                    })}
+
+                    onRemoveButtonClick={() => this.setState({
+                        activeExtensionWork: extensionWork,
+                        removeExtensionWorkModalIsShowing: true,
+                    })}
+                />
+                }
+
+            </FormDisplayExpansionPanelDetails>
+        </DetailExpansionCard>,
     );
 
     onAddButtonClick = () => this.setState({
@@ -100,10 +94,13 @@ export class ExtensionWorksTab extends Component {
     });
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded extension works`}
-                    smallMessage="Extension works added will be shown here"
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Add an extension work" />
+        <EmptyState
+            bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded extension works`}
+            smallMessage="Extension works added will be shown here"
+            onAddButtonClick={this.onAddButtonClick}
+            addButtonText="Add an extension work"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     render() {
@@ -115,9 +112,12 @@ export class ExtensionWorksTab extends Component {
         return (
             <div className={classes.expansionCardsContainer}>
                 <DetailCard>
-                    <TableToolbar tableTitle="Extension Works"
-                                  addButtonTooltipTitle="Add an extension work"
-                                  onAddButtonClick={this.onAddButtonClick} />
+                    <TableToolbar
+                        tableTitle="Extension Works"
+                        addButtonTooltipTitle="Add an extension work"
+                        onAddButtonClick={this.onAddButtonClick}
+                        showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                    />
                     {extensionWorksIsEmpty && this.renderEmptyState()}
                 </DetailCard>
 

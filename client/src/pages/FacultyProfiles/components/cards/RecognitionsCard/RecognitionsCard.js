@@ -15,19 +15,6 @@ import { RecognitionModal } from "../../modals/RecognitionModal";
 import { RemoveRecognitionModal } from "../../modals/RemoveRecognitionModal";
 
 
-const RecognitionRow = ({recognition, onRemoveButtonClick, onUpdateButtonClick}) => (
-    <TableRow>
-        <TableCell>{recognition.title}</TableCell>
-        <TableCell>{RECOGNITION.BASIS[recognition.basis].name}</TableCell>
-        <TableCell>{recognition.sponsor}</TableCell>
-        <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
-        <TableRowActions removeButtonTooltipTitle="Remove this recognition"
-                         updateButtonTooltipTitle="Update this recognition"
-                         onRemoveButtonClick={onRemoveButtonClick}
-                         onUpdateButtonClick={onUpdateButtonClick} />
-    </TableRow>
-);
-
 export class RecognitionsCard extends Component {
     state = {
         recognitionModalIsShowing: false,
@@ -44,27 +31,38 @@ export class RecognitionsCard extends Component {
     });
 
     renderRows = recognitions => recognitions.map(recognition =>
-        <RecognitionRow
-            recognition={recognition}
-            key={recognition._id}
+        <TableRow key={recognition._id}>
+            <TableCell>{recognition.title}</TableCell>
+            <TableCell>{RECOGNITION.BASIS[recognition.basis].name}</TableCell>
+            <TableCell>{recognition.sponsor}</TableCell>
+            <TableCell>{formatMonthYearDate(recognition.date)}</TableCell>
 
-            onUpdateButtonClick={() => this.setState({
-                activeRecognition: recognition,
-                recognitionModalIsShowing: true,
-            })}
+            {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
+            <TableRowActions
+                removeButtonTooltipTitle="Remove this recognition"
+                updateButtonTooltipTitle="Update this recognition"
+                onUpdateButtonClick={() => this.setState({
+                    activeRecognition: recognition,
+                    recognitionModalIsShowing: true,
+                })}
 
-            onRemoveButtonClick={() => this.setState({
-                activeRecognition: recognition,
-                removeRecognitionModalIsShowing: true,
-            })}
-        />,
+                onRemoveButtonClick={() => this.setState({
+                    activeRecognition: recognition,
+                    removeRecognitionModalIsShowing: true,
+                })}
+            />
+            }
+        </TableRow>,
     );
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded recognitions.`}
-                    smallMessage="Recognitions added will be shown here."
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Add a recognition" />
+        <EmptyState
+            bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded recognitions.`}
+            smallMessage="Recognitions added will be shown here."
+            onAddButtonClick={this.onAddButtonClick}
+            addButtonText="Add a recognition"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     onAddButtonClick = () => this.setState({
@@ -73,7 +71,7 @@ export class RecognitionsCard extends Component {
     });
 
     render() {
-        const faculty = this.props.faculty;
+        const {faculty, user} = this.props;
         //TODO: Sort by date
         const recognitions = faculty.recognitions;
         const recognitionsIsEmpty = recognitions.length === 0;
@@ -82,9 +80,12 @@ export class RecognitionsCard extends Component {
 
         return (
             <DetailCard>
-                <TableToolbar tableTitle="Recognitions"
-                              addButtonTooltipTitle="Add a recognition"
-                              onAddButtonClick={this.onAddButtonClick} />
+                <TableToolbar
+                    tableTitle="Recognitions"
+                    addButtonTooltipTitle="Add a recognition"
+                    onAddButtonClick={this.onAddButtonClick}
+                    showAddButton={user.permissions.MUTATE_FACULTY_PROFILES}
+                />
                 {!recognitionsIsEmpty &&
                 <Table>
                     <TableHead>
@@ -93,7 +94,10 @@ export class RecognitionsCard extends Component {
                             <TableCell>Basis</TableCell>
                             <TableCell>Sponsor</TableCell>
                             <TableCell>Date</TableCell>
+
+                            {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
                             <TableCell padding="none">Actions</TableCell>
+                            }
                         </TableRow>
                     </TableHead>
 

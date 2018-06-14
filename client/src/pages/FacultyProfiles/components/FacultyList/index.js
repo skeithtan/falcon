@@ -9,6 +9,7 @@ import { styles } from "./styles";
 const mapStateToProps = state => ({
     activeFacultyId: state.facultyProfiles.activeFacultyId,
     searchKeyword: state.facultyProfiles.searchKeyword,
+    user: state.authentication.user,
     ...state.faculty,
 });
 

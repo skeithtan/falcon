@@ -97,7 +97,7 @@ export class FacultyList extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, user} = this.props;
         const faculties = this.getFaculties();
         const {addFacultyModalIsShowing} = this.state;
 
@@ -105,12 +105,14 @@ export class FacultyList extends Component {
             <Grid container className={classes.facultyListContainer}>
                 {this.renderList(faculties)}
 
+                {user.permissions.MUTATE_FACULTY_PROFILES &&
                 <Tooltip title="Add a faculty" placement="top">
                     <Button variant="fab" color="primary" className={classes.addButton}
                             onClick={() => this.toggleAddFacultyModal(true)}>
                         <AddIcon />
                     </Button>
                 </Tooltip>
+                }
 
                 {addFacultyModalIsShowing &&
                 <AddFacultyModal open={addFacultyModalIsShowing}

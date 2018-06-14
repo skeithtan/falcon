@@ -24,19 +24,23 @@ export class OverviewCard extends Component {
     });
 
     render() {
-        const {faculty, classes} = this.props;
+        const {faculty, classes, user} = this.props;
         const birthDate = moment(faculty.birthDate);
         const today = moment();
         const birthDateValue = `${birthDate.format("LL")} (${today.to(birthDate, true)})`;
+
+        console.log(user.permissions, user.authorization);
         return (
             <DetailCard>
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
+                        {user.permissions.MUTATE_FACULTY_PROFILES &&
                         <Tooltip title="Update these details" placement="left">
                             <IconButton onClick={() => this.toggleUpdateFacultyModal(true)}>
                                 <EditIcon />
                             </IconButton>
                         </Tooltip>
+                        }
                     </div>
                 </div>
                 <div className={classes.bigOverview}>
