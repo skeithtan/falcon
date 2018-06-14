@@ -29,7 +29,6 @@ export class OverviewCard extends Component {
         const today = moment();
         const birthDateValue = `${birthDate.format("LL")} (${today.to(birthDate, true)})`;
 
-        console.log(user.permissions, user.authorization);
         return (
             <DetailCard>
                 <div className={classes.buttonArea}>
