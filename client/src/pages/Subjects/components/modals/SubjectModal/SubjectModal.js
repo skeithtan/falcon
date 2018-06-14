@@ -10,10 +10,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import { FacultyChip } from "../../../../../components/FacultyChip";
-import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
+import { FacultyChip } from "../../../../../components/FacultyChip/index";
+import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator/index";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
-import { ErrorState } from "../../../../../components/states/ErrorState";
+import { ErrorState } from "../../../../../components/states/ErrorState/index";
 import { validateForm } from "../../../../../utils/forms.util";
 import { getFullName } from "../../../../../utils/user.util";
 
@@ -57,11 +57,11 @@ export class SubjectModal extends ModalFormComponent {
     }
 
     get buttonName() {
-        return this.props.action === "add" ? "Add Subject" : "Update Subject";
+        return "Add Subject";
     }
 
     get modalTitle() {
-        return this.props.action === "add" ? "Add a Subject" : "Update Subject";
+        return "Add a Subject";
     }
 
     renderErrors = errors => (
