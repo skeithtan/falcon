@@ -136,9 +136,12 @@ export class TeachingSubjectsCard extends Component {
 
         return (
             <DetailCard>
-                <TableToolbar tableTitle="Subjects of Expertise"
-                              addButtonTooltipTitle="Assign a subject"
-                              onAddButtonClick={this.onAddButtonClick} />
+                <TableToolbar
+                    tableTitle="Subjects of Expertise"
+                    addButtonTooltipTitle="Assign a subject"
+                    onAddButtonClick={this.onAddButtonClick}
+                    showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                />
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
                 {subjects && this.renderTeachingSubjects(faculty)}
