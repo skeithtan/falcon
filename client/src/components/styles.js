@@ -63,3 +63,16 @@ export const split = theme => ({
     display: "grid",
     gridTemplateColumns: "320px auto",
 });
+
+export const chip = theme => ({
+    chip: {
+        background: lighten(theme.palette.primary.light, 0.9),
+
+        "&:hover, &:focus": {
+            background: lighten(theme.palette.primary.main, 0.75),
+        }
+    },
+    chipText: {
+        color: theme.palette.primary.dark,
+    },
+});
