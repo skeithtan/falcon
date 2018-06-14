@@ -50,12 +50,6 @@ export class SubjectModal extends ModalFormComponent {
         return () => submitAddSubject(form);
     }
 
-    get submitUpdateAction() {
-        const {form} = this.state;
-        const {subject, submitUpdateSubject} = this.props;
-        return () => submitUpdateSubject(subject, form);
-    }
-
     get buttonName() {
         return "Add Subject";
     }
