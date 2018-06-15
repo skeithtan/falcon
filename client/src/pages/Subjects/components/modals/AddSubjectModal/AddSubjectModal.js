@@ -3,10 +3,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/es/Grid";
 import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
@@ -14,8 +18,10 @@ import { FacultyChip } from "../../../../../components/FacultyChip/index";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator/index";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { ErrorState } from "../../../../../components/states/ErrorState/index";
+import { SUBJECT_CATEGORIES } from "../../../../../enums/class.enums";
 import { validateForm } from "../../../../../utils/forms.util";
 import { getFullName } from "../../../../../utils/user.util";
+import { SUBJECTS_PAGE } from "../../../../index";
 
 
 function getFormErrors(form) {
@@ -26,6 +32,9 @@ function getFormErrors(form) {
         code: {
             value: form.code,
         },
+        description: {
+            value: form.description,
+        },
     });
 }
 
@@ -34,14 +43,20 @@ export class AddSubjectModal extends ModalFormComponent {
         return {
             name: "",
             code: "",
+            description: "",
+            category: "PEDAGOGICAL",
             faculties: [],
         };
     }
 
     get submitAddAction() {
         const {form} = this.state;
-        const {submitAddSubject} = this.props;
-        return () => submitAddSubject(form);
+        const {submitAddSubject, history} = this.props;
+        return () => submitAddSubject(form)
+            .then(newSubject => {
+                history.push(`/${SUBJECTS_PAGE.path}/${newSubject._id}`);
+                return newSubject;
+            });
     }
 
     get buttonName() {
@@ -133,6 +148,38 @@ export class AddSubjectModal extends ModalFormComponent {
                                 {fieldErrors.code.length > 0 &&
                                 <FormHelperText>{fieldErrors.code[0]}</FormHelperText>
                                 }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.description.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.description.length > 0}
+                                    label="Description"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("description")}
+                                    value={form.description}
+                                />
+                                {fieldErrors.description.length > 0 &&
+                                <FormHelperText>{fieldErrors.description[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl>
+                                <FormLabel>Category</FormLabel>
+                                <RadioGroup value={form.category} onChange={this.handleFormChange("category")}>
+                                    {Object.entries(SUBJECT_CATEGORIES).map(([identifier, {name}]) =>
+                                        <FormControlLabel
+                                            key={identifier}
+                                            value={identifier}
+                                            label={name}
+                                            disabled={isSubmitting}
+                                            control={<Radio />}
+                                        />,
+                                    )}
+                                </RadioGroup>
                             </FormControl>
                         </Grid>
 

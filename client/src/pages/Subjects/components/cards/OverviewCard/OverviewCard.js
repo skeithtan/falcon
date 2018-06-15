@@ -26,7 +26,6 @@ export class OverviewCard extends Component {
 
         return (
             <DetailCard>
-
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
                         {user.permissions.MUTATE_FACULTY_PROFILES &&
