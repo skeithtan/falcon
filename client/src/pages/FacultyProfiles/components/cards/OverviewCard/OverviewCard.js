@@ -51,7 +51,7 @@ export class OverviewCard extends Component {
                                 <Typography variant="title">
                                     {getFullName(faculty.user)}
                                 </Typography>
-                                <Typography variant="subheading">
+                                <Typography variant="subheading" color="textSecondary">
                                     {EMPLOYMENT[faculty.employment].name} Faculty
                                 </Typography>
                             </Grid>

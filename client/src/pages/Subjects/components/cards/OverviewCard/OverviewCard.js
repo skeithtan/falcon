@@ -48,7 +48,7 @@ export class OverviewCard extends Component {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="subheading">
+                        <Typography variant="subheading" color="textSecondary">
                             {subject.name}
                         </Typography>
                     </Grid>
