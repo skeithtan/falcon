@@ -90,7 +90,9 @@ enum Sex {
 enum Employment {
     FULL_TIME_PERMANENT,
     FULL_TIME_TEMPORARY,
-    PART_TIME
+    PART_TIME,
+    ADJUNCT,
+    INACTIVE
 }
 
 type Faculty {

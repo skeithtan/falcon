@@ -136,7 +136,7 @@ const FacultySchema = new Schema({
     },
     employment: {
         type: String,
-        enum: ["FULL_TIME_PERMANENT", "FULL_TIME_TEMPORARY", "PART_TIME"],
+        enum: ["FULL_TIME_PERMANENT", "FULL_TIME_TEMPORARY", "PART_TIME", "ADJUNCT", "INACTIVE"],
         required: true,
     },
     birthDate: {

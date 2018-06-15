@@ -11,6 +11,14 @@ export const EMPLOYMENT = {
         identifier: "PART_TIME",
         name: "Part Time",
     },
+    "ADJUNCT": {
+        identifier: "ADJUNCT",
+        name: "Adjunct"
+    },
+    "INACTIVE": {
+        identifier: "INACTIVE",
+        name: "Inactive"
+    }
 };
 
 export const SEX = {
