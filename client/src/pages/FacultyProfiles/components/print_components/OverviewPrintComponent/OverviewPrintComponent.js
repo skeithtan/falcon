@@ -16,39 +16,29 @@ export const OverviewPrintComponent = ({faculty}) => {
     const birthDateValue = `${birthDate.format("LL")} (${today.to(birthDate, true)})`;
 
     return (
-        <Grid container spacing={16} direction="column">
-            <Grid item>
-                <Typography variant="title" component="h1">
-                    {getFullName(faculty.user)}
-                </Typography>
-            </Grid>
-            <Grid item>
-
-                <Table>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell padding="none"><b>ID Number</b></TableCell>
-                            <TableCell padding="none">T-{faculty.idNumber}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell padding="none"><b>Employment Type</b></TableCell>
-                            <TableCell padding="none">{EMPLOYMENT[faculty.employment].name} Faculty</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell padding="none"><b>Email</b></TableCell>
-                            <TableCell padding="none">{faculty.user.email}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell padding="none"><b>Sex</b></TableCell>
-                            <TableCell padding="none">{SEX[faculty.sex].name}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell padding="none"><b>Date of Birth</b></TableCell>
-                            <TableCell padding="none">{birthDateValue}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </Grid>
-        </Grid>
+        <Table>
+            <TableBody>
+                <TableRow>
+                    <TableCell variant="head" padding="none">ID Number</TableCell>
+                    <TableCell padding="none">T-{faculty.idNumber}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell variant="head" padding="none">Employment Type</TableCell>
+                    <TableCell padding="none">{EMPLOYMENT[faculty.employment].name} Faculty</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell variant="head" padding="none">Email</TableCell>
+                    <TableCell padding="none">{faculty.user.email}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell variant="head" padding="none">Sex</TableCell>
+                    <TableCell padding="none">{SEX[faculty.sex].name}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell variant="head" padding="none">Date of Birth</TableCell>
+                    <TableCell padding="none">{birthDateValue}</TableCell>
+                </TableRow>
+            </TableBody>
+        </Table>
     );
 };

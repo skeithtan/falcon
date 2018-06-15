@@ -24,7 +24,7 @@ export const styles = theme => ({
     printContentContainer: {
         maxWidth: 1024,
         minHeight: 1600,
-        padding: 12,
+        padding: theme.spacing.unit * 2,
         background: "white",
         width: "100%",
     },

@@ -15,6 +15,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import React, { Component } from "react";
 import ReactToPrint from "react-to-print";
 import pnuLogo from "../../../../images/pnu-logo.png";
+import { getFullName } from "../../../../utils/user.util";
 import { DegreesPrintComponent } from "../print_components/DegreesPrintComponent";
 import { OverviewPrintComponent } from "../print_components/OverviewPrintComponent";
 
@@ -32,7 +33,7 @@ class PrintContent extends Component {
         } = this.props;
 
         return (
-            <Grid container spacing={24} direction="column" className={classes.printPageContainer}>
+            <Grid container spacing={32} direction="column" className={classes.printPageContainer}>
                 <Grid item>
                     <Grid container spacing={8} direction="row" alignItems="center">
                         <Grid item>
@@ -53,6 +54,12 @@ class PrintContent extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
+                </Grid>
+
+                <Grid item>
+                    <Typography variant="title" component="h1" align="center">
+                        {getFullName(faculty.user)}'s Profile
+                    </Typography>
                 </Grid>
 
                 <Grid item>
