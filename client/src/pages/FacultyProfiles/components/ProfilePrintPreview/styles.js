@@ -20,6 +20,7 @@ export const styles = theme => ({
     printPageContainer: {
         background: "white",
         padding: theme.spacing.unit * 8,
+        maxWidth: 1024,
     },
     printContentContainer: {
         maxWidth: 1024,

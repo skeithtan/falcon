@@ -1,13 +1,10 @@
-import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import React from "react";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
-import { getFullName } from "../../../../../utils/user.util";
 
 
 export const OverviewPrintComponent = ({faculty}) => {
