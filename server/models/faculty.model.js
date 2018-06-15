@@ -48,7 +48,7 @@ const RecognitionSchema = new Schema({
     },
     basis: {
         type: String,
-        enum: ["RESEARCH", "SCHOLARSHIP", "EXTENSION_WORK", "CIVIC"],
+        enum: ["RESEARCH", "SCHOLARSHIP", "EXTENSION_WORK", "INSTRUCTION"],
         required: true,
     },
     date: MonthYearDate,

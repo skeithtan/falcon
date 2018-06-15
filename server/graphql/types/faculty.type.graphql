@@ -27,7 +27,7 @@ enum RecognitionBasis {
     RESEARCH,
     SCHOLARSHIP,
     EXTENSION_WORK,
-    CIVIC
+    INSTRUCTION
 }
 
 type Recognition {

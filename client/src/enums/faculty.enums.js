@@ -68,7 +68,7 @@ export const EXTENSION_WORK = {
             name: "Resource Speaker",
         },
         "FACILITATOR": {
-            identifier: "FACILITAOR",
+            identifier: "FACILITATOR",
             name: "Facilitator",
         },
         "COACH": {
@@ -135,9 +135,9 @@ export const RECOGNITION = {
             identifier: "EXTENSION_WORK",
             name: "Extension Work",
         },
-        "CIVIC": {
-            identifier: "CIVIC",
-            name: "Civic",
+        "INSTRUCTION": {
+            identifier: "INSTRUCTION",
+            name: "Instruction",
         },
     },
 };
