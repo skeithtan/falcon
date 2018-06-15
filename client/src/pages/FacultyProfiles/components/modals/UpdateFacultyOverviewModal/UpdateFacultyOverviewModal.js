@@ -7,6 +7,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
 import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -57,12 +58,14 @@ function getFormErrors(form, existingFaculties, currentFaculty) {
         birthDate: {
             value: form.birthDate,
         },
+        idNumber: {
+            value: form.idNumber,
+        },
     });
 }
 
 export class UpdateFacultyOverviewModal extends ModalFormComponent {
     mapPropsToForm = ({faculty}) => ({
-        _id: faculty._id,
         firstName: faculty.user.name.first,
         lastName: faculty.user.name.last,
         email: faculty.user.email,
@@ -70,11 +73,11 @@ export class UpdateFacultyOverviewModal extends ModalFormComponent {
         sex: faculty.sex,
         employment: faculty.employment,
         birthDate: dateToFormInputValue(faculty.birthDate),
+        idNumber: faculty.idNumber,
     });
 
     get initialForm() {
         return {
-            _id: "",
             firstName: "",
             lastName: "",
             email: "",
@@ -82,13 +85,15 @@ export class UpdateFacultyOverviewModal extends ModalFormComponent {
             sex: SEX.M.identifier,
             employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
             birthDate: "",
+            idNumber: "",
         };
 
     }
 
     get submitUpdateAction() {
-        const form = this.state.form;
-        return () => this.props.submitForm(form);
+        const {form} = this.state;
+        const {faculty} = this.props;
+        return () => this.props.submitForm(faculty, form);
     }
 
     render() {
@@ -151,6 +156,24 @@ export class UpdateFacultyOverviewModal extends ModalFormComponent {
                                     </Typography>
                                 </Grid>
                             </Grid>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.idNumber.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.idNumber.length > 0}
+                                    label="Faculty ID Number"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("idNumber")}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">T-</InputAdornment>
+                                    }}
+                                    value={form.idNumber}
+                                />
+                                {fieldErrors.idNumber.length > 0 &&
+                                <FormHelperText>{fieldErrors.idNumber[0]}</FormHelperText>
+                                }
+                            </FormControl>
                         </Grid>
 
 

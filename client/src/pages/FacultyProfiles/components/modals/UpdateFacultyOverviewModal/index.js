@@ -8,11 +8,11 @@ import { UpdateFacultyOverviewModal as Component } from "./UpdateFacultyOverview
 
 
 const mapFormToGraphQLParameters = form => ({
-    _id: form._id,
     newFaculty: {
         sex: form.sex,
         employment: form.employment,
         birthDate: form.birthDate,
+        idNumber: form.idNumber,
     },
     newUser: {
         name: {
@@ -29,13 +29,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    submitForm(form) {
-        const {_id, newFaculty, newUser} = mapFormToGraphQLParameters(form);
-        return updateFaculty(_id, newFaculty, newUser)
-            .then(result => {
-                const faculty = result.data.faculty.updateFaculty;
-                dispatch(facultyIsUpdated(faculty));
-                return faculty;
+    submitForm(faculty, form) {
+        const {newFaculty, newUser} = mapFormToGraphQLParameters(form);
+        return updateFaculty(faculty._id, newFaculty, newUser)
+            .then(result => result.data.faculty.update)
+            .then(newFaculty => {
+                dispatch(facultyIsUpdated({
+                    ...faculty,
+                    ...newFaculty,
+                }));
+                return newFaculty;
             });
     },
 });

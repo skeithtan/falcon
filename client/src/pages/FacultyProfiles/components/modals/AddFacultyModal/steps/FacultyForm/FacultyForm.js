@@ -4,6 +4,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import TextField from "@material-ui/core/TextField";
@@ -16,6 +17,9 @@ function getFacultyFormErrors(form) {
     return validateForm({
         birthDate: {
             value: form.birthDate,
+        },
+        idNumber: {
+            value: form.idNumber,
         },
     });
 }
@@ -36,6 +40,20 @@ export const FacultyForm = ({handleFormChange, form, handleNext, handleBack}) =>
             />
             {fieldErrors.birthDate.length > 0 &&
             <FormHelperText>{fieldErrors.birthDate[0]}</FormHelperText>
+            }
+        </FormControl>,
+        <FormControl error={fieldErrors.idNumber.length > 0} fullWidth>
+            <TextField
+                error={fieldErrors.idNumber.length > 0}
+                label="Faculty ID Number"
+                onChange={this.handleFormChange("idNumber")}
+                InputProps={{
+                    startAdornment: <InputAdornment position="start">T-</InputAdornment>,
+                }}
+                value={form.idNumber}
+            />
+            {fieldErrors.idNumber.length > 0 &&
+            <FormHelperText>{fieldErrors.idNumber[0]}</FormHelperText>
             }
         </FormControl>,
         <FormControl key={1}>

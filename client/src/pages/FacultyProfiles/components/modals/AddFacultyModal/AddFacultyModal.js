@@ -25,6 +25,7 @@ const initialForm = {
     sex: SEX.M.identifier,
     employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
     birthDate: "",
+    idNumber: "",
 };
 
 const initialState = {
