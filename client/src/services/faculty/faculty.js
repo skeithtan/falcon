@@ -9,6 +9,7 @@ import { fields as recognitionFields } from "./recognition";
 
 const facultySummary = `
     _id
+    idNumber
     user {
         name {
             first

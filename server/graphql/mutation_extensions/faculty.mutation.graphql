@@ -1,5 +1,6 @@
 input FacultyInput {
     sex: Sex
+    idNumber: String
     employment: Employment
     birthDate: String
 }

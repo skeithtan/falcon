@@ -47,19 +47,24 @@ export class OverviewCard extends Component {
                         <UserAvatar user={faculty.user} className={classes.bigAvatar} />
 
                         <Grid item>
-                            <Grid container direction="column">
-                                <Typography variant="title">
-                                    {getFullName(faculty.user)}
-                                </Typography>
-                                <Typography variant="subheading" color="textSecondary">
-                                    {EMPLOYMENT[faculty.employment].name} Faculty
-                                </Typography>
+                            <Grid container direction="column" spacing={0}>
+                                <Grid item>
+                                    <Typography variant="title">
+                                        {getFullName(faculty.user)}
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="subheading" color="textSecondary">
+                                        {EMPLOYMENT[faculty.employment].name} Faculty
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="body2" color="textSecondary">
+                                        T-{faculty.idNumber}
+                                    </Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
-
-                        <Grid item>
-                        </Grid>
-
                     </Grid>
                 </div>
                 <List disablePadding>

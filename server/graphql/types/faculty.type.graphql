@@ -95,6 +95,7 @@ enum Employment {
 
 type Faculty {
     _id: ID!
+    idNumber: String!
     user: User!
     sex: Sex!
     employment: Employment

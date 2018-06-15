@@ -31,7 +31,7 @@ const FacultyItem = ({activeTab, classes, faculty, active}) => {
             className={className}
         >
             <UserAvatar user={faculty.user} />
-            <ListItemText primary={getFullName(faculty.user)} />
+            <ListItemText primary={getFullName(faculty.user)} secondary={`T-${faculty.idNumber}`}/>
         </ListItem>
     );
 };
@@ -46,10 +46,13 @@ export class FacultyList extends Component {
     });
 
     renderEmptyState = () => (
-        <EmptyState bigMessage="No faculties found"
-                    smallMessage="When faculties are added, you can see them here"
-                    onAddButtonClick={() => this.toggleAddFacultyModal(true)}
-                    addButtonText="Add a faculty" />
+        <EmptyState
+            bigMessage="No faculties found"
+            smallMessage="When faculties are added, you can see them here"
+            onAddButtonClick={() => this.toggleAddFacultyModal(true)}
+            addButtonText="Add a faculty"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     renderNoResultsState = () => (

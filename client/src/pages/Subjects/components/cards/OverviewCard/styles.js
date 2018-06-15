@@ -1,7 +1,6 @@
 export const styles = theme => ({
     overviewTitleContainer: {
         padding: theme.spacing.unit * 4,
-        // paddingLeft: theme.spacing.unit,
     },
     buttonArea: {
         display: "flex",

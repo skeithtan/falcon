@@ -120,6 +120,10 @@ const DegreeSchema = new Schema({
     },
 });
 const FacultySchema = new Schema({
+    idNumber: {
+        type: String,
+        required: true,
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
