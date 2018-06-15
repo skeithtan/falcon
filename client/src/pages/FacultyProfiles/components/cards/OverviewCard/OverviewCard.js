@@ -4,6 +4,8 @@ import List from "@material-ui/core/List";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import PrintIcon from "@material-ui/icons/Print";
 import moment from "moment/moment";
 import React, { Component } from "react";
 import { DetailCard } from "../../../../../components/DetailCard";
@@ -12,20 +14,30 @@ import { UserAvatar } from "../../../../../components/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
 import { UpdateFacultyOverviewModal } from "../../modals/UpdateFacultyOverviewModal";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import PrintIcon from "@material-ui/icons/Print";
+import { ProfilePrintPreview } from "../../ProfilePrintPreview";
+
 
 export class OverviewCard extends Component {
     state = {
         updateFacultyModalIsShowing: false,
+        profilePrintPreviewIsShowing: false,
     };
 
     toggleUpdateFacultyModal = shouldShow => this.setState({
         updateFacultyModalIsShowing: shouldShow,
     });
 
+    toggleProfilePrintPreview = shouldShow => this.setState({
+        profilePrintPreviewIsShowing: shouldShow,
+    });
+
+    componentWillUnmount() {
+        this.toggleProfilePrintPreview(false);
+    }
+
     render() {
         const {faculty, classes, user} = this.props;
+        const {updateFacultyModalIsShowing, profilePrintPreviewIsShowing} = this.state;
         const birthDate = moment(faculty.birthDate);
         const today = moment();
         const birthDateValue = `${birthDate.format("LL")} (${today.to(birthDate, true)})`;
@@ -57,7 +69,7 @@ export class OverviewCard extends Component {
 
                             <Grid item>
                                 <Tooltip title="Print Faculty Profile" placement="left">
-                                    <IconButton>
+                                    <IconButton onClick={() => this.toggleProfilePrintPreview(true)}>
                                         <PrintIcon />
                                     </IconButton>
                                 </Tooltip>
@@ -96,13 +108,19 @@ export class OverviewCard extends Component {
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
 
-                {this.state.updateFacultyModalIsShowing &&
+                {updateFacultyModalIsShowing &&
                 <UpdateFacultyOverviewModal
                     action="update"
                     faculty={faculty}
-                    open={this.state.updateFacultyModalIsShowing}
+                    open={updateFacultyModalIsShowing}
                     onClose={() => this.toggleUpdateFacultyModal(false)} />
                 }
+
+                <ProfilePrintPreview
+                    faculty={faculty}
+                    open={profilePrintPreviewIsShowing}
+                    onClose={() => this.toggleProfilePrintPreview(false)}
+                />
             </DetailCard>
         );
     }
