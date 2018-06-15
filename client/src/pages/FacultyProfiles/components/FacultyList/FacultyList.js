@@ -31,7 +31,7 @@ const FacultyItem = ({activeTab, classes, faculty, active}) => {
             className={className}
         >
             <UserAvatar user={faculty.user} />
-            <ListItemText primary={getFullName(faculty.user)} secondary={`T-${faculty.idNumber}`}/>
+            <ListItemText primary={getFullName(faculty.user)} secondary={`T-${faculty.idNumber}`} />
         </ListItem>
     );
 };
@@ -68,7 +68,8 @@ export class FacultyList extends Component {
         return faculties.filter(faculty => {
             const fullName = `${faculty.user.name.first} ${faculty.user.name.last}`.toLowerCase();
             const email = faculty.user.email.toLowerCase();
-            return fullName.includes(searchKeyword) || email.includes(searchKeyword);
+            const idNumber = `T-${faculty.idNumber}`.toLowerCase();
+            return fullName.includes(searchKeyword) || email.includes(searchKeyword) || idNumber.includes(searchKeyword);
         });
     };
 
