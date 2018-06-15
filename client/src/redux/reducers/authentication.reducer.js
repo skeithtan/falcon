@@ -7,12 +7,16 @@ import {
 } from "../actions/authentication.actions";
 
 
-const getUser = () => {
+const getUserFromLocalStorage = () => {
     if (!localStorage.hasOwnProperty("user")) {
         return null;
     }
 
     const user = JSON.parse(localStorage.user);
+    return getUserWithPermissions(user);
+};
+
+const getUserWithPermissions = user => {
     user.permissions = getPermissions(user);
     return user;
 };
@@ -20,7 +24,7 @@ const getUser = () => {
 const initialState = {
     isLoading: false,
     signInError: null,
-    user: getUser(),
+    user: getUserFromLocalStorage(),
 };
 
 export function authentication(state = initialState, action) {
@@ -29,7 +33,7 @@ export function authentication(state = initialState, action) {
             return {
                 isLoading: false,
                 signInError: null,
-                user: action.user,
+                user: getUserWithPermissions(action.user),
             };
         case SIGN_IN_IS_LOADING:
             return {
