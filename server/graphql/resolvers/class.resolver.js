@@ -28,17 +28,19 @@ function mutateSubject() {
                 .findById(_id)
                 .exec();
 
-            const newFaculties = [...newSubject.faculties];
-            const oldFaculties = [...subject.faculties];
-
             subject.set(newSubject);
             await subject.save();
 
-            // Link faculties to subject
-            const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
+            if (newSubject.faculties !== undefined) {
+                const newFaculties = [...newSubject.faculties];
+                const oldFaculties = [...subject.faculties];
 
-            addSubjectToFaculties(subject, addedItems);
-            removeSubjectFromFaculties(subject, removedItems);
+                // Link faculties to subject
+                const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
+
+                addSubjectToFaculties(subject, addedItems);
+                removeSubjectFromFaculties(subject, removedItems);
+            }
 
             return subject;
         },
