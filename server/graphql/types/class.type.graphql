@@ -2,7 +2,17 @@ type Subject {
     _id: ID!
     code: String!
     name: String!
+    category: SubjectCategory
+    description: String!
     faculties: [ID!]!
+}
+
+enum SubjectCategory {
+    PEDAGOGICAL,
+    GENERAL,
+    SPECIALIZATION,
+    ELECTIVE,
+    PROFESSIONAL
 }
 
 type Course {

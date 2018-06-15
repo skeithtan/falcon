@@ -22,10 +22,19 @@ const SubjectSchema = new Schema({
         type: String,
         required: true,
     },
+    description: {
+        type: String,
+        required: true,
+    },
     faculties: [{
         type: Schema.Types.ObjectId,
         ref: "Faculty",
     }],
+    category: {
+        type: String,
+        enum: ["PEDAGOGICAL", "GENERAL", "SPECIALIZATION", "ELECTIVE", "PROFESSIONAL"],
+        required: true,
+    },
 });
 
 const ClassSchema = new Schema({

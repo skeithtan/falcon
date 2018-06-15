@@ -6,6 +6,8 @@ const subjectFields = `
     _id
     code
     name
+    description
+    category
     faculties
 `;
 

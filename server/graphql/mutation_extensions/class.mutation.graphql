@@ -1,6 +1,8 @@
 input SubjectInput {
     code: String
     name: String
+    category: SubjectCategory
+    description: String
     faculties: [ID!]
 }
 
