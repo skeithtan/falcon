@@ -46,7 +46,7 @@ export const FacultyForm = ({handleFormChange, form, handleNext, handleBack}) =>
             <TextField
                 error={fieldErrors.idNumber.length > 0}
                 label="Faculty ID Number"
-                onChange={this.handleFormChange("idNumber")}
+                onChange={handleFormChange("idNumber")}
                 InputProps={{
                     startAdornment: <InputAdornment position="start">T-</InputAdornment>,
                 }}
