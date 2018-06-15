@@ -87,7 +87,7 @@ export class ExpertFacultiesModal extends ModalFormComponent {
                     >
                         <Grid item>
                             <FormControl className={classes.formControl} fullWidth>
-                                <InputLabel>Subjects of Expertise</InputLabel>
+                                <InputLabel>Expert Faculties</InputLabel>
                                 <Select
                                     disabled={isSubmitting}
                                     multiple
