@@ -12,7 +12,8 @@ import { UserAvatar } from "../../../../../components/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
 import { UpdateFacultyOverviewModal } from "../../modals/UpdateFacultyOverviewModal";
-
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import PrintIcon from "@material-ui/icons/Print";
 
 export class OverviewCard extends Component {
     state = {
@@ -33,13 +34,35 @@ export class OverviewCard extends Component {
             <DetailCard>
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
-                        {user.permissions.MUTATE_FACULTY_PROFILES &&
-                        <Tooltip title="Update these details" placement="left">
-                            <IconButton onClick={() => this.toggleUpdateFacultyModal(true)}>
-                                <EditIcon />
-                            </IconButton>
-                        </Tooltip>
-                        }
+                        <Grid container spacing={8}>
+                            {user.permissions.MUTATE_FACULTY_PROFILES &&
+                            <Grid item>
+                                <Tooltip title="Update these details" placement="left">
+                                    <IconButton onClick={() => this.toggleUpdateFacultyModal(true)}>
+                                        <EditIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                            }
+
+                            {user.permissions.MUTATE_FACULTY_PROFILES &&
+                            <Grid item>
+                                <Tooltip title="Reset Faculty Password" placement="left">
+                                    <IconButton>
+                                        <LockOpenIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                            }
+
+                            <Grid item>
+                                <Tooltip title="Print Faculty Profile" placement="left">
+                                    <IconButton>
+                                        <PrintIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                        </Grid>
                     </div>
                 </div>
                 <div className={classes.bigOverview}>
