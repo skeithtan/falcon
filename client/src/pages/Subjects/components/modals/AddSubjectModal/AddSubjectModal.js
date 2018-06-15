@@ -29,7 +29,7 @@ function getFormErrors(form) {
     });
 }
 
-export class SubjectModal extends ModalFormComponent {
+export class AddSubjectModal extends ModalFormComponent {
     get initialForm() {
         return {
             name: "",
@@ -37,12 +37,6 @@ export class SubjectModal extends ModalFormComponent {
             faculties: [],
         };
     }
-
-    mapPropsToForm = ({subject}) => ({
-        name: subject.name,
-        code: subject.code,
-        faculties: subject.faculties.map(faculty => faculty._id),
-    });
 
     get submitAddAction() {
         const {form} = this.state;

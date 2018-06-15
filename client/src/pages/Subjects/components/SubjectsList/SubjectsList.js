@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { EmptySearchResultsState } from "../../../../components/states/EmptySearchResultsState";
 import { EmptyState } from "../../../../components/states/EmptyState";
 import { SUBJECTS_PAGE } from "../../../index";
-import { SubjectModal } from "../modals/SubjectModal";
+import { AddSubjectModal } from "../modals/AddSubjectModal";
 
 
 const SubjectItem = ({classes, subject, active}) => {
@@ -112,7 +112,7 @@ export class SubjectsList extends Component {
                 }
 
                 {addSubjectModalIsShowing &&
-                <SubjectModal
+                <AddSubjectModal
                     action="add"
                     open={addSubjectModalIsShowing}
                     onClose={() => this.toggleAddSubjectModal(false)}

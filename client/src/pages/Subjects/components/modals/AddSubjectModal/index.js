@@ -5,7 +5,7 @@ import { subjectIsAdded } from "../../../../../redux/actions/subject.actions";
 import { addSubject } from "../../../../../services/subjects.service";
 import { fetchAllFaculties } from "../../../../../utils/faculty.util";
 import { styles } from "./styles";
-import { SubjectModal as Component } from "./SubjectModal";
+import { AddSubjectModal as Component } from "./AddSubjectModal";
 
 
 const mapStateToProps = state => ({
@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export const SubjectModal = compose(
+export const AddSubjectModal = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles),
 )(Component);
