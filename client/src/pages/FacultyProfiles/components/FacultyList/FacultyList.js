@@ -118,10 +118,10 @@ export class FacultyList extends Component {
                 </Tooltip>
                 }
 
-                {addFacultyModalIsShowing &&
-                <AddFacultyModal open={addFacultyModalIsShowing}
-                                 onClose={() => this.toggleAddFacultyModal(false)} />
-                }
+                <AddFacultyModal
+                    open={addFacultyModalIsShowing}
+                    onClose={() => this.toggleAddFacultyModal(false)}
+                />
             </Grid>
         );
     }

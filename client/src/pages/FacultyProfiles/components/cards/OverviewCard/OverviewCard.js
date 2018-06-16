@@ -108,13 +108,12 @@ export class OverviewCard extends Component {
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
 
-                {updateFacultyModalIsShowing &&
                 <UpdateFacultyOverviewModal
                     action="update"
                     faculty={faculty}
                     open={updateFacultyModalIsShowing}
-                    onClose={() => this.toggleUpdateFacultyModal(false)} />
-                }
+                    onClose={() => this.toggleUpdateFacultyModal(false)}
+                />
 
                 <ProfilePrintPreview
                     faculty={faculty}

@@ -106,7 +106,6 @@ export class DegreeCard extends Component {
                 {!degreesIsEmpty && this.renderDegreesTable(degrees, user)}
                 {degreesIsEmpty && this.renderEmptyState()}
 
-                {degreeModalIsShowing &&
                 <DegreeModal
                     action={activeDegree ? "update" : "add"}
                     degree={activeDegree}
@@ -114,9 +113,8 @@ export class DegreeCard extends Component {
                     onClose={() => this.toggleDegreeFormModal(false)}
                     faculty={faculty}
                 />
-                }
 
-                {removeDegreeModalIsShowing &&
+                {activeDegree &&
                 <RemoveDegreeModal
                     open={removeDegreeModalIsShowing}
                     onClose={() => this.toggleRemoveDegreeModal(false)}

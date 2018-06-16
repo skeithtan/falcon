@@ -19,7 +19,7 @@ export class FacultyChips extends Component {
 
     renderChips = subjectFaculties => {
         const chips = subjectFaculties
-            // Get full faculty details from cached faculties in redux
+        // Get full faculty details from cached faculties in redux
             .map(facultyId => this.getFacultyFromId(facultyId))
             // Make a chip
             .map(faculty => (
@@ -43,20 +43,20 @@ export class FacultyChips extends Component {
     };
 
     render() {
-        const { subject } = this.props;
-        const { activeFaculty, unassignFacultyModalIsShowing } = this.state;
+        const {subject} = this.props;
+        const {activeFaculty, unassignFacultyModalIsShowing} = this.state;
         return (
             <ListItem divider>
                 {this.renderChips(subject.faculties)}
 
-                {unassignFacultyModalIsShowing &&
-                    <UnassignSubjectModal
-                        open={unassignFacultyModalIsShowing}
-                        onClose={() => this.toggleUnassignFacultyModal(false)}
-                        perspective="subject"
-                        faculty={activeFaculty}
-                        subject={subject}
-                    />
+                {activeFaculty &&
+                <UnassignSubjectModal
+                    open={unassignFacultyModalIsShowing}
+                    onClose={() => this.toggleUnassignFacultyModal(false)}
+                    perspective="subject"
+                    faculty={activeFaculty}
+                    subject={subject}
+                />
                 }
             </ListItem>
         );

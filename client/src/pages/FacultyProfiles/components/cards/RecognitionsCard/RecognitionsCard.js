@@ -109,7 +109,6 @@ export class RecognitionsCard extends Component {
 
                 {recognitionsIsEmpty && this.renderEmptyState()}
 
-                {recognitionModalIsShowing &&
                 <RecognitionModal
                     action={activeRecognition ? "update" : "add"}
                     recognition={activeRecognition}
@@ -117,9 +116,8 @@ export class RecognitionsCard extends Component {
                     open={recognitionModalIsShowing}
                     onClose={() => this.toggleRecognitionModal(false)}
                 />
-                }
 
-                {removeRecognitionModalIsShowing &&
+                {activeRecognition &&
                 <RemoveRecognitionModal
                     recognition={activeRecognition}
                     faculty={faculty}

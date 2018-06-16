@@ -80,7 +80,7 @@ export class TeachingSubjectsCard extends Component {
                 }
 
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
-                {activeSubject && removeSubjectModalIsShowing &&
+                {activeSubject &&
                 <UnassignSubjectModal
                     perspective="faculty"
                     open={removeSubjectModalIsShowing}
@@ -90,7 +90,6 @@ export class TeachingSubjectsCard extends Component {
                 />
                 }
 
-                {teachingSubjectsModalIsShowing &&
                 <TeachingSubjectModal
                     action="update"
                     open={teachingSubjectsModalIsShowing}
@@ -99,7 +98,6 @@ export class TeachingSubjectsCard extends Component {
                     faculty={faculty}
                     teachingSubjects={teachingSubjectsIds}
                 />
-                }
             </ListItem>
         );
     };

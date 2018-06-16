@@ -123,7 +123,6 @@ export class ExtensionWorksTab extends Component {
 
                 {!extensionWorksIsEmpty && this.renderRows(extensionWorks)}
 
-                {extensionWorkModalIsShowing &&
                 <ExtensionWorkModal
                     action={activeExtensionWork ? "update" : "add"}
                     extensionWork={activeExtensionWork}
@@ -131,9 +130,8 @@ export class ExtensionWorksTab extends Component {
                     open={extensionWorkModalIsShowing}
                     onClose={() => this.toggleExtensionWorkModal(false)}
                 />
-                }
 
-                {removeExtensionWorkModalIsShowing &&
+                {activeExtensionWork &&
                 <RemoveExtensionWorkModal
                     extensionWork={activeExtensionWork}
                     faculty={faculty}
@@ -141,7 +139,6 @@ export class ExtensionWorksTab extends Component {
                     onClose={() => this.toggleRemoveExtensionWorkModal(false)}
                 />
                 }
-
             </div>
         );
     }

@@ -62,14 +62,12 @@ export class OverviewCard extends Component {
                 </List>
 
 
-                {updateSubjectModalIsShowing &&
                 <UpdateSubjectModal
                     action="update"
                     open={updateSubjectModalIsShowing}
                     onClose={() => this.toggleUpdateSubjectModal(false)}
                     subject={subject}
                 />
-                }
             </DetailCard>
         );
     }

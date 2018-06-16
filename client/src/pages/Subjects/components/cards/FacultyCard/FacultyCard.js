@@ -73,7 +73,7 @@ export class FacultyCard extends Component {
                 {errors && this.renderErrors(errors)}
                 {isLoading && this.renderLoadingIndicator()}
 
-                {expertFacultiesModalIsShowing && faculties &&
+                {faculties &&
                 <ExpertFacultiesModal
                     action="update"
                     open={expertFacultiesModalIsShowing}

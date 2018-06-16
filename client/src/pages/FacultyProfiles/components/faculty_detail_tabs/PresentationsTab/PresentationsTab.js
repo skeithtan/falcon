@@ -108,7 +108,6 @@ export class PresentationsTab extends Component {
 
                 {!presentationsIsEmpty && this.renderRows(presentations)}
 
-                {presentationModalIsShowing &&
                 <PresentationModal
                     action={activePresentation ? "update" : "add"}
                     open={presentationModalIsShowing}
@@ -116,9 +115,8 @@ export class PresentationsTab extends Component {
                     presentation={activePresentation}
                     faculty={faculty}
                 />
-                }
 
-                {removePresentationModalIsShowing &&
+                {activePresentation &&
                 <RemovePresentationModal
                     open={removePresentationModalIsShowing}
                     onClose={() => this.toggleRemovePresentation(false)}

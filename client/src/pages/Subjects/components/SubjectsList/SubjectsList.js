@@ -111,13 +111,11 @@ export class SubjectsList extends Component {
                 </Tooltip>
                 }
 
-                {addSubjectModalIsShowing &&
                 <AddSubjectModal
                     action="add"
                     open={addSubjectModalIsShowing}
                     onClose={() => this.toggleAddSubjectModal(false)}
                 />
-                }
             </Grid>
         );
 
