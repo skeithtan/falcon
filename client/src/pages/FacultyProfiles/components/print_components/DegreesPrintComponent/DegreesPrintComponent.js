@@ -18,7 +18,7 @@ const renderRows = degrees => degrees.map(degree =>
 
 export const DegreesPrintComponent = ({faculty}) => (
     <div>
-        <Typography variant="body2">Degrees</Typography>
+        <Typography variant="subheading">Degrees</Typography>
 
         {faculty.degrees.length > 0 &&
         <Table>
