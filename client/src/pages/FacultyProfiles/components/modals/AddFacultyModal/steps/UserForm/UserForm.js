@@ -34,10 +34,6 @@ function getUserFormErrors(form, existingFaculties) {
         lastName: {
             value: form.lastName,
         },
-        password: {
-            value: form.password,
-            customValidators: [], //TODO: Add security validation
-        },
     });
 }
 
@@ -74,20 +70,13 @@ export class UserForm extends Component {
                 <FormHelperText>{fieldErrors.email[0]}</FormHelperText>
                 }
             </FormControl>,
-            <FormControl key={2} error={fieldErrors.password.length > 0} fullWidth>
-                <InputLabel>Temporary Password</InputLabel>
-                <Input value={form.password} onChange={handleFormChange("password")} />
-                {fieldErrors.password.length > 0 &&
-                <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
-                }
-            </FormControl>,
-            <div key={4}>
+            <div key={2}>
                 <Uploader onUploadComplete={url => {
                     form.photo = url;
                 }} />
             </div>,
             <Button
-                key={5}
+                key={3}
                 disabled={hasErrors}
                 variant="raised"
                 color="primary"
