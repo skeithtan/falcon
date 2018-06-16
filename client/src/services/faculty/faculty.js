@@ -135,3 +135,17 @@ export function updateFaculty(_id, newFaculty, newUser) {
         },
     });
 }
+
+export const resetFacultyPassword = (_id, newPassword) => client.mutate({
+    mutation: gql`
+        mutation($_id: ID!, $newPassword: String!) {
+            faculty {
+                resetPassword(_id: $_id, newPassword: $newPassword)
+            }
+        }
+    `,
+    variables: {
+        _id,
+        newPassword,
+    },
+});

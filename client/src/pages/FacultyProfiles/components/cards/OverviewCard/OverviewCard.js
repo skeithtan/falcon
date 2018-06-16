@@ -13,6 +13,7 @@ import { FormDisplayListItem } from "../../../../../components/FormDisplayListIt
 import { UserAvatar } from "../../../../../components/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
+import { ResetPasswordModal } from "../../modals/ResetPasswordModal";
 import { UpdateFacultyOverviewModal } from "../../modals/UpdateFacultyOverviewModal";
 import { ProfilePrintPreview } from "../../ProfilePrintPreview";
 
@@ -21,6 +22,7 @@ export class OverviewCard extends Component {
     state = {
         updateFacultyModalIsShowing: false,
         profilePrintPreviewIsShowing: false,
+        resetPasswordModalIsShowing: false,
     };
 
     toggleUpdateFacultyModal = shouldShow => this.setState({
@@ -31,16 +33,25 @@ export class OverviewCard extends Component {
         profilePrintPreviewIsShowing: shouldShow,
     });
 
+    toggleResetPasswordModal = shouldShow => this.setState({
+        resetPasswordModalIsShowing: shouldShow,
+    });
+
     componentWillUnmount() {
         this.toggleProfilePrintPreview(false);
     }
 
     render() {
         const {faculty, classes, user} = this.props;
-        const {updateFacultyModalIsShowing, profilePrintPreviewIsShowing} = this.state;
         const birthDate = moment(faculty.birthDate);
         const today = moment();
         const birthDateValue = `${birthDate.format("LL")} (${today.to(birthDate, true)})`;
+
+        const {
+            updateFacultyModalIsShowing,
+            profilePrintPreviewIsShowing,
+            resetPasswordModalIsShowing,
+        } = this.state;
 
         return (
             <DetailCard>
@@ -61,7 +72,7 @@ export class OverviewCard extends Component {
                             <Grid item>
                                 <Tooltip title="Reset Faculty Password" placement="left">
                                     <IconButton>
-                                        <LockOpenIcon />
+                                        <LockOpenIcon onClick={() => this.toggleResetPasswordModal(true)} />
                                     </IconButton>
                                 </Tooltip>
                             </Grid>
@@ -119,6 +130,12 @@ export class OverviewCard extends Component {
                     faculty={faculty}
                     open={profilePrintPreviewIsShowing}
                     onClose={() => this.toggleProfilePrintPreview(false)}
+                />
+
+                <ResetPasswordModal
+                    faculty={faculty}
+                    open={resetPasswordModalIsShowing}
+                    onClose={() => this.toggleResetPasswordModal(false)}
                 />
             </DetailCard>
         );
