@@ -24,9 +24,6 @@ export const styles = theme => ({
     userFullName: {
         fontWeight: "bold",
     },
-    userEmail: {
-        color: theme.palette.grey["700"],
-    },
     userDetails: {
         marginLeft: 16,
         minWidth: 240,

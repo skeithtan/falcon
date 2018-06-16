@@ -2,6 +2,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
+import { USER_TYPES } from "../../enums/user.enums";
 import { UserAvatar } from "../UserAvatar";
 
 
@@ -12,7 +13,7 @@ const UserMenu = ({
     avatar,
     classes,
     signOut,
-    user: {name: {first, last}, email},
+    user: {name: {first, last}, email, authorization},
 }) => (
     <Menu
         open={open}
@@ -24,12 +25,13 @@ const UserMenu = ({
 
             <div className={classes.userDetails}>
                 <Typography className={classes.userFullName}>{first} {last}</Typography>
-                <Typography className={classes.userEmail}>{email}</Typography>
+                <Typography color="textSecondary">{email}</Typography>
+                <Typography color="textSecondary">{USER_TYPES[authorization].name}</Typography>
             </div>
         </div>
 
-        <MenuItem>Change Password</MenuItem>
-        <MenuItem onClick={signOut}>Sign Out</MenuItem>
+        <MenuItem>Change my password</MenuItem>
+        <MenuItem onClick={signOut}>Sign out</MenuItem>
     </Menu>
 );
 
@@ -58,13 +60,15 @@ export class UserButton extends Component {
 
                 {avatar}
 
-                <UserMenu user={user}
-                          classes={classes}
-                          avatar={avatar}
-                          open={Boolean(anchor)}
-                          anchorEl={anchor}
-                          signOut={this.props.signOut}
-                          onClose={() => this.toggleMenu(null)} />
+                <UserMenu
+                    user={user}
+                    classes={classes}
+                    avatar={avatar}
+                    open={Boolean(anchor)}
+                    anchorEl={anchor}
+                    signOut={this.props.signOut}
+                    onClose={() => this.toggleMenu(null)}
+                />
             </div>
         );
     }
