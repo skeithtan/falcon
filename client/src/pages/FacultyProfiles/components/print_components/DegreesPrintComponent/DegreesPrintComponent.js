@@ -1,3 +1,4 @@
+import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -17,26 +18,32 @@ const renderRows = degrees => degrees.map(degree =>
 );
 
 export const DegreesPrintComponent = ({faculty}) => (
-    <div>
-        <Typography variant="subheading">Degrees</Typography>
+    <Grid container spacing={8} direction="column">
+        <Grid item>
+            <Typography variant="subheading">Degrees</Typography>
+        </Grid>
 
         {faculty.degrees.length > 0 &&
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell padding="none">Title</TableCell>
-                    <TableCell padding="none">Level</TableCell>
-                    <TableCell padding="none" numeric>Completion Year</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {renderRows(faculty.degrees)}
-            </TableBody>
-        </Table>
+        <Grid item>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell padding="none">Title</TableCell>
+                        <TableCell padding="none">Level</TableCell>
+                        <TableCell padding="none" numeric>Completion Year</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {renderRows(faculty.degrees)}
+                </TableBody>
+            </Table>
+        </Grid>
         }
 
         {faculty.degrees.length === 0 &&
-        <Typography variant="caption" color="textSecondary">No degrees recorded</Typography>
+        <Grid item>
+            <Typography variant="caption" color="textSecondary">No degrees recorded</Typography>
+        </Grid>
         }
-    </div>
+    </Grid>
 );

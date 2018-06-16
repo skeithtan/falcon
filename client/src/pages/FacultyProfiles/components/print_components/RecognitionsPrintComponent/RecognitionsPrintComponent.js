@@ -1,3 +1,4 @@
+import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,27 +20,33 @@ const renderRows = recognitions => recognitions.map(recognition =>
 );
 
 export const RecognitionsPrintComponent = ({faculty}) => (
-    <div>
-        <Typography variant="subheading">Recognitions</Typography>
+    <Grid container spacing={8} direction="column">
+        <Grid item>
+            <Typography variant="subheading">Recognitions</Typography>
+        </Grid>
 
         {faculty.recognitions.length > 0 &&
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell padding="none">Title</TableCell>
-                    <TableCell>Basis</TableCell>
-                    <TableCell>Sponsor</TableCell>
-                    <TableCell padding="none">Date</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {renderRows(faculty.recognitions)}
-            </TableBody>
-        </Table>
+        <Grid item>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell padding="none">Title</TableCell>
+                        <TableCell>Basis</TableCell>
+                        <TableCell>Sponsor</TableCell>
+                        <TableCell padding="none">Date</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {renderRows(faculty.recognitions)}
+                </TableBody>
+            </Table>
+        </Grid>
         }
 
         {faculty.recognitions.length === 0 &&
-        <Typography variant="caption" color="textSecondary">No recognitions recorded</Typography>
+        <Grid item>
+            <Typography variant="caption" color="textSecondary">No recognitions recorded</Typography>
+        </Grid>
         }
-    </div>
+    </Grid>
 );

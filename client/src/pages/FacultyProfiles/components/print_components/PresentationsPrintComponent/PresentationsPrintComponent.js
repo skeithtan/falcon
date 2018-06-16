@@ -54,10 +54,18 @@ export const PresentationsPrintComponent = ({faculty}) => (
             <Typography variant="subheading">Presentations</Typography>
         </Grid>
 
+        {faculty.presentations.length > 0 &&
         <Grid item>
             <Grid container spacing={16}>
                 {renderRows(faculty.presentations)}
             </Grid>
         </Grid>
+        }
+
+        {faculty.presentations.length === 0 &&
+        <Grid item>
+            <Typography variant="caption" color="textSecondary">No presentations recorded</Typography>
+        </Grid>
+        }
     </Grid>
 );

@@ -9,7 +9,7 @@ import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
 
 
 const extensionWorkRoles = roles => {
-    return roles.length > 1 ?
+    return roles.length > 0 ?
         roles
             .map(role => EXTENSION_WORK.ROLES[role].name)
             .reduce((accumulator, currentValue) => `${accumulator}, ${currentValue}`) :
@@ -41,10 +41,18 @@ export const ExtensionWorksPrintComponent = ({faculty}) => (
             <Typography variant="subheading">Extension Works</Typography>
         </Grid>
 
+        {faculty.extensionWorks.length > 0 &&
         <Grid item>
             <Grid container spacing={16}>
                 {renderRows(faculty.extensionWorks)}
             </Grid>
         </Grid>
+        }
+
+        {faculty.extensionWorks.length === 0 &&
+        <Grid item>
+            <Typography variant="caption" color="textSecondary">No extension works recorded.</Typography>
+        </Grid>
+        }
     </Grid>
 );

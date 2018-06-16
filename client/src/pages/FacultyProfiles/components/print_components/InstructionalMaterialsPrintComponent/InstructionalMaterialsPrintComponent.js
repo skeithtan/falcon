@@ -41,16 +41,24 @@ const renderRows = instructionalMaterials => instructionalMaterials.map(instruct
 ));
 
 export const InstructionalMaterialsPrintComponent = ({faculty}) => (
-    <Grid container spacing={8} direction="column">
+    <Grid container spacing={8} direction="column" alignItems="flex-start">
         <Grid item>
             <Typography variant="subheading">Instructional Materials</Typography>
         </Grid>
 
+        {faculty.instructionalMaterials.length > 1 &&
         <Grid item>
             <Grid container spacing={16}>
                 {renderRows(faculty.instructionalMaterials)}
             </Grid>
         </Grid>
+        }
+
+        {faculty.instructionalMaterials.length === 0 &&
+        <Grid item>
+            <Typography variant="caption" color="textSecondary">No instructional materials recorded</Typography>
+        </Grid>
+        }
     </Grid>
 );
 

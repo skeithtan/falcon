@@ -1,3 +1,4 @@
+import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,25 +19,31 @@ const renderRows = (facultySubjects, allSubjects) =>
         );
 
 export const TeachingSubjectsPrintComponent = ({faculty, subjects}) => (
-    <div>
-        <Typography variant="subheading">Subjects of Expertise</Typography>
+    <Grid container spacing={8} direction="column">
+        <Grid item>
+            <Typography variant="subheading">Subjects of Expertise</Typography>
+        </Grid>
 
         {faculty.teachingSubjects.length > 0 &&
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell padding="none">Code</TableCell>
-                    <TableCell padding="none">Title</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {renderRows(faculty.teachingSubjects, subjects)}
-            </TableBody>
-        </Table>
+        <Grid item>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell padding="none">Code</TableCell>
+                        <TableCell padding="none">Title</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {renderRows(faculty.teachingSubjects, subjects)}
+                </TableBody>
+            </Table>
+        </Grid>
         }
 
         {faculty.teachingSubjects.length === 0 &&
-        <Typography variant="caption" color="textSecondary">No assigned subjects of expertise</Typography>
+        <Grid item>
+            <Typography variant="caption" color="textSecondary">No assigned subjects of expertise</Typography>
+        </Grid>
         }
-    </div>
+    </Grid>
 );
