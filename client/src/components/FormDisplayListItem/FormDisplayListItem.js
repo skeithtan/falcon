@@ -1,14 +1,18 @@
+import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 
 
-export const FormDisplayListItem = ({classes, field, value}) => (
+export const FormDisplayListItem = ({field, value}) => (
     <ListItem divider>
-        <div className={classes.gridContainer}>
-            <Typography variant="body2">{field}</Typography>
-            <ListItemText>{value}</ListItemText>
-        </div>
+        <Grid container>
+            <Grid item sm zeroMinWidth>
+                <Typography variant="body2">{field}</Typography>
+            </Grid>
+            <Grid item sm={9} zeroMinWidth>
+                <Typography>{value}</Typography>
+            </Grid>
+        </Grid>
     </ListItem>
 );
