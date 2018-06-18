@@ -2,8 +2,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
-import { USER_TYPES } from "../../enums/user.enums";
-import { UserAvatar } from "../UserAvatar";
+import { USER_TYPES } from "../../../../enums/user.enums";
+import { UserAvatar } from "../../../../components/UserAvatar/index";
 
 
 const UserMenu = ({

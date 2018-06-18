@@ -1,5 +1,5 @@
 import { lighten } from "@material-ui/core/styles/colorManipulator";
-import { activeItem } from "../styles";
+import { activeItem } from "../../../../components/styles";
 
 
 export const styles = theme => ({

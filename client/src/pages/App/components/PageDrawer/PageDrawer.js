@@ -5,8 +5,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import pnuLogo from "../../images/pnu-logo.png";
-import { getPageFromPath, getPagesForUserType } from "../../pages";
+import pnuLogo from "../../../../images/pnu-logo.png";
+import { getPageFromPath, getPagesForUserType } from "../../../index";
 
 
 const PageDrawerPageItems = ({pages, classes, onClose, history, match}) => pages.map(page => {

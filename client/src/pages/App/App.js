@@ -2,8 +2,8 @@ import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { GENERAL_PAGES, getPageFromPath, getPagesForUserType, HOME_PAGE, SIGN_IN_PAGE } from "../../pages";
-import { FalconAppBar } from "../FalconAppBar";
+import { GENERAL_PAGES, getPageFromPath, getPagesForUserType, HOME_PAGE, SIGN_IN_PAGE } from "../index";
+import { FalconAppBar } from "./components/FalconAppBar/index";
 
 
 export class App extends Component {
