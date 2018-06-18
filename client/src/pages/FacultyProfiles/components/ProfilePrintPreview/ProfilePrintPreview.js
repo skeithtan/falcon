@@ -241,7 +241,6 @@ export class ProfilePrintPreview extends Component {
                             <ReactToPrint
                                 trigger={() => <Button variant="raised" color="primary">Print</Button>}
                                 content={() => this.componentRef}
-                                closeAfterPrint={false}
                             />
                         </Grid>
                     </Grid>
