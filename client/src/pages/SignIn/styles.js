@@ -1,3 +1,6 @@
+import { falconLogo } from "../../components/styles";
+
+
 export const styles = theme => ({
     background: {
         height: "100vh",
@@ -11,8 +14,9 @@ export const styles = theme => ({
         padding: theme.spacing.unit * 6,
         width: 360,
     },
-    pnuLogo: {
+    cardImage: {
         width: 80,
+        height: 80,
     },
     welcomeMessage: {
         marginTop: theme.spacing.unit * 2,
@@ -32,5 +36,9 @@ export const styles = theme => ({
     button: {
         marginTop: theme.spacing.unit * 5,
         marginLeft: "auto",
+    },
+    falconLogo: {
+        ...falconLogo(theme),
+        fontSize: 24,
     },
 });

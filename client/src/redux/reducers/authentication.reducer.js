@@ -1,5 +1,6 @@
 import { getPermissions } from "../../utils/user.util";
 import {
+    CHANGE_PASSWORD_SUCCESS,
     SIGN_IN_ERROR,
     SIGN_IN_IS_LOADING,
     SIGN_IN_SUCCESS,
@@ -52,6 +53,14 @@ export function authentication(state = initialState, action) {
                 isLoading: false,
                 signInError: null,
                 user: null,
+            };
+        case CHANGE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    temporaryPassword: false,
+                },
             };
         default:
             return state;

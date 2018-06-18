@@ -1,3 +1,6 @@
+import { falconLogo } from "../../../../components/styles";
+
+
 export const styles = theme => ({
     appBar: {
         transitionProperty: "background",
@@ -13,15 +16,15 @@ export const styles = theme => ({
     pageTitle: {
         marginRight: "auto",
     },
-    falconLogo: {
-        display: "inline-block",
-        fontSize: 20,
-        fontFamily: "Raleway",
-        marginRight: 4,
-    },
     pageName: {
         display: "inline-block",
         fontSize: 20,
         fontWeight: theme.typography.fontWeightLight,
+    },
+    falconLogo: {
+        ...falconLogo(theme),
+        display: "inline-block",
+        marginRight: 4,
+        fontSize: 20,
     },
 });

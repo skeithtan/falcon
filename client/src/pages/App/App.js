@@ -8,7 +8,15 @@ import { Toast } from "./components/Toast";
 
 
 export class App extends Component {
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.handlePath();
+    }
+
+    componentDidMount() {
+        this.handlePath();
+    }
+
+    handlePath = () => {
         const {user, match, history} = this.props;
 
         const currentPath = match.params.currentPage;
@@ -21,8 +29,9 @@ export class App extends Component {
             history.replace("/" + SIGN_IN_PAGE.path); // The slash is to specify that it's the root
         }
 
-        // We can't let them sign in if they're already signed in
-        if (user && userIsSigningIn) {
+        // We can't show them sign in if they're already signed in
+        // UNLESS their password is only temporary
+        if (user && userIsSigningIn && !user.temporaryPassword) {
             history.replace(HOME_PAGE.path);
         }
 
@@ -30,7 +39,7 @@ export class App extends Component {
         if (!currentPath) {
             history.replace(HOME_PAGE.path);
         }
-    }
+    };
 
     getActivePage = match => getPageFromPath(match.params.currentPage);
 
@@ -61,7 +70,7 @@ export class App extends Component {
                     alignItems="stretch"
                     wrap="nowrap"
                 >
-                    {user &&
+                    {user && activePage.identifier !== SIGN_IN_PAGE.identifier &&
                     <Grid item>
                         <FalconAppBar />
                     </Grid>

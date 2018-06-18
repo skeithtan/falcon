@@ -50,7 +50,7 @@ export class ChangePasswordModal extends ModalFormComponent {
     get submitUpdateAction() {
         return () =>
             changeCurrentUserPassword(this.state.form.password)
-                .then(() => this.props.makeToast("Password successfully changed"));
+                .then(this.props.onChangePasswordSuccess);
     }
 
     get buttonName() {

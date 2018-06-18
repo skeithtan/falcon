@@ -70,9 +70,13 @@ export const chip = theme => ({
 
         "&:hover, &:focus": {
             background: lighten(theme.palette.primary.main, 0.75),
-        }
+        },
     },
     chipText: {
         color: theme.palette.primary.dark,
     },
+});
+
+export const falconLogo = theme => ({
+    fontFamily: "Raleway",
 });
