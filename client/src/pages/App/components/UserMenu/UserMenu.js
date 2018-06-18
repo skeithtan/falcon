@@ -2,16 +2,18 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { UserAvatar } from "../../../../components/UserAvatar";
 import { USER_TYPES } from "../../../../enums/user.enums";
 
 
 export const UserMenu = ({
     open,
+    user,
     onClose,
     anchorEl,
-    avatar,
     classes,
-    signOut,
+    onSignOutClick,
+    onChangePasswordClick,
     user: {name: {first, last}, email, authorization},
 }) => (
     <Menu
@@ -20,7 +22,7 @@ export const UserMenu = ({
         anchorEl={anchorEl}
         MenuListProps={{disablePadding: true}}>
         <div className={classes.currentUserDisplay}>
-            {avatar}
+            <UserAvatar user={user} />
 
             <div className={classes.userDetails}>
                 <Typography className={classes.userFullName}>{first} {last}</Typography>
@@ -29,7 +31,7 @@ export const UserMenu = ({
             </div>
         </div>
 
-        <MenuItem>Change my password</MenuItem>
-        <MenuItem onClick={signOut}>Sign out</MenuItem>
+        <MenuItem onClick={onChangePasswordClick}>Change my password</MenuItem>
+        <MenuItem onClick={onSignOutClick}>Sign out</MenuItem>
     </Menu>
 );

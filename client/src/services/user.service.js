@@ -31,6 +31,17 @@ export function signIn(email, password) {
     });
 }
 
+export const changeCurrentUserPassword = newPassword => client.mutate({
+    mutation: gql`
+        mutation($newPassword: String!) {
+            changeCurrentUserPassword(newPassword: $newPassword)
+        }
+    `,
+    variables: {
+        newPassword,
+    },
+});
+
 export function signOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");

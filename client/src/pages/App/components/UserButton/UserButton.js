@@ -1,26 +1,30 @@
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { UserAvatar } from "../../../../components/UserAvatar/index";
+import { ChangePasswordModal } from "../ChangePasswordModal";
 import { UserMenu } from "../UserMenu";
 
 
 export class UserButton extends Component {
     state = {
         anchor: null,
+        changePasswordModalIsShowing: false,
     };
 
-    toggleMenu = (event) => {
-        this.setState({
-            anchor: event === null ? null : event.currentTarget,
-        });
-    };
+    toggleMenu = (event) => this.setState({
+        anchor: event === null ? null : event.currentTarget,
+    });
+
+    toggleChangePasswordModal = shouldShow => this.setState({
+        changePasswordModalIsShowing: shouldShow,
+    });
 
     renderAvatar = (user) => (
         <UserAvatar user={user} className={this.props.classes.avatar} onClick={this.toggleMenu} />
     );
 
     render() {
-        const anchor = this.state.anchor;
+        const {anchor, changePasswordModalIsShowing} = this.state;
         const {classes, user} = this.props;
         const avatar = this.renderAvatar(user);
         return (
@@ -31,12 +35,17 @@ export class UserButton extends Component {
 
                 <UserMenu
                     user={user}
-                    classes={classes}
-                    avatar={avatar}
                     open={Boolean(anchor)}
                     anchorEl={anchor}
-                    signOut={this.props.signOut}
+                    onChangePasswordClick={() => this.toggleChangePasswordModal(true)}
+                    onSignOutClick={this.props.signOut}
                     onClose={() => this.toggleMenu(null)}
+                />
+
+                <ChangePasswordModal
+                    action="update"
+                    open={changePasswordModalIsShowing}
+                    onClose={() => this.toggleChangePasswordModal(false)}
                 />
             </div>
         );
