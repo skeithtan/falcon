@@ -48,7 +48,9 @@ export class ChangePasswordModal extends ModalFormComponent {
     mapPropsToForm = () => this.initialForm;
 
     get submitUpdateAction() {
-        return () => changeCurrentUserPassword(this.state.form.password);
+        return () =>
+            changeCurrentUserPassword(this.state.form.password)
+                .then(() => this.props.makeToast("Password successfully changed"));
     }
 
     get buttonName() {
@@ -64,40 +66,44 @@ export class ChangePasswordModal extends ModalFormComponent {
             <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
                 <DialogTitle>Change my Password</DialogTitle>
                 <DialogContent className={classes.container}>
-                    <Grid container className={classes.form} spacing={24} direction="column">
+                    <form>
+                        <Grid container className={classes.form} spacing={24} direction="column">
 
-                        <Grid item>
-                            <FormControl fullWidth error={fieldErrors.password.length > 0}>
-                                <TextField
-                                    label="New Password"
-                                    disabled={isSubmitting}
-                                    type="password"
-                                    onChange={this.handleFormChange("password")}
-                                    value={form.password}
-                                />
+                            <Grid item>
+                                <FormControl fullWidth error={fieldErrors.password.length > 0}>
+                                    <TextField
+                                        label="New Password"
+                                        disabled={isSubmitting}
+                                        type="password"
+                                        autoComplete="on"
+                                        onChange={this.handleFormChange("password")}
+                                        value={form.password}
+                                    />
 
-                                {fieldErrors.password.length > 0 &&
-                                <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
-                                }
-                            </FormControl>
+                                    {fieldErrors.password.length > 0 &&
+                                    <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
+                                    }
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item>
+                                <FormControl fullWidth error={fieldErrors.confirmPassword.length > 0}>
+                                    <TextField
+                                        label="Confirm Password"
+                                        disabled={isSubmitting}
+                                        type="password"
+                                        autoComplete="on"
+                                        onChange={this.handleFormChange("confirmPassword")}
+                                        value={form.confirmPassword}
+                                    />
+
+                                    {fieldErrors.confirmPassword.length > 0 &&
+                                    <FormHelperText>{fieldErrors.confirmPassword[0]}</FormHelperText>
+                                    }
+                                </FormControl>
+                            </Grid>
                         </Grid>
-
-                        <Grid item>
-                            <FormControl fullWidth error={fieldErrors.confirmPassword.length > 0}>
-                                <TextField
-                                    label="Confirm Password"
-                                    disabled={isSubmitting}
-                                    type="password"
-                                    onChange={this.handleFormChange("confirmPassword")}
-                                    value={form.confirmPassword}
-                                />
-
-                                {fieldErrors.confirmPassword.length > 0 &&
-                                <FormHelperText>{fieldErrors.confirmPassword[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                    </form>
                 </DialogContent>
 
                 {this.renderModalFormDialogActions(hasErrors)}
