@@ -28,16 +28,18 @@ function mutateSubject() {
                 .findById(_id)
                 .exec();
 
+            // Subject.faculties is an array of ObjectIds,
+            // convert them to string for getDifference() to work properly
+            const oldFaculties = subject.faculties.map(objectId => objectId.toString());
+            const newFaculties = newSubject.faculties;
+
             subject.set(newSubject);
             await subject.save();
 
-            if (newSubject.faculties !== undefined) {
-                const newFaculties = [...newSubject.faculties];
-                const oldFaculties = [...subject.faculties];
-
-                // Link faculties to subject
+            if (newFaculties !== undefined) {
                 const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
 
+                // Link faculties to subject
                 addSubjectToFaculties(subject, addedItems);
                 removeSubjectFromFaculties(subject, removedItems);
             }
