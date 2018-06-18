@@ -2,7 +2,7 @@ import { pageContainer } from "../../../../components/styles";
 
 
 export const styles = theme => ({
-    facultyDetail: {
+    subjectsDetail: {
         overflowY: "scroll",
     },
     selectSubjectState: {

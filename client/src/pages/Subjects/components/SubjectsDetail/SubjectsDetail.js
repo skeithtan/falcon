@@ -26,7 +26,7 @@ export class SubjectsDetail extends Component {
         const subjectNotFound = !activeSubject && subjectId;
 
         return (
-            <div>
+            <div className={classes.subjectsDetail}>
                 {subjectNotFound &&
                 <Redirect to={`/${SUBJECTS_PAGE.path}`} />
                 }
