@@ -71,8 +71,8 @@ export class OverviewCard extends Component {
                             {user.permissions.MUTATE_FACULTY_PROFILES &&
                             <Grid item>
                                 <Tooltip title="Reset Faculty Password" placement="left">
-                                    <IconButton>
-                                        <LockOpenIcon onClick={() => this.toggleResetPasswordModal(true)} />
+                                    <IconButton onClick={() => this.toggleResetPasswordModal(true)} >
+                                        <LockOpenIcon />
                                     </IconButton>
                                 </Tooltip>
                             </Grid>
