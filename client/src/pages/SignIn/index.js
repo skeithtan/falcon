@@ -23,10 +23,7 @@ const mapDispatchToProps = dispatch => ({
     attemptSignIn(email, password) {
         dispatch(signInIsLoading());
         signIn(email, password)
-            .then(user => {
-                dispatch(signInSuccess(user));
-                //TODO: If password is temporary, show tour
-            })
+            .then(user => dispatch(signInSuccess(user)))
             .catch(error => {
                 const errorMessage = getMessageFromError(error);
                 dispatch(signInError(errorMessage));

@@ -18,9 +18,6 @@ export const styles = theme => ({
         width: 80,
         height: 80,
     },
-    welcomeMessage: {
-        marginTop: theme.spacing.unit * 2,
-    },
     form: {
         paddingTop: theme.spacing.unit * 4,
         display: "grid",
