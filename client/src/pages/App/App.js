@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { GENERAL_PAGES, getPageFromPath, getPagesForUserType, HOME_PAGE, SIGN_IN_PAGE } from "../index";
 import { FalconAppBar } from "./components/FalconAppBar/index";
+import { Toast } from "./components/Toast";
 
 
 export class App extends Component {
@@ -75,6 +76,8 @@ export class App extends Component {
                         </Switch>
                     </Grid>
                 </Grid>
+
+                <Toast />
             </MuiThemeProvider>
         );
     }

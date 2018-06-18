@@ -19,5 +19,4 @@ const mapDispatchToProps = dispatch => ({
 export const ProfilePrintPreview = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles),
-)
-(Component);
+)(Component);
