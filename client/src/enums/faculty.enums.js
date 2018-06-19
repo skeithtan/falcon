@@ -11,6 +11,14 @@ export const EMPLOYMENT = {
         identifier: "PART_TIME",
         name: "Part Time",
     },
+    "ADJUNCT": {
+        identifier: "ADJUNCT",
+        name: "Adjunct"
+    },
+    "INACTIVE": {
+        identifier: "INACTIVE",
+        name: "Inactive"
+    }
 };
 
 export const SEX = {
@@ -60,7 +68,7 @@ export const EXTENSION_WORK = {
             name: "Resource Speaker",
         },
         "FACILITATOR": {
-            identifier: "FACILITAOR",
+            identifier: "FACILITATOR",
             name: "Facilitator",
         },
         "COACH": {
@@ -127,9 +135,9 @@ export const RECOGNITION = {
             identifier: "EXTENSION_WORK",
             name: "Extension Work",
         },
-        "CIVIC": {
-            identifier: "CIVIC",
-            name: "Civic",
+        "INSTRUCTION": {
+            identifier: "INSTRUCTION",
+            name: "Instruction",
         },
     },
 };

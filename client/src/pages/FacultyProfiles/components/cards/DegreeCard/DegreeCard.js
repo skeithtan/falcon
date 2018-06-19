@@ -14,18 +14,6 @@ import { DegreeModal } from "../../modals/DegreeModal";
 import { RemoveDegreeModal } from "../../modals/RemoveDegreeModal";
 
 
-const DegreeRow = ({degree, onUpdateButtonClick, onRemoveButtonClick}) => (
-    <TableRow>
-        <TableCell>{degree.title}</TableCell>
-        <TableCell>{DEGREE.LEVEL[degree.level].name}</TableCell>
-        <TableCell numeric>{degree.completionYear}</TableCell>
-        <TableRowActions removeButtonTooltipTitle="Remove this degree"
-                         updateButtonTooltipTitle="Update this degree"
-                         onRemoveButtonClick={onRemoveButtonClick}
-                         onUpdateButtonClick={onUpdateButtonClick} />
-    </TableRow>
-);
-
 export class DegreeCard extends Component {
     state = {
         degreeModalIsShowing: false,
@@ -46,20 +34,24 @@ export class DegreeCard extends Component {
     };
 
     renderRows = degrees => degrees.map(degree =>
-        <DegreeRow
-            degree={degree}
-            key={degree._id}
+        <TableRow key={degree._id}>
+            <TableCell>{degree.title}</TableCell>
+            <TableCell>{DEGREE.LEVEL[degree.level].name}</TableCell>
+            <TableCell numeric>{degree.completionYear}</TableCell>
 
-            onUpdateButtonClick={() => this.setState({
-                activeDegree: degree,
-                degreeModalIsShowing: true,
-            })}
-
-            onRemoveButtonClick={() => this.setState({
-                activeDegree: degree,
-                removeDegreeModalIsShowing: true,
-            })}
-        />,
+            {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
+            <TableRowActions removeButtonTooltipTitle="Remove this degree"
+                             updateButtonTooltipTitle="Update this degree"
+                             onRemoveButtonClick={() => this.setState({
+                                 activeDegree: degree,
+                                 removeDegreeModalIsShowing: true,
+                             })}
+                             onUpdateButtonClick={() => this.setState({
+                                 activeDegree: degree,
+                                 degreeModalIsShowing: true,
+                             })} />
+            }
+        </TableRow>,
     );
 
     onAddButtonClick = () => this.setState({
@@ -68,14 +60,36 @@ export class DegreeCard extends Component {
     });
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded degrees.`}
-                    smallMessage="Degrees added will be shown here."
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Add a degree" />
+        <EmptyState
+            bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded degrees.`}
+            smallMessage="Degrees added will be shown here."
+            onAddButtonClick={this.onAddButtonClick}
+            addButtonText="Add a degree"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
+    );
+
+    renderDegreesTable = (degrees, user) => (
+        <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Level</TableCell>
+                    <TableCell numeric>Completion Year</TableCell>
+
+                    {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
+                    <TableCell padding="none">Actions</TableCell>
+                    }
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {this.renderRows(degrees, user)}
+            </TableBody>
+        </Table>
     );
 
     render() {
-        const faculty = this.props.faculty;
+        const {faculty, user} = this.props;
         const degrees = faculty.degrees;
         const degreesIsEmpty = degrees.length === 0;
 
@@ -83,29 +97,15 @@ export class DegreeCard extends Component {
 
         return (
             <DetailCard>
-                <TableToolbar tableTitle="Degrees"
-                              addButtonTooltipTitle="Add a degree"
-                              onAddButtonClick={this.onAddButtonClick} />
-                {!degreesIsEmpty &&
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Level</TableCell>
-                            <TableCell numeric>Completion Year</TableCell>
-                            <TableCell padding="none">Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.renderRows(degrees)}
-                    </TableBody>
-
-                </Table>
-                }
-
+                <TableToolbar
+                    tableTitle="Degrees"
+                    addButtonTooltipTitle="Add a degree"
+                    onAddButtonClick={this.onAddButtonClick}
+                    showAddButton={user.permissions.MUTATE_FACULTY_PROFILES}
+                />
+                {!degreesIsEmpty && this.renderDegreesTable(degrees, user)}
                 {degreesIsEmpty && this.renderEmptyState()}
 
-                {degreeModalIsShowing &&
                 <DegreeModal
                     action={activeDegree ? "update" : "add"}
                     degree={activeDegree}
@@ -113,9 +113,8 @@ export class DegreeCard extends Component {
                     onClose={() => this.toggleDegreeFormModal(false)}
                     faculty={faculty}
                 />
-                }
 
-                {removeDegreeModalIsShowing &&
+                {activeDegree &&
                 <RemoveDegreeModal
                     open={removeDegreeModalIsShowing}
                     onClose={() => this.toggleRemoveDegreeModal(false)}

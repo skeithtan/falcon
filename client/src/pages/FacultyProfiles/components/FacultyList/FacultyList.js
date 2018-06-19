@@ -33,7 +33,7 @@ const FacultyItem = ({activeTab, classes, faculty, active}) => {
             onClick={() => document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`}
         >
             <UserAvatar user={faculty.user} />
-            <ListItemText primary={getFullName(faculty.user)} />
+            <ListItemText primary={getFullName(faculty.user)} secondary={`T-${faculty.idNumber}`} />
         </ListItem>
     );
 };
@@ -48,10 +48,13 @@ export class FacultyList extends Component {
     });
 
     renderEmptyState = () => (
-        <EmptyState bigMessage="No faculties found"
-                    smallMessage="When faculties are added, you can see them here"
-                    onAddButtonClick={() => this.toggleAddFacultyModal(true)}
-                    addButtonText="Add a faculty" />
+        <EmptyState
+            bigMessage="No faculties found"
+            smallMessage="When faculties are added, you can see them here"
+            onAddButtonClick={() => this.toggleAddFacultyModal(true)}
+            addButtonText="Add a faculty"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     renderNoResultsState = () => (
@@ -67,7 +70,8 @@ export class FacultyList extends Component {
         return faculties.filter(faculty => {
             const fullName = `${faculty.user.name.first} ${faculty.user.name.last}`.toLowerCase();
             const email = faculty.user.email.toLowerCase();
-            return fullName.includes(searchKeyword) || email.includes(searchKeyword);
+            const idNumber = `T-${faculty.idNumber}`.toLowerCase();
+            return fullName.includes(searchKeyword) || email.includes(searchKeyword) || idNumber.includes(searchKeyword);
         });
     };
 
@@ -99,7 +103,7 @@ export class FacultyList extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, user} = this.props;
         const faculties = this.getFaculties();
         const {addFacultyModalIsShowing} = this.state;
 
@@ -107,17 +111,19 @@ export class FacultyList extends Component {
             <Grid container className={classes.facultyListContainer}>
                 {this.renderList(faculties)}
 
+                {user.permissions.MUTATE_FACULTY_PROFILES &&
                 <Tooltip title="Add a faculty" placement="top">
                     <Button variant="fab" color="primary" className={classes.addButton}
                             onClick={() => this.toggleAddFacultyModal(true)}>
                         <AddIcon />
                     </Button>
                 </Tooltip>
-
-                {addFacultyModalIsShowing &&
-                <AddFacultyModal open={addFacultyModalIsShowing}
-                                 onClose={() => this.toggleAddFacultyModal(false)} />
                 }
+
+                <AddFacultyModal
+                    open={addFacultyModalIsShowing}
+                    onClose={() => this.toggleAddFacultyModal(false)}
+                />
             </Grid>
         );
     }

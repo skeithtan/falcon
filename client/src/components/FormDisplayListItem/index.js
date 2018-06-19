@@ -1,9 +1,4 @@
-import { withStyles } from "@material-ui/core/styles";
-import compose from "recompose/compose";
-import { FormDisplayListItem as Component } from "./FormDisplayListItem";
-import { styles } from "./styles";
+import { FormDisplayListItem } from "./FormDisplayListItem";
 
 
-export const FormDisplayListItem = compose(
-    withStyles(styles),
-)(Component);
+export { FormDisplayListItem };

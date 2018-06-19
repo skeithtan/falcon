@@ -27,7 +27,7 @@ enum RecognitionBasis {
     RESEARCH,
     SCHOLARSHIP,
     EXTENSION_WORK,
-    CIVIC
+    INSTRUCTION
 }
 
 type Recognition {
@@ -90,11 +90,14 @@ enum Sex {
 enum Employment {
     FULL_TIME_PERMANENT,
     FULL_TIME_TEMPORARY,
-    PART_TIME
+    PART_TIME,
+    ADJUNCT,
+    INACTIVE
 }
 
 type Faculty {
     _id: ID!
+    idNumber: String!
     user: User!
     sex: Sex!
     employment: Employment

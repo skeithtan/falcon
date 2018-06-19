@@ -1,7 +1,4 @@
 import React, { PureComponent } from "react";
-import { Route } from "react-router-dom";
-import { FacultyLoadingBody } from "./components/FacultyLoadingBody";
-import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 
 
 export class FacultyLoadingPage extends PureComponent {
@@ -13,8 +10,7 @@ export class FacultyLoadingPage extends PureComponent {
         const {match, classes} = this.props;
         return (
             <div className={classes.facultyLoadingContainer}>
-                <FacultyLoadingHeader />
-                <Route path={`${match.url}/:activeTab?`} component={FacultyLoadingBody} />
+                <h1>Hello, Faculty Loading</h1>
             </div>
         );
     }

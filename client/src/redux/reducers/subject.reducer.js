@@ -1,4 +1,5 @@
 import {
+    SEARCH_KEYWORD_CHANGED,
     SUBJECT_IS_ADDED,
     SUBJECT_IS_UPDATED,
     SUBJECT_LIST_FETCH_ERROR,
@@ -11,21 +12,24 @@ const initialState = {
     subjects: null,
     isLoading: false,
     errors: null,
+    searchKeyword: "",
 };
 
 export function subject(state = initialState, action) {
     switch (action.type) {
         case SUBJECT_LIST_IS_LOADING:
             return {
+                ...state,
                 subjects: null,
                 isLoading: true,
                 errors: null,
             };
         case SUBJECT_LIST_FETCH_ERROR:
             return {
+                ...state,
                 subjects: null,
                 isLoading: false,
-                errors: action.errors
+                errors: action.errors,
             };
         case SUBJECT_IS_ADDED:
             return {
@@ -50,11 +54,17 @@ export function subject(state = initialState, action) {
             };
         case SUBJECT_LIST_IS_FETCHED:
             return {
+                ...state,
                 subjects: action.subjects,
                 errors: null,
-                isLoading: false
+                isLoading: false,
+            };
+        case SEARCH_KEYWORD_CHANGED:
+            return {
+                ...state,
+                searchKeyword: action.searchKeyword,
             };
         default:
-            return state
+            return state;
     }
 }

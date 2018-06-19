@@ -6,17 +6,25 @@ import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 
 
-export const TableToolbar = ({classes, tableTitle, onAddButtonClick, addButtonTooltipTitle}) => (
+export const TableToolbar = ({
+    classes,
+    tableTitle,
+    onAddButtonClick,
+    addButtonTooltipTitle,
+    showAddButton,
+}) => (
     <Toolbar>
         <div className={classes.titleWrapper}>
             <Typography variant="title">{tableTitle}</Typography>
         </div>
         <div>
+            {showAddButton &&
             <Tooltip title={addButtonTooltipTitle} placement="left">
                 <IconButton onClick={onAddButtonClick}>
                     <AddIcon />
                 </IconButton>
             </Tooltip>
+            }
         </div>
     </Toolbar>
 );

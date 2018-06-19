@@ -15,37 +15,6 @@ import { InstructionalMaterialModal } from "../../modals/InstructionalMaterialMo
 import { RemoveInstructionalMaterialModal } from "../../modals/RemoveInstructionalMaterialModal";
 
 
-const InstructionalMaterialRow = ({instructionalMaterial, onRemoveButtonClick, onUpdateButtonClick}) => (
-    <DetailExpansionCard>
-
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{instructionalMaterial.title}</Typography>
-        </ExpansionPanelSummary>
-
-        <FormDisplayExpansionPanelDetails>
-
-            <FormDisplayListItem field="Medium"
-                                 value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium].name} />
-            <FormDisplayListItem field="Audience"
-                                 value={INSTRUCTIONAL_MATERIAL.AUDIENCE[instructionalMaterial.audience].name} />
-            <FormDisplayListItem field="Usage Year"
-                                 value={instructionalMaterial.usageYear} />
-
-            {/*Student exclusive stuff*/}
-            {instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier &&
-            <FormDisplayListItem field="Student Level"
-                                 value={instructionalMaterial.level} />
-            }
-
-            <DetailExpansionCardActions removeButtonTooltipTitle="Remove instructional material"
-                                        updateButtonTooltipTitle="Update instructional material details"
-                                        onRemoveButtonClick={onRemoveButtonClick}
-                                        onUpdateButtonClick={onUpdateButtonClick} />
-
-        </FormDisplayExpansionPanelDetails>
-    </DetailExpansionCard>
-);
-
 export class InstructionalMaterialsTab extends Component {
     state = {
         instructionalMaterialModalIsShowing: false,
@@ -67,20 +36,45 @@ export class InstructionalMaterialsTab extends Component {
     });
 
     renderRows = instructionalMaterials => instructionalMaterials.map(instructionalMaterial =>
-        <InstructionalMaterialRow
-            instructionalMaterial={instructionalMaterial}
-            key={instructionalMaterial._id}
+        <DetailExpansionCard key={instructionalMaterial._id}>
 
-            onUpdateButtonClick={() => this.setState({
-                activeInstructionalMaterial: instructionalMaterial,
-                instructionalMaterialModalIsShowing: true,
-            })}
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="body2" color="primary">{instructionalMaterial.title}</Typography>
+            </ExpansionPanelSummary>
 
-            onRemoveButtonClick={() => this.setState({
-                activeInstructionalMaterial: instructionalMaterial,
-                removeInstructionalMaterialModalIsShowing: true,
-            })}
-        />,
+            <FormDisplayExpansionPanelDetails>
+
+                <FormDisplayListItem field="Medium"
+                                     value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium].name} />
+                <FormDisplayListItem field="Audience"
+                                     value={INSTRUCTIONAL_MATERIAL.AUDIENCE[instructionalMaterial.audience].name} />
+                <FormDisplayListItem field="Usage Year"
+                                     value={instructionalMaterial.usageYear} />
+
+                {/*Student exclusive stuff*/}
+                {instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier &&
+                <FormDisplayListItem field="Student Level"
+                                     value={instructionalMaterial.level} />
+                }
+
+                {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
+                <DetailExpansionCardActions
+                    removeButtonTooltipTitle="Remove instructional material"
+                    updateButtonTooltipTitle="Update instructional material details"
+                    onUpdateButtonClick={() => this.setState({
+                        activeInstructionalMaterial: instructionalMaterial,
+                        instructionalMaterialModalIsShowing: true,
+                    })}
+
+                    onRemoveButtonClick={() => this.setState({
+                        activeInstructionalMaterial: instructionalMaterial,
+                        removeInstructionalMaterialModalIsShowing: true,
+                    })}
+                />
+                }
+
+            </FormDisplayExpansionPanelDetails>
+        </DetailExpansionCard>,
     );
 
     renderEmptyState = () => (
@@ -88,7 +82,9 @@ export class InstructionalMaterialsTab extends Component {
             bigMessage={`${getFullName(this.props.faculty.user)} does not have recorded instructional materials`}
             smallMessage="Instructional materials added will be shown here"
             onAddButtonClick={this.onAddButtonClick}
-            addButtonText="Add an instructional material" />
+            addButtonText="Add an instructional material"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     render() {
@@ -105,15 +101,17 @@ export class InstructionalMaterialsTab extends Component {
         return (
             <div className={classes.expansionCardsContainer}>
                 <DetailCard>
-                    <TableToolbar tableTitle="Instructional Materials"
-                                  addButtonTooltipTitle="Add an instructional material"
-                                  onAddButtonClick={this.onAddButtonClick} />
+                    <TableToolbar
+                        tableTitle="Instructional Materials"
+                        addButtonTooltipTitle="Add an instructional material"
+                        onAddButtonClick={this.onAddButtonClick}
+                        showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                    />
                     {instructionalMaterialsIsEmpty && this.renderEmptyState()}
                 </DetailCard>
 
                 {!instructionalMaterialsIsEmpty && this.renderRows(instructionalMaterials)}
 
-                {instructionalMaterialModalIsShowing &&
                 <InstructionalMaterialModal
                     action={activeInstructionalMaterial ? "update" : "add"}
                     open={instructionalMaterialModalIsShowing}
@@ -121,9 +119,8 @@ export class InstructionalMaterialsTab extends Component {
                     instructionalMaterial={activeInstructionalMaterial}
                     faculty={faculty}
                 />
-                }
 
-                {removeInstructionalMaterialModalIsShowing &&
+                {activeInstructionalMaterial &&
                 <RemoveInstructionalMaterialModal
                     open={removeInstructionalMaterialModalIsShowing}
                     onClose={() => this.toggleRemoveInstructionalMaterialModal(false)}

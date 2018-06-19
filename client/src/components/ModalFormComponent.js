@@ -16,6 +16,18 @@ export class ModalFormComponent extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!prevProps.open && this.props.open) {
+            this.resetForm();
+
+            if (this.props.action === "update") {
+                this.setState({
+                    form: this.mapPropsToForm(this.props),
+                });
+            }
+        }
+    }
+
     // To be implemented by subclass
     get initialForm() {
         return {};
@@ -36,12 +48,9 @@ export class ModalFormComponent extends Component {
         }
 
         this.props.onClose();
-        this.resetForm();
     };
 
     onSubmitSuccess = () => {
-        this.resetForm();
-
         if (!this.state.keepForm) {
             this.props.onClose();
         } else {

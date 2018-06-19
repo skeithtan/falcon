@@ -1,4 +1,6 @@
+import { getPermissions } from "../../utils/user.util";
 import {
+    CHANGE_PASSWORD_SUCCESS,
     SIGN_IN_ERROR,
     SIGN_IN_IS_LOADING,
     SIGN_IN_SUCCESS,
@@ -6,11 +8,24 @@ import {
 } from "../actions/authentication.actions";
 
 
-const hasUser = localStorage.hasOwnProperty("user");
+const getUserFromLocalStorage = () => {
+    if (!localStorage.hasOwnProperty("user")) {
+        return null;
+    }
+
+    const user = JSON.parse(localStorage.user);
+    return getUserWithPermissions(user);
+};
+
+const getUserWithPermissions = user => {
+    user.permissions = getPermissions(user);
+    return user;
+};
+
 const initialState = {
     isLoading: false,
     signInError: null,
-    user: hasUser ? JSON.parse(localStorage.user) : null,
+    user: getUserFromLocalStorage(),
 };
 
 export function authentication(state = initialState, action) {
@@ -19,7 +34,7 @@ export function authentication(state = initialState, action) {
             return {
                 isLoading: false,
                 signInError: null,
-                user: action.user,
+                user: getUserWithPermissions(action.user),
             };
         case SIGN_IN_IS_LOADING:
             return {
@@ -38,6 +53,14 @@ export function authentication(state = initialState, action) {
                 isLoading: false,
                 signInError: null,
                 user: null,
+            };
+        case CHANGE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    temporaryPassword: false,
+                },
             };
         default:
             return state;

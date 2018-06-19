@@ -1,5 +1,6 @@
 input FacultyInput {
     sex: Sex
+    idNumber: String
     employment: Employment
     birthDate: String
 }
@@ -45,6 +46,7 @@ input DegreeInput {
 type FacultyMutations {
     add(newFaculty: FacultyInput!, newUser: UserInput!, temporaryPassword: String!): Faculty!
     update(_id: ID!, newFaculty: FacultyInput!, newUser: UserInput): Faculty!
+    resetPassword(_id: ID!, newPassword: String!): Boolean!
 }
 
 type PresentationMutations {

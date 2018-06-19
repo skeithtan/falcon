@@ -7,9 +7,9 @@ import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
 import { SubjectChip } from "../../../../../components/SubjectChip";
 import { TableToolbar } from "../../../../../components/TableToolbar";
+import { UnassignSubjectModal } from "../../../../../components/UnassignSubjectModal";
 import { getFullName } from "../../../../../utils/user.util";
 import { TeachingSubjectModal } from "../../modals/TeachingSubjectModal";
-import { UnassignSubjectModal } from "../../modals/UnassignSubjectModal";
 
 
 export class TeachingSubjectsCard extends Component {
@@ -20,16 +20,18 @@ export class TeachingSubjectsCard extends Component {
     };
 
     renderEmptyState = () => (
-        <EmptyState bigMessage={`${getFullName(this.props.faculty.user)} does not have assigned teaching subjects.`}
-                    smallMessage="Teaching subjects assigned will be shown here."
-                    onAddButtonClick={this.onAddButtonClick}
-                    addButtonText="Assign a subject" />
+        <EmptyState
+            bigMessage={`${getFullName(this.props.faculty.user)} does not have assigned teaching subjects.`}
+            smallMessage="Teaching subjects assigned will be shown here."
+            onAddButtonClick={this.onAddButtonClick}
+            addButtonText="Assign a subject"
+            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+        />
     );
 
     renderLoading = () => (
         <FullPageLoadingIndicator size={100} />
     );
-
 
     renderErrors = errors => (
         <ErrorState
@@ -51,7 +53,7 @@ export class TeachingSubjectsCard extends Component {
         const teachingSubjectsIds = faculty.teachingSubjects;
         const teachingSubjectsIsEmpty = teachingSubjectsIds.length === 0;
         const {activeSubject, removeSubjectModalIsShowing, teachingSubjectsModalIsShowing} = this.state;
-        const {classes, subjects: {subjects: subjectList}} = this.props;
+        const {classes, subjects: {subjects: subjectList}, user} = this.props;
 
         // Transform faculty teaching subject ID to actual subject using subjectList from redux
         const teachingSubjects = teachingSubjectsIds.map(id => subjectList.find(subject => subject._id === id));
@@ -65,6 +67,7 @@ export class TeachingSubjectsCard extends Component {
                             <SubjectChip
                                 clickable
                                 subject={subject}
+                                showDeleteButton={user.permissions.MUTATE_FACULTY_PROFILES}
                                 handleDelete={() => this.setState({
                                     activeSubject: subject,
                                     removeSubjectModalIsShowing: true,
@@ -77,8 +80,9 @@ export class TeachingSubjectsCard extends Component {
                 }
 
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
-                {activeSubject && removeSubjectModalIsShowing &&
+                {activeSubject &&
                 <UnassignSubjectModal
+                    perspective="faculty"
                     open={removeSubjectModalIsShowing}
                     onClose={() => this.toggleRemoveSubjectModal(false)}
                     subject={activeSubject}
@@ -86,7 +90,6 @@ export class TeachingSubjectsCard extends Component {
                 />
                 }
 
-                {teachingSubjectsModalIsShowing &&
                 <TeachingSubjectModal
                     action="update"
                     open={teachingSubjectsModalIsShowing}
@@ -95,7 +98,6 @@ export class TeachingSubjectsCard extends Component {
                     faculty={faculty}
                     teachingSubjects={teachingSubjectsIds}
                 />
-                }
             </ListItem>
         );
     };
@@ -127,14 +129,17 @@ export class TeachingSubjectsCard extends Component {
                 errors,
                 subjects,
             },
-            faculty
+            faculty,
         } = this.props;
 
         return (
             <DetailCard>
-                <TableToolbar tableTitle="Subjects of Expertise"
-                              addButtonTooltipTitle="Assign a subject"
-                              onAddButtonClick={this.onAddButtonClick} />
+                <TableToolbar
+                    tableTitle="Subjects of Expertise"
+                    addButtonTooltipTitle="Assign a subject"
+                    onAddButtonClick={this.onAddButtonClick}
+                    showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                />
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
                 {subjects && this.renderTeachingSubjects(faculty)}

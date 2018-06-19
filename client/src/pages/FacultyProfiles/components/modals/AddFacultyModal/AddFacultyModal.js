@@ -11,33 +11,39 @@ import Stepper from "@material-ui/core/Stepper";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
+import { generateTemporaryPassword } from "../../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../../index";
 import { OVERVIEW_TAB } from "../../faculty_detail_tabs";
 import { FacultyForm, ReviewForm, UserForm } from "./steps";
 
 
-const initialForm = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    photo: null,
-    sex: SEX.M.identifier,
-    employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
-    birthDate: "",
-};
-
-const initialState = {
-    activeStep: 0,
-    form: {...initialForm},
-    isSubmitting: false,
-    error: null,
-};
-
 export class AddFacultyModal extends Component {
-    state = {...initialState};
+    state = {...this.initialState};
 
-    resetForm = () => this.setState({...initialState, form: {...initialForm}});
+    get initialState() {
+        return {
+            activeStep: 0,
+            form: {...this.initialForm},
+            isSubmitting: false,
+            error: null,
+        };
+    }
+
+    get initialForm() {
+        return {
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: generateTemporaryPassword(),
+            photo: null,
+            sex: SEX.M.identifier,
+            employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
+            birthDate: "",
+            idNumber: "",
+        };
+    }
+
+    resetForm = () => this.setState({...this.initialState, form: {...this.initialForm}});
 
     handleBack = () => this.setState({
         activeStep: this.state.activeStep - 1,

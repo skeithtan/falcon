@@ -9,6 +9,7 @@ import { fields as recognitionFields } from "./recognition";
 
 const facultySummary = `
     _id
+    idNumber
     user {
         name {
             first
@@ -100,7 +101,7 @@ export const fetchMyProfile = () => client.query({
                 ${fullFacultyDetails}
             }
         }
-    `
+    `,
 });
 
 export const addFaculty = (newFaculty, newUser, temporaryPassword) => client.mutate({
@@ -134,5 +135,19 @@ export const updateFaculty = (_id, newFaculty, newUser) => client.mutate({
         _id,
         newFaculty,
         newUser,
+    },
+});
+
+export const resetFacultyPassword = (_id, newPassword) => client.mutate({
+    mutation: gql`
+        mutation($_id: ID!, $newPassword: String!) {
+            faculty {
+                resetPassword(_id: $_id, newPassword: $newPassword)
+            }
+        }
+    `,
+    variables: {
+        _id,
+        newPassword,
     },
 });

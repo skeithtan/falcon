@@ -2,7 +2,8 @@ import mongoose, { Schema } from "mongoose";
 import { EMPLOYMENTS, SEXES } from "./enums/faculty.enums";
 import { ProfileChangeRequestSchema } from "./faculty_profile_changes.model";
 import {
-    DegreeSchema, ExtensionWorkSchema,
+    DegreeSchema,
+    ExtensionWorkSchema,
     InstructionalMaterialSchema,
     PresentationSchema,
     RecognitionSchema,
@@ -10,6 +11,10 @@ import {
 
 
 const FacultySchema = new Schema({
+    idNumber: {
+        type: String,
+        required: true,
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",

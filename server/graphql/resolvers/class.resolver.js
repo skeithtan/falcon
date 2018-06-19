@@ -1,18 +1,12 @@
 import { AcademicYear, Course, Subject } from "../../models/class.model";
-import { getDifference } from "../../utils/array";
-import {
-    addSubjectToFaculties,
-    linkSubjectAndFaculty,
-    linkSubjectToFaculties,
-    removeSubjectFromFaculties,
-    unlinkSubjectAndFaculty,
-    unlinkSubjectFromFaculties,
-} from "../../utils/faculty_subject_link";
+import { CLERK } from "../../models/user.model";
+import { getDifference } from "../../utils/difference";
+import { addSubjectToFaculties, removeSubjectFromFaculties } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 
 
 function subjects() {
-    return Subject.find().populate("faculties");
+    return Subject.find();
 }
 
 function mutateSubject() {
@@ -25,24 +19,30 @@ function mutateSubject() {
             addSubjectToFaculties(subject, newSubject.faculties);
 
             return Subject
-                .findById(subject._id)
-                .populate("faculties");
+                .findById(subject._id);
         },
 
         async update({_id, newSubject}) {
             // Link subject to faculties
             const subject = await Subject
-                .findByIdAndUpdate(_id, newSubject, {new: true})
-                .populate("faculties")
+                .findById(_id)
                 .exec();
 
+            // Subject.faculties is an array of ObjectIds,
+            // convert them to string for getDifference() to work properly
+            const oldFaculties = subject.faculties.map(objectId => objectId.toString());
             const newFaculties = newSubject.faculties;
-            const oldFaculties = subject.faculties;
 
-            // Link faculties to subject
-            const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
-            addSubjectToFaculties(subject, addedItems);
-            removeSubjectFromFaculties(subject, removedItems);
+            subject.set(newSubject);
+            await subject.save();
+
+            if (newFaculties !== undefined) {
+                const {addedItems, removedItems} = getDifference(newFaculties, oldFaculties);
+
+                // Link faculties to subject
+                addSubjectToFaculties(subject, addedItems);
+                removeSubjectFromFaculties(subject, removedItems);
+            }
 
             return subject;
         },
@@ -118,8 +118,8 @@ export const queryResolvers = {
 };
 
 export const mutationResolvers = {
-    subject: limitAccess(mutateSubject, {allowed: NO_FACULTY, action: "Mutate subject"}),
-    academicYear: limitAccess(mutateAcademicYear, {allowed: NO_FACULTY, action: "Mutate academic year"}),
-    course: limitAccess(mutateCourse, {allowed: NO_FACULTY, action: "Mutate course"}),
-    class: limitAccess(mutateClass, {allowed: NO_FACULTY, action: "Mutate class"}),
+    subject: limitAccess(mutateSubject, {allowed: CLERK, action: "Mutate subject"}),
+    academicYear: limitAccess(mutateAcademicYear, {allowed: CLERK, action: "Mutate academic year"}),
+    course: limitAccess(mutateCourse, {allowed: CLERK, action: "Mutate course"}),
+    class: limitAccess(mutateClass, {allowed: CLERK, action: "Mutate class"}),
 };

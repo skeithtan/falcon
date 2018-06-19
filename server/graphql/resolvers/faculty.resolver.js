@@ -1,5 +1,5 @@
 import { Faculty } from "../../models/faculty.model";
-import { FACULTY, User } from "../../models/user.model";
+import { CLERK, FACULTY, User } from "../../models/user.model";
 import { getDifference, getLastElement } from "../../utils/array";
 import { addFacultyToSubjects, removeFacultyFromSubjects } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
@@ -10,7 +10,7 @@ import { ValidationError } from "../errors/validation.error";
 
 function faculties() {
     return Faculty.find({})
-                  .populate("user")
+                  .populate("user");
 }
 
 function faculty(object, {_id}) {
@@ -79,6 +79,18 @@ function mutateFaculty() {
             const user = await User.findByIdAndUpdate(faculty.user, newUser, {new: true}).exec();
             faculty.user = user;
             return faculty;
+        },
+
+        async resetPassword({_id, newPassword}) {
+            const faculty = await Faculty.findById(_id).exec();
+            const user = await User.findById(faculty.user);
+            user.password = {
+                secret: newPassword,
+                temporary: true,
+            };
+
+            await user.save();
+            return true;
         },
     };
 }
@@ -284,12 +296,12 @@ export const queryResolvers = {
 };
 
 export const mutationResolvers = {
-    faculty: limitAccess(mutateFaculty, {allowed: NO_FACULTY, action: "Mutate faculty"}),
-    presentation: limitAccess(mutatePresentation, {allowed: NO_FACULTY, action: "Mutate presentation"}),
-    recognition: limitAccess(mutateRecognition, {allowed: NO_FACULTY, action: "Mutate recognition"}),
+    faculty: limitAccess(mutateFaculty, {allowed: CLERK, action: "Mutate faculty"}),
+    presentation: limitAccess(mutatePresentation, {allowed: CLERK, action: "Mutate presentation"}),
+    recognition: limitAccess(mutateRecognition, {allowed: CLERK, action: "Mutate recognition"}),
     instructionalMaterial: limitAccess(mutateInstructionalMaterial,
-        {allowed: NO_FACULTY, action: "Mutate instructional materials"}),
-    extensionWork: limitAccess(mutateExtensionWork, {allowed: NO_FACULTY, action: "Mutate extension work"}),
-    degree: limitAccess(mutateDegree, {allowed: NO_FACULTY, action: "Mutate degrees"}),
-    teachingSubject: limitAccess(mutateTeachingSubject, {allowed: NO_FACULTY, action: "Mutate teaching subject"}),
+        {allowed: CLERK, action: "Mutate instructional materials"}),
+    extensionWork: limitAccess(mutateExtensionWork, {allowed: CLERK, action: "Mutate extension work"}),
+    degree: limitAccess(mutateDegree, {allowed: CLERK, action: "Mutate degrees"}),
+    teachingSubject: limitAccess(mutateTeachingSubject, {allowed: CLERK, action: "Mutate teaching subject"}),
 };

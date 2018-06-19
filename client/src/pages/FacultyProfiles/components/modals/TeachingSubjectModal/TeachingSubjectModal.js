@@ -19,17 +19,20 @@ export class TeachingSubjectModal extends ModalFormComponent {
         };
     }
 
-    mapPropsToForm = ({teachingSubjects}) => {
-        return ({
-            selectedSubjects: [...teachingSubjects],
-        });
-    };
+    mapPropsToForm = ({ teachingSubjects }) => ({
+        selectedSubjects: [...teachingSubjects],
+    });
 
     renderSubjectChips = selectedSubjects => (
         <Grid container spacing={8}>
             {selectedSubjects.map(subject => (
                 <Grid item key={subject._id}>
-                    <SubjectChip subject={subject} />
+                    <SubjectChip subject={subject} handleDelete={() => this.setState({
+                        form: {
+                            selectedSubjects: this.state.form.selectedSubjects.filter(id => id !== subject._id),
+                        },
+                    })}
+                    />
                 </Grid>
             ))}
         </Grid>
@@ -51,9 +54,13 @@ export class TeachingSubjectModal extends ModalFormComponent {
     });
 
     get submitUpdateAction() {
-        const {form: {selectedSubjects}} = this.state;
-        const {faculty, onSubmitForm} = this.props;
-        return () => onSubmitForm(faculty, selectedSubjects);
+        const { form: { selectedSubjects: selectedSubjectsId } } = this.state;
+        const { faculty, onSubmitForm, allSubjects } = this.props;
+        const idToSubject = id => allSubjects.find(subject => subject._id === id);
+        const selectedSubjects = selectedSubjectsId.map(idToSubject);
+        const oldSubjects = faculty.teachingSubjects.map(idToSubject)
+
+        return () => onSubmitForm(faculty, selectedSubjects, oldSubjects);
     }
 
     get buttonName() {
@@ -61,8 +68,8 @@ export class TeachingSubjectModal extends ModalFormComponent {
     }
 
     render() {
-        const {open, classes, allSubjects} = this.props;
-        const {isSubmitting, form} = this.state;
+        const { open, classes, allSubjects } = this.props;
+        const { isSubmitting, form } = this.state;
         const selectedSubjects = form.selectedSubjects.map(id => allSubjects.find(subject => subject._id === id));
 
         return (

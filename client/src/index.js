@@ -2,11 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import { App } from "./components/App";
 import { HOME_PAGE } from "./pages";
-import registerServiceWorker from "./registerServiceWorker";
+import { App } from "./pages/App";
 import { store } from "./redux/store";
-
+import registerServiceWorker from "./registerServiceWorker";
 
 const app = (
     <Provider store={store}>

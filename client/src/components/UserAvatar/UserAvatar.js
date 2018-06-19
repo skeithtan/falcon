@@ -11,12 +11,22 @@ const UserAvatarPhoto = ({photo, fullName, className, onClick}) => (
     <Avatar className={className} onClick={onClick} alt={fullName} src={photo} />
 );
 
-export const UserAvatar = ({user, className, onClick}) => {
+export const UserAvatar = ({classes, user, className, onClick}) => {
     const fullName = getFullName(user);
     const initials = getInitials(user);
     const photo = user.photo;
 
     return photo ?
-        <UserAvatarPhoto photo={photo} fullName={fullName} className={className} onClick={onClick} /> :
-        <UserAvatarInitials initials={initials} fullName={fullName} className={className} onClick={onClick} />;
+        <UserAvatarPhoto
+            photo={photo}
+            fullName={fullName}
+            className={`${classes.avatar} ${className}`}
+            onClick={onClick}
+        /> :
+        <UserAvatarInitials
+            initials={initials}
+            fullName={fullName}
+            className={`${classes.avatar} ${className}`}
+            onClick={onClick}
+        />;
 };

@@ -9,7 +9,7 @@ export const styles = theme => ({
     messageWrapper: {
         display: "grid",
         gridRowGap: `${theme.spacing.unit * 2}px`,
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing.unit * 4,
         justifyItems: "center",
         textAlign: "center",
     },
