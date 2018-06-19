@@ -19,21 +19,16 @@ npm start
 ```
 
 ### Configuration file
-The configuration file is not a part of this repository because it contains the database username and password, but this configuration file can be replicated. It is located in `/server/config.js` and has the following structure:
+The configuration file is not a part of this repository because it contains the database username and password, but this configuration file can be replicated. The module `dotenv` loads the `.env` file into `process.env`. The `.env` file has the following structure:
 
 ```
-export default {
-    server: {
-        port: 8000,
-        jwtSecret: "" //JWT Secret
-    },
-    database: {
-        username: "",
-        password: "",
-        name: "",
-        get url() {
-            return `` //Create a URL using this.username, this.password and this.name
-        },
-    },
-};
+APP_PORT=
+APP_JWT_SECRET=""
+
+DB_USERNAME=""
+DB_PASSWORD=""
+DB_NAME=""
+DB_URL=""
+DB_PORT=
+
 ```

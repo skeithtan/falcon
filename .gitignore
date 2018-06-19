@@ -1,5 +1,5 @@
 #Hides database username and pass
-server/config.js
+.env
 dist/
 
 

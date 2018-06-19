@@ -17,7 +17,7 @@ function getAuthorizationFromContext(context) {
 function getUserIdFromAuthorization(authorization) {
     // Remove bearer from authorization header to retrieve token
     const token = authorization.replace("Bearer ", "");
-    const jwtSecret = server.jwtSecret;
+    const jwtSecret = process.env.APP_JWT_SECRET;
     return new Promise((resolve, reject) => {
         try {
             const {_id} = jwt.verify(token, jwtSecret);

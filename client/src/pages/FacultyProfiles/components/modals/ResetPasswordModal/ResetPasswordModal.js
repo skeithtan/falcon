@@ -165,18 +165,16 @@ export class ResetPasswordModal extends Component {
                                 <StepContent>
                                     {content(faculty, errors, newPassword)}
 
-                                    <div>
-                                        <DialogActions>
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                disabled={activeStep === 1}
-                                                onClick={this.handleNext}
-                                            >
-                                                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                                            </Button>
-                                        </DialogActions>
-                                    </div>
+                                    <DialogActions>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            disabled={activeStep === 1}
+                                            onClick={this.handleNext}
+                                        >
+                                            {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                                        </Button>
+                                    </DialogActions>
                                 </StepContent>
                             </Step>
                         ))}
