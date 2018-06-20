@@ -37,7 +37,7 @@ export class DegreeCard extends Component {
         <TableRow key={degree._id}>
             <TableCell>{degree.title}</TableCell>
             <TableCell>{DEGREE.LEVEL[degree.level].name}</TableCell>
-            <TableCell numeric>{degree.completionYear}</TableCell>
+            <TableCell>{degree.completionYear}</TableCell>
 
             {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
             <TableRowActions removeButtonTooltipTitle="Remove this degree"
@@ -75,7 +75,7 @@ export class DegreeCard extends Component {
                 <TableRow>
                     <TableCell>Title</TableCell>
                     <TableCell>Level</TableCell>
-                    <TableCell numeric>Completion Year</TableCell>
+                    <TableCell>Completion Year</TableCell>
 
                     {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
                     <TableCell padding="none">Actions</TableCell>
