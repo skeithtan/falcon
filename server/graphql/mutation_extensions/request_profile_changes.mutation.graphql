@@ -1,53 +1,36 @@
-input OverviewChangeInput {
-    sex: Sex!
-    name: NameInput!
-    employment: Employment!
-    birthDate: String!
-}
-
-type OverviewChanges {
-    update(newOverview: OverviewChangeInput!): OverviewChange!
-}
-
 type DegreeChanges {
     add(newDegree: DegreeInput!): DegreeChange!
-    update(_id: ID!, newDegree: DegreeInput!): DegreeChange!
     remove(_id: ID!): DegreeChange!
 }
 
 type ExtensionWorkChanges {
     add(newExtensionWork: ExtensionWorkInput!): ExtensionWorkChange!
-    update(_id: ID!, newExtensionWork: ExtensionWorkInput!): ExtensionWorkChange!
     remove(_id: ID!): ExtensionWorkChange!
 }
 
 type InstructionalMaterialChanges {
     add(newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterialChange!
-    update(_id: ID!, newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterialChange!
     remove(_id: ID!): InstructionalMaterialChange!
 }
 
 type RecognitionChanges {
     add(newRecognition: RecognitionInput!): RecognitionChange!
-    update(_id: ID!, newRecognition: RecognitionInput!): RecognitionChange!
     remove(_id: ID!): RecognitionChange!
 }
 
 type PresentationChanges {
     add(newPresentation: PresentationInput!): PresentationChange!
-    update(_id: ID!, newPresentation: PresentationInput!): PresentationChange!
     remove(_id: ID!): PresentationChange!
 }
 
 type RequestChange {
-    overview: OverviewChanges!
-    degrees: DegreeChanges!
-    extensionWorks: ExtensionWorkChanges!
-    instructionalMaterials: InstructionalMaterialChanges!
-    recognitions: RecognitionChanges!
-    presentations: PresentationChanges!
+    degree: DegreeChanges!
+    extensionWork: ExtensionWorkChanges!
+    instructionalMaterial: InstructionalMaterialChanges!
+    recognition: RecognitionChanges!
+    presentation: PresentationChanges!
 }
 
 extend type Mutation {
-    requestProfileChanges: RequestChange!
+    requestProfileChange: RequestChange!
 }

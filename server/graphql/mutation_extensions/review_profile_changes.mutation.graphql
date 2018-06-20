@@ -1,18 +1,10 @@
+union FacultySubdocument = Degree | Recognition | Presentation | InstructionalMaterial | ExtensionWork
 
 type RequestReviewAction {
-    approve: Boolean!
+    approve: FacultySubdocument!
     reject: Boolean!
 }
 
-type ReviewChangeRequest {
-    overview: RequestReviewAction!
-    degrees(_id: ID!): RequestReviewAction!
-    extensionWorks(_id: ID!): RequestReviewAction!
-    instructionalMaterials(_id: ID!): RequestReviewAction!
-    recognitions(_id: ID!): RequestReviewAction!
-    presentations(_id: ID!): RequestReviewAction!
-}
-
 extend type Mutation {
-    reviewProfileChanges(facultyId: ID!): ReviewChangeRequest!
+    reviewProfileChangeRequest(_id: ID!): RequestReviewAction!
 }

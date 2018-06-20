@@ -1,3 +1,4 @@
+import { Schema } from "mongoose";
 import {
     DEGREE_LEVELS,
     EXTENSION_WORK_ROLES,
@@ -20,7 +21,8 @@ const MonthYearDate = {
         required: true,
     },
 };
-export const PresentationSchema = {
+
+export const PresentationSchema = new Schema({
     title: String,
     category: {
         type: String,
@@ -49,8 +51,9 @@ export const PresentationSchema = {
         type: Number,
         required: true,
     },
-};
-export const RecognitionSchema = {
+});
+
+export const RecognitionSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -65,8 +68,9 @@ export const RecognitionSchema = {
         type: String,
         required: true,
     },
-};
-export const InstructionalMaterialSchema = {
+});
+
+export const InstructionalMaterialSchema = new Schema({
     title: String,
     medium: {
         type: String,
@@ -90,9 +94,9 @@ export const InstructionalMaterialSchema = {
             return this.audience === "STUDENT";
         },
     },
-};
+});
 
-export const ExtensionWorkSchema = {
+export const ExtensionWorkSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -105,8 +109,9 @@ export const ExtensionWorkSchema = {
         type: String,
         required: true,
     },
-};
-export const DegreeSchema = {
+});
+
+export const DegreeSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -120,4 +125,4 @@ export const DegreeSchema = {
         type: Number,
         required: true,
     },
-};
+});

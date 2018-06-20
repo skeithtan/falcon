@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from "graphql-tools";
 import requireText from "require-text";
-import { Mutation, Query } from "./resolvers";
+import { resolvers } from "./resolvers";
 
 
 function fileToText(path) {
@@ -41,7 +41,7 @@ const mutationDefinitions = mutations
 
 export const schema = makeExecutableSchema({
     typeDefs: [schemaDefinition, queries, typeDefinitions, mutationDefinitions],
-    resolvers: {Query, Mutation},
+    resolvers: resolvers,
     resolverValidationOptions: {
         // Removes resolveType warning from console
         requireResolversForResolveType: false,

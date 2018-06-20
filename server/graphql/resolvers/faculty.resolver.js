@@ -1,6 +1,6 @@
 import { Faculty } from "../../models/faculty.model";
 import { CLERK, FACULTY, User } from "../../models/user.model";
-import { getDifference, getLastElement } from "../../utils/array";
+import { getDifference } from "../../utils/array";
 import { addFacultyToSubjects, removeFacultyFromSubjects } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { getUserFromContext } from "../../utils/user_from_context";
@@ -9,33 +9,36 @@ import { ValidationError } from "../errors/validation.error";
 
 
 function faculties() {
-    return Faculty.find({})
-                  .populate("user");
+    return Faculty
+        .find({})
+        .populate("user");
 }
 
 function faculty(object, {_id}) {
-    return Faculty.findById(_id)
-                  .populate("user")
-                  .then(faculty => {
-                      if (!faculty) {
-                          return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
-                      }
-                      return faculty;
-                  })
-                  .catch(error => {
-                      // CastErrors happen with id is an invalid ObjectID
-                      if (error.name === "CastError") {
-                          return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
-                      }
-                      throw error;
-                  });
+    return Faculty
+        .findById(_id)
+        .populate("user")
+        .then(faculty => {
+            if (!faculty) {
+                return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+            }
+            return faculty;
+        })
+        .catch(error => {
+            // CastErrors happen with id is an invalid ObjectID
+            if (error.name === "CastError") {
+                return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+            }
+            throw error;
+        });
 }
 
 async function myProfile(object, args, context) {
     const user = await getUserFromContext(context);
-    return Faculty.findOne({user: user._id})
-                  .populate("user")
-                  .populate("teachingSubjects");
+    return Faculty
+        .findOne({user: user._id})
+        .populate("user")
+        .populate("teachingSubjects");
 }
 
 function mutateFaculty() {
@@ -69,7 +72,7 @@ function mutateFaculty() {
                 console.log(`Error occurred while creating faculty object: ${error.message}`);
 
                 // We either keep both or none, but never just the user
-                await User.findByIdAndRemove({_id: user.id});
+                await User.findByIdAndDelete({_id: user.id});
                 throw error;
             }
         },
@@ -109,9 +112,10 @@ async function mutatePresentation(object, {facultyId}) {
 
     return {
         async add({newPresentation}) {
-            presentations.push(newPresentation);
+            const presentation = presentations.create(newPresentation);
+            presentations.push(presentation);
             await faculty.save();
-            return getLastElement(presentations);
+            return presentation;
         },
         async update({_id, newPresentation}) {
             const presentation = getPresentation(_id);
@@ -142,9 +146,10 @@ async function mutateRecognition(object, {facultyId}) {
 
     return {
         async add({newRecognition}) {
-            recognitions.push(newRecognition);
+            const recognition = recognitions.create(newRecognition);
+            recognitions.push(recognition);
             await faculty.save();
-            return getLastElement(recognitions);
+            return recognition;
         },
         async update({_id, newRecognition}) {
             const recognition = getRecognition(_id);
@@ -175,9 +180,10 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
 
     return {
         async add({newInstructionalMaterial}) {
-            instructionalMaterials.push(newInstructionalMaterial);
+            const instructionalMaterial = instructionalMaterials.create(newInstructionalMaterial);
+            instructionalMaterials.push(instructionalMaterial);
             await faculty.save();
-            return getLastElement(instructionalMaterials);
+            return instructionalMaterial;
         },
         async update({_id, newInstructionalMaterial}) {
             const instructionalMaterial = getInstructionalMaterial(_id);
@@ -208,9 +214,10 @@ async function mutateExtensionWork(object, {facultyId}) {
 
     return {
         async add({newExtensionWork}) {
-            extensionWorks.push(newExtensionWork);
+            const extensionWork = extensionWorks.push(newExtensionWork);
+            extensionWorks.push(extensionWork);
             await faculty.save();
-            return getLastElement(extensionWorks);
+            return extensionWork;
         },
         async update({_id, newExtensionWork}) {
             const extensionWork = getExtensionWork(_id);
@@ -241,9 +248,10 @@ async function mutateDegree(object, {facultyId}) {
 
     return {
         async add({newDegree}) {
-            degrees.push(newDegree);
+            const degree = degrees.create(newDegree);
+            degrees.push(degree);
             await faculty.save();
-            return getLastElement(degrees);
+            return degree;
         },
         async update({_id, newDegree}) {
             const degree = getDegree(_id);

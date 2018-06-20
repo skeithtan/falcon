@@ -1,5 +1,4 @@
-import { Schema } from "mongoose";
-import { EMPLOYMENTS } from "./enums/faculty.enums";
+import mongoose, { Schema } from "mongoose";
 import {
     DegreeSchema,
     ExtensionWorkSchema,
@@ -9,100 +8,49 @@ import {
 } from "./faculty_subdocuments.model";
 
 
-const ChangeTemplate = {
+const ProfileChangeRequestSchema = new Schema({
     submitted: {
         type: Date,
         default: Date.now,
     },
-    action: {
-        type: String,
-        enum: ["ADD", "UPDATE", "REMOVE"],
+    faculty: {
+        type: Schema.Types.ObjectId,
+        ref: "Faculty",
         required: true,
     },
-    changeObjectId: {
-        type: Schema.Types.ObjectId,
-        required: function () {
-            return ["UPDATE", "REMOVE"].includes(this.mutationType);
-        },
-    },
-};
+}, {
+    discriminatorKey: "subdocumentType",
+});
 
-function makeChangeSchema({reference, schema}) {
-    const mutationChangeSchema = {...ChangeTemplate};
-    mutationChangeSchema.changeObjectId.ref = reference;
-    mutationChangeSchema.object = {
-        ...schema,
-        _id: false,
-    };
+export const ProfileChangeRequest = mongoose.model("ProfileChangeRequest", ProfileChangeRequestSchema);
 
-    return new Schema(mutationChangeSchema);
-}
+const makeAddRequestDiscriminator = ({name, schema}) =>
+    ProfileChangeRequest.discriminator(name, new Schema({
+        // Just copy
+        ...schema.obj,
+    }));
 
-const DegreeChange = makeChangeSchema({
-    reference: "Faculty.degrees",
+export const DegreeAddRequest = makeAddRequestDiscriminator({
+    name: "Degree",
     schema: DegreeSchema,
 });
 
-const ExtensionWorkChange = makeChangeSchema({
-    reference: "Faculty.extensionWorks",
-    schema: ExtensionWorkSchema,
-});
-
-const InstructionalMaterialChange = makeChangeSchema({
-    reference: "Faculty.instructionalMaterials",
-    schema: InstructionalMaterialSchema,
-});
-
-const RecognitionChange = makeChangeSchema({
-    reference: "Faculty.recognitions",
+export const RecognitionAddRequest = makeAddRequestDiscriminator({
+    name: "Recognition",
     schema: RecognitionSchema,
 });
 
-const PresentationChange = makeChangeSchema({
-    reference: "Faculty.presentations",
+export const PresentationAddRequest = makeAddRequestDiscriminator({
+    name: "Presentation",
     schema: PresentationSchema,
 });
 
-const OverviewChange = new Schema({
-    submitted: {
-        type: Date,
-        default: Date.now,
-    },
-    sex: {
-        type: String,
-    },
-    name: {
-        first: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        last: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-    },
-    employment: {
-        type: String,
-        enum: EMPLOYMENTS,
-        required: true,
-    },
-    birthDate: {
-        type: Date,
-        required: true,
-    },
+export const InstructionalMaterialAddRequest = makeAddRequestDiscriminator({
+    name: "InstructionalMaterial",
+    schema: InstructionalMaterialSchema,
 });
 
-export const ProfileChangeRequestSchema = new Schema({
-    _id: false,
-    overview: {
-        type: OverviewChange,
-        required: false,
-    },
-    degrees: [DegreeChange],
-    extensionWorks: [ExtensionWorkChange],
-    instructionalMaterials: [InstructionalMaterialChange],
-    recognitions: [RecognitionChange],
-    presentations: [PresentationChange],
+export const ExtensionWorkAddRequest = makeAddRequestDiscriminator({
+    name: "ExtensionWork",
+    schema: ExtensionWorkSchema,
 });

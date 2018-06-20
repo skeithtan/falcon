@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import { EMPLOYMENTS, SEXES } from "./enums/faculty.enums";
-import { ProfileChangeRequestSchema } from "./faculty_profile_changes.model";
 import {
     DegreeSchema,
     ExtensionWorkSchema,
@@ -43,7 +42,6 @@ const FacultySchema = new Schema({
     recognitions: [RecognitionSchema],
     instructionalMaterials: [InstructionalMaterialSchema],
     extensionWorks: [ExtensionWorkSchema],
-    changeRequests: ProfileChangeRequestSchema,
 });
 export const Faculty = mongoose.model("Faculty", FacultySchema);
 

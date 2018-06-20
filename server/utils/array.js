@@ -11,7 +11,3 @@ export function getDifference(newItems, oldItems) {
 
     return {addedItems, removedItems};
 }
-
-export function getLastElement(array) {
-    return array[array.length - 1];
-}

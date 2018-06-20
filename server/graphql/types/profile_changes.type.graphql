@@ -1,69 +1,69 @@
-enum ChangeAction {
-    ADD,
-    UPDATE,
-    REMOVE
-}
-
 interface ChangeRequest {
     _id: ID!
     submitted: String!
-    action: ChangeAction!
-    changeObjectId: ID
+    subdocumentType: String!
+    faculty: ID!
 }
 
 type DegreeChange implements ChangeRequest {
     _id: ID!
     submitted: String!
-    action: ChangeAction!
-    changeObjectId: ID
-    object: Degree
+    subdocumentType: String!
+    faculty: ID!
+
+    title: String!
+    level: DegreeLevel!
+    completionYear: Int!
 }
 
 type ExtensionWorkChange implements ChangeRequest {
     _id: ID!
     submitted: String!
-    action: ChangeAction!
-    changeObjectId: ID
-    object: ExtensionWork
+    subdocumentType: String!
+    faculty: ID!
+
+    title: String!
+    roles: [String!]!
+    venue: String!
 }
 
 type InstructionalMaterialChange implements ChangeRequest {
     _id: ID!
     submitted: String!
-    action: ChangeAction!
-    changeObjectId: ID
-    object: InstructionalMaterial
+    subdocumentType: String!
+    faculty: ID!
+
+    title: String!
+    medium: InstructionalMaterialMedium!
+    audience: InstructionalMaterialAudience!
+    usageYear: Int!
+    level: String
 }
 
 type RecognitionChange implements ChangeRequest {
     _id: ID!
     submitted: String!
-    action: ChangeAction!
-    changeObjectId: ID
-    object: Recognition
+    subdocumentType: String!
+    faculty: ID!
+
+    title: String!
+    basis: RecognitionBasis!
+    date: MonthYearDate!
+    sponsor: String!
 }
 
 type PresentationChange implements ChangeRequest {
     _id: ID!
     submitted: String!
-    action: ChangeAction!
-    changeObjectId: ID
-    object: Presentation
-}
+    subdocumentType: String!
+    faculty: ID!
 
-type OverviewChange {
-    submitted: String!
-    sex: Sex!
-    name: Name!
-    employment: Employment!
-    birthDate: String!
-}
-
-type ProfileChangeRequest {
-    overview: OverviewChange
-    degrees: [DegreeChange!]!
-    extensionWorks: [ExtensionWorkChange!]!
-    instructionalMaterials: [InstructionalMaterialChange!]!
-    recognitions: [RecognitionChange!]!
-    presentations: [PresentationChange!]!
+    title: String!
+    category: PresentationCategory!
+    date: MonthYearDate!
+    sponsor: String!
+    venue: String!
+    conference: String!
+    medium: PresentationMedium!
+    daysDuration: Int!
 }
