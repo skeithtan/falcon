@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { server } from "../config";
 import { GuestAccessError } from "../graphql/errors/guest.error";
 import { User } from "../models/user.model";
 
