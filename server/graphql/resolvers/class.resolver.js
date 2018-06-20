@@ -1,6 +1,6 @@
 import { AcademicYear, Course, Subject } from "../../models/class.model";
 import { CLERK } from "../../models/user.model";
-import { getDifference } from "../../utils/difference";
+import { getDifference } from "../../utils/array";
 import { addSubjectToFaculties, removeSubjectFromFaculties } from "../../utils/faculty_subject_link";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 

@@ -1,5 +1,4 @@
 export function getDifference(newItems, oldItems) {
-
     const removedItems = oldItems.filter(oldItem =>
         // If an oldItem is not in newItems array, it is removed
         !newItems.includes(oldItem),

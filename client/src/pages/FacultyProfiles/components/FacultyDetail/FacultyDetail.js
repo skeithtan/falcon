@@ -5,7 +5,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { DetailCard } from "../../../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
-import { getFullName } from "../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { OVERVIEW_TAB, TABS } from "../faculty_detail_tabs";
 
@@ -47,7 +46,7 @@ export class FacultyDetail extends Component {
     }
 
     fetchFacultyDetails() {
-        const { getFacultyDetails, setDetailsFetched, match: { params: { facultyId } } } = this.props;
+        const {getFacultyDetails, setDetailsFetched, match: {params: {facultyId}}} = this.props;
         const activeFaculty = this.getActiveFaculty(facultyId);
 
         if (!activeFaculty) {
@@ -65,7 +64,7 @@ export class FacultyDetail extends Component {
     }
 
     renderLoading = () => (
-        <Grid container style={{ height: "100%" }}>
+        <Grid container style={{height: "100%"}}>
             <FullPageLoadingIndicator size={100} />
         </Grid>
     );
@@ -73,7 +72,8 @@ export class FacultyDetail extends Component {
     renderErrors = errors => (
         <div className={this.props.classes.cardsContainer}>
             <DetailCard>
-                <ErrorState onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
+                <ErrorState
+                    onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
                     message="An error occurred while trying to fetch faculty details."
                     debug={errors[0]} />
             </DetailCard>
@@ -81,12 +81,12 @@ export class FacultyDetail extends Component {
     );
 
     getActiveFaculty = facultyId => {
-        const { faculty : {faculties} } = this.props;
-        return !facultyId ? null : faculties.find(faculty => faculty._id === facultyId,);
+        const {faculty: {faculties}} = this.props;
+        return !facultyId ? null : faculties.find(faculty => faculty._id === facultyId);
     };
 
     render() {
-        const { match: { params: { facultyId } }, classes, isLoading, errors } = this.props;
+        const {match: {params: {facultyId}}, classes, isLoading, errors} = this.props;
 
         // We don't have a selected faculty if the URL has no facultyID
         const noSelectedFaculty = !facultyId;
@@ -101,16 +101,16 @@ export class FacultyDetail extends Component {
         return (
             <div className={classes.facultyDetail}>
                 {activeFaculty && isFetched &&
-                    <Switch>
-                        {this.renderTabs(activeFaculty)}
-                        <Route render={() => (
-                            <Redirect to={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${OVERVIEW_TAB.path}`} />
-                        )} />
-                    </Switch>
+                <Switch>
+                    {this.renderTabs(activeFaculty)}
+                    <Route render={() => (
+                        <Redirect to={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${OVERVIEW_TAB.path}`} />
+                    )} />
+                </Switch>
                 }
 
                 {facultyNotFound &&
-                    <Redirect to={`/${FACULTY_PROFILES_PAGE.path}`} />
+                <Redirect to={`/${FACULTY_PROFILES_PAGE.path}`} />
                 }
 
                 {noSelectedFaculty && this.renderSelectFacultyState()}
