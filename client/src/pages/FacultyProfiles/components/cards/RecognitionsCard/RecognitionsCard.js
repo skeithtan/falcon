@@ -84,7 +84,7 @@ export class RecognitionsCard extends Component {
                     tableTitle="Recognitions"
                     addButtonTooltipTitle="Add a recognition"
                     onAddButtonClick={this.onAddButtonClick}
-                    showAddButton={user.permissions.MUTATE_FACULTY_PROFILES}
+                    showAddButton={user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE}
                 />
                 {!recognitionsIsEmpty &&
                 <Table>

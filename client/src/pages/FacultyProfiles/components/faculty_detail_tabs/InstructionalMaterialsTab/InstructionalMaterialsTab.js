@@ -88,7 +88,7 @@ export class InstructionalMaterialsTab extends Component {
     );
 
     render() {
-        const {faculty, classes} = this.props;
+        const {faculty, classes, user} = this.props;
         const instructionalMaterials = faculty.instructionalMaterials;
         const instructionalMaterialsIsEmpty = instructionalMaterials.length === 0;
 
@@ -105,7 +105,7 @@ export class InstructionalMaterialsTab extends Component {
                         tableTitle="Instructional Materials"
                         addButtonTooltipTitle="Add an instructional material"
                         onAddButtonClick={this.onAddButtonClick}
-                        showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                        showAddButton={user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE}
                     />
                     {instructionalMaterialsIsEmpty && this.renderEmptyState()}
                 </DetailCard>

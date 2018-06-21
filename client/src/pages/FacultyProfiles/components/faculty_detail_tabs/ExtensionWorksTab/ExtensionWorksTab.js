@@ -61,11 +61,15 @@ export class ExtensionWorksTab extends Component {
 
             <FormDisplayExpansionPanelDetails>
 
-                <FormDisplayListItem field="Venue"
-                                     value={extensionWork.venue} />
+                <FormDisplayListItem
+                    field="Venue"
+                    value={extensionWork.venue}
+                />
 
-                <FormDisplayListItem field="Roles"
-                                     value={<ExtensionWorkRoles roles={extensionWork.roles} />} />
+                <FormDisplayListItem
+                    field="Roles"
+                    value={<ExtensionWorkRoles roles={extensionWork.roles} />}
+                />
 
                 {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
                 <DetailExpansionCardActions
@@ -104,7 +108,7 @@ export class ExtensionWorksTab extends Component {
     );
 
     render() {
-        const {faculty, classes} = this.props;
+        const {faculty, classes, user} = this.props;
         const extensionWorks = faculty.extensionWorks;
         const extensionWorksIsEmpty = extensionWorks.length === 0;
         const {extensionWorkModalIsShowing, activeExtensionWork, removeExtensionWorkModalIsShowing} = this.state;
@@ -116,7 +120,7 @@ export class ExtensionWorksTab extends Component {
                         tableTitle="Extension Works"
                         addButtonTooltipTitle="Add an extension work"
                         onAddButtonClick={this.onAddButtonClick}
-                        showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                        showAddButton={user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE}
                     />
                     {extensionWorksIsEmpty && this.renderEmptyState()}
                 </DetailCard>

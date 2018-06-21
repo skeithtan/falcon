@@ -45,20 +45,34 @@ export class PresentationsTab extends Component {
 
             <FormDisplayExpansionPanelDetails>
 
-                <FormDisplayListItem field="Category"
-                                     value={PRESENTATION.CATEGORY[presentation.category].name} />
-                <FormDisplayListItem field="Date"
-                                     value={formatMonthYearDate(presentation.date)} />
-                <FormDisplayListItem field="Sponsor"
-                                     value={presentation.sponsor} />
-                <FormDisplayListItem field="Venue"
-                                     value={presentation.venue} />
-                <FormDisplayListItem field="Conference"
-                                     value={presentation.conference} />
-                <FormDisplayListItem field="Medium"
-                                     value={PRESENTATION.MEDIUM[presentation.medium].name} />
-                <FormDisplayListItem field="Duration"
-                                     value={`${presentation.daysDuration} Days`} />
+                <FormDisplayListItem
+                    field="Category"
+                    value={PRESENTATION.CATEGORY[presentation.category].name}
+                />
+                <FormDisplayListItem
+                    field="Date"
+                    value={formatMonthYearDate(presentation.date)}
+                />
+                <FormDisplayListItem
+                    field="Sponsor"
+                    value={presentation.sponsor}
+                />
+                <FormDisplayListItem
+                    field="Venue"
+                    value={presentation.venue}
+                />
+                <FormDisplayListItem
+                    field="Conference"
+                    value={presentation.conference}
+                />
+                <FormDisplayListItem
+                    field="Medium"
+                    value={PRESENTATION.MEDIUM[presentation.medium].name}
+                />
+                <FormDisplayListItem
+                    field="Duration"
+                    value={`${presentation.daysDuration} Days`}
+                />
 
                 {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
                 <DetailExpansionCardActions
@@ -90,7 +104,7 @@ export class PresentationsTab extends Component {
     );
 
     render() {
-        const {faculty, classes} = this.props;
+        const {faculty, classes, user} = this.props;
         const {activePresentation, presentationModalIsShowing, removePresentationModalIsShowing} = this.state;
         const presentations = faculty.presentations;
         const presentationsIsEmpty = presentations.length === 0;
@@ -101,7 +115,7 @@ export class PresentationsTab extends Component {
                         tableTitle="Presentations"
                         addButtonTooltipTitle="Add a presentation"
                         onAddButtonClick={this.onAddButtonClick}
-                        showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                        showAddButton={user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE}
                     />
                     {presentationsIsEmpty && this.renderEmptyState()}
                 </DetailCard>

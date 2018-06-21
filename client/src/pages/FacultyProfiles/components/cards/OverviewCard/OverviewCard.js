@@ -71,7 +71,7 @@ export class OverviewCard extends Component {
                             {user.permissions.MUTATE_FACULTY_PROFILES &&
                             <Grid item>
                                 <Tooltip title="Reset Faculty Password" placement="left">
-                                    <IconButton onClick={() => this.toggleResetPasswordModal(true)} >
+                                    <IconButton onClick={() => this.toggleResetPasswordModal(true)}>
                                         <LockOpenIcon />
                                     </IconButton>
                                 </Tooltip>
@@ -119,12 +119,14 @@ export class OverviewCard extends Component {
                     <FormDisplayListItem field="Date of Birth" value={birthDateValue} />
                 </List>
 
+                {user.permissions.MUTATE_FACULTY_PROFILES &&
                 <UpdateFacultyOverviewModal
                     action="update"
                     faculty={faculty}
                     open={updateFacultyModalIsShowing}
                     onClose={() => this.toggleUpdateFacultyModal(false)}
                 />
+                }
 
                 <ProfilePrintPreview
                     faculty={faculty}
@@ -132,11 +134,13 @@ export class OverviewCard extends Component {
                     onClose={() => this.toggleProfilePrintPreview(false)}
                 />
 
+                {user.permissions.MUTATE_FACULTY_PROFILES &&
                 <ResetPasswordModal
                     faculty={faculty}
                     open={resetPasswordModalIsShowing}
                     onClose={() => this.toggleResetPasswordModal(false)}
                 />
+                }
             </DetailCard>
         );
     }

@@ -101,7 +101,7 @@ export class DegreeCard extends Component {
                     tableTitle="Degrees"
                     addButtonTooltipTitle="Add a degree"
                     onAddButtonClick={this.onAddButtonClick}
-                    showAddButton={user.permissions.MUTATE_FACULTY_PROFILES}
+                    showAddButton={user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE}
                 />
                 {!degreesIsEmpty && this.renderDegreesTable(degrees, user)}
                 {degreesIsEmpty && this.renderEmptyState()}

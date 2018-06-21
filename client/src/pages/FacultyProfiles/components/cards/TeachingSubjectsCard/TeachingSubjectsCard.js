@@ -65,7 +65,7 @@ export class TeachingSubjectsCard extends Component {
                     {teachingSubjects.map(subject => (
                         <Grid item key={subject._id}>
                             <SubjectChip
-                                clickable
+                                clickable={user.permissions.VIEW_SUBJECTS_PAGE}
                                 subject={subject}
                                 showDeleteButton={user.permissions.MUTATE_FACULTY_PROFILES}
                                 handleDelete={() => this.setState({
