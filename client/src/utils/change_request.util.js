@@ -1,11 +1,6 @@
-export function getChangeRequestFields(objectFields) {
-    return `
-        _id
+export const getChangeRequestFields = objectFields => `
         submitted
-        action
-        changeObjectId
-        object {
-            ${objectFields}
-        }
-    `
-}
+        faculty
+        subdocumentType
+        ${objectFields}
+`;
