@@ -26,15 +26,12 @@ export class RemoveRecognitionModal extends DangerActionConfirmationModal {
         return "Remove recognition";
     }
 
-    onConfirmAction = () => {
-        this.setState({isSubmitting: true, error: null});
+    get submitAction() {
         const {faculty, recognition, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, recognition._id);
+    }
 
-        onConfirmRemove(faculty, recognition._id)
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred while removing recognition", error);
-                this.setState({isSubmitting: false, error: "An error occurred"});
-            });
-    };
+    get toastSuccessMessage() {
+        return "Recognition successfully removed";
+    }
 }

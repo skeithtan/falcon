@@ -36,8 +36,32 @@ export class DangerActionConfirmationModal extends Component {
     }
 
     // To be implemented by subclass
+    get toastSuccessMessage() {
+
+    }
+
+    // To be implemented by subclass
+    get submitAction() {
+
+    }
+
+    // To be implemented by subclass
     onConfirmAction = () => {
-        console.log("Invoked parent onConfirmAction()");
+        const {showToast} = this.props;
+        this.setState({isSubmitting: true, error: null});
+
+        this.submitAction()
+            .then(() => this.setState({isSubmitting: false}))
+            .then(this.closeModal)
+            .then(() => {
+                if (showToast) {
+                    showToast(this.toastSuccessMessage);
+                }
+            })
+            .catch(error => {
+                console.log("An error occurred", error);
+                this.setState({isSubmitting: false, error: "An error occurred"});
+            });
     };
 
     closeModal = () => {

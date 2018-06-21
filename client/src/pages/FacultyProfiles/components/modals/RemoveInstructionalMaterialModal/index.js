@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { removeInstructionalMaterial } from "../../../../../services/faculty/instructional_material";
 import { RemoveInstructionalMaterialModal as Component } from "./RemoveInstructionalMaterialModal";
 
@@ -18,6 +19,10 @@ const mapDispatchToProps = dispatch => ({
 
                 dispatch(facultyIsUpdated(newFaculty));
             });
+    },
+
+    showToast(message) {
+        dispatch(toastIsShowing(message));
     },
 });
 

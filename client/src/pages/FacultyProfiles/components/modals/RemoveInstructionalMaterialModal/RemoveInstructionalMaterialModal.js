@@ -24,15 +24,12 @@ export class RemoveInstructionalMaterialModal extends DangerActionConfirmationMo
         return "Remove instructional material";
     }
 
-    onConfirmAction = () => {
-        this.setState({isSubmitting: true, error: null});
+    get submitAction() {
         const {faculty, instructionalMaterial, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, instructionalMaterial._id);
+    }
 
-        onConfirmRemove(faculty, instructionalMaterial._id)
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred while removing instructional material", error);
-                this.setState({isSubmitting: false, error: "An error occurred"});
-            });
-    };
+    get toastSuccessMessage() {
+        return "Instructional Material successfully removed";
+    }
 }

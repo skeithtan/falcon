@@ -25,15 +25,12 @@ export class RemovePresentationModal extends DangerActionConfirmationModal {
         return "Remove presentation";
     }
 
-    onConfirmAction = () => {
-        this.setState({isSubmitting: true, error: null});
-        const {faculty, presentation, onConfirmRemove} = this.props;
+    get toastSuccessMessage() {
+        return "Successfully removed presentation";
+    }
 
-        onConfirmRemove(faculty, presentation._id)
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred while removing presentation", error);
-                this.setState({isSubmitting: false, error: "An error occurred"});
-            });
-    };
+    get submitAction() {
+        const {faculty, presentation, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, presentation._id);
+    }
 }

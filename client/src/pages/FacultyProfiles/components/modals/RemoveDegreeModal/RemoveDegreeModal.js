@@ -24,15 +24,12 @@ export class RemoveDegreeModal extends DangerActionConfirmationModal {
         return "Remove degree";
     }
 
-    onConfirmAction = () => {
-        this.setState({isSubmitting: true, error: null});
+    get submitAction() {
         const {faculty, degree, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, degree._id);
+    }
 
-        onConfirmRemove(faculty, degree._id)
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred while removing degree", error);
-                this.setState({isSubmitting: false, error: "An error occurred"});
-            });
-    };
+    get toastSuccessMessage() {
+        return "Degree successfully removed";
+    }
 }
