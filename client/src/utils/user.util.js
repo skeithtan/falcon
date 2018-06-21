@@ -29,6 +29,9 @@ export const getObjectForUserType = ({user, ifAdministrative, ifFaculty}) => {
 const PERMISSIONS_PER_USER = {
     MUTATE_FACULTY_PROFILES: [CLERK],
     VIEW_FACULTY_PROFILES: [ASSOCIATE_DEAN, DEAN, CLERK],
+    REQUEST_PROFILE_CHANGE: [FACULTY],
+    REVIEW_PROFILE_CHANGE_REQUEST: [CLERK],
+    VIEW_SUBJECTS_PAGE: [ASSOCIATE_DEAN, DEAN, CLERK],
 };
 
 export const getPermissions = user => {
