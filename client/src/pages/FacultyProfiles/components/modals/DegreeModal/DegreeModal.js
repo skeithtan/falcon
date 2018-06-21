@@ -47,39 +47,31 @@ export class DegreeModal extends ModalFormComponent {
         const form = this.state.form;
         const {faculty, submitAddDegreeForm, user, submitRequestAddDegreeForm} = this.props;
 
-        return getObjectForUserType({
-            user: user,
-            ifAdministrative: () => submitAddDegreeForm(form, faculty),
-            ifFaculty: () => submitRequestAddDegreeForm(form),
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddDegreeForm(form, faculty),
+            FACULTY: () => submitRequestAddDegreeForm(form),
         });
     }
 
     get submitUpdateAction() {
         const form = this.state.form;
-        const {faculty, degree, submitUpdateDegreeForm, submitRequestUpdateDegreeForm, user} = this.props;
-
-        return getObjectForUserType({
-            user: user,
-            ifAdministrative: () => submitUpdateDegreeForm(form, degree._id, faculty),
-            ifFaculty: () => submitRequestUpdateDegreeForm(form, degree._id),
-        });
+        const {faculty, degree, submitUpdateDegreeForm} = this.props;
+        return () => submitUpdateDegreeForm(form, degree._id, faculty);
     }
 
     get buttonName() {
         const {action, user} = this.props;
-        return getObjectForUserType({
-            user: user,
-            ifAdministrative: action === "add" ? "Add Degree" : "Update Degree",
-            ifFaculty: action === "add" ? "Request Add Degree" : "Request Update Degree",
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Degree" : "Update Degree",
+            FACULTY: "Request Add Degree",
         });
     };
 
     get modalTitle() {
         const {action, user} = this.props;
-        return getObjectForUserType({
-            user: user,
-            ifAdministrative: action === "add" ? "Add a Degree" : "Update Degree",
-            ifFaculty: action === "add" ? "Request Add Degree" : "Request Update Degree",
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add a Degree" : "Update Degree",
+            FACULTY: "Request Add Degree",
         });
     }
 

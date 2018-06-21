@@ -11,19 +11,12 @@ export const getInitials = user => {
     return name.first[0] + name.last[0];
 };
 
-export const getObjectForUserType = ({user, ifAdministrative, ifFaculty}) => {
-    switch (user.authorization) {
-        case DEAN.identifier:
-        case ASSOCIATE_DEAN.identifier:
-        case CLERK.identifier:
-            return ifAdministrative;
-
-        case FACULTY.identifier:
-            return ifFaculty;
-
-        default:
-            throw new Error(`Unknown user authorization type ${user.authorization}`);
+export const getObjectForUserType = (user, objectForUser) => {
+    if (!Object.keys(objectForUser).includes(user.authorization)) {
+        throw new Error(`Error: Tried to get object for unsupported user type ${user.authorization} on object ${objectForUser}`);
     }
+
+    return objectForUser[user.authorization];
 };
 
 const PERMISSIONS_PER_USER = {
