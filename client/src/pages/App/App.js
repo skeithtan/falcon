@@ -23,16 +23,29 @@ export class App extends Component {
         // Is the user in the sign in page or any of its descendants?
         const userIsSigningIn = currentPath === SIGN_IN_PAGE.path;
 
-        // If user is not signed in and trying to access any other page
-        if (!user && !userIsSigningIn) {
-            //Force them to sign in
-            history.replace("/" + SIGN_IN_PAGE.path); // The slash is to specify that it's the root
+        if (!user) {
+            // If user is not signed in and trying to access any other page
+            if (!userIsSigningIn) {
+                // Force them to sign in
+                // The slash is to specify that it's the root
+                history.replace("/" + SIGN_IN_PAGE.path);
+            }
+
+            // We want to ensure the next conditions have a non-null user
+            return;
         }
 
-        // We can't show them sign in if they're already signed in
-        // UNLESS their password is only temporary
-        if (user && userIsSigningIn && !user.temporaryPassword) {
+        // If the user has a temporary password and they're not in the sign in page
+        if (user.temporaryPassword && !userIsSigningIn) {
+            // Force them to change it
+            history.replace("/" + SIGN_IN_PAGE.path);
+            return;
+        }
+
+        if (!user.temporaryPassword && userIsSigningIn) {
+            // We can't show them sign in if they're already signed in
             history.replace(HOME_PAGE.path);
+            return;
         }
 
         // Our homepage is in /home, redirect anyone authenticated to it
