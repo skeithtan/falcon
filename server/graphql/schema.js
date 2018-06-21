@@ -1,11 +1,10 @@
 import { makeExecutableSchema } from "graphql-tools";
-import requireText from "require-text";
 import { resolvers } from "./resolvers";
-
+import fs from "fs";
 
 function fileToText(path) {
     // Insert new line to avoid merging last line of previous file to first line of next file
-    return requireText(path, require) + "\n";
+    return fs.readFileSync(require.resolve(path)).toString() + "\n";
 }
 
 const schemaDefinition = fileToText("./schema.graphql");

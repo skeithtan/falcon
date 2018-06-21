@@ -28,8 +28,7 @@
     "graphql": "^0.13.2",
     "graphql-tools": "^3.0.2",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.1.5",
-    "require-text": "0.0.1"
+    "mongoose": "^5.1.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
