@@ -17,6 +17,10 @@ const mapFormToRecognitionInput = form => ({
     },
 });
 
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     submitAddRecognitionForm(form, faculty) {
         const recognition = mapFormToRecognitionInput(form);
@@ -59,6 +63,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const RecognitionModal = compose(
-    connect(null, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     withStyles(genericModalStyle),
 )(Component);

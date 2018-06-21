@@ -20,6 +20,10 @@ const mapFormToInstructionalMaterialInput = form => {
     return instructionalMaterial;
 };
 
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     submitAddInstructionalMaterialForm(form, faculty) {
         const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
@@ -62,6 +66,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const InstructionalMaterialModal = compose(
-    connect(null, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     withStyles(genericModalStyle),
 )(Component);

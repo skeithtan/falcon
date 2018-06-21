@@ -13,6 +13,10 @@ const mapFormToExtensionWorkInput = form => ({
     venue: form.venue,
 });
 
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     submitAddExtensionWorkForm(form, faculty) {
         const extensionWork = mapFormToExtensionWorkInput(form);
@@ -55,6 +59,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const ExtensionWorkModal = compose(
-    connect(null, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     withStyles(genericModalStyle),
 )(Component);

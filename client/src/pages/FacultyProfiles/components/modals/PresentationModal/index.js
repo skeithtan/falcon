@@ -21,6 +21,10 @@ const mapFormToPresentationInput = form => ({
     daysDuration: form.daysDuration,
 });
 
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     submitAddPresentationForm(form, faculty) {
         const presentation = mapFormToPresentationInput(form);
@@ -63,6 +67,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const PresentationModal = compose(
-    connect(null, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     withStyles(genericModalStyle),
 )(Component);
