@@ -7,6 +7,7 @@ export const Toast = ({
     message,
     dismissToast,
     isShowing,
+    classes
 }) => (
     <Snackbar
         anchorOrigin={{
@@ -18,7 +19,11 @@ export const Toast = ({
         autoHideDuration={3000}
         message={message}
         action={
-            <Button color="primary" size="small" onClick={dismissToast}>
+            <Button
+                className={classes.button}
+                size="small"
+                onClick={dismissToast}
+            >
                 Dismiss
             </Button>
         }
