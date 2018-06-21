@@ -1,9 +1,10 @@
 import { AuthorizationError } from "../graphql/errors/authorization.error";
-import { ASSOCIATE_DEAN, CLERK, DEAN } from "../models/user.model";
+import { ASSOCIATE_DEAN, CLERK, DEAN, FACULTY } from "../models/user.model";
 import { getUserFromContext } from "./user_from_context";
 
 
 export const NO_FACULTY = [DEAN, ASSOCIATE_DEAN, CLERK];
+export const AUTHENTICATED_USERS = [FACULTY, DEAN, ASSOCIATE_DEAN, CLERK];
 
 export function requireSignIn(resolver) {
     return (object, args, context) =>

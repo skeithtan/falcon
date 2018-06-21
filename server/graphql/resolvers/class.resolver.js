@@ -2,7 +2,7 @@ import { AcademicYear, Course, Subject } from "../../models/class.model";
 import { CLERK } from "../../models/user.model";
 import { getDifference } from "../../utils/array";
 import { addSubjectToFaculties, removeSubjectFromFaculties } from "../../utils/faculty_subject_link";
-import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
+import { AUTHENTICATED_USERS, limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 
 
 function subjects() {
@@ -113,7 +113,7 @@ function academicYears() {
 }
 
 export const queryResolvers = {
-    subjects: limitAccess(subjects, {allowed: NO_FACULTY, action: "Get all subjects"}),
+    subjects: limitAccess(subjects, {allowed: AUTHENTICATED_USERS, action: "Get all subjects"}),
     academicYears: limitAccess(academicYears, {allowed: NO_FACULTY, action: "Get all terms"}),
 };
 
