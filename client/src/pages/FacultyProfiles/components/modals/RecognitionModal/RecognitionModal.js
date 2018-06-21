@@ -15,6 +15,7 @@ import { ModalFormComponent } from "../../../../../components/ModalFormComponent
 import { MonthPicker } from "../../../../../components/MonthPicker";
 import { RECOGNITION } from "../../../../../enums/faculty.enums";
 import { validateForm, yearValidators } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
 
 
 function getFormErrors(form) {
@@ -52,17 +53,28 @@ export class RecognitionModal extends ModalFormComponent {
     });
 
     get buttonName() {
-        return this.props.action === "add" ? "Add Recognition" : "Update Recognition";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Recognition" : "Update Recognition",
+            FACULTY: "Request Add Recognition",
+        });
     }
 
     get modalTitle() {
-        return this.props.action === "add" ? "Add a Recognition" : "Update Recognition";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add a Recognition" : "Update Recognition",
+            FACULTY: "Request Add Recognition",
+        });
     }
 
     get submitAddAction() {
         const form = this.state.form;
-        const {faculty, submitAddRecognitionForm} = this.props;
-        return () => submitAddRecognitionForm(form, faculty);
+        const {faculty, user, submitAddRecognitionForm, submitRequestAddRecognitionForm} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddRecognitionForm(form, faculty),
+            FACULTY: () => submitRequestAddRecognitionForm(form),
+        });
     }
 
     get submitUpdateAction() {
