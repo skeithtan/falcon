@@ -4,6 +4,7 @@ import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import {
     addInstructionalMaterial,
     updateInstructionalMaterial,
@@ -25,6 +26,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    showToast(message) {
+        dispatch(toastIsShowing(message));
+    },
+
     submitAddInstructionalMaterialForm(form, faculty) {
         const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
         return addInstructionalMaterial(faculty._id, instructionalMaterial)

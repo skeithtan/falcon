@@ -51,8 +51,14 @@ export class ModalFormComponent extends Component {
     };
 
     onSubmitSuccess = () => {
+        const {onClose, showToast} = this.props;
+
         if (!this.state.keepForm) {
-            this.props.onClose();
+            onClose();
+
+            if (showToast) {
+                showToast(this.toastSuccessMessage);
+            }
         } else {
             // If keepForm is true, do not turn false unless user says so
             this.setState({keepForm: true});
@@ -98,13 +104,19 @@ export class ModalFormComponent extends Component {
 
     }
 
+    // To be implemented by subclass
+    get toastSuccessMessage() {
+
+    }
+
     handleSubmit = () => {
         this.setState({isSubmitting: true, error: null});
         const action = this.props.action;
         const submit = action === "add" ? this.submitAddAction : this.submitUpdateAction;
 
         submit()
-            .then(() => this.setState({isSubmitting: false}, this.onSubmitSuccess))
+            .then(() => this.setState({isSubmitting: false}))
+            .then(this.onSubmitSuccess)
             .catch(error => {
                 console.log("An error occurred while submitting form", error);
                 this.setState({

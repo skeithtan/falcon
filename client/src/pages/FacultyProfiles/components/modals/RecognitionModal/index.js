@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addRecognition, updateRecognition } from "../../../../../services/faculty/recognition";
 import { RecognitionModal as Component } from "./RecognitionModal";
 
@@ -59,6 +60,10 @@ const mapDispatchToProps = dispatch => ({
                 dispatch(facultyIsUpdated(newFaculty));
                 return newRecognition;
             });
+    },
+
+    showToast(message) {
+        dispatch(toastIsShowing(message));
     },
 });
 

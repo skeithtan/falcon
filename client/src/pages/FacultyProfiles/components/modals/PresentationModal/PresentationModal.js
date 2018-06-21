@@ -15,6 +15,7 @@ import { ModalFormComponent } from "../../../../../components/ModalFormComponent
 import { MonthPicker } from "../../../../../components/MonthPicker";
 import { PRESENTATION } from "../../../../../enums/faculty.enums";
 import { mustBeNumberValidator, validateForm, yearValidators } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
 
 
 function getFormErrors(form) {
@@ -96,6 +97,14 @@ export class PresentationModal extends ModalFormComponent {
         const form = this.state.form;
         const {submitUpdatePresentationForm, presentation, faculty} = this.props;
         return () => submitUpdatePresentationForm(form, presentation._id, faculty);
+    }
+
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Presentation successfully added" : "Presentation successfully updated",
+            FACULTY: "Presentation request successfully added",
+        });
     }
 
     render() {

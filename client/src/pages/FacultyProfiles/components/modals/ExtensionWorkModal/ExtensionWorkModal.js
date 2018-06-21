@@ -13,6 +13,7 @@ import React from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
 import { validateForm } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
 
 
 function getFormErrors(form) {
@@ -60,6 +61,14 @@ export class ExtensionWorkModal extends ModalFormComponent {
 
     get modalTitle() {
         return this.props.action === "add" ? "Add an Extension Work" : "Update Extension Work";
+    }
+
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Extension work successfully added" : "Extension work successfully updated",
+            FACULTY: "Extension work request successfully added",
+        });
     }
 
     handleRolesCheckbox = event => {

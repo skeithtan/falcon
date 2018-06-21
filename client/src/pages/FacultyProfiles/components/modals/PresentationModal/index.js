@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addPresentation, updatePresentation } from "../../../../../services/faculty/presentation";
 import { PresentationModal as Component } from "./PresentationModal";
 
@@ -26,6 +27,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    showToast(message) {
+        dispatch(toastIsShowing(message));
+    },
+
     submitAddPresentationForm(form, faculty) {
         const presentation = mapFormToPresentationInput(form);
         return addPresentation(faculty._id, presentation)

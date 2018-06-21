@@ -15,6 +15,7 @@ import React from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import { validateForm, yearValidators } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
 
 
 function isForStudents(form) {
@@ -75,6 +76,16 @@ export class InstructionalMaterialModal extends ModalFormComponent {
 
     get modalTitle() {
         return this.props.action === "add" ? "Add an Instructional Material" : "Update Instructional Material";
+    }
+
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ?
+                "Instructional material successfully added" :
+                "Instructional material successfully updated",
+            FACULTY: "Instructional material request successfully added",
+        });
     }
 
     get submitAddAction() {

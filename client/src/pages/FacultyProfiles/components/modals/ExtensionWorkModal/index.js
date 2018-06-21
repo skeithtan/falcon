@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addExtensionWork, updateExtensionWork } from "../../../../../services/faculty/extension_work";
 import { ExtensionWorkModal as Component } from "./ExtensionWorkModal";
 
@@ -18,6 +19,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    showToast(message) {
+        dispatch(toastIsShowing(message));
+    },
+
     submitAddExtensionWorkForm(form, faculty) {
         const extensionWork = mapFormToExtensionWorkInput(form);
         return addExtensionWork(faculty._id, extensionWork)

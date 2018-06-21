@@ -59,6 +59,14 @@ export class DegreeModal extends ModalFormComponent {
         return () => submitUpdateDegreeForm(form, degree._id, faculty);
     }
 
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Degree successfully added" : "Degree successfully updated",
+            FACULTY: "Degree request successfully added",
+        });
+    }
+
     get buttonName() {
         const {action, user} = this.props;
         return getObjectForUserType(user, {

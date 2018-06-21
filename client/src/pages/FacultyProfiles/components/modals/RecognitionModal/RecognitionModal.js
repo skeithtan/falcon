@@ -68,6 +68,14 @@ export class RecognitionModal extends ModalFormComponent {
         });
     }
 
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Recognition successfully added" : "Recognition successfully updated",
+            FACULTY: "Recognition request successfully added",
+        });
+    }
+
     get submitAddAction() {
         const form = this.state.form;
         const {faculty, user, submitAddRecognitionForm, submitRequestAddRecognitionForm} = this.props;
