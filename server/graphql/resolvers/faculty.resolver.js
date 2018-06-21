@@ -37,8 +37,7 @@ async function myProfile(object, args, context) {
     const user = await getUserFromContext(context);
     return Faculty
         .findOne({user: user._id})
-        .populate("user")
-        .populate("teachingSubjects");
+        .populate("user");
 }
 
 function mutateFaculty() {
