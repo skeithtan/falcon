@@ -7,6 +7,8 @@ export const EMPLOYMENTS = [
     "FULL_TIME_PERMANENT",
     "FULL_TIME_TEMPORARY",
     "PART_TIME",
+    "ADJUNCT",
+    "INACTIVE",
 ];
 
 export const DEGREE_LEVELS = [

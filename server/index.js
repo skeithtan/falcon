@@ -24,8 +24,8 @@ const {
 } = process.env;
 
 mongoose.connect(`mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_URL}:${DB_PORT}/${DB_NAME}`)
-        .then(onDatabaseConnect)
-        .catch(err => console.log(`Could not connect to mongodb: ${err}`));
+    .then(onDatabaseConnect)
+    .catch(err => console.log(`Could not connect to mongodb: ${err}`));
 
 function onDatabaseConnect() {
     console.log("Connected to database");
@@ -40,7 +40,7 @@ function onDatabaseConnect() {
         };
     }));
 
-    app.use("/graphiql", graphiqlExpress({endpointURL: "/graphql"}));
+    app.use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
 
     app.listen(APP_PORT, () => {
         console.info(`Server listening at port ${APP_PORT}`);
