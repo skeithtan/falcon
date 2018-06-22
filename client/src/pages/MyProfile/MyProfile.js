@@ -1,7 +1,7 @@
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { DetailCard } from "../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
 import { OVERVIEW_TAB, TABS } from "../FacultyProfiles/components/faculty_detail_tabs";
@@ -37,11 +37,11 @@ export class MyProfilePage extends Component {
 
     renderErrors = errors => (
         <div className={this.props.classes.cardsContainer}>
-            <DetailCard>
+            <Card>
                 <ErrorState onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
                             message="An error occurred while trying to fetch faculty details."
                             debug={errors[0]} />
-            </DetailCard>
+            </Card>
         </div>
     );
 

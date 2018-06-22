@@ -1,5 +1,5 @@
+import Card from "@material-ui/core/Card";
 import React, { Component } from "react";
-import { DetailCard } from "../../../../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
@@ -61,7 +61,7 @@ export class FacultyCard extends Component {
         const {expertFacultiesModalIsShowing} = this.state;
 
         return (
-            <DetailCard>
+            <Card>
                 <TableToolbar
                     tableTitle="Expert Faculties"
                     addButtonTooltipTitle="Add an expert faculty"
@@ -82,7 +82,7 @@ export class FacultyCard extends Component {
                     subject={subject}
                 />
                 }
-            </DetailCard>
+            </Card>
         );
     }
 }

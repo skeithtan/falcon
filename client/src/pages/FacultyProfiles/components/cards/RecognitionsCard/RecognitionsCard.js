@@ -1,10 +1,10 @@
+import Card from "@material-ui/core/Card";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React, { Component } from "react";
-import { DetailCard } from "../../../../../components/DetailCard";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { TableRowActions } from "../../../../../components/TableRowActions";
 import { TableToolbar } from "../../../../../components/TableToolbar";
@@ -79,7 +79,7 @@ export class RecognitionsCard extends Component {
         const {recognitionModalIsShowing, activeRecognition, removeRecognitionModalIsShowing} = this.state;
 
         return (
-            <DetailCard>
+            <Card>
                 <TableToolbar
                     tableTitle="Recognitions"
                     addButtonTooltipTitle="Add a recognition"
@@ -125,7 +125,7 @@ export class RecognitionsCard extends Component {
                     onClose={() => this.toggleRemoveRecognitionModal(false)}
                 />
                 }
-            </DetailCard>
+            </Card>
         );
     }
 }

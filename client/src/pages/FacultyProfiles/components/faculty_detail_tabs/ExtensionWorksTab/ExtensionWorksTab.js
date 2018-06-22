@@ -1,10 +1,10 @@
+import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { DetailCard } from "../../../../../components/DetailCard";
 import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
 import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
@@ -115,7 +115,7 @@ export class ExtensionWorksTab extends Component {
 
         return (
             <div className={classes.expansionCardsContainer}>
-                <DetailCard>
+                <Card>
                     <TableToolbar
                         tableTitle="Extension Works"
                         addButtonTooltipTitle="Add an extension work"
@@ -123,7 +123,7 @@ export class ExtensionWorksTab extends Component {
                         showAddButton={user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE}
                     />
                     {extensionWorksIsEmpty && this.renderEmptyState()}
-                </DetailCard>
+                </Card>
 
                 {!extensionWorksIsEmpty && this.renderRows(extensionWorks)}
 

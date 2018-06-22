@@ -1,3 +1,4 @@
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
@@ -8,7 +9,6 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import PrintIcon from "@material-ui/icons/Print";
 import moment from "moment/moment";
 import React, { Component } from "react";
-import { DetailCard } from "../../../../../components/DetailCard";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
 import { UserAvatar } from "../../../../../components/UserAvatar";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
@@ -54,7 +54,7 @@ export class OverviewCard extends Component {
         } = this.state;
 
         return (
-            <DetailCard>
+            <Card>
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
                         <Grid container spacing={8}>
@@ -141,7 +141,7 @@ export class OverviewCard extends Component {
                     onClose={() => this.toggleResetPasswordModal(false)}
                 />
                 }
-            </DetailCard>
+            </Card>
         );
     }
 }

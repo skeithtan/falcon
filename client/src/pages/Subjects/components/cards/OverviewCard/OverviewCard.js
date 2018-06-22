@@ -1,3 +1,4 @@
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
@@ -5,7 +6,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 import React, { Component } from "react";
-import { DetailCard } from "../../../../../components/DetailCard";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
 import { SUBJECT_CATEGORIES } from "../../../../../enums/class.enums";
 import { UpdateSubjectModal } from "../../modals/UpdateSubjectModal";
@@ -25,7 +25,7 @@ export class OverviewCard extends Component {
         const {updateSubjectModalIsShowing} = this.state;
 
         return (
-            <DetailCard>
+            <Card>
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
                         {user.permissions.MUTATE_FACULTY_PROFILES &&
@@ -68,7 +68,7 @@ export class OverviewCard extends Component {
                     onClose={() => this.toggleUpdateSubjectModal(false)}
                     subject={subject}
                 />
-            </DetailCard>
+            </Card>
         );
     }
 }

@@ -1,7 +1,7 @@
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import React, { Component } from "react";
-import { DetailCard } from "../../../../../components/DetailCard";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
@@ -133,7 +133,7 @@ export class TeachingSubjectsCard extends Component {
         } = this.props;
 
         return (
-            <DetailCard>
+            <Card>
                 <TableToolbar
                     tableTitle="Subjects of Expertise"
                     addButtonTooltipTitle="Assign a subject"
@@ -143,7 +143,7 @@ export class TeachingSubjectsCard extends Component {
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
                 {subjects && this.renderTeachingSubjects(faculty)}
-            </DetailCard>
+            </Card>
         );
     }
 }

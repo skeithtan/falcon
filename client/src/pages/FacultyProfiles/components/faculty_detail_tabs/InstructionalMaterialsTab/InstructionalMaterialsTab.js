@@ -1,8 +1,8 @@
+import Card from "@material-ui/core/Card";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { DetailCard } from "../../../../../components/DetailCard";
 import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
 import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
@@ -100,7 +100,7 @@ export class InstructionalMaterialsTab extends Component {
 
         return (
             <div className={classes.expansionCardsContainer}>
-                <DetailCard>
+                <Card>
                     <TableToolbar
                         tableTitle="Instructional Materials"
                         addButtonTooltipTitle="Add an instructional material"
@@ -108,7 +108,7 @@ export class InstructionalMaterialsTab extends Component {
                         showAddButton={user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE}
                     />
                     {instructionalMaterialsIsEmpty && this.renderEmptyState()}
-                </DetailCard>
+                </Card>
 
                 {!instructionalMaterialsIsEmpty && this.renderRows(instructionalMaterials)}
 
