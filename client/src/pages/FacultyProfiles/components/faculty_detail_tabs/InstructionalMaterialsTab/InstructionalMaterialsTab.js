@@ -4,7 +4,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
+import { ExpansionPanelActions } from "../../ExpansionPanelActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
 import { EmptyState } from "../../../../../components/states/EmptyState";
@@ -58,7 +58,7 @@ export class InstructionalMaterialsTab extends Component {
                 }
 
                 {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
-                <DetailExpansionCardActions
+                <ExpansionPanelActions
                     removeButtonTooltipTitle="Remove instructional material"
                     updateButtonTooltipTitle="Update instructional material details"
                     onUpdateButtonClick={() => this.setState({

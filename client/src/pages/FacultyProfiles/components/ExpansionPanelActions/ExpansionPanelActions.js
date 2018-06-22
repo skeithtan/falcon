@@ -6,7 +6,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
 
 
-export const DetailExpansionCardActions = ({
+export const ExpansionPanelActions = ({
     classes,
     onRemoveButtonClick,
     onUpdateButtonClick,

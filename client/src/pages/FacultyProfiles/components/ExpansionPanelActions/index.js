@@ -1,9 +1,9 @@
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
-import { DetailExpansionCardActions as Component } from "./DetailExpansionCardActions";
+import { ExpansionPanelActions as Component } from "./ExpansionPanelActions";
 import { styles } from "./styles";
 
 
-export const DetailExpansionCardActions = compose(
+export const ExpansionPanelActions = compose(
     withStyles(styles),
 )(Component);

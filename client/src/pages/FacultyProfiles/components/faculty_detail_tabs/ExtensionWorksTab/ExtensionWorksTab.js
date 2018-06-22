@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
+import { ExpansionPanelActions } from "../../ExpansionPanelActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
 import { EmptyState } from "../../../../../components/states/EmptyState";
@@ -72,7 +72,7 @@ export class ExtensionWorksTab extends Component {
                 />
 
                 {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
-                <DetailExpansionCardActions
+                <ExpansionPanelActions
                     removeButtonTooltipTitle="Remove instructional material"
                     updateButtonTooltipTitle="Update instructional material details"
 
