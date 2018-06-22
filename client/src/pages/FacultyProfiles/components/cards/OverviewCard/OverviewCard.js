@@ -44,8 +44,7 @@ export class OverviewCard extends Component {
     render() {
         const {faculty, classes, user} = this.props;
         const birthDate = moment(faculty.birthDate);
-        const today = moment();
-        const birthDateValue = `${birthDate.format("LL")} (${today.to(birthDate, true)})`;
+        const birthDateValue = `${birthDate.format("LL")} (${birthDate.fromNow(true)})`;
 
         const {
             updateFacultyModalIsShowing,
