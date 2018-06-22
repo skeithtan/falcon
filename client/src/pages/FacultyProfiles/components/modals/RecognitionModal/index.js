@@ -5,6 +5,7 @@ import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addRecognition, updateRecognition } from "../../../../../services/faculty/recognition";
+import { requestAddRecognition } from "../../../../../services/faculty/request_profile_changes";
 import { RecognitionModal as Component } from "./RecognitionModal";
 
 
@@ -23,6 +24,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    showToast(message) {
+        dispatch(toastIsShowing(message));
+    },
+
     submitAddRecognitionForm(form, faculty) {
         const recognition = mapFormToRecognitionInput(form);
         return addRecognition(faculty._id, recognition)
@@ -62,8 +67,9 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    showToast(message) {
-        dispatch(toastIsShowing(message));
+    submitRequestAddRecognitionForm(form) {
+        return requestAddRecognition(form)
+            .then(result => result.data.requestProfileChange.recognition.add);
     },
 });
 

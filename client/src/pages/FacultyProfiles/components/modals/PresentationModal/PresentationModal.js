@@ -80,17 +80,28 @@ export class PresentationModal extends ModalFormComponent {
     });
 
     get buttonName() {
-        return this.props.action === "add" ? "Add Presentation" : "Update Presentation";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Presentation" : "Update Presentation",
+            FACULTY: "Request Add Presentation",
+        });
     }
 
     get modalTitle() {
-        return this.props.action === "add" ? "Add a Presentation" : "Update Presentation";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add a Presentation" : "Update Presentation",
+            FACULTY: "Request Add Presentation",
+        });
     }
 
     get submitAddAction() {
         const form = this.state.form;
-        const {submitAddPresentationForm, faculty} = this.props;
-        return () => submitAddPresentationForm(form, faculty);
+        const {submitAddPresentationForm, faculty, user, submitRequestAddPresentationForm} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddPresentationForm(form, faculty),
+            FACULTY: () => submitRequestAddPresentationForm(form),
+        });
     }
 
     get submitUpdateAction() {

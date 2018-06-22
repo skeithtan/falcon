@@ -5,6 +5,7 @@ import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addPresentation, updatePresentation } from "../../../../../services/faculty/presentation";
+import { requestAddPresentation } from "../../../../../services/faculty/request_profile_changes";
 import { PresentationModal as Component } from "./PresentationModal";
 
 
@@ -68,6 +69,11 @@ const mapDispatchToProps = dispatch => ({
                 dispatch(facultyIsUpdated(newFaculty));
                 return newPresentation;
             });
+    },
+
+    submitRequestAddPresentationForm(form) {
+        return requestAddPresentation(form)
+            .then(result => result.data.requestProfileChange.presentation.add);
     },
 });
 

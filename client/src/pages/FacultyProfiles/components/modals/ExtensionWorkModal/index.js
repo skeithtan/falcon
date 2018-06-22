@@ -5,6 +5,7 @@ import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addExtensionWork, updateExtensionWork } from "../../../../../services/faculty/extension_work";
+import { requestAddExtensionWork } from "../../../../../services/faculty/request_profile_changes";
 import { ExtensionWorkModal as Component } from "./ExtensionWorkModal";
 
 
@@ -60,6 +61,11 @@ const mapDispatchToProps = dispatch => ({
                 dispatch(facultyIsUpdated(newFaculty));
                 return newExtensionWork;
             });
+    },
+
+    submitRequestAddExtensionWorkForm(form) {
+        return requestAddExtensionWork(form)
+            .then(result => result.data.requestProfileChange.extensionWork.add);
     },
 });
 

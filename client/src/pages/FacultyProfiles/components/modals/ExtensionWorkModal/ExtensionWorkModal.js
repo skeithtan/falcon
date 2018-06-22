@@ -45,8 +45,11 @@ export class ExtensionWorkModal extends ModalFormComponent {
 
     get submitAddAction() {
         const form = this.state.form;
-        const {submitAddExtensionWorkForm, faculty} = this.props;
-        return () => submitAddExtensionWorkForm(form, faculty);
+        const {submitAddExtensionWorkForm, faculty, user, submitRequestAddExtensionWorkForm} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddExtensionWorkForm(form, faculty),
+            FACULTY: () => submitRequestAddExtensionWorkForm(form),
+        });
     }
 
     get submitUpdateAction() {
@@ -56,11 +59,19 @@ export class ExtensionWorkModal extends ModalFormComponent {
     }
 
     get buttonName() {
-        return this.props.action === "add" ? "Add Extension Work" : "Update Extension Work";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Extension Work" : "Update Extension Work",
+            FACULTY: "Request Add Extension Work",
+        });
     }
 
     get modalTitle() {
-        return this.props.action === "add" ? "Add an Extension Work" : "Update Extension Work";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add an Extension Work" : "Update Extension Work",
+            FACULTY: "Request Add Extension Work",
+        });
     }
 
     get toastSuccessMessage() {

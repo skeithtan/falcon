@@ -71,11 +71,19 @@ export class InstructionalMaterialModal extends ModalFormComponent {
     };
 
     get buttonName() {
-        return this.props.action === "add" ? "Add Instructional Material" : "Update Instructional Material";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Instructional Material" : "Update Instructional Material",
+            FACULTY: "Request add Instructional Material",
+        });
     }
 
     get modalTitle() {
-        return this.props.action === "add" ? "Add an Instructional Material" : "Update Instructional Material";
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add an Instructional Material" : "Update Instructional Material",
+            FACULTY: "Request add Instructional Material",
+        });
     }
 
     get toastSuccessMessage() {
@@ -90,8 +98,11 @@ export class InstructionalMaterialModal extends ModalFormComponent {
 
     get submitAddAction() {
         const form = this.state.form;
-        const {faculty, submitAddInstructionalMaterialForm} = this.props;
-        return () => submitAddInstructionalMaterialForm(form, faculty);
+        const {faculty, submitAddInstructionalMaterialForm, user, submitRequestAddInstructionalMaterialForm} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddInstructionalMaterialForm(form, faculty),
+            FACULTY: () => submitRequestAddInstructionalMaterialForm(form),
+        });
     }
 
     get submitUpdateAction() {

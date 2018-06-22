@@ -9,6 +9,7 @@ import {
     addInstructionalMaterial,
     updateInstructionalMaterial,
 } from "../../../../../services/faculty/instructional_material";
+import { requestAddInstructionalMaterial } from "../../../../../services/faculty/request_profile_changes";
 import { InstructionalMaterialModal as Component } from "./InstructionalMaterialModal";
 
 
@@ -67,6 +68,11 @@ const mapDispatchToProps = dispatch => ({
                 dispatch(facultyIsUpdated(newFaculty));
                 return newInstructionalMaterial;
             });
+    },
+
+    submitRequestAddInstructionalMaterialForm(form) {
+        return requestAddInstructionalMaterial(form)
+            .then(result => result.data.requestProfileChange.instructionalMaterial.add);
     },
 });
 
