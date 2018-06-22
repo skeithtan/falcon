@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { updateFaculty } from "../../../../../services/faculty/faculty";
 import { UpdateFacultyOverviewModal as Component } from "./UpdateFacultyOverviewModal";
 
@@ -29,6 +30,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    showToast(message) {
+        dispatch(toastIsShowing(message));
+    },
+
     submitForm(faculty, form) {
         const {newFaculty, newUser} = mapFormToGraphQLParameters(form);
         return updateFaculty(faculty._id, newFaculty, newUser)

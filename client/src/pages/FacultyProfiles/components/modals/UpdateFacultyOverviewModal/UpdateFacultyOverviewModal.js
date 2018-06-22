@@ -96,6 +96,10 @@ export class UpdateFacultyOverviewModal extends ModalFormComponent {
         return () => this.props.submitForm(faculty, form);
     }
 
+    get toastSuccessMessage() {
+        return "Faculty successfully updated";
+    }
+
     render() {
         const {open, faculties, faculty, classes} = this.props;
         const {form, isSubmitting, error} = this.state;
