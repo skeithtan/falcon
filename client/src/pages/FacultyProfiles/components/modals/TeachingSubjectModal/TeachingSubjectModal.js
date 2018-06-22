@@ -19,7 +19,7 @@ export class TeachingSubjectModal extends ModalFormComponent {
         };
     }
 
-    mapPropsToForm = ({ teachingSubjects }) => ({
+    mapPropsToForm = ({teachingSubjects}) => ({
         selectedSubjects: [...teachingSubjects],
     });
 
@@ -27,12 +27,7 @@ export class TeachingSubjectModal extends ModalFormComponent {
         <Grid container spacing={8}>
             {selectedSubjects.map(subject => (
                 <Grid item key={subject._id}>
-                    <SubjectChip subject={subject} handleDelete={() => this.setState({
-                        form: {
-                            selectedSubjects: this.state.form.selectedSubjects.filter(id => id !== subject._id),
-                        },
-                    })}
-                    />
+                    <SubjectChip subject={subject} />
                 </Grid>
             ))}
         </Grid>
@@ -54,11 +49,11 @@ export class TeachingSubjectModal extends ModalFormComponent {
     });
 
     get submitUpdateAction() {
-        const { form: { selectedSubjects: selectedSubjectsId } } = this.state;
-        const { faculty, onSubmitForm, allSubjects } = this.props;
+        const {form: {selectedSubjects: selectedSubjectsId}} = this.state;
+        const {faculty, onSubmitForm, allSubjects} = this.props;
         const idToSubject = id => allSubjects.find(subject => subject._id === id);
         const selectedSubjects = selectedSubjectsId.map(idToSubject);
-        const oldSubjects = faculty.teachingSubjects.map(idToSubject)
+        const oldSubjects = faculty.teachingSubjects.map(idToSubject);
 
         return () => onSubmitForm(faculty, selectedSubjects, oldSubjects);
     }
@@ -67,9 +62,13 @@ export class TeachingSubjectModal extends ModalFormComponent {
         return "Set Expertise";
     }
 
+    get toastSuccessMessage() {
+        return "Faculty subjects of expertise successfully updated";
+    }
+
     render() {
-        const { open, classes, allSubjects } = this.props;
-        const { isSubmitting, form } = this.state;
+        const {open, classes, allSubjects} = this.props;
+        const {isSubmitting, form} = this.state;
         const selectedSubjects = form.selectedSubjects.map(id => allSubjects.find(subject => subject._id === id));
 
         return (
