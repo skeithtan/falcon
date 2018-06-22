@@ -1,7 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import { DangerActionConfirmationModal } from "../DangerActionConfirmationModal/index";
 import { getFullName } from "../../utils/user.util";
+import { DangerActionConfirmationModal } from "../DangerActionConfirmationModal/index";
 
 
 export class UnassignSubjectModal extends DangerActionConfirmationModal {
@@ -26,15 +26,14 @@ export class UnassignSubjectModal extends DangerActionConfirmationModal {
         return this.props.perspective === "faculty" ? "Unassign subject" : "Unassign faculty";
     }
 
-    onConfirmAction = () => {
-        this.setState({isSubmitting: true, error: null});
-        const {subject, faculty, onConfirmRemove} = this.props;
+    get toastSuccessMessage() {
+        return this.props.perspective === "faculty" ?
+            "Subject successfully unassigned" :
+            "Faculty successfully unassigned";
+    }
 
-        onConfirmRemove(faculty, subject)
-            .then(() => this.setState({isSubmitting: false}, this.closeModal))
-            .catch(error => {
-                console.log("An error occurred while unassigning subject", error);
-                this.setState({isSubmitting: false, error: "An error occurred"});
-            });
-    };
+    get submitAction() {
+        const {subject, faculty, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, subject);
+    }
 }
