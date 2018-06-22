@@ -3,7 +3,6 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
 import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
@@ -14,7 +13,7 @@ import { formatMonthYearDate } from "../../../../../utils/faculty.util";
 import { getFullName } from "../../../../../utils/user.util";
 import { PresentationModal } from "../../modals/PresentationModal";
 import { RemovePresentationModal } from "../../modals/RemovePresentationModal";
-
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 
 export class PresentationsTab extends Component {
     state = {
@@ -37,7 +36,7 @@ export class PresentationsTab extends Component {
     });
 
     renderRows = presentations => presentations.map(presentation =>
-        <DetailExpansionCard key={presentation._id}>
+        <ExpansionPanel key={presentation._id}>
 
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography variant="body2" color="primary">{presentation.title}</Typography>
@@ -90,7 +89,7 @@ export class PresentationsTab extends Component {
                 />
                 }
             </FormDisplayExpansionPanelDetails>
-        </DetailExpansionCard>,
+        </ExpansionPanel>,
     );
 
     renderEmptyState = () => (

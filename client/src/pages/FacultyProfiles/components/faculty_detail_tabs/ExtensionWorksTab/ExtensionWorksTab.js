@@ -1,11 +1,11 @@
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
 import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
@@ -53,7 +53,7 @@ export class ExtensionWorksTab extends Component {
     });
 
     renderRows = extensionWorks => extensionWorks.map(extensionWork =>
-        <DetailExpansionCard key={extensionWork._id}>
+        <ExpansionPanel key={extensionWork._id}>
 
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography variant="body2" color="primary">{extensionWork.title}</Typography>
@@ -89,7 +89,7 @@ export class ExtensionWorksTab extends Component {
                 }
 
             </FormDisplayExpansionPanelDetails>
-        </DetailExpansionCard>,
+        </ExpansionPanel>,
     );
 
     onAddButtonClick = () => this.setState({

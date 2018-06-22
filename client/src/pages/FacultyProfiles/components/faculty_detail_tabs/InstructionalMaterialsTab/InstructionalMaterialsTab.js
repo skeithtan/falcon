@@ -1,9 +1,9 @@
 import Card from "@material-ui/core/Card";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { DetailExpansionCard } from "../../../../../components/DetailExpansionCard";
 import { DetailExpansionCardActions } from "../../../../../components/DetailExpansionCardActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
@@ -36,7 +36,7 @@ export class InstructionalMaterialsTab extends Component {
     });
 
     renderRows = instructionalMaterials => instructionalMaterials.map(instructionalMaterial =>
-        <DetailExpansionCard key={instructionalMaterial._id}>
+        <ExpansionPanel key={instructionalMaterial._id}>
 
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography variant="body2" color="primary">{instructionalMaterial.title}</Typography>
@@ -74,7 +74,7 @@ export class InstructionalMaterialsTab extends Component {
                 }
 
             </FormDisplayExpansionPanelDetails>
-        </DetailExpansionCard>,
+        </ExpansionPanel>,
     );
 
     renderEmptyState = () => (
