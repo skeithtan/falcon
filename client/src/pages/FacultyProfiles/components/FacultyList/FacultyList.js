@@ -121,6 +121,7 @@ export class FacultyList extends Component {
                 }
 
                 <AddFacultyModal
+                    action="add"
                     open={addFacultyModalIsShowing}
                     onClose={() => this.toggleAddFacultyModal(false)}
                 />

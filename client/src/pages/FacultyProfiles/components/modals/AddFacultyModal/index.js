@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
 import { facultyIsAdded } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addFaculty } from "../../../../../services/faculty/faculty";
 import { AddFacultyModal as Component } from "./AddFacultyModal";
 import { styles } from "./styles";
@@ -22,15 +23,20 @@ const mapFormToGraphQLParameters = form => ({
         sex: form.sex,
         employment: form.employment,
         birthDate: form.birthDate,
+        idNumber: form.idNumber,
     },
 });
 
 const mapDispatchToProps = dispatch => ({
+    showToast(message) {
+        dispatch(toastIsShowing(message));
+    },
+    
     submitForm(form) {
         const {newFaculty, newUser, temporaryPassword} = mapFormToGraphQLParameters(form);
         return addFaculty(newFaculty, newUser, temporaryPassword)
             .then(result => {
-                const faculty = result.data.faculty.createFaculty;
+                const faculty = result.data.faculty.add;
                 dispatch(facultyIsAdded(faculty));
                 return faculty;
             });

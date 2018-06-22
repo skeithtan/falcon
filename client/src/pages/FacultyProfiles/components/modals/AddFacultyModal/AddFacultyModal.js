@@ -1,15 +1,13 @@
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Grid from "@material-ui/core/es/Grid";
 import Step from "@material-ui/core/Step";
 import StepContent from "@material-ui/core/StepContent";
 import StepLabel from "@material-ui/core/StepLabel";
 import Stepper from "@material-ui/core/Stepper";
-import Typography from "@material-ui/core/Typography";
-import React, { Component } from "react";
+import React, { Fragment } from "react";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { generateTemporaryPassword } from "../../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../../index";
@@ -17,9 +15,7 @@ import { OVERVIEW_TAB } from "../../faculty_detail_tabs";
 import { FacultyForm, ReviewForm, UserForm } from "./steps";
 
 
-export class AddFacultyModal extends Component {
-    state = {...this.initialState};
-
+export class AddFacultyModal extends ModalFormComponent {
     get initialState() {
         return {
             activeStep: 0,
@@ -43,8 +39,6 @@ export class AddFacultyModal extends Component {
         };
     }
 
-    resetForm = () => this.setState({...this.initialState, form: {...this.initialForm}});
-
     handleBack = () => this.setState({
         activeStep: this.state.activeStep - 1,
     });
@@ -53,117 +47,78 @@ export class AddFacultyModal extends Component {
         activeStep: this.state.activeStep + 1,
     });
 
-    handleFinish = () => {
-        this.setState({
-            isSubmitting: true,
-            error: null,
-        });
-
-        this.props.submitForm(this.state.form)
+    get submitAddAction() {
+        const {submitForm} = this.props;
+        return () => submitForm(this.state.form)
             .then(faculty => {
-                this.setState({isSubmitting: false}, this.closeModal);
                 this.props.history.push(`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${OVERVIEW_TAB.path}`);
-            })
-            .catch(error => {
-                console.log("An error occurred while adding faculty", error);
-                if (error.graphQLErrors &&
-                    error.graphQLErrors[0].message.startsWith("ValidationError: User with email")) {
-                    this.setState({
-                        error: `User with email ${this.state.form.email} already exists.`,
-                        isSubmitting: false,
-                    });
-                } else {
-                    this.setState({
-                        error: "An error occurred",
-                        isSubmitting: false,
-                    });
-                }
+                return faculty;
             });
-    };
+    }
 
-    closeModal = () => {
-        if (this.state.isSubmitting) {
-            // You can't exit while the form is submitting!
-            return;
-        }
+    get buttonName() {
+        return "Finish";
+    }
 
-        this.props.onClose();
-        this.resetForm();
-    };
+    get toastSuccessMessage() {
+        return "Faculty successfully added";
+    }
 
-    handleFormChange = fieldName => event => {
-        const form = {...this.state.form};
-        form[fieldName] = event.target.value;
-        this.setState({form: form});
-    };
+    get steps() {
+        const {classes} = this.props;
+        const {isSubmitting, form} = this.state;
 
-    getSteps = () => [
-        <Step key={0}>
-            <StepLabel>Create a user</StepLabel>
-            <StepContent>
-                <div className={this.props.classes.form}>
-                    <UserForm handleFormChange={this.handleFormChange} form={this.state.form}
-                              handleNext={this.handleNext} />
-                </div>
-            </StepContent>
-        </Step>,
-        <Step key={1}>
-            <StepLabel>Set faculty details</StepLabel>
-            <StepContent>
-                <div className={this.props.classes.form}>
-                    <FacultyForm handleFormChange={this.handleFormChange} form={this.state.form}
-                                 handleNext={this.handleNext} handleBack={this.handleBack} />
-                </div>
-            </StepContent>
-        </Step>,
-        <Step key={2}>
-            <StepLabel>Review details</StepLabel>
-            <StepContent>
-                <div className={this.props.classes.form}>
-                    <ReviewForm form={this.state.form} classes={this.props.classes} />
-                </div>
-
-                <Grid container key={3} spacing={16} alignItems="center">
-                    <Grid item>
+        return [
+            {
+                label: "Create a user",
+                content: (
+                    <UserForm
+                        handleFormChange={this.handleFormChange}
+                        form={form}
+                        handleNext={this.handleNext}
+                    />
+                ),
+            },
+            {
+                label: "Set faculty details",
+                content: (
+                    <FacultyForm
+                        handleFormChange={this.handleFormChange}
+                        form={form}
+                        handleNext={this.handleNext}
+                        handleBack={this.handleBack}
+                    />
+                ),
+            },
+            {
+                label: "Review details",
+                content: (
+                    <Fragment>
+                        <ReviewForm form={form} classes={classes} />
                         <Button
-                            disabled={this.state.isSubmitting}
+                            variant="outlined"
+                            disabled={isSubmitting}
                             onClick={this.handleBack}
-                            className={this.props.classes.backButton}>
-                            Back
+                            className={classes.backButton}>
+                            Change details
                         </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button
-                            disabled={this.state.isSubmitting}
-                            variant="raised"
-                            color="primary"
-                            onClick={this.handleFinish}>
-                            Finish
-                        </Button>
-                    </Grid>
+                        {this.renderModalFormDialogActions(false)}
+                    </Fragment>
+                ),
+            },
+        ];
+    }
 
-                    {this.state.isSubmitting &&
-                    <Grid item>
-                        <CircularProgress size={24} />
-                    </Grid>
-                    }
-
-                    {this.state.isSubmitting &&
-                    <Grid item>
-                        <Typography color="primary">Submitting...</Typography>
-                    </Grid>
-                    }
-
-                    {this.state.error &&
-                    <Grid item>
-                        <Typography color="error">{String(this.state.error)}</Typography>
-                    </Grid>
-                    }
-                </Grid>
-
+    renderSteps = () => this.steps.map(step => (
+        <Step key={step.label}>
+            <StepLabel>{step.label}</StepLabel>
+            <StepContent>
+                <div className={this.props.classes.form}>
+                    {step.content}
+                </div>
             </StepContent>
-        </Step>,
-    ];
+        </Step>
+    ));
 
     render() {
         const {open, classes} = this.props;
@@ -174,7 +129,7 @@ export class AddFacultyModal extends Component {
                 <DialogTitle>Add a Faculty</DialogTitle>
                 <DialogContent className={classes.container}>
                     <Stepper activeStep={activeStep} orientation="vertical">
-                        {this.getSteps()}
+                        {this.renderSteps()}
                     </Stepper>
                 </DialogContent>
             </Dialog>

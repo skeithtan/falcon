@@ -106,7 +106,7 @@ export const fetchMyProfile = () => client.query({
 
 export const addFaculty = (newFaculty, newUser, temporaryPassword) => client.mutate({
     mutation: gql`
-        mutation createFaculty($newFaculty: FacultyInput!, $newUser: UserInput!, $temporaryPassword: String!) {
+        mutation($newFaculty: FacultyInput!, $newUser: UserInput!, $temporaryPassword: String!) {
             faculty {
                 add(newFaculty: $newFaculty, newUser: $newUser, temporaryPassword: $temporaryPassword) {
                     ${fullFacultyDetails}
@@ -123,7 +123,7 @@ export const addFaculty = (newFaculty, newUser, temporaryPassword) => client.mut
 
 export const updateFaculty = (_id, newFaculty, newUser) => client.mutate({
     mutation: gql`
-        mutation updateFaculty($_id: ID!, $newFaculty: FacultyInput!, $newUser: UserInput) {
+        mutation($_id: ID!, $newFaculty: FacultyInput!, $newUser: UserInput) {
             faculty {
                 update(_id: $_id, newFaculty: $newFaculty, newUser: $newUser) {
                     ${fullFacultyDetails}
