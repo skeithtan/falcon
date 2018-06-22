@@ -8,30 +8,24 @@ import { DoesNotExistError } from "../errors/does_not_exist.error";
 import { ValidationError } from "../errors/validation.error";
 
 
-function faculties() {
-    return Faculty
-        .find({})
-        .populate("user");
-}
+const faculties = () => Faculty.find().populate("user");
 
-function faculty(object, {_id}) {
-    return Faculty
-        .findById(_id)
-        .populate("user")
-        .then(faculty => {
-            if (!faculty) {
-                return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
-            }
-            return faculty;
-        })
-        .catch(error => {
-            // CastErrors happen with id is an invalid ObjectID
-            if (error.name === "CastError") {
-                return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
-            }
-            throw error;
-        });
-}
+const faculty = (object, {_id}) => Faculty
+    .findById(_id)
+    .populate("user")
+    .then(faculty => {
+        if (!faculty) {
+            return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+        }
+        return faculty;
+    })
+    .catch(error => {
+        // CastErrors happen with id is an invalid ObjectID
+        if (error.name === "CastError") {
+            return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+        }
+        throw error;
+    });
 
 async function myProfile(object, args, context) {
     const user = await getUserFromContext(context);
