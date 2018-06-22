@@ -53,13 +53,14 @@ export class ModalFormComponent extends Component {
     onSubmitSuccess = () => {
         const {onClose, showToast} = this.props;
 
+        if (showToast) {
+            showToast(this.toastSuccessMessage);
+        }
+
         if (!this.state.keepForm) {
             onClose();
-
-            if (showToast) {
-                showToast(this.toastSuccessMessage);
-            }
         } else {
+            this.resetForm();
             // If keepForm is true, do not turn false unless user says so
             this.setState({keepForm: true});
         }
