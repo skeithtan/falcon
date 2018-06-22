@@ -5,8 +5,9 @@ extend type Query {
 
     faculties: [Faculty]!
     faculty(_id: ID!): Faculty!
-    profileChangeRequests: [ChangeRequest]!
+    profileChangeRequests(facultyId: ID): [ChangeRequest!]!
 
     currentUser: User
     myProfile: Faculty!
+    myChangeRequests: [ChangeRequest!]!
 }

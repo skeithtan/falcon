@@ -1,7 +1,8 @@
 import { Faculty } from "../../models/faculty.model";
 import { ProfileChangeRequest } from "../../models/faculty_profile_changes.model";
-import { CLERK } from "../../models/user.model";
-import { limitAccess } from "../../utils/user_decorator";
+import { CLERK, FACULTY } from "../../models/user.model";
+import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
+import { getUserFromContext } from "../../utils/user_from_context";
 import { DoesNotExistError } from "../errors/does_not_exist.error";
 import { ValidationError } from "../errors/validation.error";
 
@@ -60,18 +61,30 @@ const reviewProfileChangeRequest = async (object, {_id}) => {
     };
 };
 
-const profileChangeRequests = () => ProfileChangeRequest.find();
+const profileChangeRequests = (object, {facultyId}) =>
+    facultyId ?
+        ProfileChangeRequest.find({faculty: facultyId}) :
+        ProfileChangeRequest.find();
+
+const myChangeRequests = async (object, args, context) => {
+    const user = await getUserFromContext(context);
+    const faculty = await Faculty.findOne({user: user._id}).exec();
+    return ProfileChangeRequest.find({faculty: faculty._id});
+};
 
 export const mutationResolvers = {
-    reviewProfileChangeRequest: limitAccess(reviewProfileChangeRequest,
-        {allowed: CLERK, action: "Review change requests"},
-    ),
+    reviewProfileChangeRequest: limitAccess(reviewProfileChangeRequest, {
+        allowed: NO_FACULTY, action: "Review change requests",
+    }),
 };
 
 export const queryResolvers = {
-    profileChangeRequests: limitAccess(profileChangeRequests,
-        {allowed: CLERK, action: "View change requests"},
-    ),
+    profileChangeRequests: limitAccess(profileChangeRequests, {
+        allowed: CLERK, action: "View change requests by faculty",
+    }),
+    myChangeRequests: limitAccess(myChangeRequests, {
+        allowed: FACULTY, action: "View current faculty change requests",
+    }),
 };
 
 export const typeDefs = {
