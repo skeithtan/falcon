@@ -14,7 +14,7 @@ export function requireSignIn(resolver) {
 }
 
 export function limitAccess(resolver, {allowed, action}) {
-    return (object, args, context) =>
+    return (object, args, context, info) =>
         getUserFromContext(context)
             .then(user => {
                 const authorization = user.authorization;
@@ -22,5 +22,5 @@ export function limitAccess(resolver, {allowed, action}) {
                     throw new AuthorizationError(authorization, action);
                 }
             })
-            .then(() => resolver(object, args, context));
+            .then(() => resolver(object, args, context, info));
 }
