@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { SIGN_OUT_SUCCESS } from "../actions/authentication.actions";
 import { authentication } from "./authentication.reducer";
+import { changeRequests } from "./change_requests.reducer";
 import { faculty } from "./faculty.reducer";
 import { facultyProfiles } from "./faculty_profiles.reducer";
 import { myProfile } from "./my_profile.reducer";
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
     subject,
     myProfile,
     toast,
+    changeRequests,
 });
 
 export const reducer = (state, action) => {

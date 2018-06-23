@@ -17,7 +17,7 @@ import { ExtensionWorkModal } from "../../modals/ExtensionWorkModal";
 import { RemoveExtensionWorkModal } from "../../modals/RemoveExtensionWorkModal";
 
 
-const ExtensionWorkRoles = ({roles}) => {
+export const ExtensionWorkRoles = ({roles}) => {
     if (roles.length === 0) {
         return (
             <Typography>

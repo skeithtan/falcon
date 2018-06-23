@@ -4,13 +4,13 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { Component } from "react";
-import { ExpansionPanelActions } from "../../ExpansionPanelActions";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { TableToolbar } from "../../../../../components/TableToolbar";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 import { getFullName } from "../../../../../utils/user.util";
+import { ExpansionPanelActions } from "../../ExpansionPanelActions";
 import { InstructionalMaterialModal } from "../../modals/InstructionalMaterialModal";
 import { RemoveInstructionalMaterialModal } from "../../modals/RemoveInstructionalMaterialModal";
 
@@ -44,33 +44,41 @@ export class InstructionalMaterialsTab extends Component {
 
             <FormDisplayExpansionPanelDetails>
 
-                <FormDisplayListItem field="Medium"
-                                     value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium].name} />
-                <FormDisplayListItem field="Audience"
-                                     value={INSTRUCTIONAL_MATERIAL.AUDIENCE[instructionalMaterial.audience].name} />
-                <FormDisplayListItem field="Usage Year"
-                                     value={instructionalMaterial.usageYear} />
+                <FormDisplayListItem
+                    field="Medium"
+                    value={INSTRUCTIONAL_MATERIAL.MEDIUM[instructionalMaterial.medium].name}
+                />
+                <FormDisplayListItem
+                    field="Audience"
+                    value={INSTRUCTIONAL_MATERIAL.AUDIENCE[instructionalMaterial.audience].name}
+                />
+                <FormDisplayListItem
+                    field="Usage Year"
+                    value={instructionalMaterial.usageYear}
+                />
 
                 {/*Student exclusive stuff*/}
                 {instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier &&
-                <FormDisplayListItem field="Student Level"
-                                     value={instructionalMaterial.level} />
+                    <FormDisplayListItem
+                        field="Student Level"
+                        value={instructionalMaterial.level}
+                    />
                 }
 
                 {this.props.user.permissions.MUTATE_FACULTY_PROFILES &&
-                <ExpansionPanelActions
-                    removeButtonTooltipTitle="Remove instructional material"
-                    updateButtonTooltipTitle="Update instructional material details"
-                    onUpdateButtonClick={() => this.setState({
-                        activeInstructionalMaterial: instructionalMaterial,
-                        instructionalMaterialModalIsShowing: true,
-                    })}
+                    <ExpansionPanelActions
+                        removeButtonTooltipTitle="Remove instructional material"
+                        updateButtonTooltipTitle="Update instructional material details"
+                        onUpdateButtonClick={() => this.setState({
+                            activeInstructionalMaterial: instructionalMaterial,
+                            instructionalMaterialModalIsShowing: true,
+                        })}
 
-                    onRemoveButtonClick={() => this.setState({
-                        activeInstructionalMaterial: instructionalMaterial,
-                        removeInstructionalMaterialModalIsShowing: true,
-                    })}
-                />
+                        onRemoveButtonClick={() => this.setState({
+                            activeInstructionalMaterial: instructionalMaterial,
+                            removeInstructionalMaterialModalIsShowing: true,
+                        })}
+                    />
                 }
 
             </FormDisplayExpansionPanelDetails>
@@ -88,7 +96,7 @@ export class InstructionalMaterialsTab extends Component {
     );
 
     render() {
-        const {faculty, classes, user} = this.props;
+        const { faculty, classes, user } = this.props;
         const instructionalMaterials = faculty.instructionalMaterials;
         const instructionalMaterialsIsEmpty = instructionalMaterials.length === 0;
 
@@ -121,12 +129,12 @@ export class InstructionalMaterialsTab extends Component {
                 />
 
                 {activeInstructionalMaterial &&
-                <RemoveInstructionalMaterialModal
-                    open={removeInstructionalMaterialModalIsShowing}
-                    onClose={() => this.toggleRemoveInstructionalMaterialModal(false)}
-                    instructionalMaterial={activeInstructionalMaterial}
-                    faculty={faculty}
-                />
+                    <RemoveInstructionalMaterialModal
+                        open={removeInstructionalMaterialModalIsShowing}
+                        onClose={() => this.toggleRemoveInstructionalMaterialModal(false)}
+                        instructionalMaterial={activeInstructionalMaterial}
+                        faculty={faculty}
+                    />
                 }
             </div>
         );
