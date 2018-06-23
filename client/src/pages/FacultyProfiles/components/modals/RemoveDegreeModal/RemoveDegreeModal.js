@@ -1,10 +1,10 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import { DangerActionConfirmationModal } from "../../../../../components/DangerActionConfirmationModal";
+import { ConfirmActionModal } from "../../../../../components/ConfirmActionModal";
 import { getFullName } from "../../../../../utils/user.util";
 
 
-export class RemoveDegreeModal extends DangerActionConfirmationModal {
+export class RemoveDegreeModal extends ConfirmActionModal {
     get dialogTitle() {
         return "Are you sure you want to remove this degree?";
     }

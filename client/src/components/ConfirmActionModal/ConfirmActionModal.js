@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 
 
-export class DangerActionConfirmationModal extends Component {
+export class ConfirmActionModal extends Component {
     state = {
         isSubmitting: false,
         error: null,
@@ -45,7 +45,6 @@ export class DangerActionConfirmationModal extends Component {
 
     }
 
-    // To be implemented by subclass
     onConfirmAction = () => {
         const {showToast} = this.props;
         this.setState({isSubmitting: true, error: null});
@@ -83,26 +82,29 @@ export class DangerActionConfirmationModal extends Component {
                     {this.dialogContent}
                 </DialogContent>
                 <DialogActions>
-                    <div>
-                        <Grid container spacing={8} alignItems="center">
-                            {isSubmitting &&
-                            <Grid item>
-                                <CircularProgress size={24} />
-                            </Grid>
-                            }
-
-                            {error &&
-                            <Grid item>
-                                <Typography color="error">{error}</Typography>
-                            </Grid>
-                            }
+                    <Grid container spacing={8} alignItems="center" justify="flex-end">
+                        {isSubmitting &&
+                        <Grid item>
+                            <CircularProgress size={24} />
                         </Grid>
-                    </div>
-                    <Button color="primary"
-                            disabled={isSubmitting}
-                            onClick={this.onConfirmAction}>
-                        {this.buttonName}
-                    </Button>
+                        }
+
+                        {error &&
+                        <Grid item>
+                            <Typography color="error">{error}</Typography>
+                        </Grid>
+                        }
+
+                        <Grid item>
+                            <Button
+                                color="primary"
+                                disabled={isSubmitting}
+                                onClick={this.onConfirmAction}
+                            >
+                                {this.buttonName}
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </DialogActions>
             </Dialog>
         );

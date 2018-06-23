@@ -1,10 +1,10 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 import { getFullName } from "../../utils/user.util";
-import { DangerActionConfirmationModal } from "../DangerActionConfirmationModal/index";
+import { ConfirmActionModal } from "../ConfirmActionModal/index";
 
 
-export class UnassignSubjectModal extends DangerActionConfirmationModal {
+export class UnassignSubjectModal extends ConfirmActionModal {
     get dialogTitle() {
         return this.props.perspective === "faculty" ?
             "Are you sure you want to unassign this subject?" :
