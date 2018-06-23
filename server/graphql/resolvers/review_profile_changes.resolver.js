@@ -42,15 +42,11 @@ const reviewProfileChangeRequest = async (object, {_id}) => {
                 throw new ValidationError(`Attempted to approve change request with id ${changeRequest._id} of unknown subdocumentType ${changeRequest.subdocumentType}`);
             }
 
-            // .toObject() is required so that mongoose does not delete .subdocumentType field later
-            const newSubdocument = collection.create(subdocument).toObject();
+            const newSubdocument = collection.create(subdocument);
             collection.push(newSubdocument);
 
             await faculty.save();
             await changeRequest.remove();
-
-            // Help GraphQL figure out what type this subdocument is
-            newSubdocument.subdocumentType = changeRequest.subdocumentType;
             return newSubdocument;
         },
 
@@ -85,25 +81,4 @@ export const queryResolvers = {
     myChangeRequests: limitAccess(myChangeRequests, {
         allowed: FACULTY, action: "View current faculty change requests",
     }),
-};
-
-export const typeDefs = {
-    ChangeRequest: {
-        __resolveType({subdocumentType}) {
-            // We expect subdocumentType to be Degree / Recognition / InstructionalMaterial, or so on
-            // subdocumentType was defined as discriminator name in mongoose
-            // GraphQL Interface implementations are just subdocumentTypes with Change at the end:
-            // For example, DegreeChange / RecognitionChange / InstructionalMaterialChange
-            return subdocumentType + "Change";
-        },
-    },
-
-    FacultySubdocument: {
-        // Approving a subdocument has a special field subdocumentType
-        // This special field is defined above, in reviewProfileChangeRequest.approve()
-        // This helps GraphQL map the subdocument to its type definition
-        __resolveType({subdocumentType}) {
-            return subdocumentType;
-        },
-    },
 };

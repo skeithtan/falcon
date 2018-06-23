@@ -5,9 +5,9 @@ extend type Query {
 
     faculties: [Faculty]!
     faculty(_id: ID!): Faculty!
-    profileChangeRequests(facultyId: ID): [ChangeRequest!]!
+    profileChangeRequests(facultyId: ID): [JSON!]!
 
     currentUser: User
     myProfile: Faculty!
-    myChangeRequests: [ChangeRequest!]!
+    myChangeRequests: [JSON!]!
 }

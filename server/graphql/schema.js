@@ -1,6 +1,7 @@
+import fs from "fs";
 import { makeExecutableSchema } from "graphql-tools";
 import { resolvers } from "./resolvers";
-import fs from "fs";
+
 
 function fileToText(path) {
     // Insert new line to avoid merging last line of previous file to first line of next file
@@ -16,6 +17,7 @@ const types = [
     "faculty",
     "profile_changes",
     "user",
+    "json",
 ];
 
 const mutations = [
