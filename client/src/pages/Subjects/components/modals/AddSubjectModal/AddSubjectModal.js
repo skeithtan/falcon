@@ -67,6 +67,10 @@ export class AddSubjectModal extends ModalFormComponent {
         return "Add a Subject";
     }
 
+    get toastSuccessMessage() {
+        return "Subject successfully added";
+    }
+
     renderErrors = errors => (
         <ErrorState
             onRetryButtonClick={this.props.fetchData}

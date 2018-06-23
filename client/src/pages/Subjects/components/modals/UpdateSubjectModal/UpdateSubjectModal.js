@@ -60,6 +60,10 @@ export class UpdateSubjectModal extends ModalFormComponent {
         return "Update Subject";
     }
 
+    get toastSuccessMessage() {
+        return "Subject successfully updated";
+    }
+
     render() {
         const {open, classes} = this.props;
         const {form, isSubmitting} = this.state;

@@ -66,6 +66,10 @@ export class ExpertFacultiesModal extends ModalFormComponent {
         return () => onSubmitForm(subject, selectedFaculties, oldFaculties);
     }
 
+    get toastSuccessMessage() {
+        return "Subject faculties successfully updated";
+    }
+
     get buttonName() {
         return "Set Expert Faculties";
     }
