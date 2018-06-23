@@ -19,16 +19,13 @@ const mapDispatchToProps = dispatch => ({
     getFacultyDetails(faculty) {
         dispatch(detailsIsLoading());
         return fetchFacultyDetails(faculty._id)
-            .then(result => {
-                const overview = result.data.faculty;
-                const newFaculty = {
-                    ...faculty,
-                    ...overview,
-                };
-
-                dispatch(facultyIsUpdated(newFaculty));
-            })
+            .then(result => result.data.faculty)
+            .then(newFaculty => dispatch(facultyIsUpdated({
+                ...faculty,
+                ...newFaculty,
+            })))
             .catch(error => {
+                console.log("An error occurred while fetching faculty details", error);
                 dispatch(detailFetchError([error.message]));
             });
 

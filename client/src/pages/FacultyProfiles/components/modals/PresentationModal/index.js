@@ -72,7 +72,8 @@ const mapDispatchToProps = dispatch => ({
     },
 
     submitRequestAddPresentationForm(form) {
-        return requestAddPresentation(form)
+        const presentation = mapFormToPresentationInput(form);
+        return requestAddPresentation(presentation)
             .then(result => result.data.requestProfileChange.presentation.add);
     },
 });

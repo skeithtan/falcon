@@ -64,7 +64,8 @@ const mapDispatchToProps = dispatch => ({
     },
 
     submitRequestAddExtensionWorkForm(form) {
-        return requestAddExtensionWork(form)
+        const extensionWork = mapFormToExtensionWorkInput(form);
+        return requestAddExtensionWork(extensionWork)
             .then(result => result.data.requestProfileChange.extensionWork.add);
     },
 });

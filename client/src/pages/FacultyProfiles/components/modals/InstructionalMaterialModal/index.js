@@ -71,7 +71,8 @@ const mapDispatchToProps = dispatch => ({
     },
 
     submitRequestAddInstructionalMaterialForm(form) {
-        return requestAddInstructionalMaterial(form)
+        const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
+        return requestAddInstructionalMaterial(instructionalMaterial)
             .then(result => result.data.requestProfileChange.instructionalMaterial.add);
     },
 });

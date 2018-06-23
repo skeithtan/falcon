@@ -68,7 +68,8 @@ const mapDispatchToProps = dispatch => ({
     },
 
     submitRequestAddRecognitionForm(form) {
-        return requestAddRecognition(form)
+        const recognition = mapFormToRecognitionInput(form);
+        return requestAddRecognition(recognition)
             .then(result => result.data.requestProfileChange.recognition.add);
     },
 });
