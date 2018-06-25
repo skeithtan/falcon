@@ -9,10 +9,6 @@ import { ChangeRequestCard } from "../../cards/ChangeRequestCard";
 
 
 export class ChangeRequestsTab extends Component {
-    state = {
-        activeChangeRequest: null,
-    };
-
     componentDidMount() {
         this.fetchChangeRequests();
     }
@@ -20,6 +16,16 @@ export class ChangeRequestsTab extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.fetchChangeRequests();
     }
+
+    approveChangeRequest = changeRequest => {
+        const {onApproveChangeRequest, faculty} = this.props;
+        return onApproveChangeRequest(changeRequest, faculty);
+    };
+
+    rejectChangeRequest = changeRequest => {
+        const {onRejectChangeRequest} = this.props;
+        return onRejectChangeRequest(changeRequest);
+    };
 
     fetchChangeRequests = () => {
         const {
@@ -74,6 +80,8 @@ export class ChangeRequestsTab extends Component {
                 user={this.props.user}
                 faculty={this.props.faculty}
                 changeRequest={changeRequest}
+                approveChangeRequest={() => this.approveChangeRequest(changeRequest)}
+                rejectChangeRequest={() => this.rejectChangeRequest(changeRequest)}
             />
         </Grid>
     ));

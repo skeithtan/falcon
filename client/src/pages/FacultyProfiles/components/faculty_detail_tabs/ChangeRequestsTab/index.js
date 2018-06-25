@@ -1,13 +1,21 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
+import { SUBDOCUMENT_TYPE } from "../../../../../enums/faculty.enums";
 import {
     changeRequestFetchError,
     changeRequestIsDismissed,
     changeRequestIsFetched,
     changeRequestsIsLoading,
 } from "../../../../../redux/actions/change_requests.actions";
-import { fetchAllChangeRequests, fetchMyChangeRequests } from "../../../../../services/faculty/change_requests";
+import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
+import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
+import {
+    approveChangeRequest,
+    fetchAllChangeRequests,
+    fetchMyChangeRequests,
+    rejectChangeRequest,
+} from "../../../../../services/faculty/change_requests";
 import { styles } from "../styles";
 import { ChangeRequestsTab as Component } from "./ChangeRequestsTab";
 
@@ -40,8 +48,35 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    dismissChangeRequest(changeRequest) {
-        dispatch(changeRequestIsDismissed(changeRequest));
+    onApproveChangeRequest(changeRequest, faculty) {
+        return approveChangeRequest(changeRequest._id)
+            .then(result => result.data.reviewProfileChangeRequest.approve)
+            .then(newSubdocument => {
+                dispatch(changeRequestIsDismissed(changeRequest));
+
+                console.log("New subdocument", newSubdocument);
+
+                const newFaculty = {
+                    ...faculty,
+                };
+
+                const facultyKey = SUBDOCUMENT_TYPE[changeRequest.subdocumentType].facultyKey;
+                console.log("Faculty key", facultyKey, changeRequest);
+
+                newFaculty[facultyKey] = [...newFaculty[facultyKey], newSubdocument];
+                dispatch(facultyIsUpdated(newFaculty));
+
+                dispatch(toastIsShowing("Change request successfully approved"));
+                return newSubdocument;
+            });
+    },
+
+    onRejectChangeRequest(changeRequest) {
+        return rejectChangeRequest(changeRequest._id)
+            .then(() => {
+                dispatch(changeRequestIsDismissed(changeRequest));
+                dispatch(toastIsShowing("Change request successfully rejected"));
+            });
     },
 });
 
