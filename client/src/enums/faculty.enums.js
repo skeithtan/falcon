@@ -13,12 +13,12 @@ export const EMPLOYMENT = {
     },
     "ADJUNCT": {
         identifier: "ADJUNCT",
-        name: "Adjunct"
+        name: "Adjunct",
     },
     "INACTIVE": {
         identifier: "INACTIVE",
-        name: "Inactive"
-    }
+        name: "Inactive",
+    },
 };
 
 export const SEX = {
@@ -174,6 +174,29 @@ export const PRESENTATION = {
             identifier: "RESEARCH",
             name: "Research",
         },
+    },
+};
+
+export const SUBDOCUMENT_TYPE = {
+    "Degree": {
+        name: "Degree",
+        facultyKey: "degrees",
+    },
+    "Recognition": {
+        name: "Recognition",
+        facultyKey: "recognitions",
+    },
+    "Presentation": {
+        name: "Presentation",
+        facultyKey: "presentations",
+    },
+    "InstructionalMaterial": {
+        name: "Instructional Material",
+        facultyKey: "instructionalMaterials",
+    },
+    "ExtensionWork": {
+        name: "Extension Work",
+        facultyKey: "extensionWorks",
     },
 };
 
