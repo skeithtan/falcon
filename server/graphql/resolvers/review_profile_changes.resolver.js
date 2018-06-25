@@ -22,7 +22,7 @@ const facultySubdocumentsPerType = faculty => ({
     Recognition: faculty.recognitions,
     Presentation: faculty.presentations,
     InstructionalMaterial: faculty.instructionalMaterials,
-    ExtensionWork: faculty.extensionWork,
+    ExtensionWork: faculty.extensionWorks,
 });
 
 const reviewProfileChangeRequest = async (object, {_id}) => {
