@@ -11,7 +11,10 @@ export const FormDisplayListItem = ({field, value}) => (
                 <Typography variant="body2">{field}</Typography>
             </Grid>
             <Grid item sm={9} zeroMinWidth>
-                <Typography>{value}</Typography>
+                {typeof value === "object" ?
+                    value :
+                    <Typography>{value}</Typography>
+                }
             </Grid>
         </Grid>
     </ListItem>
