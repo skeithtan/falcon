@@ -1,5 +1,5 @@
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import { split } from "../../../../components/styles";
+import { badge, split } from "../../../../components/styles";
 
 export const styles = theme => ({
     facultyProfilesHeader: {
@@ -33,6 +33,12 @@ export const styles = theme => ({
     },
     tabsIndicator: {
         background: "white",
+    },
+    badgeContainer: {
+        padding: `0 ${theme.spacing.unit * 2}px 0 0px`
+    },
+    badge: {
+        ...badge(theme),
     },
     split: split(theme),
 });

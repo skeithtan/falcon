@@ -24,15 +24,4 @@ export const styles = theme => ({
         left: 240,
         bottom: theme.spacing.unit * 3,
     },
-    listItem: {
-        transition: "150ms",
-    },
-    activeListItem: {
-        ...activeItem(theme),
-
-        "& h3": {
-            fontWeight: theme.typography.fontWeightMedium,
-            color: theme.palette.primary.main,
-        },
-    },
 });

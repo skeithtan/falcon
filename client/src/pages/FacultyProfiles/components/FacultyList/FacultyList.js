@@ -1,42 +1,14 @@
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { EmptySearchResultsState } from "../../../../components/states/EmptySearchResultsState";
 import { EmptyState } from "../../../../components/states/EmptyState";
-import { UserAvatar } from "../../../../components/UserAvatar";
-import { getFullName } from "../../../../utils/user.util";
-import { FACULTY_PROFILES_PAGE } from "../../../index";
-import { OVERVIEW_TAB } from "../faculty_detail_tabs";
 import { AddFacultyModal } from "../modals/AddFacultyModal";
+import { FacultyListItem } from "./FacultyListItem";
 
-
-const FacultyItem = ({activeTab, classes, faculty, active}) => {
-    const {activeListItem, listItem} = classes;
-    const className = active ? [activeListItem, listItem].join(" ") : listItem;
-
-    // Go to where the active tab is if any. If none, go to default overview tab
-    const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
-    const fullName = getFullName(faculty.user);
-
-    return (
-        <ListItem
-            button
-            component={Link}
-            to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${tabPath}`}
-            className={className}
-            onClick={() => document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`}
-        >
-            <UserAvatar user={faculty.user} />
-            <ListItemText primary={getFullName(faculty.user)} secondary={`T-${faculty.idNumber}`} />
-        </ListItem>
-    );
-};
 
 export class FacultyList extends Component {
     state = {
@@ -91,12 +63,12 @@ export class FacultyList extends Component {
         return (
             <List className={classes.facultyList}>
                 {faculties.map(faculty =>
-                    <FacultyItem
+                    <FacultyListItem
+                        key={faculty._id}
                         activeTab={activeTab}
-                        classes={classes}
                         faculty={faculty}
                         active={facultyId === faculty._id}
-                        key={faculty._id} />,
+                    />,
                 )}
             </List>
         );

@@ -1,3 +1,4 @@
+import red from "@material-ui/core/colors/red";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 
 
@@ -79,4 +80,9 @@ export const chip = theme => ({
 
 export const falconLogo = theme => ({
     fontFamily: "Raleway",
+});
+
+export const badge = theme => ({
+    background: red["600"],
+    color: "white !important",
 });

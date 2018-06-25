@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
     searchKeyword: state.facultyProfiles.searchKeyword,
     activeFacultyId: state.facultyProfiles.activeFacultyId,
     activeTabIdentifier: state.facultyProfiles.activeTabIdentifier,
+    changeRequests: state.changeRequests,
 });
 
 const mapDispatchToProps = dispatch => ({
