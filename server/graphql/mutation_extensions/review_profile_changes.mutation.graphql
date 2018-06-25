@@ -1,7 +1,5 @@
-union FacultySubdocument = Degree | Recognition | Presentation | InstructionalMaterial | ExtensionWork
-
 type RequestReviewAction {
-    approve: FacultySubdocument!
+    approve: JSON!
     reject: Boolean!
 }
 
