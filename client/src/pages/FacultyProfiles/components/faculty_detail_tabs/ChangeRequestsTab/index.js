@@ -76,8 +76,8 @@ class BaseChangeRequestsTab extends Component {
         <div className={this.props.classes.cardsContainer}>
             <Card>
                 <ErrorState
-                    onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
-                    message="An error occurred while trying to fetch faculty details."
+                    onRetryButtonClick={this.fetchChangeRequests}
+                    message="An error occurred while trying to fetch change requests."
                     debug={errors[0]}
                 />
             </Card>
@@ -113,7 +113,7 @@ class BaseChangeRequestsTab extends Component {
 
         return (
             <div className={classes.cardsContainer}>
-                {changeRequests && changeRequests.length > 1 &&
+                {changeRequests && changeRequests.length > 0 &&
                 <Grid
                     container
                     spacing={16}
@@ -123,7 +123,10 @@ class BaseChangeRequestsTab extends Component {
                 >
                     <Grid item>
                         <Card>
-                            <Typography variant="title">Change Requests</Typography>
+                            <TableToolbar
+                                tableTitle="Change Requests"
+                                showAddButton={false}
+                            />
                         </Card>
                     </Grid>
                     {this.renderChangeRequests(changeRequests)}
