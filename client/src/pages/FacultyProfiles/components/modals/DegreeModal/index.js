@@ -1,67 +1,155 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { genericModalStyle } from "../../../../../components/styles";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { addDegree, updateDegree } from "../../../../../services/faculty/degree";
-import { requestAddDegree } from "../../../../../services/faculty/request_profile_changes";
-import { DegreeModal as Component } from "./DegreeModal";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/es/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import TextField from "@material-ui/core/TextField";
+import React from "react";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
+import { DEGREE } from "../../../../../enums/faculty.enums";
+import { validateForm, yearValidators } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapStateToProps = state => ({
-    user: state.authentication.user,
-});
+function getFormErrors(form) {
+    return validateForm({
+        title: {
+            value: form.title,
+        },
+        completionYear: {
+            value: form.completionYear,
+            customValidators: yearValidators,
+        },
+    });
+}
 
-const mapDispatchToProps = dispatch => ({
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
+class BaseDegreeModal extends ModalFormComponent {
+    mapPropsToForm = ({degree}) => ({
+        title: degree.title,
+        completionYear: degree.completionYear,
+        level: degree.level,
+    });
 
-    submitAddDegreeForm(form, faculty) {
-        return addDegree(faculty._id, form)
-            .then(result => {
-                const newDegree = result.data.degree.add;
-                const newFaculty = {
-                    ...faculty,
-                    degrees: [
-                        ...faculty.degrees,
-                        newDegree,
-                    ],
-                };
+    get initialForm() {
+        return {
+            title: "",
+            level: DEGREE.LEVEL.ASSOCIATE.identifier,
+            completionYear: "",
+        };
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newDegree;
-            });
-    },
+    get submitAddAction() {
+        const form = this.state.form;
+        const {faculty, submitAddDegreeForm, user, submitRequestAddDegreeForm} = this.props;
 
-    submitUpdateDegreeForm(form, degreeId, faculty) {
-        return updateDegree(faculty._id, degreeId, form)
-            .then(result => {
-                const newDegree = result.data.degree.update;
-                const newFaculty = {
-                    ...faculty,
-                    degrees: faculty.degrees.map(degree => {
-                        if (degree._id === degreeId) {
-                            return newDegree;
-                        }
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddDegreeForm(form, faculty),
+            FACULTY: () => submitRequestAddDegreeForm(form),
+        });
+    }
 
-                        return degree;
-                    }),
-                };
+    get submitUpdateAction() {
+        const form = this.state.form;
+        const {faculty, degree, submitUpdateDegreeForm} = this.props;
+        return () => submitUpdateDegreeForm(form, degree._id, faculty);
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newDegree;
-            });
-    },
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Degree successfully added" : "Degree successfully updated",
+            FACULTY: "Degree request successfully added",
+        });
+    }
 
-    submitRequestAddDegreeForm(form) {
-        return requestAddDegree(form)
-            .then(result => result.data.requestProfileChange.degree.add);
-    },
-});
+    get buttonName() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Degree" : "Update Degree",
+            FACULTY: "Request Add Degree",
+        });
+    };
 
-export const DegreeModal = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withStyles(genericModalStyle),
-)(Component);
+    get modalTitle() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add a Degree" : "Update Degree",
+            FACULTY: "Request Add Degree",
+        });
+    }
+
+    render() {
+        const {open, classes} = this.props;
+        const {form, isSubmitting} = this.state;
+        const {hasErrors, fieldErrors} = getFormErrors(form);
+
+        return (
+            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
+                <DialogTitle>{this.modalTitle}</DialogTitle>
+                <DialogContent className={classes.container}>
+                    <Grid container className={classes.form} spacing={24} direction="column">
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.title.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.title.length > 0}
+                                    label="Degree Title"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("title")}
+                                    value={form.title}
+                                />
+                                {fieldErrors.title.length > 0 &&
+                                <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.completionYear.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.completionYear.length > 0}
+                                    label="Completion Year"
+                                    type="number"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("completionYear")}
+                                    value={form.completionYear}
+                                />
+                                {fieldErrors.completionYear.length > 0 &&
+                                <FormHelperText>{fieldErrors.completionYear[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl>
+                                <FormLabel>Degree Level</FormLabel>
+                                <RadioGroup value={form.level} onChange={this.handleFormChange("level")}>
+                                    {Object.entries(DEGREE.LEVEL).map(([identifier, {name}]) =>
+                                        <FormControlLabel key={identifier}
+                                                          value={identifier}
+                                                          label={name}
+                                                          disabled={isSubmitting}
+                                                          control={<Radio />}
+                                        />,
+                                    )}
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+
+                    </Grid>
+                </DialogContent>
+
+                {this.renderModalFormDialogActions(hasErrors)}
+            </Dialog>
+        );
+    }
+}
+
+export const DegreeModal = wrap(BaseDegreeModal);

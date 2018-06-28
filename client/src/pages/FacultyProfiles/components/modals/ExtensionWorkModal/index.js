@@ -1,76 +1,172 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { genericModalStyle } from "../../../../../components/styles";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { addExtensionWork, updateExtensionWork } from "../../../../../services/faculty/extension_work";
-import { requestAddExtensionWork } from "../../../../../services/faculty/request_profile_changes";
-import { ExtensionWorkModal as Component } from "./ExtensionWorkModal";
+import Checkbox from "@material-ui/core/Checkbox";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/es/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
+import TextField from "@material-ui/core/TextField";
+import React from "react";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
+import { EXTENSION_WORK } from "../../../../../enums/faculty.enums";
+import { validateForm } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapFormToExtensionWorkInput = form => ({
-    title: form.title,
-    roles: form.roles,
-    venue: form.venue,
-});
+function getFormErrors(form) {
+    return validateForm({
+        title: {
+            value: form.title,
+        },
+        venue: {
+            value: form.venue,
+        },
+    });
+}
 
-const mapStateToProps = state => ({
-    user: state.authentication.user,
-});
+class BaseExtensionWorkModal extends ModalFormComponent {
+    get initialForm() {
+        return {
+            title: "",
+            roles: [],
+            venue: "",
+        };
+    }
 
-const mapDispatchToProps = dispatch => ({
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
+    mapPropsToForm = ({extensionWork}) => ({
+        title: extensionWork.title,
+        // Copy the array to avoid manipulating state in form
+        roles: [...extensionWork.roles],
+        venue: extensionWork.venue,
+    });
 
-    submitAddExtensionWorkForm(form, faculty) {
-        const extensionWork = mapFormToExtensionWorkInput(form);
-        return addExtensionWork(faculty._id, extensionWork)
-            .then(result => {
-                const newExtensionWork = result.data.extensionWork.add;
-                const newFaculty = {
-                    ...faculty,
-                    extensionWorks: [
-                        ...faculty.extensionWorks,
-                        newExtensionWork,
-                    ],
-                };
+    get submitAddAction() {
+        const form = this.state.form;
+        const {submitAddExtensionWorkForm, faculty, user, submitRequestAddExtensionWorkForm} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddExtensionWorkForm(form, faculty),
+            FACULTY: () => submitRequestAddExtensionWorkForm(form),
+        });
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newExtensionWork;
-            });
-    },
+    get submitUpdateAction() {
+        const form = this.state.form;
+        const {submitUpdateExtensionWorkForm, faculty, extensionWork} = this.props;
+        return () => submitUpdateExtensionWorkForm(form, extensionWork._id, faculty);
+    }
 
-    submitUpdateExtensionWorkForm(form, extensionWorkId, faculty) {
-        const extensionWork = mapFormToExtensionWorkInput(form);
-        return updateExtensionWork(faculty._id, extensionWorkId, extensionWork)
-            .then(result => {
-                const newExtensionWork = result.data.extensionWork.update;
-                const newFaculty = {
-                    ...faculty,
-                    extensionWorks: faculty.extensionWorks.map(extensionWork => {
-                        if (extensionWork._id === extensionWorkId) {
-                            return newExtensionWork;
-                        }
+    get buttonName() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Extension Work" : "Update Extension Work",
+            FACULTY: "Request Add Extension Work",
+        });
+    }
 
-                        return extensionWork;
-                    }),
-                };
+    get modalTitle() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add an Extension Work" : "Update Extension Work",
+            FACULTY: "Request Add Extension Work",
+        });
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newExtensionWork;
-            });
-    },
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Extension work successfully added" : "Extension work successfully updated",
+            FACULTY: "Extension work request successfully added",
+        });
+    }
 
-    submitRequestAddExtensionWorkForm(form) {
-        const extensionWork = mapFormToExtensionWorkInput(form);
-        return requestAddExtensionWork(extensionWork)
-            .then(result => result.data.requestProfileChange.extensionWork.add);
-    },
-});
+    handleRolesCheckbox = event => {
+        const {value, checked} = event.target;
+        const form = {...this.state.form};
 
-export const ExtensionWorkModal = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withStyles(genericModalStyle),
-)(Component);
+        if (!checked) {
+            form.roles = form.roles.filter(role => role !== value);
+        } else {
+            form.roles = [...form.roles, value];
+        }
+
+        this.setState({
+            form: form,
+        });
+    };
+
+    render() {
+        const {open, classes} = this.props;
+        const {form, isSubmitting} = this.state;
+        const {hasErrors, fieldErrors} = getFormErrors(form);
+
+        return (
+            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
+                <DialogTitle>{this.modalTitle}</DialogTitle>
+                <DialogContent className={classes.container}>
+                    <Grid container className={classes.form} spacing={24} direction="column">
+                        <Grid item>
+                            <FormControl error={fieldErrors.title.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.title.length > 0}
+                                    label="Extension Work Title"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("title")}
+                                    value={form.title}
+                                />
+                                {fieldErrors.title.length > 0 &&
+                                <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.venue.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.venue.length > 0}
+                                    label="Venue"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("venue")}
+                                    value={form.venue}
+                                />
+                                {fieldErrors.venue.length > 0 &&
+                                <FormHelperText>{fieldErrors.venue[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl disabled={isSubmitting}>
+                                <FormLabel>Roles</FormLabel>
+                                <FormGroup>
+                                    {Object.entries(EXTENSION_WORK.ROLES).map(([identifier, {name}]) =>
+                                        <FormControlLabel
+                                            key={identifier}
+                                            label={name}
+                                            disabled={isSubmitting}
+                                            control={
+                                                <Checkbox
+                                                    checked={form.roles.includes(identifier)}
+                                                    onChange={this.handleRolesCheckbox}
+                                                    value={identifier}
+                                                />
+                                            }
+                                        />,
+                                    )}
+                                </FormGroup>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+
+                </DialogContent>
+
+                {this.renderModalFormDialogActions(hasErrors)}
+            </Dialog>
+        );
+    }
+}
+
+export const ExtensionWorkModal = wrap(BaseExtensionWorkModal);

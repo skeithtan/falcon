@@ -1,83 +1,219 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { genericModalStyle } from "../../../../../components/styles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/es/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
+import React from "react";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import {
-    addInstructionalMaterial,
-    updateInstructionalMaterial,
-} from "../../../../../services/faculty/instructional_material";
-import { requestAddInstructionalMaterial } from "../../../../../services/faculty/request_profile_changes";
-import { InstructionalMaterialModal as Component } from "./InstructionalMaterialModal";
+import { validateForm, yearValidators } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapFormToInstructionalMaterialInput = form => {
-    const instructionalMaterial = {...form};
-    if (instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.TEACHER.identifier) {
-        delete instructionalMaterial.level;
+function isForStudents(form) {
+    return form.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier;
+}
+
+function getFormErrors(form) {
+    const toValidate = {
+        title: {
+            value: form.title,
+        },
+        usageYear: {
+            value: form.usageYear,
+            customValidators: yearValidators,
+        },
+    };
+
+    if (isForStudents(form)) {
+        toValidate.level = {
+            value: form.level,
+        };
     }
 
-    return instructionalMaterial;
-};
+    return validateForm(toValidate);
+}
 
-const mapStateToProps = state => ({
-    user: state.authentication.user,
-});
+class BaseInstructionalMaterialModal extends ModalFormComponent {
+    get initialForm() {
+        return {
+            title: "",
+            medium: INSTRUCTIONAL_MATERIAL.MEDIUM.PRINT.identifier,
+            audience: INSTRUCTIONAL_MATERIAL.AUDIENCE.TEACHER.identifier,
+            usageYear: "",
+            level: "",
+        };
+    }
 
-const mapDispatchToProps = dispatch => ({
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
+    mapPropsToForm = ({instructionalMaterial}) => {
+        const form = {
+            title: instructionalMaterial.title,
+            medium: instructionalMaterial.medium,
+            audience: instructionalMaterial.audience,
+            usageYear: instructionalMaterial.usageYear,
+            level: "",
+        };
 
-    submitAddInstructionalMaterialForm(form, faculty) {
-        const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
-        return addInstructionalMaterial(faculty._id, instructionalMaterial)
-            .then(result => {
-                const newInstructionalMaterial = result.data.instructionalMaterial.add;
-                const newFaculty = {
-                    ...faculty,
-                    instructionalMaterials: [
-                        ...faculty.instructionalMaterials,
-                        newInstructionalMaterial,
-                    ],
-                };
+        const forStudents = instructionalMaterial.audience === INSTRUCTIONAL_MATERIAL.AUDIENCE.STUDENT.identifier;
+        if (forStudents) {
+            form.level = instructionalMaterial.level;
+        }
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newInstructionalMaterial;
-            });
-    },
+        return form;
+    };
 
-    submitUpdateInstructionalMaterialForm(form, instructionalMaterialId, faculty) {
-        const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
-        return updateInstructionalMaterial(faculty._id, instructionalMaterialId, instructionalMaterial)
-            .then(result => {
-                const newInstructionalMaterial = result.data.instructionalMaterial.update;
-                const newFaculty = {
-                    ...faculty,
-                    instructionalMaterials: faculty.instructionalMaterials.map(instructionalMaterial => {
-                        if (instructionalMaterial._id === instructionalMaterialId) {
-                            return newInstructionalMaterial;
+    get buttonName() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Instructional Material" : "Update Instructional Material",
+            FACULTY: "Request add Instructional Material",
+        });
+    }
+
+    get modalTitle() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add an Instructional Material" : "Update Instructional Material",
+            FACULTY: "Request add Instructional Material",
+        });
+    }
+
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ?
+                "Instructional material successfully added" :
+                "Instructional material successfully updated",
+            FACULTY: "Instructional material request successfully added",
+        });
+    }
+
+    get submitAddAction() {
+        const form = this.state.form;
+        const {faculty, submitAddInstructionalMaterialForm, user, submitRequestAddInstructionalMaterialForm} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddInstructionalMaterialForm(form, faculty),
+            FACULTY: () => submitRequestAddInstructionalMaterialForm(form),
+        });
+    }
+
+    get submitUpdateAction() {
+        const form = this.state.form;
+        const {faculty, instructionalMaterial, submitUpdateInstructionalMaterialForm} = this.props;
+        return () => submitUpdateInstructionalMaterialForm(form, instructionalMaterial._id, faculty);
+    }
+
+    render() {
+        const {open, classes} = this.props;
+        const {form, isSubmitting} = this.state;
+        const {hasErrors, fieldErrors} = getFormErrors(form);
+
+        return (
+            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
+                <DialogTitle>{this.modalTitle}</DialogTitle>
+                <DialogContent className={classes.container}>
+                    <Grid container className={classes.form} spacing={24} direction="column">
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.title.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.title.length > 0}
+                                    label="Instructional Material Title"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("title")}
+                                    value={form.title}
+                                />
+                                {fieldErrors.title.length > 0 &&
+                                <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.usageYear.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.usageYear.length > 0}
+                                    label="Usage year"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("usageYear")}
+                                    value={form.usageYear}
+                                />
+                                {fieldErrors.usageYear.length > 0 &&
+                                <FormHelperText>{fieldErrors.usageYear[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl>
+                                <FormLabel>Audience</FormLabel>
+                                <RadioGroup value={form.audience}
+                                            onChange={this.handleFormChange("audience")}>
+                                    {Object.entries(INSTRUCTIONAL_MATERIAL.AUDIENCE).map(([identifier, {name}]) =>
+                                        <FormControlLabel
+                                            key={identifier}
+                                            value={identifier}
+                                            label={name}
+                                            disabled={isSubmitting}
+                                            control={<Radio />}
+                                        />,
+                                    )}
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+
+
+                        {isForStudents(form) &&
+                        <Grid item>
+                            <FormControl error={fieldErrors.level.length > 0}>
+                                <FormLabel>Student Level</FormLabel>
+                                <Select
+                                    value={form.level}
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("level")}
+                                >
+                                    {["1", "2", "3", "4"].map(level =>
+                                        <MenuItem key={level} value={level}>{level}</MenuItem>,
+                                    )}
+                                </Select>
+                                <FormHelperText>{fieldErrors.level[0]}</FormHelperText>
+                            </FormControl>
+                        </Grid>
                         }
 
-                        return instructionalMaterial;
-                    }),
-                };
+                        <Grid item>
+                            <FormControl>
+                                <FormLabel>Medium</FormLabel>
+                                <RadioGroup value={form.medium} onChange={this.handleFormChange("medium")}>
+                                    {Object.entries(INSTRUCTIONAL_MATERIAL.MEDIUM).map(([identifier, {name}]) =>
+                                        <FormControlLabel
+                                            key={identifier}
+                                            value={identifier}
+                                            label={name}
+                                            disabled={isSubmitting}
+                                            control={<Radio />}
+                                        />,
+                                    )}
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newInstructionalMaterial;
-            });
-    },
+                    </Grid>
+                </DialogContent>
 
-    submitRequestAddInstructionalMaterialForm(form) {
-        const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
-        return requestAddInstructionalMaterial(instructionalMaterial)
-            .then(result => result.data.requestProfileChange.instructionalMaterial.add);
-    },
-});
+                {this.renderModalFormDialogActions(hasErrors)}
+            </Dialog>
+        );
+    }
+}
 
-export const InstructionalMaterialModal = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withStyles(genericModalStyle),
-)(Component);
+export const InstructionalMaterialModal = wrap(BaseInstructionalMaterialModal);

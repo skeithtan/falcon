@@ -1,29 +1,39 @@
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { removePresentation } from "../../../../../services/faculty/presentation";
-import { RemovePresentationModal as Component } from "./RemovePresentationModal";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import React from "react";
+import { ConfirmActionModal } from "../../../../../components/ConfirmActionModal";
+import { getFullName } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapDispatchToProps = dispatch => ({
-    onConfirmRemove(faculty, _id) {
-        return removePresentation(faculty._id, _id)
-            .then(() => {
-                const newFaculty = {
-                    ...faculty,
-                    presentations: faculty.presentations.filter(presentation => presentation._id !== _id),
-                };
+class BaseRemovePresentationModal extends ConfirmActionModal {
+    get dialogTitle() {
+        return "Are you sure you want to remove this presentation?";
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-            });
-    },
+    get dialogContent() {
+        const facultyName = getFullName(this.props.faculty.user);
+        const {title, date} = this.props.presentation;
 
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
-});
+        return (
+            <DialogContentText>
+                You are about to remove <b>{facultyName}</b>'s presentation
+                titled <b>{title}</b> from <b>{date.year}</b>.
+            </DialogContentText>
+        );
+    }
 
-export const RemovePresentationModal = compose(
-    connect(null, mapDispatchToProps),
-)(Component);
+    get buttonName() {
+        return "Remove presentation";
+    }
+
+    get toastSuccessMessage() {
+        return "Successfully removed presentation";
+    }
+
+    get submitAction() {
+        const {faculty, presentation, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, presentation._id);
+    }
+}
+
+export const RemovePresentationModal = wrap(BaseRemovePresentationModal);

@@ -1,36 +1,72 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import compose from "recompose/compose";
-import { myProfileFetchError, myProfileIsFetched, myProfileIsLoading } from "../../redux/actions/my_profile.actions";
-import { fetchMyProfile } from "../../services/faculty/faculty";
-import { MyProfilePage as Component } from "./MyProfile";
-import { styles } from "./styles";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
+import { ErrorState } from "../../components/states/ErrorState";
+import { OVERVIEW_TAB, TABS } from "../FacultyProfiles/components/faculty_detail_tabs";
+import { MY_PROFILE } from "../index";
+import { MyProfileHeader } from "./components/MyProfileHeader";
+import { wrap } from "./wrapper";
 
 
-const mapStateToProps = state => state.myProfile;
+class BaseMyProfilePage extends Component {
+    componentDidMount() {
+        document.title = "My Profile - Falcon";
 
-const mapDispatchToProps = dispatch => ({
-    fetchData() {
-        dispatch(myProfileIsLoading());
-        return fetchMyProfile()
-            .then(result => {
-                if (result.data) {
-                    dispatch(myProfileIsFetched(result.data.myProfile));
+        const {profile, fetchData} = this.props;
+        if (!profile) {
+            fetchData();
+        }
+    }
+
+    renderTabs = faculty => TABS.map(tab => (
+        <Route
+            key={tab.identifier}
+            path={`/${MY_PROFILE.path}/${tab.path}`}
+            render={() => React.createElement(tab.component, {
+                faculty: faculty,
+            })}
+        />
+    ));
+
+    renderLoading = () => (
+        <Grid container style={{height: "100%"}}>
+            <FullPageLoadingIndicator size={100} />
+        </Grid>
+    );
+
+    renderErrors = errors => (
+        <div className={this.props.classes.cardsContainer}>
+            <Card>
+                <ErrorState onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
+                            message="An error occurred while trying to fetch faculty details."
+                            debug={errors[0]} />
+            </Card>
+        </div>
+    );
+
+    render() {
+        const {classes, profile, isLoading, errors, match} = this.props;
+        return (
+            <div className={classes.myProfileContainer}>
+                <Route path={`${match.url}/:activeTab?`} component={MyProfileHeader} />
+                {isLoading && this.renderLoading()}
+                {errors && this.renderErrors(errors)}
+
+                {profile &&
+                <div className={classes.myProfileBodyContainer}>
+                    <Switch>
+                        {this.renderTabs(profile)}
+                        <Route render={() => (
+                            <Redirect to={`/${MY_PROFILE.path}/${OVERVIEW_TAB.path}`} />
+                        )} />
+                    </Switch>
+                </div>
                 }
+            </div>
+        );
+    }
+}
 
-                if (result.errors) {
-                    dispatch(myProfileFetchError(result.errors));
-                }
-            })
-            .catch(error => {
-                dispatch(myProfileFetchError([error.message]));
-            });
-    },
-});
-
-export const MyProfilePage = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withStyles(styles),
-    withRouter,
-)(Component);
+export const MyProfilePage = wrap(BaseMyProfilePage);

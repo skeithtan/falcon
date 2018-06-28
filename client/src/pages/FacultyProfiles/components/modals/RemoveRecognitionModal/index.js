@@ -1,29 +1,40 @@
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { removeRecognition } from "../../../../../services/faculty/recognition";
-import { RemoveRecognitionModal as Component } from "./RemoveRecognitionModal";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import React from "react";
+import { ConfirmActionModal } from "../../../../../components/ConfirmActionModal";
+import { RECOGNITION } from "../../../../../enums/faculty.enums";
+import { getFullName } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapDispatchToProps = dispatch => ({
-    onConfirmRemove(faculty, _id) {
-        return removeRecognition(faculty._id, _id)
-            .then(() => {
-                const newFaculty = {
-                    ...faculty,
-                    recognitions: faculty.recognitions.filter(recognition => recognition._id !== _id),
-                };
+class BaseRemoveRecognitionModal extends ConfirmActionModal {
+    get dialogTitle() {
+        return "Are you sure you want to remove this recognition?";
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-            });
-    },
+    get dialogContent() {
+        const facultyName = getFullName(this.props.faculty.user);
+        const {title, basis} = this.props.recognition;
+        const basisName = RECOGNITION.BASIS[basis].name;
 
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
-});
+        return (
+            <DialogContentText>
+                You are about to remove <b>{facultyName}</b>'s <b>{basisName}</b> recognition titled <b>{title}</b>.
+            </DialogContentText>
+        );
+    }
 
-export const RemoveRecognitionModal = compose(
-    connect(null, mapDispatchToProps),
-)(Component);
+    get buttonName() {
+        return "Remove recognition";
+    }
+
+    get submitAction() {
+        const {faculty, recognition, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, recognition._id);
+    }
+
+    get toastSuccessMessage() {
+        return "Recognition successfully removed";
+    }
+}
+
+export const RemoveRecognitionModal = wrap(BaseRemoveRecognitionModal);

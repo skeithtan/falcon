@@ -1,21 +1,34 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { toastIsDismissed } from "../../../../redux/actions/toast.actions";
-import { styles } from "./styles";
-import { Toast as Component } from "./Toast";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import React from "react";
+import { wrap } from "./wrapper";
 
 
-const mapStateToProps = state => ({
-    ...state.toast,
-});
+const BaseToast = ({
+    message,
+    dismissToast,
+    isShowing,
+    classes,
+}) => (
+    <Snackbar
+        anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+        }}
+        open={isShowing}
+        onClose={dismissToast}
+        autoHideDuration={3000}
+        message={message}
+        action={
+            <Button
+                className={classes.button}
+                size="small"
+                onClick={dismissToast}
+            >
+                Dismiss
+            </Button>
+        }
+    />
+);
 
-const mapDispatchToProps = dispatch => ({
-    dismissToast() {
-        dispatch(toastIsDismissed());
-    },
-});
-export const Toast = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withStyles(styles),
-)(Component);
+export const Toast = wrap(BaseToast);

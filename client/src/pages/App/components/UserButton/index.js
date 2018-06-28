@@ -1,22 +1,56 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { signOutSuccess } from "../../../../redux/actions/authentication.actions";
-import { signOut } from "../../../../services/user.service";
-import { styles } from "./styles";
-import { UserButton as Component } from "./UserButton";
+import Typography from "@material-ui/core/Typography";
+import React, { Component } from "react";
+import { UserAvatar } from "../../../../components/UserAvatar/index";
+import { ChangePasswordModal } from "../ChangePasswordModal";
+import { UserMenu } from "../UserMenu";
+import { wrap } from "./wrapper";
 
 
-const mapStateToProps = state => state.authentication;
+class BaseUserButton extends Component {
+    state = {
+        anchor: null,
+        changePasswordModalIsShowing: false,
+    };
 
-const mapDispatchToProps = dispatch => ({
-    signOut() {
-        signOut();
-        dispatch(signOutSuccess());
-    },
-});
+    toggleMenu = (event) => this.setState({
+        anchor: event === null ? null : event.currentTarget,
+    });
 
-export const UserButton = compose(
-    withStyles(styles),
-    connect(mapStateToProps, mapDispatchToProps),
-)(Component);
+    toggleChangePasswordModal = shouldShow => this.setState({
+        changePasswordModalIsShowing: shouldShow,
+    });
+
+    renderAvatar = (user) => (
+        <UserAvatar user={user} className={this.props.classes.avatar} onClick={this.toggleMenu} />
+    );
+
+    render() {
+        const {anchor, changePasswordModalIsShowing} = this.state;
+        const {classes, user} = this.props;
+        const avatar = this.renderAvatar(user);
+        return (
+            <div className={classes.userButton}>
+                <Typography className={classes.userNameDisplay}>{user.name.first}</Typography>
+
+                {avatar}
+
+                <UserMenu
+                    user={user}
+                    open={Boolean(anchor)}
+                    anchorEl={anchor}
+                    onChangePasswordClick={() => this.toggleChangePasswordModal(true)}
+                    onSignOutClick={this.props.signOut}
+                    onClose={() => this.toggleMenu(null)}
+                />
+
+                <ChangePasswordModal
+                    action="update"
+                    open={changePasswordModalIsShowing}
+                    onClose={() => this.toggleChangePasswordModal(false)}
+                />
+            </div>
+        );
+    }
+}
+
+export const UserButton = wrap(BaseUserButton);

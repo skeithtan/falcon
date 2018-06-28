@@ -1,11 +1,20 @@
-import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router-dom";
-import compose from "recompose/compose";
-import { FacultyLoadingPage as Component } from "./FacultyLoading";
-import { styles } from "./styles";
+import React, { PureComponent } from "react";
+import { wrap } from "./wrapper";
 
 
-export const FacultyLoadingPage = compose(
-    withStyles(styles),
-    withRouter,
-)(Component);
+class BaseFacultyLoadingPage extends PureComponent {
+    componentDidMount() {
+        document.title = "Faculty Loading - Falcon";
+    }
+
+    render() {
+        const {classes} = this.props;
+        return (
+            <div className={classes.facultyLoadingContainer}>
+                <h1>Hello, Faculty Loading</h1>
+            </div>
+        );
+    }
+}
+
+export const FacultyLoadingPage = wrap(BaseFacultyLoadingPage);

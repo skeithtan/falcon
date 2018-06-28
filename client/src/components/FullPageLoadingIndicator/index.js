@@ -1,9 +1,12 @@
-import { withStyles } from "@material-ui/core/styles";
-import compose from "recompose/compose";
-import { FullPageLoadingIndicator as Component } from "./FullPageLoadingIndicator";
-import { styles } from "./styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import React from "react";
+import { wrap } from "./wrapper";
 
 
-export const FullPageLoadingIndicator = compose(
-    withStyles(styles),
-)(Component);
+const BaseFullPageLoadingIndicator = ({classes, size}) => (
+    <div className={classes.loadingIndicatorWrapper}>
+        <CircularProgress size={size} />
+    </div>
+);
+
+export const FullPageLoadingIndicator = wrap(BaseFullPageLoadingIndicator);

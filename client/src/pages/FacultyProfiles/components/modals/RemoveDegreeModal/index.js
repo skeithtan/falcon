@@ -1,29 +1,38 @@
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { removeDegree } from "../../../../../services/faculty/degree";
-import { RemoveDegreeModal as Component } from "./RemoveDegreeModal";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import React from "react";
+import { ConfirmActionModal } from "../../../../../components/ConfirmActionModal";
+import { getFullName } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapDispatchToProps = dispatch => ({
-    onConfirmRemove(faculty, _id) {
-        return removeDegree(faculty._id, _id)
-            .then(() => {
-                const newFaculty = {
-                    ...faculty,
-                    degrees: faculty.degrees.filter(degree => degree._id !== _id),
-                };
+class BaseRemoveDegreeModal extends ConfirmActionModal {
+    get dialogTitle() {
+        return "Are you sure you want to remove this degree?";
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-            });
-    },
+    get dialogContent() {
+        const facultyName = getFullName(this.props.faculty.user);
+        const {title, completionYear} = this.props.degree;
 
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
-});
+        return (
+            <DialogContentText>
+                You are about to remove <b>{facultyName}</b>'s degree <b>{title}</b> from <b>{completionYear}</b>.
+            </DialogContentText>
+        );
+    }
 
-export const RemoveDegreeModal = compose(
-    connect(null, mapDispatchToProps),
-)(Component);
+    get buttonName() {
+        return "Remove degree";
+    }
+
+    get submitAction() {
+        const {faculty, degree, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, degree._id);
+    }
+
+    get toastSuccessMessage() {
+        return "Degree successfully removed";
+    }
+}
+
+export const RemoveDegreeModal = wrap(BaseRemoveDegreeModal);

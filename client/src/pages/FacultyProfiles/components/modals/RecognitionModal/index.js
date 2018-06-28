@@ -1,80 +1,203 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { genericModalStyle } from "../../../../../components/styles";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { addRecognition, updateRecognition } from "../../../../../services/faculty/recognition";
-import { requestAddRecognition } from "../../../../../services/faculty/request_profile_changes";
-import { RecognitionModal as Component } from "./RecognitionModal";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/es/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
+import InputLabel from "@material-ui/core/InputLabel";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import TextField from "@material-ui/core/TextField";
+import React from "react";
+import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
+import { MonthPicker } from "../../../../../components/MonthPicker";
+import { RECOGNITION } from "../../../../../enums/faculty.enums";
+import { validateForm, yearValidators } from "../../../../../utils/forms.util";
+import { getObjectForUserType } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapFormToRecognitionInput = form => ({
-    title: form.title,
-    basis: form.basis,
-    sponsor: form.sponsor,
-    date: {
-        month: form.month,
-        year: form.year,
-    },
-});
+function getFormErrors(form) {
+    return validateForm({
+        title: {
+            value: form.title,
+        },
+        year: {
+            value: form.year,
+            customValidators: yearValidators,
+        },
+        sponsor: {
+            value: form.sponsor,
+        },
+    });
+}
 
-const mapStateToProps = state => ({
-    user: state.authentication.user,
-});
+class BaseRecognitionModal extends ModalFormComponent {
+    get initialForm() {
+        return {
+            title: "",
+            basis: RECOGNITION.BASIS.RESEARCH.identifier,
+            month: 1,
+            year: "",
+            sponsor: "",
+        };
+    }
 
-const mapDispatchToProps = dispatch => ({
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
+    mapPropsToForm = ({recognition}) => ({
+        title: recognition.title,
+        basis: recognition.basis,
+        sponsor: recognition.sponsor,
+        year: recognition.date.year,
+        month: recognition.date.month,
+    });
 
-    submitAddRecognitionForm(form, faculty) {
-        const recognition = mapFormToRecognitionInput(form);
-        return addRecognition(faculty._id, recognition)
-            .then(result => {
-                const newRecognition = result.data.recognition.add;
-                const newFaculty = {
-                    ...faculty,
-                    recognitions: [
-                        ...faculty.recognitions,
-                        newRecognition,
-                    ],
-                };
+    get buttonName() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add Recognition" : "Update Recognition",
+            FACULTY: "Request Add Recognition",
+        });
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newRecognition;
-            });
-    },
+    get modalTitle() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Add a Recognition" : "Update Recognition",
+            FACULTY: "Request Add Recognition",
+        });
+    }
 
-    submitUpdateRecognitionForm(form, recognitionId, faculty) {
-        const recognition = mapFormToRecognitionInput(form);
-        return updateRecognition(faculty._id, recognitionId, recognition)
-            .then(result => {
-                const newRecognition = result.data.recognition.update;
-                const newFaculty = {
-                    ...faculty,
-                    recognitions: faculty.recognitions.map(recognition => {
-                        if (recognition._id === recognitionId) {
-                            return newRecognition;
-                        }
+    get toastSuccessMessage() {
+        const {action, user} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: action === "add" ? "Recognition successfully added" : "Recognition successfully updated",
+            FACULTY: "Recognition request successfully added",
+        });
+    }
 
-                        return recognition;
-                    }),
-                };
+    get submitAddAction() {
+        const form = this.state.form;
+        const {faculty, user, submitAddRecognitionForm, submitRequestAddRecognitionForm} = this.props;
+        return getObjectForUserType(user, {
+            CLERK: () => submitAddRecognitionForm(form, faculty),
+            FACULTY: () => submitRequestAddRecognitionForm(form),
+        });
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-                return newRecognition;
-            });
-    },
+    get submitUpdateAction() {
+        const form = this.state.form;
+        const {faculty, recognition, submitUpdateRecognitionForm} = this.props;
+        return () => submitUpdateRecognitionForm(form, recognition._id, faculty);
+    }
 
-    submitRequestAddRecognitionForm(form) {
-        const recognition = mapFormToRecognitionInput(form);
-        return requestAddRecognition(recognition)
-            .then(result => result.data.requestProfileChange.recognition.add);
-    },
-});
+    render() {
+        const {open, classes} = this.props;
+        const {form, isSubmitting} = this.state;
+        const {hasErrors, fieldErrors} = getFormErrors(form);
 
-export const RecognitionModal = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withStyles(genericModalStyle),
-)(Component);
+        return (
+            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
+                <DialogTitle>{this.modalTitle}</DialogTitle>
+                <DialogContent className={classes.container}>
+                    <Grid container className={classes.form} spacing={24} direction="column">
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.title.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.title.length > 0}
+                                    label="Recognition Title"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("title")}
+                                    value={form.title}
+                                />
+                                {fieldErrors.title.length > 0 &&
+                                <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl error={fieldErrors.sponsor.length > 0} fullWidth>
+                                <TextField
+                                    error={fieldErrors.sponsor.length > 0}
+                                    label="Sponsor"
+                                    disabled={isSubmitting}
+                                    onChange={this.handleFormChange("sponsor")}
+                                    value={form.sponsor}
+                                />
+                                {fieldErrors.sponsor.length > 0 &&
+                                <FormHelperText>{fieldErrors.sponsor[0]}</FormHelperText>
+                                }
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item>
+                            <Grid container spacing={8} direction="column">
+
+                                <Grid item>
+                                    <FormLabel>Recognition Date</FormLabel>
+                                </Grid>
+
+                                <Grid item>
+                                    <Grid container spacing={16}>
+                                        <Grid item xs={6}>
+                                            <FormControl fullWidth>
+                                                <InputLabel>Month</InputLabel>
+                                                <MonthPicker
+                                                    value={form.month}
+                                                    disabled={isSubmitting}
+                                                    onChange={this.handleFormChange("month")}
+                                                />
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <FormControl error={fieldErrors.year.length > 0} fullWidth>
+                                                <TextField
+                                                    error={fieldErrors.year.length > 0}
+                                                    type="number"
+                                                    label="Year"
+                                                    disabled={isSubmitting}
+                                                    onChange={this.handleFormChange("year")}
+                                                    value={form.year}
+                                                />
+                                                {fieldErrors.year.length > 0 &&
+                                                <FormHelperText>{fieldErrors.year[0]}</FormHelperText>
+                                                }
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+
+                        <Grid item>
+                            <FormControl>
+                                <FormLabel>Recognition Basis</FormLabel>
+                                <RadioGroup value={form.basis} onChange={this.handleFormChange("basis")}>
+                                    {Object.entries(RECOGNITION.BASIS).map(([identifier, {name}]) =>
+                                        <FormControlLabel
+                                            key={identifier}
+                                            value={identifier}
+                                            label={name}
+                                            disabled={isSubmitting}
+                                            control={<Radio />}
+                                        />,
+                                    )}
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+
+                    </Grid>
+
+                </DialogContent>
+
+                {this.renderModalFormDialogActions(hasErrors)}
+            </Dialog>
+        );
+    }
+}
+
+export const RecognitionModal = wrap(BaseRecognitionModal);

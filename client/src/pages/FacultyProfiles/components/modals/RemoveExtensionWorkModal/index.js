@@ -1,31 +1,37 @@
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { removeExtensionWork } from "../../../../../services/faculty/extension_work";
-import { RemoveExtensionWorkModal as Component } from "./RemoveExtensionWorkModal";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import React from "react";
+import { ConfirmActionModal } from "../../../../../components/ConfirmActionModal";
+import { getFullName } from "../../../../../utils/user.util";
+import { wrap } from "./wrapper";
 
 
-const mapDispatchToProps = dispatch => ({
-    onConfirmRemove(faculty, _id) {
-        return removeExtensionWork(faculty._id, _id)
-            .then(() => {
-                const newFaculty = {
-                    ...faculty,
-                    extensionWorks: faculty.extensionWorks.filter(
-                        extensionWork => extensionWork._id !== _id,
-                    ),
-                };
+class BaseRemoveExtensionWorkModal extends ConfirmActionModal {
+    get dialogTitle() {
+        return "Are you sure you want to remove this extension work?";
+    }
 
-                dispatch(facultyIsUpdated(newFaculty));
-            });
-    },
+    get dialogContent() {
+        const facultyName = getFullName(this.props.faculty.user);
+        const {title} = this.props.extensionWork;
+        return (
+            <DialogContentText>
+                You are about to remove <b>{facultyName}</b>'s extension work titled <b>{title}</b>.
+            </DialogContentText>
+        );
+    }
 
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
-});
+    get buttonName() {
+        return "Remove extension work";
+    }
 
-export const RemoveExtensionWorkModal = compose(
-    connect(null, mapDispatchToProps),
-)(Component);
+    get submitAction() {
+        const {faculty, extensionWork, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, extensionWork._id);
+    }
+
+    get toastSuccessMessage() {
+        return "Extension work successfully removed";
+    }
+}
+
+export const RemoveExtensionWorkModal = wrap(BaseRemoveExtensionWorkModal);

@@ -1,9 +1,38 @@
-import { withStyles } from "@material-ui/core/styles";
-import compose from "recompose/compose";
-import { ExpansionPanelActions as Component } from "./ExpansionPanelActions";
-import { styles } from "./styles";
+import IconButton from "@material-ui/core/IconButton";
+import ListItem from "@material-ui/core/ListItem";
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import React from "react";
+import { wrap } from "./wrapper";
 
 
-export const ExpansionPanelActions = compose(
-    withStyles(styles),
-)(Component);
+const BaseExpansionPanelActions = ({
+    classes,
+    onRemoveButtonClick,
+    onUpdateButtonClick,
+    removeButtonTooltipTitle,
+    updateButtonTooltipTitle,
+}) => (
+    <ListItem className={classes.actionButtonsWrapper}>
+
+        {onUpdateButtonClick &&
+        <Tooltip title={updateButtonTooltipTitle}>
+            <IconButton aria-label="update" onClick={onUpdateButtonClick}>
+                <EditIcon />
+            </IconButton>
+        </Tooltip>
+        }
+
+        {onRemoveButtonClick &&
+        <Tooltip title={removeButtonTooltipTitle}>
+            <IconButton aria-label="remove" onClick={onRemoveButtonClick}>
+                <DeleteIcon />
+            </IconButton>
+        </Tooltip>
+        }
+
+    </ListItem>
+);
+
+export const ExpansionPanelActions = wrap(BaseExpansionPanelActions);

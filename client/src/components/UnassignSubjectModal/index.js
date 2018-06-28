@@ -1,34 +1,42 @@
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { facultyIsUpdated } from "../../redux/actions/faculty.actions";
-import { toastIsShowing } from "../../redux/actions/toast.actions";
-import { unassignFacultyFromSubject } from "../../services/faculty/teaching_subjects";
-import { removeFacultyFromSubjects } from "../../utils/subject.util";
-import { UnassignSubjectModal as Component } from "./UnassignSubjectModal";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import React from "react";
+import { getFullName } from "../../utils/user.util";
+import { ConfirmActionModal } from "../ConfirmActionModal/index";
+import { wrap } from "./wrapper";
 
 
-const mapDispatchToProps = dispatch => ({
-    showToast(message) {
-        dispatch(toastIsShowing(message));
-    },
+class BaseUnassignSubjectModal extends ConfirmActionModal {
+    get dialogTitle() {
+        return this.props.perspective === "faculty" ?
+            "Are you sure you want to unassign this subject?" :
+            "Are you sure you want to unassign this faculty?";
+    }
 
-    onConfirmRemove(faculty, subject) {
-        return unassignFacultyFromSubject(faculty._id, subject._id)
-            .then(() => {
-                dispatch(facultyIsUpdated({
-                    ...faculty,
-                    teachingSubjects: faculty.teachingSubjects.filter(id => id !== subject._id),
-                }));
+    get dialogContent() {
+        const {subject, faculty} = this.props;
+        const facultyName = getFullName(faculty.user);
 
-                removeFacultyFromSubjects({
-                    dispatch,
-                    faculty,
-                    subjects: [subject],
-                });
-            });
-    },
-});
+        return (
+            <DialogContentText>
+                You are about to unassign <b>{facultyName}</b> from the subject <b>{subject.name}</b>.
+            </DialogContentText>
+        );
+    }
 
-export const UnassignSubjectModal = compose(
-    connect(null, mapDispatchToProps),
-)(Component);
+    get buttonName() {
+        return this.props.perspective === "faculty" ? "Unassign subject" : "Unassign faculty";
+    }
+
+    get toastSuccessMessage() {
+        return this.props.perspective === "faculty" ?
+            "Subject successfully unassigned" :
+            "Faculty successfully unassigned";
+    }
+
+    get submitAction() {
+        const {subject, faculty, onConfirmRemove} = this.props;
+        return () => onConfirmRemove(faculty, subject);
+    }
+}
+
+export const UnassignSubjectModal = wrap(BaseUnassignSubjectModal);
