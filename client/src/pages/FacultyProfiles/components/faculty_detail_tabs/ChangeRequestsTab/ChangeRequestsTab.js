@@ -1,12 +1,14 @@
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
-import { getObjectForUserType, getFullName } from "../../../../../utils/user.util";
-import { ChangeRequestCard } from "../../cards/ChangeRequestCard";
 import { TableToolbar } from "../../../../../components/TableToolbar";
+import { getFullName, getObjectForUserType } from "../../../../../utils/user.util";
+import { ChangeRequestCard } from "../../cards/ChangeRequestCard";
+
 
 export class ChangeRequestsTab extends Component {
     componentDidMount() {
@@ -18,12 +20,12 @@ export class ChangeRequestsTab extends Component {
     }
 
     approveChangeRequest = changeRequest => {
-        const { onApproveChangeRequest, faculty } = this.props;
+        const {onApproveChangeRequest, faculty} = this.props;
         return onApproveChangeRequest(changeRequest, faculty);
     };
 
     rejectChangeRequest = changeRequest => {
-        const { onRejectChangeRequest } = this.props;
+        const {onRejectChangeRequest} = this.props;
         return onRejectChangeRequest(changeRequest);
     };
 
@@ -64,7 +66,7 @@ export class ChangeRequestsTab extends Component {
     );
 
     renderLoading = () => (
-        <Grid container style={{ height: "100%" }}>
+        <Grid container style={{height: "100%"}}>
             <FullPageLoadingIndicator size={100} />
         </Grid>
     );
@@ -94,14 +96,14 @@ export class ChangeRequestsTab extends Component {
     ));
 
     get changeRequestsForCurrentFaculty() {
-        const { faculty, changeRequests } = this.props;
+        const {faculty, changeRequests} = this.props;
         return changeRequests ?
             changeRequests.filter(changeRequest => changeRequest.faculty === faculty._id) :
             null;
     }
 
     render() {
-        const { classes, isLoading, errors } = this.props;
+        const {classes, isLoading, errors} = this.props;
         const changeRequests = this.changeRequestsForCurrentFaculty;
 
         if (isLoading) {
@@ -111,20 +113,20 @@ export class ChangeRequestsTab extends Component {
         return (
             <div className={classes.cardsContainer}>
                 {changeRequests && changeRequests.length > 1 &&
-                    <Grid
-                        container
-                        spacing={16}
-                        alignItems="stretch"
-                        direction="column"
-                        wrap="nowrap"
-                    >
-                        <Grid item>
-                            <Card>
-                                <Typography variant="title">{tableTitle}</Typography>
-                            </Card>
-                        </Grid>
-                        {this.renderChangeRequests(changeRequests)}
+                <Grid
+                    container
+                    spacing={16}
+                    alignItems="stretch"
+                    direction="column"
+                    wrap="nowrap"
+                >
+                    <Grid item>
+                        <Card>
+                            <Typography variant="title">Change Requests</Typography>
+                        </Card>
                     </Grid>
+                    {this.renderChangeRequests(changeRequests)}
+                </Grid>
                 }
 
                 {changeRequests && changeRequests.length === 0 && this.renderEmptyState()}
