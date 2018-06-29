@@ -76,7 +76,7 @@ export const mutationResolvers = {
 
 export const queryResolvers = {
     profileChangeRequests: limitAccess(profileChangeRequests, {
-        allowed: CLERK, action: "View change requests by faculty",
+        allowed: NO_FACULTY, action: "View change requests by faculty",
     }),
     myChangeRequests: limitAccess(myChangeRequests, {
         allowed: FACULTY, action: "View current faculty change requests",
