@@ -123,6 +123,7 @@ class BasePresentationsTab extends Component {
 
                 {!presentationsIsEmpty && this.renderRows(presentations)}
 
+                {user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE &&
                 <PresentationModal
                     action={activePresentation ? "update" : "add"}
                     open={presentationModalIsShowing}
@@ -130,6 +131,7 @@ class BasePresentationsTab extends Component {
                     presentation={activePresentation}
                     faculty={faculty}
                 />
+                }
 
                 {activePresentation &&
                 <RemovePresentationModal

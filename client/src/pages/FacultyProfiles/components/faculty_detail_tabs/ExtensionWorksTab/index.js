@@ -128,6 +128,7 @@ class BaseExtensionWorksTab extends Component {
 
                 {!extensionWorksIsEmpty && this.renderRows(extensionWorks)}
 
+                {user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE &&
                 <ExtensionWorkModal
                     action={activeExtensionWork ? "update" : "add"}
                     extensionWork={activeExtensionWork}
@@ -135,6 +136,7 @@ class BaseExtensionWorksTab extends Component {
                     open={extensionWorkModalIsShowing}
                     onClose={() => this.toggleExtensionWorkModal(false)}
                 />
+                }
 
                 {activeExtensionWork &&
                 <RemoveExtensionWorkModal

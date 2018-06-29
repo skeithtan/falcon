@@ -48,17 +48,18 @@ const BaseFacultyProfilesHeader = ({
         <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
             <div className={classes.searchWrapper}>
                 <Paper className={classes.searchPaper}>
-                    <Input className={classes.searchInput}
-                           fullWidth
-                           type="search"
-                           value={searchKeyword}
-                           onChange={event => onSearchInputChange(event.target.value)}
-                           startAdornment={
-                               <InputAdornment position="start" className={classes.searchAdornment}>
-                                   <SearchIcon />
-                               </InputAdornment>
-                           }
-                           placeholder="Search faculties" />
+                    <Input
+                        className={classes.searchInput}
+                        fullWidth
+                        type="search"
+                        value={searchKeyword}
+                        onChange={event => onSearchInputChange(event.target.value)}
+                        startAdornment={
+                            <InputAdornment position="start" className={classes.searchAdornment}>
+                                <SearchIcon />
+                            </InputAdornment>
+                        }
+                        placeholder="Search faculties" />
                 </Paper>
             </div>
 

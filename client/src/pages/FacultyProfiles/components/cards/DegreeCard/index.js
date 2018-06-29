@@ -107,6 +107,7 @@ class BaseDegreeCard extends Component {
                 {!degreesIsEmpty && this.renderDegreesTable(degrees, user)}
                 {degreesIsEmpty && this.renderEmptyState()}
 
+                {user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE &&
                 <DegreeModal
                     action={activeDegree ? "update" : "add"}
                     degree={activeDegree}
@@ -114,6 +115,7 @@ class BaseDegreeCard extends Component {
                     onClose={() => this.toggleDegreeFormModal(false)}
                     faculty={faculty}
                 />
+                }
 
                 {activeDegree &&
                 <RemoveDegreeModal
