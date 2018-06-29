@@ -1,3 +1,5 @@
+import { pageContainer } from "../../../../components/styles";
+
 export const styles = theme => ({
     facultyDetail: {
         overflowY: "scroll",
@@ -11,4 +13,7 @@ export const styles = theme => ({
     selectFacultyText: {
         color: theme.palette.grey["600"],
     },
+    stateContainer: {
+        ...pageContainer(theme)
+    }
 });
