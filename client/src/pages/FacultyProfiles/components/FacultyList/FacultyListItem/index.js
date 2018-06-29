@@ -4,21 +4,22 @@ import ListItemText from "@material-ui/core/ListItemText";
 import React from "react";
 import { Link } from "react-router-dom";
 import { UserAvatar } from "../../../../../components/UserAvatar/index";
+import { changeRequestsForFaculty } from "../../../../../utils/change_request.util";
 import { getFullName } from "../../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../../index";
 import { OVERVIEW_TAB } from "../../faculty_detail_tabs/index";
 import { wrap } from "./wrapper";
 
 
-const getBadgeNumber = (facultyId, changeRequests) => {
-    if (!changeRequests) {
-        return null;
-    }
-
-    return changeRequests.filter(changeRequest => changeRequest.faculty === facultyId).length;
-};
-
-const BaseFacultyListItem = ({activeTab, classes, faculty, active, changeRequests}) => {
+const BaseFacultyListItem = ({
+    activeTab,
+    classes,
+    faculty,
+    active,
+    changeRequests: {
+        changeRequests: allChangeRequests
+    },
+}) => {
     const {activeListItem, listItem} = classes;
     const className = active ? [activeListItem, listItem].join(" ") : listItem;
 
@@ -26,7 +27,7 @@ const BaseFacultyListItem = ({activeTab, classes, faculty, active, changeRequest
     const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
     const fullName = getFullName(faculty.user);
 
-    const badge = getBadgeNumber(faculty._id, changeRequests.changeRequests);
+    const badge = allChangeRequests && changeRequestsForFaculty(allChangeRequests, faculty._id);
     const withBadge = badge && badge > 0;
 
     return (

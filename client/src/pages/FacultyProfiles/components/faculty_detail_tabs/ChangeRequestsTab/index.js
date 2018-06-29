@@ -1,11 +1,11 @@
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
 import { TableToolbar } from "../../../../../components/TableToolbar";
+import { changeRequestsForFaculty } from "../../../../../utils/change_request.util";
 import { getFullName, getObjectForUserType } from "../../../../../utils/user.util";
 import { ChangeRequestCard } from "../../cards/ChangeRequestCard";
 import { wrap } from "./wrapper";
@@ -96,16 +96,16 @@ class BaseChangeRequestsTab extends Component {
         </Grid>
     ));
 
-    get changeRequestsForCurrentFaculty() {
-        const {faculty, changeRequests} = this.props;
-        return changeRequests ?
-            changeRequests.filter(changeRequest => changeRequest.faculty === faculty._id) :
-            null;
-    }
-
     render() {
-        const {classes, isLoading, errors} = this.props;
-        const changeRequests = this.changeRequestsForCurrentFaculty;
+        const {
+            classes,
+            isLoading,
+            errors,
+            faculty,
+            changeRequests: allChangeRequests,
+        } = this.props;
+
+        const changeRequests = allChangeRequests && changeRequestsForFaculty(allChangeRequests, faculty._id);
 
         if (isLoading) {
             return this.renderLoading();

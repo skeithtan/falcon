@@ -4,3 +4,6 @@ export const getChangeRequestFields = objectFields => `
         subdocumentType
         ${objectFields}
 `;
+
+export const changeRequestsForFaculty = (changeRequests, facultyId) =>
+    changeRequests.filter(changeRequest => changeRequest.faculty === facultyId);

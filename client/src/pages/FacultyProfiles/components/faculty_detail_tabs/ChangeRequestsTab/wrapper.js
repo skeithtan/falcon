@@ -18,7 +18,6 @@ import {
 } from "../../../../../services/faculty/change_requests";
 import { styles } from "../styles";
 
-
 const mapStateToProps = state => ({
     ...state.changeRequests,
     user: state.authentication.user,
