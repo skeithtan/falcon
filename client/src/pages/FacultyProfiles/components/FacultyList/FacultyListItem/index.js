@@ -27,7 +27,7 @@ const BaseFacultyListItem = ({
     const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
     const fullName = getFullName(faculty.user);
 
-    const badge = allChangeRequests && changeRequestsForFaculty(allChangeRequests, faculty._id);
+    const badge = allChangeRequests && changeRequestsForFaculty(allChangeRequests, faculty._id).length;
     const withBadge = badge && badge > 0;
 
     return (
