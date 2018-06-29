@@ -8,7 +8,7 @@ export const styles = theme => ({
         alignItems: "center",
     },
     userNameDisplay: {
-        color: "white",
+        color: theme.palette.common.white,
         fontSize: 16,
         marginRight: 12,
     },

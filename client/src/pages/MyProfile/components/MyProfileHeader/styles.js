@@ -7,12 +7,12 @@ export const styles = theme => ({
         flexGrow: 0,
     },
     tabs: {
-        color: "white",
+        color: theme.palette.common.white,
         "&:focus": {
             color: "#fff",
         },
     },
     tabsIndicator: {
-        background: "white",
+        background: theme.palette.common.white,
     },
 });

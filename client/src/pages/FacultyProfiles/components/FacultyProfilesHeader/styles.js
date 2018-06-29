@@ -26,13 +26,13 @@ export const styles = theme => ({
         opacity: 0.7,
     },
     tabs: {
-        color: "white",
+        color: theme.palette.common.white,
         "&:focus": {
             color: "#fff",
         },
     },
     tabsIndicator: {
-        background: "white",
+        background: theme.palette.common.white,
     },
     badgeContainer: {
         padding: `0 ${theme.spacing.unit * 2}px 0 0px`

@@ -12,7 +12,7 @@ export const styles = theme => ({
     messageGrid: {
         display: "flex",
         flexDirection: "column",
-        color: "white",
+        color: theme.palette.common.white,
         maxWidth: 800,
         padding: theme.spacing.unit * 6,
         paddingBottom: theme.spacing.unit * 20,
