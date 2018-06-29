@@ -93,13 +93,11 @@ export const requestAddExtensionWork = newExtensionWork => client.mutate({
     },
 });
 
-const rescindRequest = (_id, subdocumentType) => client.mutate({
+export const rescindChangeRequest = _id => client.mutate({
     mutation: gql`
         mutation($_id: ID!) {
             requestProfileChange {
-                ${subdocumentType} {
-                    remove(_id: $_id)
-                }
+                rescindChangeRequest(_id: $_id)
             }
         }
     `,
