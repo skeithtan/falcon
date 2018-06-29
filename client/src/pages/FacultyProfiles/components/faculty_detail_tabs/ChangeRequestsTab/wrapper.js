@@ -2,21 +2,17 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { SUBDOCUMENT_TYPE } from "../../../../../enums/faculty.enums";
-import {
-    changeRequestFetchError,
-    changeRequestIsDismissed,
-    changeRequestIsFetched,
-    changeRequestsIsLoading,
-} from "../../../../../redux/actions/change_requests.actions";
+import { changeRequestIsDismissed } from "../../../../../redux/actions/change_requests.actions";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import {
     approveChangeRequest,
-    fetchAllChangeRequests,
     fetchMyChangeRequests,
     rejectChangeRequest,
 } from "../../../../../services/faculty/change_requests";
+import { fetchChangeRequests } from "../../../../../utils/change_request.util";
 import { styles } from "../styles";
+
 
 const mapStateToProps = state => ({
     ...state.changeRequests,
@@ -24,26 +20,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getChangeRequests() {
-        dispatch(changeRequestsIsLoading());
-        return fetchAllChangeRequests()
-            .then(result => result.data.profileChangeRequests)
-            .then(changeRequests => dispatch(changeRequestIsFetched(changeRequests)))
-            .catch(error => {
-                console.log("An error occurred while fetching change requests", error);
-                dispatch(changeRequestFetchError([error.message]));
-            });
+    fetchChangeRequests() {
+        return fetchChangeRequests(dispatch);
     },
 
-    getMyChangeRequests() {
-        dispatch(changeRequestsIsLoading());
-        return fetchMyChangeRequests()
-            .then(result => result.data.myChangeRequests)
-            .then(changeRequests => dispatch(changeRequestIsFetched(changeRequests)))
-            .catch(error => {
-                console.log("An error occurred while fetching my change requests", error);
-                dispatch(changeRequestFetchError([error.message]));
-            });
+    fetchMyChangeRequests() {
+        return fetchMyChangeRequests(dispatch);
     },
 
     onApproveChangeRequest(changeRequest, faculty) {

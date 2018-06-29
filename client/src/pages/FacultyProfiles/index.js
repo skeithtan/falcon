@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
+import { getObjectForUserType } from "../../utils/user.util";
 import { FacultyDetail } from "./components/FacultyDetail";
 import { FacultyList } from "./components/FacultyList";
 import { FacultyProfilesHeader } from "./components/FacultyProfilesHeader";
@@ -12,12 +13,35 @@ import { wrap } from "./wrapper";
 class BaseFacultyProfilesPage extends Component {
     componentDidMount() {
         document.title = "Faculty Profiles - Falcon";
-
-        const {faculties, isLoading, fetchData} = this.props;
-        if (!faculties && !isLoading) {
-            fetchData();
-        }
+        this.fetchFaculties();
+        this.fetchChangeRequests();
     }
+
+    fetchFaculties = () => {
+        const {
+            faculties,
+            isLoading,
+            fetchAllFaculties,
+        } = this.props;
+        if (!faculties && !isLoading) {
+            fetchAllFaculties();
+        }
+    };
+
+    fetchChangeRequests = () => {
+        const {
+            fetchChangeRequests,
+            changeRequests: {
+                isLoading,
+                errors,
+                changeRequests,
+            },
+        } = this.props;
+
+        if (!isLoading && !changeRequests && !errors) {
+            fetchChangeRequests();
+        }
+    };
 
     renderLoading = () => (
         <Grid container style={{height: "100%"}}>
@@ -26,7 +50,7 @@ class BaseFacultyProfilesPage extends Component {
     );
 
     renderErrors = errors => (
-        <ErrorState onRetryButtonClick={this.props.fetchData}
+        <ErrorState onRetryButtonClick={this.props.fetchAllFaculties}
                     message="An error occurred while trying to fetch list of faculties."
                     debug={errors[0]}
         />
