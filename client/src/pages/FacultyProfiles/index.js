@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
-import { getObjectForUserType } from "../../utils/user.util";
 import { FacultyDetail } from "./components/FacultyDetail";
 import { FacultyList } from "./components/FacultyList";
 import { FacultyProfilesHeader } from "./components/FacultyProfilesHeader";

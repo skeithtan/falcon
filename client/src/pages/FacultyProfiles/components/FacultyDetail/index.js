@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
+import { getFullName } from "../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { OVERVIEW_TAB, TABS } from "../faculty_detail_tabs";
 import { wrap } from "./wrapper";
@@ -34,21 +35,34 @@ class BaseFacultyDetail extends Component {
     ));
 
     componentDidMount() {
-        this.onNewFacultySelect();
+        this.onNewFacultySelect(this.props.match.params.facultyId);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.onNewFacultySelect();
+        const oldFacultyId = prevProps.match.params.facultyId;
+        const newFacultyId = this.props.match.params.facultyId;
+
+        if (oldFacultyId !== newFacultyId) {
+            this.onNewFacultySelect(newFacultyId);
+        }
     }
 
-    onNewFacultySelect() {
-        const activeFaculty = this.getActiveFaculty();
-        this.fetchFacultyDetails(activeFaculty);
-    }
-
-    fetchFacultyDetails() {
-        const {getFacultyDetails, setDetailsFetched, match: {params: {facultyId}}} = this.props;
+    onNewFacultySelect(facultyId) {
         const activeFaculty = this.getActiveFaculty(facultyId);
+        this.fetchFacultyDetails(activeFaculty);
+
+        if (activeFaculty) {
+            FacultyDetail.setDocumentTitle(activeFaculty);
+        }
+    }
+
+    static setDocumentTitle(faculty) {
+        const fullName = getFullName(faculty.user);
+        document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`;
+    }
+
+    fetchFacultyDetails = activeFaculty => {
+        const {getFacultyDetails, setDetailsFetched} = this.props;
 
         if (!activeFaculty) {
             // There's nothing to fetch when the faculty doesn't exist
@@ -62,7 +76,7 @@ class BaseFacultyDetail extends Component {
         } else {
             setDetailsFetched();
         }
-    }
+    };
 
     renderLoading = () => (
         <Grid container style={{height: "100%"}}>

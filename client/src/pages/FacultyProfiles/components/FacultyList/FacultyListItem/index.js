@@ -25,7 +25,6 @@ const BaseFacultyListItem = ({
 
     // Go to where the active tab is if any. If none, go to default overview tab
     const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
-    const fullName = getFullName(faculty.user);
 
     const badge = allChangeRequests && changeRequestsForFaculty(allChangeRequests, faculty._id).length;
     const withBadge = badge && badge > 0;
@@ -36,7 +35,6 @@ const BaseFacultyListItem = ({
             component={Link}
             to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${tabPath}`}
             className={className}
-            onClick={() => document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`}
         >
             {withBadge ?
                 <Badge badgeContent={badge} classes={{badge: classes.badge}}>
