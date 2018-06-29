@@ -121,7 +121,7 @@ class BaseInstructionalMaterialsTab extends Component {
 
                 {!instructionalMaterialsIsEmpty && this.renderRows(instructionalMaterials)}
 
-                {user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE &&
+                {(user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE) &&
                 <InstructionalMaterialModal
                     action={activeInstructionalMaterial ? "update" : "add"}
                     open={instructionalMaterialModalIsShowing}

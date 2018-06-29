@@ -110,7 +110,7 @@ class BaseRecognitionsCard extends Component {
 
                 {recognitionsIsEmpty && this.renderEmptyState()}
 
-                {user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE &&
+                {(user.permissions.MUTATE_FACULTY_PROFILES || user.permissions.REQUEST_PROFILE_CHANGE) &&
                 <RecognitionModal
                     action={activeRecognition ? "update" : "add"}
                     recognition={activeRecognition}
