@@ -2,6 +2,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
+import { changeRequestIsAdded } from "../../../../../redux/actions/change_requests.actions";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addRecognition, updateRecognition } from "../../../../../services/faculty/recognition";
@@ -69,7 +70,11 @@ const mapDispatchToProps = dispatch => ({
     submitRequestAddRecognitionForm(form) {
         const recognition = mapFormToRecognitionInput(form);
         return requestAddRecognition(recognition)
-            .then(result => result.data.requestProfileChange.recognition.add);
+            .then(result => result.data.requestProfileChange.recognition.add)
+            .then(newRecognition => {
+                dispatch(changeRequestIsAdded(newRecognition));
+                return newRecognition;
+            });
     },
 });
 

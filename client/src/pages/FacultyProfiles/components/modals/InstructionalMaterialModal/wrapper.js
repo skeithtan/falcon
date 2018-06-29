@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
 import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
+import { changeRequestIsAdded } from "../../../../../redux/actions/change_requests.actions";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import {
@@ -72,7 +73,11 @@ const mapDispatchToProps = dispatch => ({
     submitRequestAddInstructionalMaterialForm(form) {
         const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
         return requestAddInstructionalMaterial(instructionalMaterial)
-            .then(result => result.data.requestProfileChange.instructionalMaterial.add);
+            .then(result => result.data.requestProfileChange.instructionalMaterial.add)
+            .then(newInstructionalMaterial => {
+                dispatch(changeRequestIsAdded(newInstructionalMaterial));
+                return newInstructionalMaterial;
+            });
     },
 });
 

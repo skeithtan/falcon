@@ -2,6 +2,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
+import { changeRequestIsAdded } from "../../../../../redux/actions/change_requests.actions";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addPresentation, updatePresentation } from "../../../../../services/faculty/presentation";
@@ -73,7 +74,11 @@ const mapDispatchToProps = dispatch => ({
     submitRequestAddPresentationForm(form) {
         const presentation = mapFormToPresentationInput(form);
         return requestAddPresentation(presentation)
-            .then(result => result.data.requestProfileChange.presentation.add);
+            .then(result => result.data.requestProfileChange.presentation.add)
+            .then(newPresentation => {
+                dispatch(changeRequestIsAdded(newPresentation));
+                return newPresentation;
+            });
     },
 });
 

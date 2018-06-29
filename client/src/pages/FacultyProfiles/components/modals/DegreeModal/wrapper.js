@@ -2,6 +2,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
+import { changeRequestIsAdded } from "../../../../../redux/actions/change_requests.actions";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addDegree, updateDegree } from "../../../../../services/faculty/degree";
@@ -56,7 +57,11 @@ const mapDispatchToProps = dispatch => ({
 
     submitRequestAddDegreeForm(form) {
         return requestAddDegree(form)
-            .then(result => result.data.requestProfileChange.degree.add);
+            .then(result => result.data.requestProfileChange.degree.add)
+            .then(newDegree => {
+                dispatch(changeRequestIsAdded(newDegree));
+                return newDegree;
+            });
     },
 });
 

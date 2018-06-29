@@ -2,6 +2,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { genericModalStyle } from "../../../../../components/styles";
+import { changeRequestIsAdded } from "../../../../../redux/actions/change_requests.actions";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addExtensionWork, updateExtensionWork } from "../../../../../services/faculty/extension_work";
@@ -65,7 +66,11 @@ const mapDispatchToProps = dispatch => ({
     submitRequestAddExtensionWorkForm(form) {
         const extensionWork = mapFormToExtensionWorkInput(form);
         return requestAddExtensionWork(extensionWork)
-            .then(result => result.data.requestProfileChange.extensionWork.add);
+            .then(result => result.data.requestProfileChange.extensionWork.add)
+            .then(newExtensionWork => {
+                dispatch(changeRequestIsAdded(newExtensionWork));
+                return newExtensionWork;
+            });
     },
 });
 
