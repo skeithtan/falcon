@@ -61,17 +61,23 @@ class BaseSignInPage extends Component {
                                     <Typography color="error">{signInError}</Typography>
                                     }
 
-                                    <TextField className={classes.formInput}
-                                               label="Email Address"
-                                               fullWidth={true}
-                                               value={email}
-                                               onChange={this.handleChange("email")} />
-                                    <TextField className={classes.formInput}
-                                               label="Password"
-                                               fullWidth={true}
-                                               type="password"
-                                               value={password}
-                                               onChange={this.handleChange("password")} />
+                                    <TextField
+                                        className={classes.formInput}
+                                        label="Email Address"
+                                        fullWidth={true}
+                                        value={email}
+                                        autoComplete="email"
+                                        onChange={this.handleChange("email")}
+                                    />
+                                    <TextField
+                                        className={classes.formInput}
+                                        label="Password"
+                                        fullWidth={true}
+                                        type="password"
+                                        value={password}
+                                        autoComplete="current-password"
+                                        onChange={this.handleChange("password")}
+                                    />
                                 </div>
 
                                 <div className={classes.buttonContainer}>
