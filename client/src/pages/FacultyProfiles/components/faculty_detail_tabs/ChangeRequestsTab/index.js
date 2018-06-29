@@ -33,18 +33,18 @@ class BaseChangeRequestsTab extends Component {
     fetchChangeRequests = () => {
         const {
             user,
-            getChangeRequests,
-            getMyChangeRequests,
+            fetchChangeRequests,
+            fetchMyChangeRequests,
             isLoading,
             errors,
             changeRequests,
         } = this.props;
 
         const fetch = getObjectForUserType(user, {
-            CLERK: getChangeRequests,
-            DEAN: getChangeRequests,
-            ASSOCIATE_DEAN: getChangeRequests,
-            FACULTY: getMyChangeRequests,
+            CLERK: fetchChangeRequests,
+            DEAN: fetchChangeRequests,
+            ASSOCIATE_DEAN: fetchChangeRequests,
+            FACULTY: fetchMyChangeRequests,
         });
 
         if (!isLoading && !changeRequests && !errors) {
