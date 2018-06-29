@@ -37,11 +37,13 @@ class BaseMyProfilePage extends Component {
     );
 
     renderErrors = errors => (
-        <div className={this.props.classes.cardsContainer}>
+        <div className={this.props.classes.stateContainer}>
             <Card>
-                <ErrorState onRetryButtonClick={() => this.props.getFacultyDetails(this.props.activeFaculty)}
-                            message="An error occurred while trying to fetch faculty details."
-                            debug={errors[0]} />
+                <ErrorState
+                    onRetryButtonClick={this.props.fetchData}
+                    message="An error occurred while trying to fetch faculty details."
+                    debug={errors[0]}
+                />
             </Card>
         </div>
     );
