@@ -4,7 +4,7 @@ import { SEX } from "../enums/faculty.enums";
 import { fetchAllFacultiesSummary } from "../services/faculty/faculty";
 
 
-export const fetchAllFaculties = dispatch => {
+export const initiateFetchAllFacultiesSummary = dispatch => {
     dispatch(facultyListIsLoading());
     return fetchAllFacultiesSummary()
         .then(result => {

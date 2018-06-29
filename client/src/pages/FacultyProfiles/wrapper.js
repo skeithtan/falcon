@@ -2,8 +2,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
-import { fetchChangeRequests } from "../../utils/change_request.util";
-import { fetchAllFaculties } from "../../utils/faculty.util";
+import { initiateFetchChangeRequests } from "../../utils/change_request.util";
+import { initiateFetchAllFacultiesSummary } from "../../utils/faculty.util";
 import { styles } from "./styles";
 
 
@@ -14,11 +14,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchAllFaculties() {
-        fetchAllFaculties(dispatch);
+        initiateFetchAllFacultiesSummary(dispatch);
     },
 
     fetchChangeRequests() {
-        return fetchChangeRequests(dispatch);
+        return initiateFetchChangeRequests(dispatch);
     },
 });
 

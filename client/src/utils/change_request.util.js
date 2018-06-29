@@ -3,7 +3,7 @@ import {
     changeRequestIsFetched,
     changeRequestsIsLoading,
 } from "../redux/actions/change_requests.actions";
-import { fetchAllChangeRequests } from "../services/faculty/change_requests";
+import { fetchAllChangeRequests, fetchMyChangeRequests } from "../services/faculty/change_requests";
 
 
 export const getChangeRequestFields = objectFields => `
@@ -16,7 +16,7 @@ export const getChangeRequestFields = objectFields => `
 export const changeRequestsForFaculty = (changeRequests, facultyId) =>
     changeRequests.filter(changeRequest => changeRequest.faculty === facultyId);
 
-export const fetchChangeRequests = dispatch => {
+export const initiateFetchChangeRequests = dispatch => {
     dispatch(changeRequestsIsLoading());
     return fetchAllChangeRequests()
         .then(result => result.data.profileChangeRequests)
@@ -27,7 +27,7 @@ export const fetchChangeRequests = dispatch => {
         });
 };
 
-export const fetchMyChangeRequests = dispatch => {
+export const initiateFetchMyChangeRequests = dispatch => {
     dispatch(changeRequestsIsLoading());
     return fetchMyChangeRequests()
         .then(result => result.data.myChangeRequests)

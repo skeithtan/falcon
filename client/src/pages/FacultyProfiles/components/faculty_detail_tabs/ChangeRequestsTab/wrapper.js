@@ -7,10 +7,9 @@ import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import {
     approveChangeRequest,
-    fetchMyChangeRequests,
     rejectChangeRequest,
 } from "../../../../../services/faculty/change_requests";
-import { fetchChangeRequests } from "../../../../../utils/change_request.util";
+import { initiateFetchChangeRequests, initiateFetchMyChangeRequests } from "../../../../../utils/change_request.util";
 import { styles } from "../styles";
 
 
@@ -21,11 +20,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchChangeRequests() {
-        return fetchChangeRequests(dispatch);
+        return initiateFetchChangeRequests(dispatch);
     },
 
     fetchMyChangeRequests() {
-        return fetchMyChangeRequests(dispatch);
+        return initiateFetchMyChangeRequests(dispatch);
     },
 
     onApproveChangeRequest(changeRequest, faculty) {

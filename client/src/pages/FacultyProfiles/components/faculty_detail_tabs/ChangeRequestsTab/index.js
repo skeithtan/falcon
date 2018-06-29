@@ -17,7 +17,9 @@ class BaseChangeRequestsTab extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.fetchChangeRequests();
+        if (prevProps.faculty._id !== this.props.faculty._id) {
+            this.fetchChangeRequests();
+        }
     }
 
     approveChangeRequest = changeRequest => {

@@ -6,7 +6,7 @@ import compose from "recompose/compose";
 import { subjectIsAdded } from "../../../../../redux/actions/subject.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 import { addSubject } from "../../../../../services/subjects.service";
-import { fetchAllFaculties } from "../../../../../utils/faculty.util";
+import { initiateFetchAllFacultiesSummary } from "../../../../../utils/faculty.util";
 import { styles } from "./styles";
 
 
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
     },
 
     fetchData() {
-        fetchAllFaculties(dispatch);
+        initiateFetchAllFacultiesSummary(dispatch);
     },
 
     submitAddSubject(form) {

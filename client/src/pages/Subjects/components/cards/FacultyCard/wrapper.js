@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { fetchAllFaculties } from "../../../../../utils/faculty.util";
+import { initiateFetchAllFacultiesSummary } from "../../../../../utils/faculty.util";
 
 
 const mapStateToProps = state => ({
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchData() {
-        fetchAllFaculties(dispatch);
+        initiateFetchAllFacultiesSummary(dispatch);
     },
 });
 
