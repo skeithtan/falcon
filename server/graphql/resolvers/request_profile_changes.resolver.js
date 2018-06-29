@@ -4,11 +4,14 @@ import {
     ExtensionWorkAddRequest,
     InstructionalMaterialAddRequest,
     PresentationAddRequest,
+    ProfileChangeRequest,
     RecognitionAddRequest,
 } from "../../models/faculty_profile_changes.model";
 import { FACULTY } from "../../models/user.model";
 import { limitAccess } from "../../utils/user_decorator";
 import { getUserFromContext } from "../../utils/user_from_context";
+import { DoesNotExistError } from "../errors/does_not_exist.error";
+import { ValidationError } from "../errors/validation.error";
 
 
 const degreeChanges = faculty => ({
@@ -17,11 +20,6 @@ const degreeChanges = faculty => ({
             faculty: faculty._id,
             ...newDegree,
         });
-    },
-
-    async remove({_id}) {
-        await DegreeAddRequest.findByIdAndDelete(_id);
-        return true;
     },
 });
 
@@ -32,11 +30,6 @@ const recognitionChanges = faculty => ({
             ...newRecognition,
         });
     },
-
-    async remove({_id}) {
-        await RecognitionAddRequest.findByIdAndDelete(_id);
-        return true;
-    },
 });
 
 const presentationChanges = faculty => ({
@@ -45,11 +38,6 @@ const presentationChanges = faculty => ({
             faculty: faculty._id,
             ...newPresentation,
         });
-    },
-
-    async remove({_id}) {
-        await PresentationAddRequest.findByIdAndDelete(_id);
-        return true;
     },
 });
 
@@ -60,11 +48,6 @@ const instructionalMaterialChanges = faculty => ({
             ...newInstructionalMaterial,
         });
     },
-
-    async remove({_id}) {
-        await InstructionalMaterialAddRequest.findByIdAndDelete(_id);
-        return true;
-    },
 });
 
 const extensionWorkChanges = faculty => ({
@@ -74,12 +57,22 @@ const extensionWorkChanges = faculty => ({
             ...newExtensionWork,
         });
     },
-
-    async remove({_id}) {
-        await ExtensionWorkAddRequest.findByIdAndDelete(_id);
-        return true;
-    },
 });
+
+const rescindChangeRequest = faculty => async ({_id}) => {
+    const changeRequest = await ProfileChangeRequest.findById(_id);
+    if (!changeRequest) {
+        throw new DoesNotExistError(`Change Request of ID ${_id} does not exist`);
+    }
+
+    // Convert to string because they are ObjectID instances that won't be equal otherwise
+    if (String(changeRequest.faculty) !== String(faculty._id)) {
+        throw new ValidationError(`Faculty of ID ${faculty._id} cannot rescind another faculty's (${changeRequest.faculty}) change request`);
+    }
+
+    await changeRequest.remove();
+    return true;
+};
 
 async function requestProfileChanges(object, args, context) {
     const user = await getUserFromContext(context);
@@ -91,6 +84,7 @@ async function requestProfileChanges(object, args, context) {
         recognition: recognitionChanges(faculty),
         instructionalMaterial: instructionalMaterialChanges(faculty),
         presentation: presentationChanges(faculty),
+        rescindChangeRequest: rescindChangeRequest(faculty),
     };
 }
 

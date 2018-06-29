@@ -1,26 +1,21 @@
 type DegreeChanges {
     add(newDegree: DegreeInput!): DegreeChange!
-    remove(_id: ID!): DegreeChange!
 }
 
 type ExtensionWorkChanges {
     add(newExtensionWork: ExtensionWorkInput!): ExtensionWorkChange!
-    remove(_id: ID!): ExtensionWorkChange!
 }
 
 type InstructionalMaterialChanges {
     add(newInstructionalMaterial: InstructionalMaterialInput!): InstructionalMaterialChange!
-    remove(_id: ID!): InstructionalMaterialChange!
 }
 
 type RecognitionChanges {
     add(newRecognition: RecognitionInput!): RecognitionChange!
-    remove(_id: ID!): RecognitionChange!
 }
 
 type PresentationChanges {
     add(newPresentation: PresentationInput!): PresentationChange!
-    remove(_id: ID!): PresentationChange!
 }
 
 type RequestChange {
@@ -29,6 +24,7 @@ type RequestChange {
     instructionalMaterial: InstructionalMaterialChanges!
     recognition: RecognitionChanges!
     presentation: PresentationChanges!
+    rescindChangeRequest(_id: ID!): Boolean!
 }
 
 extend type Mutation {

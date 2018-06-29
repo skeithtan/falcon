@@ -107,9 +107,3 @@ const rescindRequest = (_id, subdocumentType) => client.mutate({
         _id,
     },
 });
-
-export const rescindDegreeRequest = _id => rescindRequest(_id, "degree");
-export const rescindRecognitionRequest = _id => rescindRequest(_id, "recognition");
-export const rescindPresentationRequest = _id => rescindRequest(_id, "presentation");
-export const rescindInstructionalMaterialRequest = _id => rescindRequest(_id, "instructionalMaterial");
-export const rescindExtensionWorkRequest = _id => rescindRequest(_id, "extensionWork");

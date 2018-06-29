@@ -15,14 +15,14 @@ const faculty = (object, {_id}) => Faculty
     .populate("user")
     .then(faculty => {
         if (!faculty) {
-            return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+            return new DoesNotExistError(`Faculty of ID ${_id} does not exist.`);
         }
         return faculty;
     })
     .catch(error => {
         // CastErrors happen with id is an invalid ObjectID
         if (error.name === "CastError") {
-            return new DoesNotExistError(`Faculty of id ${_id} does not exist.`);
+            return new DoesNotExistError(`Faculty of ID ${_id} does not exist.`);
         }
         throw error;
     });
@@ -98,7 +98,7 @@ async function mutatePresentation(object, {facultyId}) {
     function getPresentation(_id) {
         const presentation = presentations.id(_id);
         if (presentation === null) {
-            throw new DoesNotExistError(`Presentation of id ${_id} does not exist`);
+            throw new DoesNotExistError(`Presentation of ID ${_id} does not exist`);
         }
         return presentation;
     }
@@ -132,7 +132,7 @@ async function mutateRecognition(object, {facultyId}) {
     function getRecognition(_id) {
         const recognition = recognitions.id(_id);
         if (recognition === null) {
-            throw new DoesNotExistError(`Recognition of id ${_id} does not exist`);
+            throw new DoesNotExistError(`Recognition of ID ${_id} does not exist`);
         }
         return recognition;
     }
@@ -166,7 +166,7 @@ async function mutateInstructionalMaterial(object, {facultyId}) {
     function getInstructionalMaterial(_id) {
         const instructionalMaterial = instructionalMaterials.id(_id);
         if (instructionalMaterial === null) {
-            throw new DoesNotExistError(`Instructional material of id ${_id} does not exist`);
+            throw new DoesNotExistError(`Instructional material of ID ${_id} does not exist`);
         }
         return instructionalMaterial;
     }
@@ -200,7 +200,7 @@ async function mutateExtensionWork(object, {facultyId}) {
     function getExtensionWork(_id) {
         const extensionWork = extensionWorks.id(_id);
         if (extensionWork === null) {
-            throw new DoesNotExistError(`Extension work of id ${_id} does not exist`);
+            throw new DoesNotExistError(`Extension work of ID ${_id} does not exist`);
         }
         return extensionWork;
     }
@@ -234,7 +234,7 @@ async function mutateDegree(object, {facultyId}) {
     function getDegree(_id) {
         const degree = degrees.id(_id);
         if (degree === null) {
-            throw new DoesNotExistError(`Degree of id ${_id} does not exist`);
+            throw new DoesNotExistError(`Degree of ID ${_id} does not exist`);
         }
         return degree;
     }

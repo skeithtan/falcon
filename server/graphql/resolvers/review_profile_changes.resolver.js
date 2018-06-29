@@ -28,7 +28,7 @@ const facultySubdocumentsPerType = faculty => ({
 const reviewProfileChangeRequest = async (object, {_id}) => {
     const changeRequest = await ProfileChangeRequest.findById(_id);
     if (!changeRequest) {
-        throw new DoesNotExistError(`Change request of id ${_id} does not exist.`);
+        throw new DoesNotExistError(`Change request of ID ${_id} does not exist.`);
     }
 
     const faculty = await Faculty.findById(changeRequest.faculty);

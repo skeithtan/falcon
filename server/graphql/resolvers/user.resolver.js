@@ -40,7 +40,7 @@ function updateUser(object, {_id, newUser}) {
     return User.findByIdAndUpdate(_id, newUser, {new: true})
                .exec()
                .catch(() => {
-                   return new DoesNotExistError(`User of id ${_id} does not exist.`);
+                   return new DoesNotExistError(`User of ID ${_id} does not exist.`);
                });
 }
 
