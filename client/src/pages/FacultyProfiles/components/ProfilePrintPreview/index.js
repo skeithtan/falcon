@@ -66,7 +66,7 @@ class PrintContent extends Component {
                                     </Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Typography component="subheading" color="textSecondary">
+                                    <Typography variant="subheading" color="textSecondary">
                                         Faculty of Arts and Languages
                                     </Typography>
                                 </Grid>
@@ -169,93 +169,113 @@ class BaseProfilePrintPreview extends Component {
         />
     );
 
+    renderPrintSettings = () => (
+        <Grid container spacing={24} direction="column">
+            <Grid item>
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Print Settings</FormLabel>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.includeTeachingSubjects}
+                                    onChange={this.handleChange("includeTeachingSubjects")}
+                                />
+                            }
+                            label="Include Subjects of Expertise"
+                        />
+
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.includeDegrees}
+                                    onChange={this.handleChange("includeDegrees")}
+                                />
+                            }
+                            label="Include Degrees"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.includeRecognitions}
+                                    onChange={this.handleChange("includeRecognitions")}
+                                />
+                            }
+                            label="Include Recognitions"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.includePresentations}
+                                    onChange={this.handleChange("includePresentations")}
+                                />
+                            }
+                            label="Include Presentations"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.includeInstructionalMaterials}
+                                    onChange={this.handleChange("includeInstructionalMaterials")}
+                                />
+                            }
+                            label="Include Instructional Materials"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.includeExtensionWorks}
+                                    onChange={this.handleChange("includeExtensionWorks")}
+                                />
+                            }
+                            label="Include Extension Works"
+                        />
+                    </FormGroup>
+                </FormControl>
+            </Grid>
+            <Grid item>
+                <ReactToPrint
+                    trigger={() => <Button variant="raised" color="primary">Print</Button>}
+                    content={() => this.componentRef}
+                />
+            </Grid>
+        </Grid>
+    );
+
     renderPrintPreview = () => {
         const {faculty, subjects, classes} = this.props;
 
         return (
-            <div className={classes.printContentContainerBackdrop}>
-                <div className={classes.settingsContainer}>
-                    <Grid container spacing={24} direction="column">
-                        <Grid item>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">Print Settings</FormLabel>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={this.state.includeTeachingSubjects}
-                                                onChange={this.handleChange("includeTeachingSubjects")}
-                                            />
-                                        }
-                                        label="Include Subjects of Expertise"
+            <div className={classes.printPreviewModalBody}>
+                <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="stretch"
+                    wrap="nowrap"
+                    style={{height: "100%"}}
+                >
+                    <Grid item sm={12}>
+                        <div className={classes.printPreviewPagesContainer}>
+                            <div className={classes.printPreviewBackdrop}>
+                                <div className={classes.printPage}>
+                                    <PrintContent
+                                        ref={el => this.componentRef = el}
+                                        classes={classes}
+                                        faculty={faculty}
+                                        subjects={subjects.subjects}
+                                        {...this.state}
                                     />
-
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={this.state.includeDegrees}
-                                                onChange={this.handleChange("includeDegrees")}
-                                            />
-                                        }
-                                        label="Include Degrees"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={this.state.includeRecognitions}
-                                                onChange={this.handleChange("includeRecognitions")}
-                                            />
-                                        }
-                                        label="Include Recognitions"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={this.state.includePresentations}
-                                                onChange={this.handleChange("includePresentations")}
-                                            />
-                                        }
-                                        label="Include Presentations"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={this.state.includeInstructionalMaterials}
-                                                onChange={this.handleChange("includeInstructionalMaterials")}
-                                            />
-                                        }
-                                        label="Include Instructional Materials"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={this.state.includeExtensionWorks}
-                                                onChange={this.handleChange("includeExtensionWorks")}
-                                            />
-                                        }
-                                        label="Include Extension Works"
-                                    />
-                                </FormGroup>
-                            </FormControl>
-                        </Grid>
-                        <Grid item>
-                            <ReactToPrint
-                                trigger={() => <Button variant="raised" color="primary">Print</Button>}
-                                content={() => this.componentRef}
-                            />
-                        </Grid>
+                                </div>
+                            </div>
+                        </div>
                     </Grid>
-                </div>
-
-                <div className={classes.printContentContainer}>
-                    <PrintContent
-                        ref={el => this.componentRef = el}
-                        classes={classes}
-                        faculty={faculty}
-                        subjects={subjects.subjects}
-                        {...this.state}
-                    />
-                </div>
+                    <Grid item style={{minWidth: 320}}>
+                        <div className={classes.settingsContainer}>
+                            {this.renderPrintSettings()}
+                        </div>
+                    </Grid>
+                </Grid>
             </div>
         );
     };
@@ -270,7 +290,7 @@ class BaseProfilePrintPreview extends Component {
                 onClose={onClose}
                 TransitionComponent={Transition}
             >
-                <div className={classes.printPreviewContainer}>
+                <div className={classes.printPreviewModal}>
                     <AppBar position="static" color="primary">
                         <Toolbar>
                             <IconButton color="inherit" onClick={onClose} aria-label="Close">
