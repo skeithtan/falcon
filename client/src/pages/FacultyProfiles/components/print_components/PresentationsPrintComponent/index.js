@@ -10,7 +10,11 @@ import { formatMonthYearDate } from "../../../../../utils/faculty.util";
 
 
 const renderRows = presentations => presentations.map(presentation => (
-    <Grid item xs={6}>
+    <Grid
+        item
+        xs={6}
+        key={presentation._id}
+    >
         <Typography variant="body2">{presentation.title}</Typography>
 
         <Table>

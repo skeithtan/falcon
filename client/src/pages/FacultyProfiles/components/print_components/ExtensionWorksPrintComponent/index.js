@@ -17,7 +17,11 @@ const extensionWorkRoles = roles => {
 };
 
 const renderRows = extensionWorks => extensionWorks.map(extensionWork => (
-    <Grid item xs={6}>
+    <Grid
+        item
+        xs={6}
+        key={extensionWork._id}
+    >
         <Typography variant="body2">{extensionWork.title}</Typography>
 
         <Table>

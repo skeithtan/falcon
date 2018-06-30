@@ -9,7 +9,11 @@ import { INSTRUCTIONAL_MATERIAL } from "../../../../../enums/faculty.enums";
 
 
 const renderRows = instructionalMaterials => instructionalMaterials.map(instructionalMaterial => (
-    <Grid item xs={6}>
+    <Grid
+        item
+        xs={6}
+        key={instructionalMaterial._id}
+    >
         <Typography variant="body2">{instructionalMaterial.title}</Typography>
 
         <Table>
