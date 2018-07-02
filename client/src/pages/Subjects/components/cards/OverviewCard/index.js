@@ -30,7 +30,7 @@ class BaseOverviewCard extends Component {
                 <div className={classes.buttonArea}>
                     <div className={classes.buttonsWrapper}>
                         {user.permissions.MUTATE_FACULTY_PROFILES &&
-                        <Tooltip title="Update these details" placement="left">
+                        <Tooltip disableFocusListener title="Update these details" placement="left">
                             <IconButton onClick={() => this.toggleUpdateSubjectModal(true)}>
                                 <EditIcon />
                             </IconButton>

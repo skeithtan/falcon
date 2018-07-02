@@ -104,7 +104,7 @@ class BaseSubjectsList extends Component {
                 {this.renderList(subjects)}
 
                 {user.permissions.MUTATE_FACULTY_PROFILES &&
-                <Tooltip title="Add a subject" placement="top">
+                <Tooltip disableFocusListener title="Add a subject" placement="top">
                     <Button variant="fab" color="primary" className={classes.addButton}
                             onClick={() => this.toggleAddSubjectModal(true)}>
                         <AddIcon />

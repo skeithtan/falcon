@@ -17,7 +17,7 @@ const BaseExpansionPanelActions = ({
     <ListItem className={classes.actionButtonsWrapper}>
 
         {onUpdateButtonClick &&
-        <Tooltip title={updateButtonTooltipTitle}>
+        <Tooltip disableFocusListener title={updateButtonTooltipTitle}>
             <IconButton aria-label="update" onClick={onUpdateButtonClick}>
                 <EditIcon />
             </IconButton>
@@ -25,7 +25,7 @@ const BaseExpansionPanelActions = ({
         }
 
         {onRemoveButtonClick &&
-        <Tooltip title={removeButtonTooltipTitle}>
+        <Tooltip disableFocusListener title={removeButtonTooltipTitle}>
             <IconButton aria-label="remove" onClick={onRemoveButtonClick}>
                 <DeleteIcon />
             </IconButton>

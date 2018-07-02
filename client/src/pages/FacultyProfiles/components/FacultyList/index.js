@@ -85,7 +85,7 @@ class BaseFacultyList extends Component {
                 {this.renderList(faculties)}
 
                 {user.permissions.MUTATE_FACULTY_PROFILES &&
-                <Tooltip title="Add a faculty" placement="top">
+                <Tooltip disableFocusListener title="Add a faculty" placement="top">
                     <Button variant="fab" color="primary" className={classes.addButton}
                             onClick={() => this.toggleAddFacultyModal(true)}>
                         <AddIcon />

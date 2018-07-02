@@ -17,7 +17,7 @@ export const TableRowActions = ({
         <Grid container wrap="nowrap">
             {onUpdateButtonClick &&
             <Grid item>
-                <Tooltip title={updateButtonTooltipTitle}>
+                <Tooltip disableFocusListener title={updateButtonTooltipTitle}>
                     <IconButton aria-label="update" onClick={onUpdateButtonClick}>
                         <EditIcon />
                     </IconButton>
@@ -27,7 +27,7 @@ export const TableRowActions = ({
 
             {onRemoveButtonClick &&
             <Grid item>
-                <Tooltip title={removeButtonTooltipTitle}>
+                <Tooltip disableFocusListener title={removeButtonTooltipTitle}>
                     <IconButton aria-label="remove" onClick={onRemoveButtonClick}>
                         <DeleteIcon />
                     </IconButton>

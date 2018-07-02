@@ -60,7 +60,7 @@ class BaseOverviewCard extends Component {
                         <Grid container spacing={8}>
                             {user.permissions.MUTATE_FACULTY_PROFILES &&
                             <Grid item>
-                                <Tooltip title="Update these details" placement="left">
+                                <Tooltip disableFocusListener title="Update these details" placement="left">
                                     <IconButton onClick={() => this.toggleUpdateFacultyModal(true)}>
                                         <EditIcon />
                                     </IconButton>
@@ -70,7 +70,7 @@ class BaseOverviewCard extends Component {
 
                             {user.permissions.MUTATE_FACULTY_PROFILES &&
                             <Grid item>
-                                <Tooltip title="Reset Faculty Password" placement="left">
+                                <Tooltip disableFocusListener title="Reset Faculty Password" placement="left">
                                     <IconButton onClick={() => this.toggleResetPasswordModal(true)}>
                                         <LockOpenIcon />
                                     </IconButton>
@@ -79,7 +79,7 @@ class BaseOverviewCard extends Component {
                             }
 
                             <Grid item>
-                                <Tooltip title="Print Faculty Profile" placement="left">
+                                <Tooltip disableFocusListener title="Print Faculty Profile" placement="left">
                                     <IconButton onClick={() => this.toggleProfilePrintPreview(true)}>
                                         <PrintIcon />
                                     </IconButton>

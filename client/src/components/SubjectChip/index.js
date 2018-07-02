@@ -15,7 +15,7 @@ function onChipClick({subject, clickable, history}) {
 }
 
 const BaseSubjectChip = ({classes, subject, clickable, history, handleDelete, showDeleteButton}) => (
-    <Tooltip title={subject.name}>
+    <Tooltip disableFocusListener title={subject.name}>
         <Chip
             className={classes.chip}
             onClick={() => onChipClick({subject, clickable, history})}

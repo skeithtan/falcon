@@ -20,7 +20,7 @@ const BaseTableToolbar = ({
         </div>
         <div>
             {showAddButton &&
-            <Tooltip title={addButtonTooltipTitle} placement="left">
+            <Tooltip disableFocusListener title={addButtonTooltipTitle} placement="left">
                 <IconButton onClick={onAddButtonClick}>
                     <AddIcon />
                 </IconButton>
