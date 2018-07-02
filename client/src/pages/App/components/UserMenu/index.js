@@ -1,5 +1,6 @@
-import Popover from "@material-ui/core/Popover";
+import Divider from "@material-ui/core/Divider";
 import MenuItem from "@material-ui/core/MenuItem";
+import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { UserAvatar } from "../../../../components/UserAvatar";
@@ -31,6 +32,8 @@ const BaseUserMenu = ({
                 <Typography color="textSecondary">{USER_TYPES[authorization].name}</Typography>
             </div>
         </div>
+
+        <Divider />
 
         <MenuItem onClick={onChangePasswordClick}>Change my password</MenuItem>
         <MenuItem onClick={onSignOutClick}>Sign out</MenuItem>
