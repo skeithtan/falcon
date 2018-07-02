@@ -1,6 +1,5 @@
-import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
-import { UserAvatar } from "../../../../components/UserAvatar/index";
+import { UserChip } from "../../../../components/UserChip";
 import { ChangePasswordModal } from "../ChangePasswordModal";
 import { UserMenu } from "../UserMenu";
 import { wrap } from "./wrapper";
@@ -20,19 +19,12 @@ class BaseUserButton extends Component {
         changePasswordModalIsShowing: shouldShow,
     });
 
-    renderAvatar = (user) => (
-        <UserAvatar user={user} className={this.props.classes.avatar} onClick={this.toggleMenu} />
-    );
-
     render() {
         const {anchor, changePasswordModalIsShowing} = this.state;
         const {classes, user} = this.props;
-        const avatar = this.renderAvatar(user);
         return (
             <div className={classes.userButton}>
-                <Typography className={classes.userNameDisplay}>{user.name.first}</Typography>
-
-                {avatar}
+                <UserChip user={user} onClick={this.toggleMenu} />
 
                 <UserMenu
                     user={user}
