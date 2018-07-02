@@ -108,7 +108,7 @@ class BaseChangeRequestsTab extends Component {
 
         const changeRequests = allChangeRequests &&
             allChangeRequests[faculty._id] &&
-            allChangeRequests[faculty._id].changeRequests || []; // If undefined, there are no change requests for this faculty.
+            allChangeRequests[faculty._id].changeRequests;
 
         if (isLoading) {
             return this.renderLoading();
@@ -136,7 +136,7 @@ class BaseChangeRequestsTab extends Component {
                 </Grid>
                 }
 
-                {changeRequests && changeRequests.length === 0 && this.renderEmptyState()}
+                {allChangeRequests && !changeRequests && this.renderEmptyState()}
                 {errors && this.renderErrors(errors)}
             </div>
         );

@@ -1,6 +1,5 @@
 import blue from "@material-ui/core/colors/blue";
 import blueGrey from "@material-ui/core/colors/blueGrey";
-import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import indigo from "@material-ui/core/colors/indigo";
 import pink from "@material-ui/core/colors/pink";
@@ -30,9 +29,9 @@ export const TEAL_THEME = makeTheme({
 export const GREEN_THEME = createMuiTheme({
     palette: {
         primary: {
-            main: "#058258"
-        }
-    }
+            main: "#058258",
+        },
+    },
 });
 
 export const INDIGO_THEME = makeTheme({
