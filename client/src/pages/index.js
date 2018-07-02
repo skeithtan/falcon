@@ -6,14 +6,14 @@ import { MyProfilePage } from "./MyProfile";
 import { NotFoundPage } from "./NotFound";
 import { SignInPage } from "./SignIn";
 import { SubjectsPage } from "./Subjects";
-import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, PNU_THEME, TEAL_THEME } from "./themes";
+import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, TEAL_THEME, GREEN_THEME } from "./themes";
 
 
 export const SIGN_IN_PAGE = {
     identifier: "SIGN_IN_PAGE",
     path: "sign-in",
     component: SignInPage,
-    theme: PNU_THEME,
+    theme: INDIGO_THEME,
 };
 
 export const FACULTY_PROFILES_PAGE = {
@@ -37,7 +37,7 @@ export const SUBJECTS_PAGE = {
     path: "subjects",
     component: SubjectsPage,
     name: "Subjects",
-    theme: BLUE_THEME,
+    theme: GREEN_THEME,
 };
 
 export const HOME_PAGE = {
@@ -45,7 +45,7 @@ export const HOME_PAGE = {
     path: "home",
     component: HomePage,
     name: "Home",
-    theme: PNU_THEME,
+    theme: INDIGO_THEME,
 };
 
 export const FACULTY_LOADING_PAGE = {
@@ -53,7 +53,7 @@ export const FACULTY_LOADING_PAGE = {
     path: "faculty-loading",
     component: FacultyLoadingPage,
     name: "Faculty Loading",
-    theme: INDIGO_THEME,
+    theme: BLUE_THEME,
 };
 
 export const USER_SETTINGS_PAGE = {
@@ -76,9 +76,9 @@ export const PAGES = [
     HOME_PAGE,
     FACULTY_PROFILES_PAGE,
     FACULTY_LOADING_PAGE,
+    SUBJECTS_PAGE,
     USER_SETTINGS_PAGE,
     MY_PROFILE,
-    SUBJECTS_PAGE,
 ];
 
 export const GENERAL_PAGES = [
@@ -97,8 +97,8 @@ export function getPagesForUserType(userType) {
                 HOME_PAGE,
                 FACULTY_PROFILES_PAGE,
                 FACULTY_LOADING_PAGE,
-                USER_SETTINGS_PAGE,
                 SUBJECTS_PAGE,
+                USER_SETTINGS_PAGE,
             ];
         case FACULTY.identifier:
             return [
