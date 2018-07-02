@@ -6,7 +6,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import pnuLogo from "../../../../images/pnu-logo.png";
-import { getPageFromPath, getPagesForUserType } from "../../../index";
+import { getPagesForUser } from "../../../../utils/user.util";
+import { getPageFromPath} from "../../../index";
 import { wrap } from "./wrapper";
 
 
@@ -73,7 +74,7 @@ const BasePageDrawer = ({open, onClose, classes, user, match, history}) => (
 
             <List className={classes.pageItemsContainer}>
                 <PageDrawerPageItems
-                    pages={getPagesForUserType(user.authorization)}
+                    pages={getPagesForUser(user)}
                     match={match}
                     classes={classes}
                     history={history}

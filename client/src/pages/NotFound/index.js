@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import React, { PureComponent } from "react";
-import { HOME_PAGE } from "../index";
+import { getDefaultPageForUser } from "../../utils/user.util";
 import { wrap } from "./wrapper";
 
 
@@ -11,7 +11,9 @@ class BaseNotFoundPage extends PureComponent {
     }
 
     render() {
-        const {classes, history} = this.props;
+        const {classes, history, user} = this.props;
+        const defaultPage = getDefaultPageForUser(user);
+
         return (
             <div className={classes.container}>
                 <div className={classes.messageGrid}>
@@ -29,8 +31,8 @@ class BaseNotFoundPage extends PureComponent {
                         <Grid item>
                             <Button
                                 variant="raised"
-                                onClick={() => history.push(HOME_PAGE.path)}>
-                                Take me home
+                                onClick={() => history.push(defaultPage.path)}>
+                                Take me to {defaultPage.name}
                             </Button>
                         </Grid>
                     </Grid>

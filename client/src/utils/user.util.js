@@ -1,4 +1,5 @@
 import { ASSOCIATE_DEAN, CLERK, DEAN, FACULTY, USER_TYPES } from "../enums/user.enums";
+import { FACULTY_LOADING_PAGE, FACULTY_PROFILES_PAGE, MY_PROFILE, SUBJECTS_PAGE, USER_SETTINGS_PAGE } from "../pages";
 
 
 export const getFullName = user => {
@@ -39,3 +40,31 @@ export const getPermissions = user => {
 };
 
 export const generateTemporaryPassword = () => Math.random().toString(36).substring(7);
+
+export const getPagesForUser = user => {
+    const administrativePages = [
+        FACULTY_PROFILES_PAGE,
+        FACULTY_LOADING_PAGE,
+        SUBJECTS_PAGE,
+        USER_SETTINGS_PAGE,
+    ];
+
+    const facultyPages = [
+        MY_PROFILE,
+    ];
+
+    return getObjectForUserType(user, {
+        DEAN: administrativePages,
+        ASSOCIATE_DEAN: administrativePages,
+        CLERK: administrativePages,
+        FACULTY: facultyPages,
+    });
+};
+
+export const getDefaultPageForUser = user => getObjectForUserType(user, {
+    DEAN: FACULTY_LOADING_PAGE,
+    ASSOCIATE_DEAN: FACULTY_LOADING_PAGE,
+    CLERK: FACULTY_PROFILES_PAGE,
+    FACULTY: MY_PROFILE, // TODO: Replace with MySchedule
+});
+

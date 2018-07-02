@@ -1,12 +1,10 @@
-import { USER_TYPES } from "../enums/user.enums";
 import { FacultyLoadingPage } from "./FacultyLoading";
 import { FacultyProfilesPage } from "./FacultyProfiles";
-import { HomePage } from "./Home";
 import { MyProfilePage } from "./MyProfile";
 import { NotFoundPage } from "./NotFound";
 import { SignInPage } from "./SignIn";
 import { SubjectsPage } from "./Subjects";
-import { BLUE_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, TEAL_THEME, GREEN_THEME } from "./themes";
+import { BLUE_THEME, GREEN_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, TEAL_THEME } from "./themes";
 
 
 export const SIGN_IN_PAGE = {
@@ -40,14 +38,6 @@ export const SUBJECTS_PAGE = {
     theme: GREEN_THEME,
 };
 
-export const HOME_PAGE = {
-    identifier: "HOME_PAGE",
-    path: "home",
-    component: HomePage,
-    name: "Home",
-    theme: INDIGO_THEME,
-};
-
 export const FACULTY_LOADING_PAGE = {
     identifier: "FACULTY_LOADING_PAGE",
     path: "faculty-loading",
@@ -73,7 +63,6 @@ export const NOT_FOUND_PAGE = {
 export const PAGES = [
     SIGN_IN_PAGE,
     NOT_FOUND_PAGE,
-    HOME_PAGE,
     FACULTY_PROFILES_PAGE,
     FACULTY_LOADING_PAGE,
     SUBJECTS_PAGE,
@@ -85,32 +74,6 @@ export const GENERAL_PAGES = [
     NOT_FOUND_PAGE,
     SIGN_IN_PAGE,
 ];
-
-export function getPagesForUserType(userType) {
-    const {DEAN, ASSOCIATE_DEAN, FACULTY, CLERK} = USER_TYPES;
-
-    switch (userType) {
-        case DEAN.identifier:
-        case ASSOCIATE_DEAN.identifier:
-        case CLERK.identifier:
-            return [
-                HOME_PAGE,
-                FACULTY_PROFILES_PAGE,
-                FACULTY_LOADING_PAGE,
-                SUBJECTS_PAGE,
-                USER_SETTINGS_PAGE,
-            ];
-        case FACULTY.identifier:
-            return [
-                HOME_PAGE,
-                MY_PROFILE,
-            ];
-        default:
-            console.log(`Attempted to retrieve pages for unknown user type ${userType}`);
-            return [];
-
-    }
-}
 
 export function getPageFromPath(candidatePath) {
     const page = PAGES.find(page => page.path === candidatePath);
