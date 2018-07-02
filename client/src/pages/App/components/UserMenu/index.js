@@ -1,4 +1,4 @@
-import Menu from "@material-ui/core/Menu";
+import Popover from "@material-ui/core/Popover";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
@@ -17,11 +17,11 @@ const BaseUserMenu = ({
     onChangePasswordClick,
     user: {name: {first, last}, email, authorization},
 }) => (
-    <Menu
+    <Popover
         open={open}
         onClose={onClose}
         anchorEl={anchorEl}
-        MenuListProps={{disablePadding: true}}>
+    >
         <div className={classes.currentUserDisplay}>
             <UserAvatar user={user} />
 
@@ -34,7 +34,7 @@ const BaseUserMenu = ({
 
         <MenuItem onClick={onChangePasswordClick}>Change my password</MenuItem>
         <MenuItem onClick={onSignOutClick}>Sign out</MenuItem>
-    </Menu>
+    </Popover>
 );
 
 export const UserMenu = wrap(BaseUserMenu);
