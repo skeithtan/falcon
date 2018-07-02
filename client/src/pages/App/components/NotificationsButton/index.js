@@ -31,12 +31,16 @@ class BaseNotificationsButton extends Component {
         const {anchor} = this.state;
         const {
             classes,
+            user,
             changeRequests: {
                 changeRequests: allChangeRequests,
             },
         } = this.props;
 
-        const badge = allChangeRequests && Object.keys(allChangeRequests).length;
+        const badge = user.permissions.REVIEW_PROFILE_CHANGE_REQUEST &&
+            allChangeRequests &&
+            Object.keys(allChangeRequests).length;
+        
         const withBadge = badge && badge > 0;
 
         return (
