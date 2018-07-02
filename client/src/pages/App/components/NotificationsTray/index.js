@@ -1,15 +1,84 @@
 import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import ListItem from "@material-ui/core/ListItem";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { Link } from "react-router-dom";
+import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
+import { EmptyState } from "../../../../components/states/EmptyState";
+import { UserAvatar } from "../../../../components/UserAvatar";
+import { getFullName } from "../../../../utils/user.util";
+import { CHANGE_REQUESTS_TAB } from "../../../FacultyProfiles/components/faculty_detail_tabs";
+import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { wrap } from "./wrapper";
 
+
+const ChangeRequestNotificationItem = ({faculty, changeRequestCount}) => (
+    <ListItem
+        button
+        component={Link}
+        to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${CHANGE_REQUESTS_TAB.path}`}
+    >
+        <Grid container spacing={16} direction="row" wrap="nowrap" alignItems="center">
+            <Grid item>
+                <UserAvatar user={faculty.user} />
+            </Grid>
+            <Grid item>
+                <Typography>
+                    <strong>{getFullName(faculty.user)}</strong> submitted <strong>{changeRequestCount} change
+                    requests</strong>
+                </Typography>
+            </Grid>
+        </Grid>
+    </ListItem>
+);
+
+const ChangeRequestNotifications = ({changeRequests, faculties}) =>
+    Object.entries(changeRequests).map(([facultyId, {changeRequests: facultyChangeRequests}]) => (
+        <ChangeRequestNotificationItem
+            key={facultyId}
+            faculty={faculties.find(faculty => faculty._id === facultyId)}
+            changeRequestCount={facultyChangeRequests.length}
+        />
+    ));
+
+const renderNotificationTrayBody = (classes, user, changeRequests, faculties) => {
+    if (changeRequests.changeRequests &&
+        Object.keys(changeRequests.changeRequests).length === 0) {
+        return (
+            <EmptyState bigMessage="No notifications found" />
+        );
+    }
+
+    if (changeRequests.isLoading || faculties.isLoading) {
+        return (
+            <Grid container style={{height: "100%"}}>
+                <FullPageLoadingIndicator size={60} />
+            </Grid>
+        );
+    }
+
+    if (user.permissions.MUTATE_FACULTY_PROFILES && changeRequests.changeRequests && faculties.faculties) {
+        return (
+            <ChangeRequestNotifications
+                changeRequests={changeRequests.changeRequests}
+                faculties={faculties.faculties}
+            />
+        );
+    }
+
+    return null;
+};
 
 const BaseNotificationsTray = ({
     classes,
     open,
     onClose,
     anchorEl,
+    changeRequests,
+    faculties,
+    user,
 }) => (
     <Popover
         open={open}
@@ -23,6 +92,9 @@ const BaseNotificationsTray = ({
                 </Typography>
             </div>
             <Divider />
+            <div className={classes.notificationsTrayBody}>
+                {renderNotificationTrayBody(classes, user, changeRequests, faculties)}
+            </div>
         </div>
     </Popover>
 );
