@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../components/states/EmptyState";
@@ -44,6 +44,12 @@ const ChangeRequestNotifications = ({changeRequests, faculties}) =>
     ));
 
 const renderNotificationTrayBody = (classes, user, changeRequests, faculties) => {
+    if (!user.permissions.REVIEW_PROFILE_CHANGE_REQUEST) {
+        return (
+            <EmptyState bigMessage="No notifications found" />
+        );
+    }
+
     if (changeRequests.changeRequests &&
         Object.keys(changeRequests.changeRequests).length === 0) {
         return (
@@ -59,7 +65,7 @@ const renderNotificationTrayBody = (classes, user, changeRequests, faculties) =>
         );
     }
 
-    if (user.permissions.MUTATE_FACULTY_PROFILES && changeRequests.changeRequests && faculties.faculties) {
+    if (user.permissions.REVIEW_PROFILE_CHANGE_REQUEST && changeRequests.changeRequests && faculties.faculties) {
         return (
             <ChangeRequestNotifications
                 changeRequests={changeRequests.changeRequests}
@@ -71,32 +77,55 @@ const renderNotificationTrayBody = (classes, user, changeRequests, faculties) =>
     return null;
 };
 
-const BaseNotificationsTray = ({
-    classes,
-    open,
-    onClose,
-    anchorEl,
-    changeRequests,
-    faculties,
-    user,
-}) => (
-    <Popover
-        open={open}
-        onClose={onClose}
-        anchorEl={anchorEl}
-    >
-        <div className={classes.notificationsTray}>
-            <div className={classes.notificationsTrayTitle}>
-                <Typography variant="body2">
-                    Notifications
-                </Typography>
-            </div>
-            <Divider />
-            <div className={classes.notificationsTrayBody}>
-                {renderNotificationTrayBody(classes, user, changeRequests, faculties)}
-            </div>
-        </div>
-    </Popover>
-);
+class BaseNotificationsTray extends Component {
+    componentDidMount() {
+        const {
+            faculties,
+            changeRequests,
+            fetchAllFaculties,
+            fetchChangeRequests,
+        } = this.props;
+
+        if (!faculties.faculties && !faculties.isLoading) {
+            fetchAllFaculties();
+        }
+
+        if (!changeRequests.changeRequests && !changeRequests.changeRequests) {
+            fetchChangeRequests();
+        }
+    }
+
+    render() {
+        const {
+            classes,
+            open,
+            onClose,
+            anchorEl,
+            changeRequests,
+            faculties,
+            user,
+        } = this.props;
+
+        return (
+            <Popover
+                open={open}
+                onClose={onClose}
+                anchorEl={anchorEl}
+            >
+                <div className={classes.notificationsTray}>
+                    <div className={classes.notificationsTrayTitle}>
+                        <Typography variant="body2">
+                            Notifications
+                        </Typography>
+                    </div>
+                    <Divider />
+                    <div className={classes.notificationsTrayBody}>
+                        {renderNotificationTrayBody(classes, user, changeRequests, faculties)}
+                    </div>
+                </div>
+            </Popover>
+        );
+    }
+}
 
 export const NotificationsTray = wrap(BaseNotificationsTray);
