@@ -8,13 +8,8 @@ export const styles = theme => ({
         boxShadow: theme.shadows[0],
     },
     toolbar: {
-        display: "flex",
-    },
-    hamburger: {
-        marginLeft: -20,
-    },
-    pageTitle: {
-        marginRight: "auto",
+        paddingLeft: theme.spacing.unit,
+        paddingRight: theme.spacing.unit * 2,
     },
     pageName: {
         display: "inline-block",
