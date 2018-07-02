@@ -22,7 +22,7 @@ export const pageContainer = theme => ({
     paddingBottom: theme.spacing.unit * 5,
 
     // Constrain content to margins
-    width: "80%",
+    width: "90%",
     maxWidth: 1200,
 
     // Center the page container
