@@ -5,7 +5,6 @@ import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoad
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
 import { TableToolbar } from "../../../../../components/TableToolbar";
-import { changeRequestsForFaculty } from "../../../../../utils/change_request.util";
 import { getFullName, getObjectForUserType } from "../../../../../utils/user.util";
 import { ChangeRequestCard } from "../../cards/ChangeRequestCard";
 import { wrap } from "./wrapper";
@@ -107,7 +106,9 @@ class BaseChangeRequestsTab extends Component {
             changeRequests: allChangeRequests,
         } = this.props;
 
-        const changeRequests = allChangeRequests && changeRequestsForFaculty(allChangeRequests, faculty._id);
+        const changeRequests = allChangeRequests &&
+            allChangeRequests[faculty._id] &&
+            allChangeRequests[faculty._id].changeRequests || []; // If undefined, there are no change requests for this faculty.
 
         if (isLoading) {
             return this.renderLoading();

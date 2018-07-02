@@ -4,7 +4,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import React from "react";
 import { Link } from "react-router-dom";
 import { UserAvatar } from "../../../../../components/UserAvatar/index";
-import { changeRequestsForFaculty } from "../../../../../utils/change_request.util";
 import { getFullName } from "../../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../../index";
 import { OVERVIEW_TAB } from "../../faculty_detail_tabs/index";
@@ -26,7 +25,10 @@ const BaseFacultyListItem = ({
     // Go to where the active tab is if any. If none, go to default overview tab
     const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
 
-    const badge = allChangeRequests && changeRequestsForFaculty(allChangeRequests, faculty._id).length;
+    const badge = allChangeRequests &&
+        allChangeRequests[faculty._id] &&
+        allChangeRequests[faculty._id].changeRequests.length;
+
     const withBadge = badge && badge > 0;
 
     return (

@@ -6,7 +6,6 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
-import { changeRequestsForFaculty } from "../../../../utils/change_request.util";
 import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { CHANGE_REQUESTS_TAB, TABS } from "../faculty_detail_tabs";
 import { wrap } from "./wrapper";
@@ -37,7 +36,9 @@ const BaseFacultyProfilesHeader = ({
     const activeFacultyId = match.params.facultyId;
     const activeTabIndex = TABS.findIndex(tab => tab.path === match.params.activeTab);
 
-    const badge = allChangeRequests && changeRequestsForFaculty(allChangeRequests, activeFacultyId).length;
+    const badge = allChangeRequests &&
+        allChangeRequests[activeFacultyId] &&
+        allChangeRequests[activeFacultyId].changeRequests.length;
 
     return (
         <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
