@@ -1,7 +1,4 @@
 import Checkbox from "@material-ui/core/Checkbox";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/es/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -98,75 +95,77 @@ class BaseExtensionWorkModal extends ModalFormComponent {
         });
     };
 
-    render() {
-        const {open, classes} = this.props;
+    get formErrors() {
+        return getFormErrors(this.state.form);
+    };
+
+    get dialogActionIsDisabled() {
+        return this.formErrors.hasErrors;
+    }
+
+    renderDialogContent = () => {
+        const {classes} = this.props;
         const {form, isSubmitting} = this.state;
-        const {hasErrors, fieldErrors} = getFormErrors(form);
+        const {fieldErrors} = this.formErrors;
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
-                <DialogTitle>{this.modalTitle}</DialogTitle>
-                <DialogContent className={classes.container}>
-                    <Grid container className={classes.form} spacing={24} direction="column">
-                        <Grid item>
-                            <FormControl error={fieldErrors.title.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.title.length > 0}
-                                    label="Extension Work Title"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("title")}
-                                    value={form.title}
-                                />
-                                {fieldErrors.title.length > 0 &&
-                                <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item>
-                            <FormControl error={fieldErrors.venue.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.venue.length > 0}
-                                    label="Venue"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("venue")}
-                                    value={form.venue}
-                                />
-                                {fieldErrors.venue.length > 0 &&
-                                <FormHelperText>{fieldErrors.venue[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item>
-                            <FormControl disabled={isSubmitting}>
-                                <FormLabel>Roles</FormLabel>
-                                <FormGroup>
-                                    {Object.entries(EXTENSION_WORK.ROLES).map(([identifier, {name}]) =>
-                                        <FormControlLabel
-                                            key={identifier}
-                                            label={name}
-                                            disabled={isSubmitting}
-                                            control={
-                                                <Checkbox
-                                                    checked={form.roles.includes(identifier)}
-                                                    onChange={this.handleRolesCheckbox}
-                                                    value={identifier}
-                                                />
-                                            }
-                                        />,
-                                    )}
-                                </FormGroup>
-                            </FormControl>
-                        </Grid>
+            <div className={classes.container}>
+                <Grid container className={classes.form} spacing={24} direction="column">
+                    <Grid item>
+                        <FormControl error={fieldErrors.title.length > 0} fullWidth>
+                            <TextField
+                                error={fieldErrors.title.length > 0}
+                                label="Extension Work Title"
+                                disabled={isSubmitting}
+                                onChange={this.handleFormChange("title")}
+                                value={form.title}
+                            />
+                            {fieldErrors.title.length > 0 &&
+                            <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
+                            }
+                        </FormControl>
                     </Grid>
 
-                </DialogContent>
+                    <Grid item>
+                        <FormControl error={fieldErrors.venue.length > 0} fullWidth>
+                            <TextField
+                                error={fieldErrors.venue.length > 0}
+                                label="Venue"
+                                disabled={isSubmitting}
+                                onChange={this.handleFormChange("venue")}
+                                value={form.venue}
+                            />
+                            {fieldErrors.venue.length > 0 &&
+                            <FormHelperText>{fieldErrors.venue[0]}</FormHelperText>
+                            }
+                        </FormControl>
+                    </Grid>
 
-                {this.renderModalFormDialogActions(hasErrors)}
-            </Dialog>
+                    <Grid item>
+                        <FormControl disabled={isSubmitting}>
+                            <FormLabel>Roles</FormLabel>
+                            <FormGroup>
+                                {Object.entries(EXTENSION_WORK.ROLES).map(([identifier, {name}]) =>
+                                    <FormControlLabel
+                                        key={identifier}
+                                        label={name}
+                                        disabled={isSubmitting}
+                                        control={
+                                            <Checkbox
+                                                checked={form.roles.includes(identifier)}
+                                                onChange={this.handleRolesCheckbox}
+                                                value={identifier}
+                                            />
+                                        }
+                                    />,
+                                )}
+                            </FormGroup>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </div>
         );
-    }
+    };
 }
 
 export const ExtensionWorkModal = wrap(BaseExtensionWorkModal);

@@ -1,6 +1,3 @@
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/es/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -54,64 +51,69 @@ class BaseChangePasswordModal extends ModalFormComponent {
                 .then(this.props.onChangePasswordSuccess);
     }
 
+    get modalTitle() {
+        return "Change my Password";
+    }
+
     get buttonName() {
         return "Change Password";
     }
 
-    render() {
-        const {open, classes} = this.props;
+    get formErrors() {
+        return getFormErrors(this.state.form);
+    };
+
+    get dialogActionIsDisabled() {
+        return this.formErrors.hasErrors;
+    }
+
+    renderDialogContent = () => {
+        const {classes} = this.props;
         const {form, isSubmitting} = this.state;
-        const {hasErrors, fieldErrors} = getFormErrors(form);
+        const {fieldErrors} = this.formErrors;
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
-                <DialogTitle>Change my Password</DialogTitle>
-                <DialogContent className={classes.container}>
-                    <form>
-                        <Grid container className={classes.form} spacing={24} direction="column">
+            <form className={classes.container}>
+                <Grid container className={classes.form} spacing={24} direction="column">
 
-                            <Grid item>
-                                <FormControl fullWidth error={fieldErrors.password.length > 0}>
-                                    <TextField
-                                        label="New Password"
-                                        disabled={isSubmitting}
-                                        type="password"
-                                        autoComplete="on"
-                                        onChange={this.handleFormChange("password")}
-                                        value={form.password}
-                                    />
+                    <Grid item>
+                        <FormControl fullWidth error={fieldErrors.password.length > 0}>
+                            <TextField
+                                label="New Password"
+                                disabled={isSubmitting}
+                                type="password"
+                                autoComplete="on"
+                                onChange={this.handleFormChange("password")}
+                                value={form.password}
+                            />
 
-                                    {fieldErrors.password.length > 0 &&
-                                    <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
-                                    }
-                                </FormControl>
-                            </Grid>
+                            {fieldErrors.password.length > 0 &&
+                            <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
+                            }
+                        </FormControl>
+                    </Grid>
 
-                            <Grid item>
-                                <FormControl fullWidth error={fieldErrors.confirmPassword.length > 0}>
-                                    <TextField
-                                        label="Confirm Password"
-                                        disabled={isSubmitting}
-                                        type="password"
-                                        autoComplete="on"
-                                        onChange={this.handleFormChange("confirmPassword")}
-                                        value={form.confirmPassword}
-                                    />
+                    <Grid item>
+                        <FormControl fullWidth error={fieldErrors.confirmPassword.length > 0}>
+                            <TextField
+                                label="Confirm Password"
+                                disabled={isSubmitting}
+                                type="password"
+                                autoComplete="on"
+                                onChange={this.handleFormChange("confirmPassword")}
+                                value={form.confirmPassword}
+                            />
 
-                                    {fieldErrors.confirmPassword.length > 0 &&
-                                    <FormHelperText>{fieldErrors.confirmPassword[0]}</FormHelperText>
-                                    }
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </DialogContent>
-
-                {this.renderModalFormDialogActions(hasErrors)}
-
-            </Dialog>
+                            {fieldErrors.confirmPassword.length > 0 &&
+                            <FormHelperText>{fieldErrors.confirmPassword[0]}</FormHelperText>
+                            }
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </form>
         );
-    }
+    };
+
 }
 
 export const ChangePasswordModal = wrap(BaseChangePasswordModal);

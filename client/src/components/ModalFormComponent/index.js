@@ -1,5 +1,9 @@
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import React, { Component } from "react";
-import { ModalFormDialogActions } from "./ModalFormDialogActions";
+import { ModalFormDialogActions } from "../ModalFormDialogActions/index";
 
 
 export class ModalFormComponent extends Component {
@@ -82,19 +86,6 @@ export class ModalFormComponent extends Component {
         keepForm: event.target.checked,
     });
 
-    renderModalFormDialogActions = disabled => (
-        <ModalFormDialogActions
-            isSubmitting={this.state.isSubmitting}
-            error={this.state.error}
-            showKeepForm={this.props.action === "add"}
-            keepForm={this.state.keepForm}
-            handleKeepFormChange={this.handleKeepFormChange}
-            disabled={disabled}
-            handleSubmit={this.handleSubmit}
-            buttonName={this.buttonName}
-        />
-    );
-
     // To be implemented by subclass
     get submitAddAction() {
 
@@ -107,6 +98,11 @@ export class ModalFormComponent extends Component {
 
     // To be implemented by subclass
     get toastSuccessMessage() {
+
+    }
+
+    // To be implemented by subclass
+    get dialogActionIsDisabled() {
 
     }
 
@@ -126,4 +122,37 @@ export class ModalFormComponent extends Component {
                 });
             });
     };
+
+    // To be implemented by subclass
+    renderDialogContent = () => null;
+
+    // Can be overriden by subclass
+    renderDialogActions = () => (
+        <ModalFormDialogActions
+            isSubmitting={this.state.isSubmitting}
+            error={this.state.error}
+            showKeepForm={this.props.action === "add"}
+            keepForm={this.state.keepForm}
+            handleKeepFormChange={this.handleKeepFormChange}
+            disabled={this.dialogActionIsDisabled}
+            handleSubmit={this.handleSubmit}
+            buttonName={this.buttonName}
+        />
+    );
+
+    render() {
+        const {open} = this.props;
+
+        return (
+            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
+                <DialogTitle>{this.modalTitle}</DialogTitle>
+                <DialogContent>
+                    {this.renderDialogContent()}
+                </DialogContent>
+                <DialogActions>
+                    {this.renderDialogActions()}
+                </DialogActions>
+            </Dialog>
+        );
+    }
 }

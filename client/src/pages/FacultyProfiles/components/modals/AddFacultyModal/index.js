@@ -1,13 +1,11 @@
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Step from "@material-ui/core/Step";
 import StepContent from "@material-ui/core/StepContent";
 import StepLabel from "@material-ui/core/StepLabel";
 import Stepper from "@material-ui/core/Stepper";
 import React, { Fragment } from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
+import { ModalFormDialogActions } from "../../../../../components/ModalFormDialogActions";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
 import { makeURL } from "../../../../../utils/url.util";
 import { generateTemporaryPassword } from "../../../../../utils/user.util";
@@ -71,6 +69,10 @@ class BaseAddFacultyModal extends ModalFormComponent {
         return "Faculty successfully added";
     }
 
+    get modalTitle() {
+        return "Add a Faculty";
+    }
+
     get steps() {
         const {classes} = this.props;
         const {isSubmitting, form} = this.state;
@@ -109,39 +111,46 @@ class BaseAddFacultyModal extends ModalFormComponent {
                             className={classes.backButton}>
                             Change details
                         </Button>
-                        {this.renderModalFormDialogActions(false)}
+                        <ModalFormDialogActions
+                            isSubmitting={this.state.isSubmitting}
+                            error={this.state.error}
+                            showKeepForm={this.props.action === "add"}
+                            keepForm={this.state.keepForm}
+                            handleKeepFormChange={this.handleKeepFormChange}
+                            disabled={this.dialogActionIsDisabled}
+                            handleSubmit={this.handleSubmit}
+                            buttonName={this.buttonName}
+                        />
                     </Fragment>
                 ),
             },
         ];
     }
 
-    renderSteps = () => this.steps.map(step => (
-        <Step key={step.label}>
-            <StepLabel>{step.label}</StepLabel>
-            <StepContent>
-                <div className={this.props.classes.form}>
-                    {step.content}
-                </div>
-            </StepContent>
-        </Step>
-    ));
+    // No actions here
+    renderDialogActions = () => null;
 
-    render() {
-        const {open, classes} = this.props;
+    renderDialogContent = () => {
         const {activeStep} = this.state;
+        const {classes} = this.props;
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
-                <DialogTitle>Add a Faculty</DialogTitle>
-                <DialogContent className={classes.container}>
-                    <Stepper activeStep={activeStep} orientation="vertical">
-                        {this.renderSteps()}
-                    </Stepper>
-                </DialogContent>
-            </Dialog>
+            <div className={classes.container}>
+                <Stepper activeStep={activeStep} orientation="vertical">
+                    {this.steps.map(step => (
+                        <Step key={step.label}>
+                            <StepLabel>{step.label}</StepLabel>
+                            <StepContent>
+                                <div className={this.props.classes.form}>
+                                    {step.content}
+                                </div>
+                            </StepContent>
+                        </Step>
+                    ))}
+                </Stepper>
+            </div>
         );
-    }
+    };
 }
 
 export const AddFacultyModal = wrap(BaseAddFacultyModal);

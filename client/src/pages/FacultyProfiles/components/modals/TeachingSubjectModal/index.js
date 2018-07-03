@@ -1,6 +1,3 @@
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
@@ -67,45 +64,43 @@ class BaseTeachingSubjectModal extends ModalFormComponent {
         return "Faculty subjects of expertise successfully updated";
     }
 
-    render() {
-        const {open, classes, allSubjects} = this.props;
+    get modalTitle() {
+        return "Set Subjects of Expertise";
+    }
+
+    renderDialogContent = () => {
+        const {classes, allSubjects} = this.props;
         const {isSubmitting, form} = this.state;
         const selectedSubjects = form.selectedSubjects.map(id => allSubjects.find(subject => subject._id === id));
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
-                <DialogTitle>Set Subjects of Expertise</DialogTitle>
-                <DialogContent className={classes.container}>
-                    <Grid
-                        container
-                        className={classes.form}
-                        spacing={24}
-                        direction="column"
-                    >
-                        <Grid item>
-                            <FormControl className={classes.formControl} fullWidth>
-                                <InputLabel>Subjects of Expertise</InputLabel>
-                                <Select
-                                    disabled={isSubmitting}
-                                    multiple
-                                    value={this.state.form.selectedSubjects}
-                                    onChange={this.handleFormChange("selectedSubjects")}
-                                    input={<Input />}
-                                    renderValue={() => this.renderSubjectChips(selectedSubjects)}
-                                >
-                                    {this.renderMenuItems(allSubjects)}
-                                </Select>
-                            </FormControl>
+            <div className={classes.container}>
+                <Grid
+                    container
+                    className={classes.form}
+                    spacing={24}
+                    direction="column"
+                >
+                    <Grid item>
+                        <FormControl className={classes.formControl} fullWidth>
+                            <InputLabel>Subjects of Expertise</InputLabel>
+                            <Select
+                                disabled={isSubmitting}
+                                multiple
+                                value={this.state.form.selectedSubjects}
+                                onChange={this.handleFormChange("selectedSubjects")}
+                                input={<Input />}
+                                renderValue={() => this.renderSubjectChips(selectedSubjects)}
+                            >
+                                {this.renderMenuItems(allSubjects)}
+                            </Select>
+                        </FormControl>
 
-                        </Grid>
                     </Grid>
-                </DialogContent>
-
-                {this.renderModalFormDialogActions(false)}
-            </Dialog>
+                </Grid>
+            </div>
         );
-
-    }
+    };
 
 }
 

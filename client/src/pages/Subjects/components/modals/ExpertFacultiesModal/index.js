@@ -1,6 +1,3 @@
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
@@ -75,44 +72,43 @@ class BaseExpertFacultiesModal extends ModalFormComponent {
         return "Set Expert Faculties";
     }
 
-    render() {
-        const {open, classes, allFaculties} = this.props;
-        const {isSubmitting, form} = this.state;
+    get dialogActionIsDisabled() {
+        return false;
+    }
+
+    renderDialogContent = () => {
+        const {classes, allFaculties} = this.props;
+        const {form, isSubmitting} = this.state;
         const selectedFaculties = form.selectedFaculties.map(id => allFaculties.find(faculty => faculty._id === id));
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
-                <DialogTitle>Set Expert Faculties</DialogTitle>
-                <DialogContent className={classes.container}>
-                    <Grid
-                        container
-                        className={classes.form}
-                        spacing={24}
-                        direction="column"
-                    >
-                        <Grid item>
-                            <FormControl className={classes.formControl} fullWidth>
-                                <InputLabel>Expert Faculties</InputLabel>
-                                <Select
-                                    disabled={isSubmitting}
-                                    multiple
-                                    value={this.state.form.selectedFaculties}
-                                    onChange={this.handleFormChange("selectedFaculties")}
-                                    input={<Input />}
-                                    renderValue={() => this.renderFacultyChips(selectedFaculties)}
-                                >
-                                    {this.renderMenuItems(allFaculties)}
-                                </Select>
-                            </FormControl>
+            <div className={classes.container}>
+                <Grid
+                    container
+                    className={classes.form}
+                    spacing={24}
+                    direction="column"
+                >
+                    <Grid item>
+                        <FormControl className={classes.formControl} fullWidth>
+                            <InputLabel>Expert Faculties</InputLabel>
+                            <Select
+                                disabled={isSubmitting}
+                                multiple
+                                value={this.state.form.selectedFaculties}
+                                onChange={this.handleFormChange("selectedFaculties")}
+                                input={<Input />}
+                                renderValue={() => this.renderFacultyChips(selectedFaculties)}
+                            >
+                                {this.renderMenuItems(allFaculties)}
+                            </Select>
+                        </FormControl>
 
-                        </Grid>
                     </Grid>
-                </DialogContent>
-
-                {this.renderModalFormDialogActions(false)}
-            </Dialog>
+                </Grid>
+            </div>
         );
-    }
+    };
 }
 
 export const ExpertFacultiesModal = wrap(BaseExpertFacultiesModal);

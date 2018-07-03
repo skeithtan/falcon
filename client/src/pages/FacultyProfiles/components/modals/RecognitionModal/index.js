@@ -1,6 +1,3 @@
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/es/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -92,112 +89,115 @@ class BaseRecognitionModal extends ModalFormComponent {
         return () => submitUpdateRecognitionForm(form, recognition._id, faculty);
     }
 
-    render() {
-        const {open, classes} = this.props;
+    get formErrors() {
+        return getFormErrors(this.state.form);
+    };
+
+    get dialogActionIsDisabled() {
+        return this.formErrors.hasErrors;
+    }
+
+    renderDialogContent = () => {
+        const {classes} = this.props;
         const {form, isSubmitting} = this.state;
-        const {hasErrors, fieldErrors} = getFormErrors(form);
+        const {fieldErrors} = this.formErrors;
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
-                <DialogTitle>{this.modalTitle}</DialogTitle>
-                <DialogContent className={classes.container}>
-                    <Grid container className={classes.form} spacing={24} direction="column">
+            <div className={classes.container}>
+                <Grid container className={classes.form} spacing={24} direction="column">
 
-                        <Grid item>
-                            <FormControl error={fieldErrors.title.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.title.length > 0}
-                                    label="Recognition Title"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("title")}
-                                    value={form.title}
-                                />
-                                {fieldErrors.title.length > 0 &&
-                                <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item>
-                            <FormControl error={fieldErrors.sponsor.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.sponsor.length > 0}
-                                    label="Sponsor"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("sponsor")}
-                                    value={form.sponsor}
-                                />
-                                {fieldErrors.sponsor.length > 0 &&
-                                <FormHelperText>{fieldErrors.sponsor[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item>
-                            <Grid container spacing={8} direction="column">
-
-                                <Grid item>
-                                    <FormLabel>Recognition Date</FormLabel>
-                                </Grid>
-
-                                <Grid item>
-                                    <Grid container spacing={16}>
-                                        <Grid item xs={6}>
-                                            <FormControl fullWidth>
-                                                <InputLabel>Month</InputLabel>
-                                                <MonthPicker
-                                                    value={form.month}
-                                                    disabled={isSubmitting}
-                                                    onChange={this.handleFormChange("month")}
-                                                />
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <FormControl error={fieldErrors.year.length > 0} fullWidth>
-                                                <TextField
-                                                    error={fieldErrors.year.length > 0}
-                                                    type="number"
-                                                    label="Year"
-                                                    disabled={isSubmitting}
-                                                    onChange={this.handleFormChange("year")}
-                                                    value={form.year}
-                                                />
-                                                {fieldErrors.year.length > 0 &&
-                                                <FormHelperText>{fieldErrors.year[0]}</FormHelperText>
-                                                }
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-
-                            </Grid>
-                        </Grid>
-
-                        <Grid item>
-                            <FormControl>
-                                <FormLabel>Recognition Basis</FormLabel>
-                                <RadioGroup value={form.basis} onChange={this.handleFormChange("basis")}>
-                                    {Object.entries(RECOGNITION.BASIS).map(([identifier, {name}]) =>
-                                        <FormControlLabel
-                                            key={identifier}
-                                            value={identifier}
-                                            label={name}
-                                            disabled={isSubmitting}
-                                            control={<Radio />}
-                                        />,
-                                    )}
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
-
+                    <Grid item>
+                        <FormControl error={fieldErrors.title.length > 0} fullWidth>
+                            <TextField
+                                error={fieldErrors.title.length > 0}
+                                label="Recognition Title"
+                                disabled={isSubmitting}
+                                onChange={this.handleFormChange("title")}
+                                value={form.title}
+                            />
+                            {fieldErrors.title.length > 0 &&
+                            <FormHelperText>{fieldErrors.title[0]}</FormHelperText>
+                            }
+                        </FormControl>
                     </Grid>
 
-                </DialogContent>
+                    <Grid item>
+                        <FormControl error={fieldErrors.sponsor.length > 0} fullWidth>
+                            <TextField
+                                error={fieldErrors.sponsor.length > 0}
+                                label="Sponsor"
+                                disabled={isSubmitting}
+                                onChange={this.handleFormChange("sponsor")}
+                                value={form.sponsor}
+                            />
+                            {fieldErrors.sponsor.length > 0 &&
+                            <FormHelperText>{fieldErrors.sponsor[0]}</FormHelperText>
+                            }
+                        </FormControl>
+                    </Grid>
 
-                {this.renderModalFormDialogActions(hasErrors)}
-            </Dialog>
+                    <Grid item>
+                        <Grid container spacing={8} direction="column">
+
+                            <Grid item>
+                                <FormLabel>Recognition Date</FormLabel>
+                            </Grid>
+
+                            <Grid item>
+                                <Grid container spacing={16}>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth>
+                                            <InputLabel>Month</InputLabel>
+                                            <MonthPicker
+                                                value={form.month}
+                                                disabled={isSubmitting}
+                                                onChange={this.handleFormChange("month")}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControl error={fieldErrors.year.length > 0} fullWidth>
+                                            <TextField
+                                                error={fieldErrors.year.length > 0}
+                                                type="number"
+                                                label="Year"
+                                                disabled={isSubmitting}
+                                                onChange={this.handleFormChange("year")}
+                                                value={form.year}
+                                            />
+                                            {fieldErrors.year.length > 0 &&
+                                            <FormHelperText>{fieldErrors.year[0]}</FormHelperText>
+                                            }
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl>
+                            <FormLabel>Recognition Basis</FormLabel>
+                            <RadioGroup value={form.basis} onChange={this.handleFormChange("basis")}>
+                                {Object.entries(RECOGNITION.BASIS).map(([identifier, {name}]) =>
+                                    <FormControlLabel
+                                        key={identifier}
+                                        value={identifier}
+                                        label={name}
+                                        disabled={isSubmitting}
+                                        control={<Radio />}
+                                    />,
+                                )}
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+
+                </Grid>
+
+            </div>
         );
-    }
+    };
 }
 
 export const RecognitionModal = wrap(BaseRecognitionModal);

@@ -1,6 +1,3 @@
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/es/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -65,90 +62,93 @@ class BaseUpdateSubjectModal extends ModalFormComponent {
         return "Subject successfully updated";
     }
 
-    render() {
-        const {open, classes} = this.props;
+    get formErrors() {
+        return getFormErrors(this.state.form);
+    };
+
+    get dialogActionIsDisabled() {
+        return this.formErrors.hasErrors;
+    }
+
+    renderDialogContent = () => {
+        const {classes} = this.props;
         const {form, isSubmitting} = this.state;
-        const {hasErrors, fieldErrors} = getFormErrors(form);
+        const {fieldErrors} = this.formErrors;
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
-                <DialogTitle>{this.modalTitle}</DialogTitle>
-                <DialogContent className={classes.container}>
-                    <Grid
-                        container
-                        className={classes.form}
-                        spacing={24}
-                        direction="column">
+            <div className={classes.container}>
+                <Grid
+                    container
+                    className={classes.form}
+                    spacing={24}
+                    direction="column">
 
-                        <Grid item>
-                            <FormControl error={fieldErrors.name.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.name.length > 0}
-                                    label="Subject Name"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("name")}
-                                    value={form.name}
-                                />
-                                {fieldErrors.name.length > 0 &&
-                                <FormHelperText>{fieldErrors.name[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item>
-                            <FormControl error={fieldErrors.code.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.code.length > 0}
-                                    label="Subject Code"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("code")}
-                                    value={form.code}
-                                />
-                                {fieldErrors.code.length > 0 &&
-                                <FormHelperText>{fieldErrors.code[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item>
-                            <FormControl error={fieldErrors.description.length > 0} fullWidth>
-                                <TextField
-                                    error={fieldErrors.description.length > 0}
-                                    label="Description"
-                                    disabled={isSubmitting}
-                                    onChange={this.handleFormChange("description")}
-                                    value={form.description}
-                                />
-                                {fieldErrors.description.length > 0 &&
-                                <FormHelperText>{fieldErrors.description[0]}</FormHelperText>
-                                }
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item>
-                            <FormControl>
-                                <FormLabel>Category</FormLabel>
-                                <RadioGroup value={form.category} onChange={this.handleFormChange("category")}>
-                                    {Object.entries(SUBJECT_CATEGORIES).map(([identifier, {name}]) =>
-                                        <FormControlLabel
-                                            key={identifier}
-                                            value={identifier}
-                                            label={name}
-                                            disabled={isSubmitting}
-                                            control={<Radio />}
-                                        />,
-                                    )}
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
-
+                    <Grid item>
+                        <FormControl error={fieldErrors.name.length > 0} fullWidth>
+                            <TextField
+                                error={fieldErrors.name.length > 0}
+                                label="Subject Name"
+                                disabled={isSubmitting}
+                                onChange={this.handleFormChange("name")}
+                                value={form.name}
+                            />
+                            {fieldErrors.name.length > 0 &&
+                            <FormHelperText>{fieldErrors.name[0]}</FormHelperText>
+                            }
+                        </FormControl>
                     </Grid>
-                </DialogContent>
 
-                {this.renderModalFormDialogActions(hasErrors)}
-            </Dialog>
+                    <Grid item>
+                        <FormControl error={fieldErrors.code.length > 0} fullWidth>
+                            <TextField
+                                error={fieldErrors.code.length > 0}
+                                label="Subject Code"
+                                disabled={isSubmitting}
+                                onChange={this.handleFormChange("code")}
+                                value={form.code}
+                            />
+                            {fieldErrors.code.length > 0 &&
+                            <FormHelperText>{fieldErrors.code[0]}</FormHelperText>
+                            }
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl error={fieldErrors.description.length > 0} fullWidth>
+                            <TextField
+                                error={fieldErrors.description.length > 0}
+                                label="Description"
+                                disabled={isSubmitting}
+                                onChange={this.handleFormChange("description")}
+                                value={form.description}
+                            />
+                            {fieldErrors.description.length > 0 &&
+                            <FormHelperText>{fieldErrors.description[0]}</FormHelperText>
+                            }
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl>
+                            <FormLabel>Category</FormLabel>
+                            <RadioGroup value={form.category} onChange={this.handleFormChange("category")}>
+                                {Object.entries(SUBJECT_CATEGORIES).map(([identifier, {name}]) =>
+                                    <FormControlLabel
+                                        key={identifier}
+                                        value={identifier}
+                                        label={name}
+                                        disabled={isSubmitting}
+                                        control={<Radio />}
+                                    />,
+                                )}
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+
+                </Grid>
+            </div>
         );
-    }
+    };
 }
 
 export const UpdateSubjectModal = wrap(BaseUpdateSubjectModal);
