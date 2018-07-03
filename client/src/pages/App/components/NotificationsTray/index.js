@@ -14,11 +14,12 @@ import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { wrap } from "./wrapper";
 
 
-const ChangeRequestNotificationItem = ({faculty, changeRequestCount}) => (
+const ChangeRequestNotificationItem = ({faculty, changeRequestCount, onClose}) => (
     <ListItem
         button
         component={Link}
         to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${CHANGE_REQUESTS_TAB.path}`}
+        onClick={onClose}
     >
         <Grid container spacing={16} direction="row" wrap="nowrap" alignItems="center">
             <Grid item>
@@ -34,16 +35,17 @@ const ChangeRequestNotificationItem = ({faculty, changeRequestCount}) => (
     </ListItem>
 );
 
-const ChangeRequestNotifications = ({changeRequests, faculties}) =>
+const ChangeRequestNotifications = ({changeRequests, faculties, onClose}) =>
     Object.entries(changeRequests).map(([facultyId, facultyChangeRequests]) => (
         <ChangeRequestNotificationItem
             key={facultyId}
             faculty={faculties.find(faculty => faculty._id === facultyId)}
             changeRequestCount={facultyChangeRequests.length}
+            onClose={onClose}
         />
     ));
 
-const renderNotificationTrayBody = (classes, changeRequests, faculties) => {
+const renderNotificationTrayBody = (classes, changeRequests, faculties, onClose) => {
     if (changeRequests.changeRequests &&
         Object.keys(changeRequests.changeRequests).length === 0) {
         return (
@@ -64,6 +66,7 @@ const renderNotificationTrayBody = (classes, changeRequests, faculties) => {
             <ChangeRequestNotifications
                 changeRequests={changeRequests.changeRequests}
                 faculties={faculties.faculties}
+                onClose={onClose}
             />
         );
     }
@@ -113,7 +116,7 @@ class BaseNotificationsTray extends Component {
                     </div>
                     <Divider />
                     <div className={classes.notificationsTrayBody}>
-                        {renderNotificationTrayBody(classes, changeRequests, faculties)}
+                        {renderNotificationTrayBody(classes, changeRequests, faculties, onClose)}
                     </div>
                 </div>
             </Popover>

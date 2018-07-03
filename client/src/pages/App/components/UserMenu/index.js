@@ -8,6 +8,11 @@ import { USER_TYPES } from "../../../../enums/user.enums";
 import { wrap } from "./wrapper";
 
 
+const menuItemClickHandler = (onClick, onClose) => () => {
+    onClick();
+    onClose();
+};
+
 const BaseUserMenu = ({
     open,
     user,
@@ -35,8 +40,8 @@ const BaseUserMenu = ({
 
         <Divider />
 
-        <MenuItem onClick={onChangePasswordClick}>Change my password</MenuItem>
-        <MenuItem onClick={onSignOutClick}>Sign out</MenuItem>
+        <MenuItem onClick={menuItemClickHandler(onChangePasswordClick, onClose)}>Change my password</MenuItem>
+        <MenuItem onClick={menuItemClickHandler(onSignOutClick, onClose)}>Sign out</MenuItem>
     </Popover>
 );
 
