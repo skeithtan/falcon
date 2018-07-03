@@ -29,6 +29,7 @@ export const styles = theme => ({
         background: theme.palette.common.white,
         padding: theme.spacing.unit * 8,
         maxWidth: 1024,
+        width: "100%",
         margin: 0,
     },
     printPage: {
