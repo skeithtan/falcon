@@ -75,7 +75,7 @@ export const yearValidators = [
 
 const fieldIsNotEmptyValidator = {
     isValid(fieldValue) {
-        return String(fieldValue).length > 0;
+        return String(fieldValue).trim().length > 0;
     },
     errorMessage: "This field is required",
 };
