@@ -136,11 +136,16 @@ class BaseFacultyDetail extends Component {
 
         const isFetched = activeFaculty ? facultyIsFetched(activeFaculty) : false;
 
-        const defaultTabURL = makeURL()
-            .facultyProfiles()
-            .selectFaculty(activeFaculty._id)
-            .overview()
-            .build();
+        const defaultTabURL =
+            activeFaculty ?
+                makeURL()
+                    .facultyProfiles()
+                    .selectFaculty(facultyId)
+                    .overview()
+                    .build() :
+                makeURL()
+                    .facultyProfiles()
+                    .build();
 
         const facultyNotFoundRedirectURL = makeURL()
             .facultyProfiles()
