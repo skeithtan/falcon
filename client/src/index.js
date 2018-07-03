@@ -10,7 +10,7 @@ import registerServiceWorker from "./registerServiceWorker";
 const app = (
     <Provider store={store}>
         <Router>
-            <Route path="/:currentPage?/" component={App} />
+            <Route path="/:currentPage?" component={App} />
         </Router>
     </Provider>
 );

@@ -18,9 +18,8 @@ class BaseFalconAppBar extends Component {
     };
 
     render() {
-        const {classes, match, user} = this.props;
-        const activePage = getPageFromPath(match.params.currentPage);
-        
+        const {classes, activePage, user} = this.props;
+
         return (
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar className={classes.toolbar} disableGutters>

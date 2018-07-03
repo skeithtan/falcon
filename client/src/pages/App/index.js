@@ -78,6 +78,7 @@ class BaseApp extends Component {
     render() {
         const {user, match, classes} = this.props;
         const activePage = this.getActivePage(match);
+
         return (
             <MuiThemeProvider theme={activePage.theme}>
                 <Grid
@@ -89,7 +90,7 @@ class BaseApp extends Component {
                 >
                     {user && activePage.identifier !== SIGN_IN_PAGE.identifier &&
                     <Grid item>
-                        <FalconAppBar />
+                        <FalconAppBar activePage={activePage}/>
                     </Grid>
                     }
                     <Grid
