@@ -12,7 +12,7 @@ export const makeURL = () => {
     let currentURL = "";
 
     const makeEndpoint = (toAppend, subPaths) => {
-        currentURL += "/" + toAppend;
+        currentURL += toAppend ? "/" + toAppend : "";
 
         const endpoint = {
             build: () => currentURL,
@@ -21,7 +21,7 @@ export const makeURL = () => {
         return subPaths ? {...endpoint, ...subPaths} : endpoint;
     };
 
-    return makeEndpoint("", {
+    return makeEndpoint(null, {
         facultyProfiles: () => makeEndpoint(FACULTY_PROFILES_PAGE.path, {
             selectFaculty: facultyId => makeEndpoint(facultyId, {
                 overview: () => makeEndpoint(OVERVIEW_TAB.path),
