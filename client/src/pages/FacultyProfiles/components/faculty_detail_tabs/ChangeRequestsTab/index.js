@@ -27,8 +27,8 @@ class BaseChangeRequestsTab extends Component {
     };
 
     rejectChangeRequest = changeRequest => {
-        const {onRejectChangeRequest} = this.props;
-        return onRejectChangeRequest(changeRequest);
+        const {onRejectChangeRequest, faculty} = this.props;
+        return onRejectChangeRequest(changeRequest, faculty);
     };
 
     fetchChangeRequests = () => {
@@ -48,7 +48,7 @@ class BaseChangeRequestsTab extends Component {
             FACULTY: fetchMyChangeRequests,
         });
 
-        if (!isLoading && !changeRequests && !errors) {
+        if (!isLoading && !changeRequests) {
             fetch();
         }
     };
@@ -91,8 +91,8 @@ class BaseChangeRequestsTab extends Component {
                 user={this.props.user}
                 faculty={this.props.faculty}
                 changeRequest={changeRequest}
-                approveChangeRequest={() => this.approveChangeRequest(changeRequest)}
-                rejectChangeRequest={() => this.rejectChangeRequest(changeRequest)}
+                approveChangeRequest={() => this.approveChangeRequest(changeRequest, this.props.faculty)}
+                rejectChangeRequest={() => this.rejectChangeRequest(changeRequest, this.props.faculty)}
             />
         </Grid>
     ));
@@ -111,8 +111,6 @@ class BaseChangeRequestsTab extends Component {
         if (isLoading) {
             return this.renderLoading();
         }
-
-        console.log(changeRequests, allChangeRequests, faculty._id);
 
         return (
             <div className={classes.cardsContainer}>

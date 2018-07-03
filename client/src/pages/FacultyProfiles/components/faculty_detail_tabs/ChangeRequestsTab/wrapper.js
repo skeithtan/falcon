@@ -31,16 +31,13 @@ const mapDispatchToProps = dispatch => ({
         return approveChangeRequest(changeRequest._id)
             .then(result => result.data.reviewProfileChangeRequest.approve)
             .then(newSubdocument => {
-                dispatch(changeRequestIsDismissed(changeRequest));
-
-                console.log("New subdocument", newSubdocument);
+                dispatch(changeRequestIsDismissed(changeRequest, faculty._id));
 
                 const newFaculty = {
                     ...faculty,
                 };
 
                 const facultyKey = SUBDOCUMENT_TYPE[changeRequest.subdocumentType].facultyKey;
-                console.log("Faculty key", facultyKey, changeRequest);
 
                 newFaculty[facultyKey] = [...newFaculty[facultyKey], newSubdocument];
                 dispatch(facultyIsUpdated(newFaculty));
@@ -50,10 +47,10 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    onRejectChangeRequest(changeRequest) {
+    onRejectChangeRequest(changeRequest, faculty) {
         return rejectChangeRequest(changeRequest._id)
             .then(() => {
-                dispatch(changeRequestIsDismissed(changeRequest));
+                dispatch(changeRequestIsDismissed(changeRequest, faculty._id));
                 dispatch(toastIsShowing("Change request successfully rejected"));
             });
     },

@@ -15,15 +15,22 @@ const initialState = {
 };
 
 export function changeRequests(state = initialState, action) {
-    const newState = {
-        ...state,
-        changeRequests: {
-            ...state.changeRequests,
-        },
-    };
+    let newState;
 
     switch (action.type) {
         case CHANGE_REQUEST_IS_ADDED:
+            // In case changeRequests hasn't been fetched yet
+            if (!state.changeRequests) {
+                return state;
+            }
+
+            newState = {
+                ...state,
+                changeRequests: {
+                    ...state.changeRequests,
+                },
+            };
+
             if (state.changeRequests[action.facultyId]) {
                 newState.changeRequests[action.facultyId].push(action.changeRequest);
             } else {
@@ -32,6 +39,17 @@ export function changeRequests(state = initialState, action) {
 
             return newState;
         case CHANGE_REQUEST_IS_DISMISSED:
+            if (!state.changeRequests) {
+                return state;
+            }
+
+            newState = {
+                ...state,
+                changeRequests: {
+                    ...state.changeRequests,
+                },
+            };
+
             const facultyChangeRequests = newState.changeRequests[action.facultyId];
             newState.changeRequests[action.facultyId] = facultyChangeRequests.filter(changeRequest =>
                 changeRequest._id !== action.changeRequest._id,
