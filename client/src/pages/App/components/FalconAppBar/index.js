@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
-import { getPageFromPath } from "../../../index";
 import { NotificationsButton } from "../NotificationsButton";
 import { PageDrawer } from "../PageDrawer/index";
 import { UserButton } from "../UserButton/index";

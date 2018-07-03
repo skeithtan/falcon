@@ -37,7 +37,6 @@ class BaseChangeRequestsTab extends Component {
             fetchChangeRequests,
             fetchMyChangeRequests,
             isLoading,
-            errors,
             changeRequests,
         } = this.props;
 
