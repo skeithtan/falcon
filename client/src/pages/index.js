@@ -22,7 +22,7 @@ export const FACULTY_PROFILES_PAGE = {
     theme: TEAL_THEME,
 };
 
-export const MY_PROFILE = {
+export const MY_PROFILE_PAGE = {
     identifier: "MY_PROFILE_PAGE",
     path: "my-profile",
     component: MyProfilePage,
@@ -67,7 +67,7 @@ export const PAGES = [
     FACULTY_LOADING_PAGE,
     SUBJECTS_PAGE,
     USER_SETTINGS_PAGE,
-    MY_PROFILE,
+    MY_PROFILE_PAGE,
 ];
 
 export const GENERAL_PAGES = [

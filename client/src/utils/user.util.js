@@ -1,5 +1,5 @@
 import { ASSOCIATE_DEAN, CLERK, DEAN, FACULTY, USER_TYPES } from "../enums/user.enums";
-import { FACULTY_LOADING_PAGE, FACULTY_PROFILES_PAGE, MY_PROFILE, SUBJECTS_PAGE, USER_SETTINGS_PAGE } from "../pages";
+import { FACULTY_LOADING_PAGE, FACULTY_PROFILES_PAGE, MY_PROFILE_PAGE, SUBJECTS_PAGE, USER_SETTINGS_PAGE } from "../pages";
 
 
 export const getFullName = user => {
@@ -50,7 +50,7 @@ export const getPagesForUser = user => {
     ];
 
     const facultyPages = [
-        MY_PROFILE,
+        MY_PROFILE_PAGE,
     ];
 
     return getObjectForUserType(user, {
@@ -65,6 +65,6 @@ export const getDefaultPageForUser = user => getObjectForUserType(user, {
     DEAN: FACULTY_LOADING_PAGE,
     ASSOCIATE_DEAN: FACULTY_LOADING_PAGE,
     CLERK: FACULTY_PROFILES_PAGE,
-    FACULTY: MY_PROFILE, // TODO: Replace with MySchedule
+    FACULTY: MY_PROFILE_PAGE, // TODO: Replace with MySchedule
 });
 

@@ -9,9 +9,8 @@ import Stepper from "@material-ui/core/Stepper";
 import React, { Fragment } from "react";
 import { ModalFormComponent } from "../../../../../components/ModalFormComponent";
 import { EMPLOYMENT, SEX } from "../../../../../enums/faculty.enums";
+import { makeURL } from "../../../../../utils/url.util";
 import { generateTemporaryPassword } from "../../../../../utils/user.util";
-import { FACULTY_PROFILES_PAGE } from "../../../../index";
-import { OVERVIEW_TAB } from "../../faculty_detail_tabs";
 import { FacultyForm, ReviewForm, UserForm } from "./steps";
 import { wrap } from "./wrapper";
 
@@ -49,10 +48,17 @@ class BaseAddFacultyModal extends ModalFormComponent {
     });
 
     get submitAddAction() {
-        const {submitForm} = this.props;
+        const {submitForm, history} = this.props;
+
         return () => submitForm(this.state.form)
             .then(faculty => {
-                this.props.history.push(`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${OVERVIEW_TAB.path}`);
+                const overviewTabURL = makeURL()
+                    .facultyProfiles()
+                    .selectFaculty(faculty._id)
+                    .overview()
+                    .build();
+
+                history.push(overviewTabURL);
                 return faculty;
             });
     }

@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { EmptySearchResultsState } from "../../../../components/states/EmptySearchResultsState";
 import { EmptyState } from "../../../../components/states/EmptyState";
-import { SUBJECTS_PAGE } from "../../../index";
+import { makeURL } from "../../../../utils/url.util";
 import { AddSubjectModal } from "../modals/AddSubjectModal";
 import { wrap } from "./wrapper";
 
@@ -17,6 +17,10 @@ import { wrap } from "./wrapper";
 const SubjectItem = ({classes, subject, active}) => {
     const {activeListItem, listItem} = classes;
     const className = active ? [activeListItem, listItem].join(" ") : listItem;
+    const subjectPageURL = makeURL()
+        .subjects()
+        .selectSubject(subject._id)
+        .build();
 
     return (
         <ListItem
@@ -24,7 +28,7 @@ const SubjectItem = ({classes, subject, active}) => {
             component={Link}
             className={className}
             onClick={() => document.title = `${subject.code} (${subject.name}) - Falcon`}
-            to={`/${SUBJECTS_PAGE.path}/${subject._id}`}
+            to={subjectPageURL}
         >
             <ListItemText
                 primary={subject.code}

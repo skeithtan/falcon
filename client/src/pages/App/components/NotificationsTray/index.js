@@ -8,9 +8,8 @@ import { Link } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../components/states/EmptyState";
 import { UserAvatar } from "../../../../components/UserAvatar";
+import { makeURL } from "../../../../utils/url.util";
 import { getFullName } from "../../../../utils/user.util";
-import { CHANGE_REQUESTS_TAB } from "../../../FacultyProfiles/components/faculty_detail_tabs";
-import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { wrap } from "./wrapper";
 
 
@@ -18,7 +17,7 @@ const ChangeRequestNotificationItem = ({faculty, changeRequestCount, onClose}) =
     <ListItem
         button
         component={Link}
-        to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${CHANGE_REQUESTS_TAB.path}`}
+        to={makeURL().facultyProfiles().selectFaculty(faculty._id).changeRequests().build()}
         onClick={onClose}
     >
         <Grid container spacing={16} direction="row" wrap="nowrap" alignItems="center">

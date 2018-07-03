@@ -4,8 +4,9 @@ import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
-import { OVERVIEW_TAB, TABS } from "../FacultyProfiles/components/faculty_detail_tabs";
-import { MY_PROFILE } from "../index";
+import { makeURL } from "../../utils/url.util";
+import { TABS } from "../FacultyProfiles/components/faculty_detail_tabs";
+import { MY_PROFILE_PAGE } from "../index";
 import { MyProfileHeader } from "./components/MyProfileHeader";
 import { wrap } from "./wrapper";
 
@@ -23,7 +24,7 @@ class BaseMyProfilePage extends Component {
     renderTabs = faculty => TABS.map(tab => (
         <Route
             key={tab.identifier}
-            path={`/${MY_PROFILE.path}/${tab.path}`}
+            path={`/${MY_PROFILE_PAGE.path}/${tab.path}`}
             render={() => React.createElement(tab.component, {
                 faculty: faculty,
             })}
@@ -50,6 +51,10 @@ class BaseMyProfilePage extends Component {
 
     render() {
         const {classes, profile, isLoading, errors, match} = this.props;
+        const myProfileOverviewURL = makeURL()
+            .myProfile()
+            .overview();
+
         return (
             <div className={classes.myProfileContainer}>
                 <Route path={`${match.url}/:activeTab?`} component={MyProfileHeader} />
@@ -61,7 +66,7 @@ class BaseMyProfilePage extends Component {
                     <Switch>
                         {this.renderTabs(profile)}
                         <Route render={() => (
-                            <Redirect to={`/${MY_PROFILE.path}/${OVERVIEW_TAB.path}`} />
+                            <Redirect to={myProfileOverviewURL} />
                         )} />
                     </Switch>
                 </div>

@@ -2,7 +2,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { SUBJECTS_PAGE } from "../../../index";
+import { makeURL } from "../../../../utils/url.util";
 import { FacultyCard } from "../cards/FacultyCard";
 import { OverviewCard } from "../cards/OverviewCard";
 import { wrap } from "./wrapper";
@@ -26,10 +26,14 @@ class BaseSubjectsDetail extends Component {
         const activeSubject = this.getActiveSubject(subjectId);
         const subjectNotFound = !activeSubject && subjectId;
 
+        const subjectNotFoundRedirectURL = makeURL()
+            .subjects()
+            .build();
+
         return (
             <div className={classes.subjectsDetail}>
                 {subjectNotFound &&
-                <Redirect to={`/${SUBJECTS_PAGE.path}`} />
+                <Redirect to={subjectNotFoundRedirectURL} />
                 }
 
                 {activeSubject &&

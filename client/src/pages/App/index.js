@@ -90,7 +90,7 @@ class BaseApp extends Component {
                 >
                     {user && activePage.identifier !== SIGN_IN_PAGE.identifier &&
                     <Grid item>
-                        <FalconAppBar activePage={activePage}/>
+                        <FalconAppBar activePage={activePage} />
                     </Grid>
                     }
                     <Grid

@@ -5,9 +5,10 @@ import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
+import { makeURL } from "../../../../utils/url.util";
 import { getFullName } from "../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../index";
-import { OVERVIEW_TAB, TABS } from "../faculty_detail_tabs";
+import { TABS } from "../faculty_detail_tabs";
 import { wrap } from "./wrapper";
 
 
@@ -21,7 +22,6 @@ class BaseFacultyDetail extends Component {
         isLoading: false,
         errors: null,
     };
-
 
     renderSelectFacultyState = () => (
         <div className={this.props.classes.selectFacultyState}>
@@ -68,16 +68,16 @@ class BaseFacultyDetail extends Component {
     }
 
     fetchFacultyDetails = activeFaculty => {
-        const { getFacultyDetails } = this.props;
+        const {getFacultyDetails} = this.props;
 
         if (!activeFaculty) {
             // There's nothing to fetch when the faculty doesn't exist
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
             return;
         }
 
         if (facultyIsFetched(activeFaculty)) {
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
             return;
         }
 
@@ -89,19 +89,19 @@ class BaseFacultyDetail extends Component {
         getFacultyDetails(activeFaculty)
             .then(() => this.setState({
                 isLoading: false,
-                errors: null
+                errors: null,
             }))
             .catch(error => {
                 console.log("An error occurred while fetching faculty details", error);
                 this.setState({
                     isLoading: false,
-                    errors: [error.message]
+                    errors: [error.message],
                 });
             });
     };
 
     renderLoading = () => (
-        <Grid container style={{ height: "100%" }}>
+        <Grid container style={{height: "100%"}}>
             <FullPageLoadingIndicator size={100} />
         </Grid>
     );
@@ -118,13 +118,13 @@ class BaseFacultyDetail extends Component {
     );
 
     getActiveFaculty = facultyId => {
-        const { faculty: { faculties } } = this.props;
+        const {faculty: {faculties}} = this.props;
         return !facultyId ? null : faculties.find(faculty => faculty._id === facultyId);
     };
 
     render() {
-        const { match: { params: { facultyId } }, classes } = this.props;
-        const { isLoading, errors } = this.state;
+        const {match: {params: {facultyId}}, classes} = this.props;
+        const {isLoading, errors} = this.state;
 
         // We don't have a selected faculty if the URL has no facultyID
         const noSelectedFaculty = !facultyId;
@@ -136,19 +136,29 @@ class BaseFacultyDetail extends Component {
 
         const isFetched = activeFaculty ? facultyIsFetched(activeFaculty) : false;
 
+        const defaultTabURL = makeURL()
+            .facultyProfiles()
+            .selectFaculty(activeFaculty._id)
+            .overview()
+            .build();
+
+        const facultyNotFoundRedirectURL = makeURL()
+            .facultyProfiles()
+            .build();
+
         return (
             <div className={classes.facultyDetail}>
                 {activeFaculty && isFetched &&
-                    <Switch>
-                        {this.renderTabs(activeFaculty)}
-                        <Route render={() => (
-                            <Redirect to={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${OVERVIEW_TAB.path}`} />
-                        )} />
-                    </Switch>
+                <Switch>
+                    {this.renderTabs(activeFaculty)}
+                    <Route render={() => (
+                        <Redirect to={defaultTabURL} />
+                    )} />
+                </Switch>
                 }
 
                 {facultyNotFound &&
-                    <Redirect to={`/${FACULTY_PROFILES_PAGE.path}`} />
+                <Redirect to={facultyNotFoundRedirectURL} />
                 }
 
                 {noSelectedFaculty && this.renderSelectFacultyState()}
