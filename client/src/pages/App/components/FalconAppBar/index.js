@@ -18,7 +18,7 @@ class BaseFalconAppBar extends Component {
     };
 
     render() {
-        const {classes, match} = this.props;
+        const {classes, match, user} = this.props;
         const activePage = getPageFromPath(match.params.currentPage);
         
         return (
@@ -54,9 +54,11 @@ class BaseFalconAppBar extends Component {
 
                         <Grid item>
                             <Grid container spacing={8} alignItems="center">
+                                {user.permissions.REVIEW_PROFILE_CHANGE_REQUEST &&
                                 <Grid item>
                                     <NotificationsButton />
                                 </Grid>
+                                }
                                 <Grid item>
                                     <UserButton />
                                 </Grid>

@@ -32,18 +32,18 @@ export class PasswordSetupCard extends Component {
                     </Grid>
 
                     <Grid item>
-                        <SecurityIcon className={classes.cardImage} color="secondary" />
+                        <SecurityIcon className={classes.cardImage} color="primary" />
                     </Grid>
 
                     <Grid item>
-                        <Typography variant="headline">
+                        <Typography variant="headline" color="primary">
                             Hello, {fullName}!
                         </Typography>
                     </Grid>
 
                     <Grid item>
                         <Typography color="textSecondary">
-                            Your password was marked as a temporary password. For security reasons,
+                            Your password <strong>was marked as a temporary password</strong>. For security reasons,
                             we need you to set a new password.
                         </Typography>
                     </Grid>

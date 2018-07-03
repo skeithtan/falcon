@@ -13,16 +13,14 @@ export const getChangeRequestFields = objectFields => `
         ${objectFields}
 `;
 
-const normalizeChangeRequests = changeRequests => {
+export const normalizeChangeRequests = changeRequests => {
     let normalized = {};
 
     changeRequests.forEach(({faculty, ...changeRequest}) => {
         if (normalized[faculty]) {
-            normalized[faculty].changeRequests.push(changeRequest);
+            normalized[faculty].push(changeRequest);
         } else {
-            normalized[faculty] = {
-                changeRequests: [changeRequest],
-            };
+            normalized[faculty] = [changeRequest];
         }
     });
 
@@ -33,7 +31,6 @@ export const initiateFetchChangeRequests = dispatch => {
     dispatch(changeRequestsIsLoading());
     return fetchAllChangeRequests()
         .then(result => result.data.profileChangeRequests)
-        .then(changeRequests => normalizeChangeRequests(changeRequests))
         .then(changeRequests => dispatch(changeRequestIsFetched(changeRequests)))
         .catch(error => {
             console.log("An error occurred while fetching change requests", error);
@@ -45,7 +42,6 @@ export const initiateFetchMyChangeRequests = dispatch => {
     dispatch(changeRequestsIsLoading());
     return fetchMyChangeRequests()
         .then(result => result.data.myChangeRequests)
-        .then(changeRequests => normalizeChangeRequests(changeRequests))
         .then(changeRequests => dispatch(changeRequestIsFetched(changeRequests)))
         .catch(error => {
             console.log("An error occurred while fetching my change requests", error);

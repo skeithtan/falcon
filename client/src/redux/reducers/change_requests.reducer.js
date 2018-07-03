@@ -1,3 +1,4 @@
+import { normalizeChangeRequests } from "../../utils/change_request.util";
 import {
     CHANGE_REQUEST_FETCH_ERROR,
     CHANGE_REQUEST_IS_ADDED,
@@ -14,23 +15,33 @@ const initialState = {
 };
 
 export function changeRequests(state = initialState, action) {
+    const newState = {
+        ...state,
+        changeRequests: {
+            ...state.changeRequests,
+        },
+    };
+
     switch (action.type) {
         case CHANGE_REQUEST_IS_ADDED:
-            return {
-                ...state,
-                changeRequests: [...state.changeRequests, action.changeRequest],
-            };
+            if (state.changeRequests[action.facultyId]) {
+                newState.changeRequests[action.facultyId].push(action.changeRequest);
+            } else {
+                newState.changeRequests[action.facultyId] = [action.changeRequest];
+            }
+
+            return newState;
         case CHANGE_REQUEST_IS_DISMISSED:
-            return {
-                ...state,
-                changeRequests: state.changeRequests.filter(changeRequest => (
-                    changeRequest._id !== action.changeRequest._id
-                )),
-            };
+            const facultyChangeRequests = newState.changeRequests[action.facultyId];
+            newState.changeRequests[action.facultyId] = facultyChangeRequests.filter(changeRequest =>
+                changeRequest._id !== action.changeRequest._id,
+            );
+
+            return newState;
         case CHANGE_REQUEST_IS_FETCHED:
             return {
                 ...state,
-                changeRequests: action.changeRequests,
+                changeRequests: normalizeChangeRequests(action.changeRequests),
                 isLoading: false,
                 errors: null,
             };

@@ -63,12 +63,12 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    submitRequestAddExtensionWorkForm(form) {
+    submitRequestAddExtensionWorkForm(form, faculty) {
         const extensionWork = mapFormToExtensionWorkInput(form);
         return requestAddExtensionWork(extensionWork)
             .then(result => result.data.requestProfileChange.extensionWork.add)
             .then(newExtensionWork => {
-                dispatch(changeRequestIsAdded(newExtensionWork));
+                dispatch(changeRequestIsAdded(newExtensionWork, faculty._id));
                 return newExtensionWork;
             });
     },

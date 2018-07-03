@@ -9,7 +9,6 @@ import { styles } from "./styles";
 const mapStateToProps = state => ({
     changeRequests: state.changeRequests,
     faculties: state.faculty,
-    user: state.authentication.user,
 });
 
 

@@ -70,12 +70,12 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    submitRequestAddInstructionalMaterialForm(form) {
+    submitRequestAddInstructionalMaterialForm(form, faculty) {
         const instructionalMaterial = mapFormToInstructionalMaterialInput(form);
         return requestAddInstructionalMaterial(instructionalMaterial)
             .then(result => result.data.requestProfileChange.instructionalMaterial.add)
             .then(newInstructionalMaterial => {
-                dispatch(changeRequestIsAdded(newInstructionalMaterial));
+                dispatch(changeRequestIsAdded(newInstructionalMaterial, faculty._id));
                 return newInstructionalMaterial;
             });
     },

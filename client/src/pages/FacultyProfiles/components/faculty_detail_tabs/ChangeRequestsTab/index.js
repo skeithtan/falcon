@@ -106,13 +106,13 @@ class BaseChangeRequestsTab extends Component {
             changeRequests: allChangeRequests,
         } = this.props;
 
-        const changeRequests = allChangeRequests &&
-            allChangeRequests[faculty._id] &&
-            allChangeRequests[faculty._id].changeRequests;
+        const changeRequests = allChangeRequests && allChangeRequests[faculty._id];
 
         if (isLoading) {
             return this.renderLoading();
         }
+
+        console.log(changeRequests, allChangeRequests, faculty._id);
 
         return (
             <div className={classes.cardsContainer}>

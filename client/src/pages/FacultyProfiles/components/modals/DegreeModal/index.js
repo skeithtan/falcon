@@ -50,7 +50,7 @@ class BaseDegreeModal extends ModalFormComponent {
 
         return getObjectForUserType(user, {
             CLERK: () => submitAddDegreeForm(form, faculty),
-            FACULTY: () => submitRequestAddDegreeForm(form),
+            FACULTY: () => submitRequestAddDegreeForm(form, faculty),
         });
     }
 

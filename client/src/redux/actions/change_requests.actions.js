@@ -11,17 +11,19 @@ export function changeRequestIsFetched(changeRequests) {
     };
 }
 
-export function changeRequestIsAdded(changeRequest) {
+export function changeRequestIsAdded(changeRequest, facultyId) {
     return {
         type: CHANGE_REQUEST_IS_ADDED,
         changeRequest,
+        facultyId,
     };
 }
 
-export function changeRequestIsDismissed(changeRequest) {
+export function changeRequestIsDismissed(changeRequest, facultyId) {
     return {
         type: CHANGE_REQUEST_IS_DISMISSED,
         changeRequest,
+        facultyId,
     };
 }
 

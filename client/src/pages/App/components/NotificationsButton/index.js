@@ -12,7 +12,7 @@ class BaseNotificationsButton extends Component {
         anchor: null,
     };
 
-    toggleNotificationTray = (event) => this.setState({
+    toggleNotificationTray = event => this.setState({
         anchor: event === null ? null : event.currentTarget,
     });
 
@@ -31,16 +31,12 @@ class BaseNotificationsButton extends Component {
         const {anchor} = this.state;
         const {
             classes,
-            user,
             changeRequests: {
                 changeRequests: allChangeRequests,
             },
         } = this.props;
 
-        const badge = user.permissions.REVIEW_PROFILE_CHANGE_REQUEST &&
-            allChangeRequests &&
-            Object.keys(allChangeRequests).length;
-        
+        const badge = allChangeRequests && Object.keys(allChangeRequests).length;
         const withBadge = badge && badge > 0;
 
         return (

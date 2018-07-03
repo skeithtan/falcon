@@ -55,11 +55,11 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    submitRequestAddDegreeForm(form) {
+    submitRequestAddDegreeForm(form, faculty) {
         return requestAddDegree(form)
             .then(result => result.data.requestProfileChange.degree.add)
             .then(newDegree => {
-                dispatch(changeRequestIsAdded(newDegree));
+                dispatch(changeRequestIsAdded(newDegree, faculty._id));
                 return newDegree;
             });
     },

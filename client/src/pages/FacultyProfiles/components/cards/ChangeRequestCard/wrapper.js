@@ -6,10 +6,10 @@ import { rescindChangeRequest } from "../../../../../services/faculty/request_pr
 
 
 const mapDispatchToProps = dispatch => ({
-    onRescindChangeRequest(changeRequest) {
+    onRescindChangeRequest(changeRequest, faculty) {
         return rescindChangeRequest(changeRequest._id)
             .then(() => dispatch(toastIsShowing("Change request successfully rescinded")))
-            .then(() => dispatch(changeRequestIsDismissed(changeRequest)));
+            .then(() => dispatch(changeRequestIsDismissed(changeRequest, faculty._id)));
     },
 });
 

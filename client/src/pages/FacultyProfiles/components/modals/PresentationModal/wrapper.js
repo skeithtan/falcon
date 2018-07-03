@@ -71,12 +71,12 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    submitRequestAddPresentationForm(form) {
+    submitRequestAddPresentationForm(form, faculty) {
         const presentation = mapFormToPresentationInput(form);
         return requestAddPresentation(presentation)
             .then(result => result.data.requestProfileChange.presentation.add)
             .then(newPresentation => {
-                dispatch(changeRequestIsAdded(newPresentation));
+                dispatch(changeRequestIsAdded(newPresentation, faculty._id));
                 return newPresentation;
             });
     },

@@ -49,7 +49,7 @@ class BaseExtensionWorkModal extends ModalFormComponent {
         const {submitAddExtensionWorkForm, faculty, user, submitRequestAddExtensionWorkForm} = this.props;
         return getObjectForUserType(user, {
             CLERK: () => submitAddExtensionWorkForm(form, faculty),
-            FACULTY: () => submitRequestAddExtensionWorkForm(form),
+            FACULTY: () => submitRequestAddExtensionWorkForm(form, faculty),
         });
     }
 

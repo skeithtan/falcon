@@ -82,7 +82,7 @@ class BaseRecognitionModal extends ModalFormComponent {
         const {faculty, user, submitAddRecognitionForm, submitRequestAddRecognitionForm} = this.props;
         return getObjectForUserType(user, {
             CLERK: () => submitAddRecognitionForm(form, faculty),
-            FACULTY: () => submitRequestAddRecognitionForm(form),
+            FACULTY: () => submitRequestAddRecognitionForm(form, faculty),
         });
     }
 

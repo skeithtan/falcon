@@ -38,7 +38,7 @@ const BaseFacultyProfilesHeader = ({
 
     const badge = allChangeRequests &&
         allChangeRequests[activeFacultyId] &&
-        allChangeRequests[activeFacultyId].changeRequests.length;
+        allChangeRequests[activeFacultyId].length;
 
     return (
         <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>

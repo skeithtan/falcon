@@ -101,7 +101,7 @@ class BasePresentationModal extends ModalFormComponent {
         const {submitAddPresentationForm, faculty, user, submitRequestAddPresentationForm} = this.props;
         return getObjectForUserType(user, {
             CLERK: () => submitAddPresentationForm(form, faculty),
-            FACULTY: () => submitRequestAddPresentationForm(form),
+            FACULTY: () => submitRequestAddPresentationForm(form, faculty),
         });
     }
 

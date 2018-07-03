@@ -35,7 +35,7 @@ const ChangeRequestNotificationItem = ({faculty, changeRequestCount}) => (
 );
 
 const ChangeRequestNotifications = ({changeRequests, faculties}) =>
-    Object.entries(changeRequests).map(([facultyId, {changeRequests: facultyChangeRequests}]) => (
+    Object.entries(changeRequests).map(([facultyId, facultyChangeRequests]) => (
         <ChangeRequestNotificationItem
             key={facultyId}
             faculty={faculties.find(faculty => faculty._id === facultyId)}
@@ -43,13 +43,7 @@ const ChangeRequestNotifications = ({changeRequests, faculties}) =>
         />
     ));
 
-const renderNotificationTrayBody = (classes, user, changeRequests, faculties) => {
-    if (!user.permissions.REVIEW_PROFILE_CHANGE_REQUEST) {
-        return (
-            <EmptyState bigMessage="No notifications found" />
-        );
-    }
-
+const renderNotificationTrayBody = (classes, changeRequests, faculties) => {
     if (changeRequests.changeRequests &&
         Object.keys(changeRequests.changeRequests).length === 0) {
         return (
@@ -65,7 +59,7 @@ const renderNotificationTrayBody = (classes, user, changeRequests, faculties) =>
         );
     }
 
-    if (user.permissions.REVIEW_PROFILE_CHANGE_REQUEST && changeRequests.changeRequests && faculties.faculties) {
+    if (changeRequests.changeRequests && faculties.faculties) {
         return (
             <ChangeRequestNotifications
                 changeRequests={changeRequests.changeRequests}
@@ -103,7 +97,6 @@ class BaseNotificationsTray extends Component {
             anchorEl,
             changeRequests,
             faculties,
-            user,
         } = this.props;
 
         return (
@@ -120,7 +113,7 @@ class BaseNotificationsTray extends Component {
                     </div>
                     <Divider />
                     <div className={classes.notificationsTrayBody}>
-                        {renderNotificationTrayBody(classes, user, changeRequests, faculties)}
+                        {renderNotificationTrayBody(classes, changeRequests, faculties)}
                     </div>
                 </div>
             </Popover>

@@ -67,12 +67,12 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    submitRequestAddRecognitionForm(form) {
+    submitRequestAddRecognitionForm(form, faculty) {
         const recognition = mapFormToRecognitionInput(form);
         return requestAddRecognition(recognition)
             .then(result => result.data.requestProfileChange.recognition.add)
             .then(newRecognition => {
-                dispatch(changeRequestIsAdded(newRecognition));
+                dispatch(changeRequestIsAdded(newRecognition, faculty._id));
                 return newRecognition;
             });
     },

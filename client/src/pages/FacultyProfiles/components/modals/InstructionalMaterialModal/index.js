@@ -102,7 +102,7 @@ class BaseInstructionalMaterialModal extends ModalFormComponent {
         const {faculty, submitAddInstructionalMaterialForm, user, submitRequestAddInstructionalMaterialForm} = this.props;
         return getObjectForUserType(user, {
             CLERK: () => submitAddInstructionalMaterialForm(form, faculty),
-            FACULTY: () => submitRequestAddInstructionalMaterialForm(form),
+            FACULTY: () => submitRequestAddInstructionalMaterialForm(form, faculty),
         });
     }
 

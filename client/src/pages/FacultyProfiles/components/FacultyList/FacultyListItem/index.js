@@ -27,7 +27,7 @@ const BaseFacultyListItem = ({
 
     const badge = allChangeRequests &&
         allChangeRequests[faculty._id] &&
-        allChangeRequests[faculty._id].changeRequests.length;
+        allChangeRequests[faculty._id].length;
 
     const withBadge = badge && badge > 0;
 

@@ -106,7 +106,7 @@ const BaseChangeRequestCard = ({
             user={user}
             approveChangeRequest={() => approveChangeRequest()}
             rejectChangeRequest={() => rejectChangeRequest()}
-            rescindChangeRequest={() => onRescindChangeRequest(changeRequest)}
+            rescindChangeRequest={() => onRescindChangeRequest(changeRequest, faculty)}
         />
     </Card>
 );
