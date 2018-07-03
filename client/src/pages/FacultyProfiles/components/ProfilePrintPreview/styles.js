@@ -1,3 +1,5 @@
+import blueGrey from "@material-ui/core/colors/blueGrey";
+
 export const styles = theme => ({
     printPreviewModal: {
         overflowY: "scroll",
@@ -23,7 +25,7 @@ export const styles = theme => ({
         overflowY: "scroll",
         height: "100%",
         boxSizing: "border-box",
-        boxShadow: theme.shadows[24],
+        boxShadow: theme.shadows[12],
     },
     printPageContainer: {
         background: theme.palette.common.white,
@@ -40,7 +42,7 @@ export const styles = theme => ({
         background: theme.palette.common.white,
         marginBottom: theme.spacing.unit * 4,
         boxSizing: "border-box",
-        boxShadow: theme.shadows[24],
+        boxShadow: theme.shadows[12],
     },
     printPreviewBackdrop: {
         padding: theme.spacing.unit * 5,
