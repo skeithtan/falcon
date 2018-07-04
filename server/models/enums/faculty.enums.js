@@ -45,6 +45,7 @@ export const RECOGNITION_BASES = [
     "SCHOLARSHIP",
     "EXTENSION_WORK",
     "CIVIC",
+    "INSTRUCTION",
 ];
 
 export const INSTRUCTIONAL_MATERIAL_MEDIA = [
