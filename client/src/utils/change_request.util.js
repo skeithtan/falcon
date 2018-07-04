@@ -3,13 +3,15 @@ import {
     changeRequestIsFetched,
     changeRequestsIsLoading,
 } from "../redux/actions/change_requests.actions";
-import { fetchAllChangeRequests, fetchMyChangeRequests } from "../services/faculty/change_requests";
+import { fetchAllPendingChangeRequests, fetchMyChangeRequests } from "../services/faculty/change_requests";
 
 
 export const getChangeRequestFields = objectFields => `
         submitted
         faculty
         subdocumentType
+        rejectionReason
+        status
         ${objectFields}
 `;
 
@@ -29,7 +31,7 @@ export const normalizeChangeRequests = changeRequests => {
 
 export const initiateFetchChangeRequests = dispatch => {
     dispatch(changeRequestsIsLoading());
-    return fetchAllChangeRequests()
+    return fetchAllPendingChangeRequests()
         .then(result => result.data.profileChangeRequests)
         .then(changeRequests => dispatch(changeRequestIsFetched(changeRequests)))
         .catch(error => {

@@ -2,10 +2,10 @@ import gql from "graphql-tag";
 import { client } from "../../client";
 
 
-export const fetchAllChangeRequests = () => client.query({
+export const fetchAllPendingChangeRequests = () => client.query({
     query: gql`
         query {
-            profileChangeRequests
+            profileChangeRequests(status: PENDING)
         }
     `,
 });
@@ -16,17 +16,6 @@ export const fetchMyChangeRequests = () => client.query({
             myChangeRequests
         }
     `,
-});
-
-export const fetchChangeRequestsForFaculty = facultyId => client.query({
-    query: gql`
-        query($facultyId: ID!) {
-            profileChangeRequests(facultyId: $facultyId)
-        }
-    `,
-    variables: {
-        facultyId,
-    },
 });
 
 export const approveChangeRequest = _id => client.mutate({
@@ -42,15 +31,16 @@ export const approveChangeRequest = _id => client.mutate({
     },
 });
 
-export const rejectChangeRequest = _id => client.mutate({
+export const rejectChangeRequest = (_id, rejectionReason) => client.mutate({
     mutation: gql`
-        mutation($_id: ID!) {
+        mutation($_id: ID!, $rejectionReason: String!) {
             reviewProfileChangeRequest(_id: $_id) {
-                reject
+                reject(reason: $rejectionReason)
             }
         }
     `,
     variables: {
         _id,
+        rejectionReason
     },
 });
