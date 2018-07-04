@@ -53,7 +53,8 @@ class BaseMyProfilePage extends Component {
         const {classes, profile, isLoading, errors, match} = this.props;
         const myProfileOverviewURL = makeURL()
             .myProfile()
-            .overview();
+            .overview()
+            .build();
 
         return (
             <div className={classes.myProfileContainer}>
