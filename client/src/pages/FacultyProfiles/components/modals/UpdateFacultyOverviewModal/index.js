@@ -108,7 +108,7 @@ class BaseUpdateFacultyOverviewModal extends ModalFormComponent {
     get formErrors() {
         const {form} = this.state;
         const {faculties, faculty} = this.props;
-        return getFormErrors(this.state.form, faculties, faculty);
+        return getFormErrors(form, faculties, faculty);
     };
 
     get dialogActionIsDisabled() {
