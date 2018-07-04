@@ -38,7 +38,7 @@ class BaseSubjectsDetail extends Component {
 
                 {activeSubject &&
                 <div className={classes.cardsContainer}>
-                    <Grid container spacing={16} alignItems="stretch" direction="column">
+                    <Grid container spacing={16} alignItems="stretch" direction="column" wrap="nowrap">
                         <Grid item>
                             <OverviewCard subject={activeSubject} />
                         </Grid>
