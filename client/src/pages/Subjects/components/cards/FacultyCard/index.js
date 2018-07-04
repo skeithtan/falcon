@@ -55,7 +55,7 @@ class BaseFacultyCard extends Component {
 
     renderBody = subject => subject.faculties.length === 0 ?
         this.renderEmptyState() :
-        <FacultyChips subject={subject} faculties={this.props.faculties} />;
+        <FacultyChips subject={subject} faculties={this.props.faculties} user={this.props.user}/>;
 
     render() {
         const {isLoading, errors, subject, faculties} = this.props;

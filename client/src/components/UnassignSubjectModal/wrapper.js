@@ -14,10 +14,13 @@ const mapDispatchToProps = dispatch => ({
     onConfirmRemove(faculty, subject) {
         return unassignFacultyFromSubject(faculty._id, subject._id)
             .then(() => {
-                dispatch(facultyIsUpdated({
-                    ...faculty,
-                    teachingSubjects: faculty.teachingSubjects.filter(id => id !== subject._id),
-                }));
+
+                if (faculty.teachingSubjects) {
+                    dispatch(facultyIsUpdated({
+                        ...faculty,
+                        teachingSubjects: faculty.teachingSubjects.filter(id => id !== subject._id),
+                    }));
+                }
 
                 removeFacultyFromSubjects({
                     dispatch,

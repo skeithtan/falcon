@@ -16,7 +16,8 @@ const BaseFacultyChip = ({faculty, clickable, history, handleDelete, showDeleteB
     <UserChip
         user={faculty.user}
         onClick={() => onChipClick({faculty, clickable, history})}
-        onDelete={showDeleteButton ? handleDelete : null}
+        showDeleteButton={showDeleteButton}
+        handleDelete={showDeleteButton ? handleDelete : null}
     />
 );
 

@@ -27,6 +27,7 @@ export class FacultyChips extends Component {
                     <FacultyChip
                         clickable
                         faculty={faculty}
+                        showDeleteButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
                         handleDelete={() => this.setState({
                             unassignFacultyModalIsShowing: true,
                             activeFaculty: faculty,
