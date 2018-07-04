@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { CHANGE_REQUEST_STATUSES } from "./enums/faculty.enums";
 import {
     DegreeSchema,
     ExtensionWorkSchema,
@@ -9,6 +10,17 @@ import {
 
 
 const ProfileChangeRequestSchema = new Schema({
+    status: {
+        type: String,
+        enum: CHANGE_REQUEST_STATUSES,
+        required: true,
+    },
+    rejectionReason: {
+        type: String,
+        required: function () {
+            return this.status === "REJECTED";
+        },
+    },
     submitted: {
         type: Date,
         default: Date.now,

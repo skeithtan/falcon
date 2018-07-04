@@ -1,6 +1,6 @@
 type RequestReviewAction {
     approve: JSON!
-    reject: Boolean!
+    reject(reason: String!): Boolean!
 }
 
 extend type Mutation {

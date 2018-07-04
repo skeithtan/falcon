@@ -1,8 +1,16 @@
+enum ChangeRequestStatus {
+    PENDING,
+    APPROVED,
+    REJECTED
+}
+
 interface ChangeRequest {
     _id: ID!
     submitted: String!
     subdocumentType: String!
     faculty: ID!
+    status: ChangeRequestStatus!
+    rejectionReason: String
 }
 
 type DegreeChange implements ChangeRequest {
@@ -10,6 +18,8 @@ type DegreeChange implements ChangeRequest {
     submitted: String!
     subdocumentType: String!
     faculty: ID!
+    status: ChangeRequestStatus!
+    rejectionReason: String
 
     title: String!
     level: DegreeLevel!
@@ -21,6 +31,8 @@ type ExtensionWorkChange implements ChangeRequest {
     submitted: String!
     subdocumentType: String!
     faculty: ID!
+    status: ChangeRequestStatus!
+    rejectionReason: String
 
     title: String!
     roles: [String!]!
@@ -32,6 +44,8 @@ type InstructionalMaterialChange implements ChangeRequest {
     submitted: String!
     subdocumentType: String!
     faculty: ID!
+    status: ChangeRequestStatus!
+    rejectionReason: String
 
     title: String!
     medium: InstructionalMaterialMedium!
@@ -45,6 +59,8 @@ type RecognitionChange implements ChangeRequest {
     submitted: String!
     subdocumentType: String!
     faculty: ID!
+    status: ChangeRequestStatus!
+    rejectionReason: String
 
     title: String!
     basis: RecognitionBasis!
@@ -57,6 +73,8 @@ type PresentationChange implements ChangeRequest {
     submitted: String!
     subdocumentType: String!
     faculty: ID!
+    status: ChangeRequestStatus!
+    rejectionReason: String
 
     title: String!
     category: PresentationCategory!

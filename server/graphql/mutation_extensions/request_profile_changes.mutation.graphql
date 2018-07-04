@@ -24,7 +24,7 @@ type RequestChange {
     instructionalMaterial: InstructionalMaterialChanges!
     recognition: RecognitionChanges!
     presentation: PresentationChanges!
-    rescindChangeRequest(_id: ID!): Boolean!
+    deleteChangeRequest(_id: ID!): Boolean!
 }
 
 extend type Mutation {

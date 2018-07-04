@@ -1,6 +1,6 @@
 import { Faculty } from "../../models/faculty.model";
 import { ProfileChangeRequest } from "../../models/faculty_profile_changes.model";
-import { CLERK, FACULTY } from "../../models/user.model";
+import { FACULTY } from "../../models/user.model";
 import { limitAccess, NO_FACULTY } from "../../utils/user_decorator";
 import { getUserFromContext } from "../../utils/user_from_context";
 import { DoesNotExistError } from "../errors/does_not_exist.error";
@@ -13,6 +13,8 @@ const getSubdocumentFromChangeRequest = changeRequest => {
     delete subdocument.submitted;
     delete subdocument.faculty;
     delete subdocument.subdocumentType;
+    delete subdocument.rejectionReason;
+    delete subdocument.status;
 
     return subdocument;
 };
@@ -46,21 +48,35 @@ const reviewProfileChangeRequest = async (object, {_id}) => {
             collection.push(newSubdocument);
 
             await faculty.save();
-            await changeRequest.remove();
+
+            changeRequest.status = "ACCEPTED";
+            await changeRequest.save();
+
             return newSubdocument;
         },
 
-        async reject() {
-            await changeRequest.remove();
+        async reject({rejectionReason}) {
+            changeRequest.rejectionReason = rejectionReason;
+            changeRequest.status = "REJECTED";
+            await changeRequest.save();
             return true;
         },
     };
 };
 
-const profileChangeRequests = (object, {facultyId}) =>
-    facultyId ?
-        ProfileChangeRequest.find({faculty: facultyId}) :
-        ProfileChangeRequest.find();
+const profileChangeRequests = (object, {facultyId, status}) => {
+    let query = {};
+
+    if (facultyId) {
+        query.faculty = facultyId;
+    }
+
+    if (status) {
+        query.status = status;
+    }
+
+    return ProfileChangeRequest.find(query);
+};
 
 const myChangeRequests = async (object, args, context) => {
     const user = await getUserFromContext(context);

@@ -17,8 +17,9 @@ import { ValidationError } from "../errors/validation.error";
 const degreeChanges = faculty => ({
     add({newDegree}) {
         return DegreeAddRequest.create({
-            faculty: faculty._id,
             ...newDegree,
+            faculty: faculty._id,
+            status: "PENDING",
         });
     },
 });
@@ -26,8 +27,9 @@ const degreeChanges = faculty => ({
 const recognitionChanges = faculty => ({
     add({newRecognition}) {
         return RecognitionAddRequest.create({
-            faculty: faculty._id,
             ...newRecognition,
+            faculty: faculty._id,
+            status: "PENDING",
         });
     },
 });
@@ -35,8 +37,9 @@ const recognitionChanges = faculty => ({
 const presentationChanges = faculty => ({
     add({newPresentation}) {
         return PresentationAddRequest.create({
-            faculty: faculty._id,
             ...newPresentation,
+            faculty: faculty._id,
+            status: "PENDING",
         });
     },
 });
@@ -44,8 +47,9 @@ const presentationChanges = faculty => ({
 const instructionalMaterialChanges = faculty => ({
     add({newInstructionalMaterial}) {
         return InstructionalMaterialAddRequest.create({
-            faculty: faculty._id,
             ...newInstructionalMaterial,
+            faculty: faculty._id,
+            status: "PENDING",
         });
     },
 });
@@ -53,13 +57,14 @@ const instructionalMaterialChanges = faculty => ({
 const extensionWorkChanges = faculty => ({
     add({newExtensionWork}) {
         return ExtensionWorkAddRequest.create({
-            faculty: faculty._id,
             ...newExtensionWork,
+            faculty: faculty._id,
+            status: "PENDING",
         });
     },
 });
 
-const rescindChangeRequest = faculty => async ({_id}) => {
+const deleteChangeRequest = faculty => async ({_id}) => {
     const changeRequest = await ProfileChangeRequest.findById(_id);
     if (!changeRequest) {
         throw new DoesNotExistError(`Change Request of ID ${_id} does not exist`);
@@ -84,7 +89,7 @@ async function requestProfileChanges(object, args, context) {
         recognition: recognitionChanges(faculty),
         instructionalMaterial: instructionalMaterialChanges(faculty),
         presentation: presentationChanges(faculty),
-        rescindChangeRequest: rescindChangeRequest(faculty),
+        deleteChangeRequest: deleteChangeRequest(faculty),
     };
 }
 

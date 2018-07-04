@@ -68,3 +68,9 @@ export const STUDENT_LEVELS = [
     "3",
     "4",
 ];
+
+export const CHANGE_REQUEST_STATUSES = [
+    "PENDING",
+    "ACCEPTED",
+    "REJECTED",
+];
