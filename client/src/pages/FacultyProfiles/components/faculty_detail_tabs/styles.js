@@ -9,4 +9,8 @@ export const styles = theme => ({
     expansionCardsContainer: {
         ...pageContainer(theme),
     },
+    changeRequestsContainer: {
+        maxWidth: 800,
+        margin: "auto",
+    },
 });
