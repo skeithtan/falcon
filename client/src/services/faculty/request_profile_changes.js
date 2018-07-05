@@ -93,11 +93,11 @@ export const requestAddExtensionWork = newExtensionWork => client.mutate({
     },
 });
 
-export const rescindChangeRequest = _id => client.mutate({
+export const deleteChangeRequest = _id => client.mutate({
     mutation: gql`
         mutation($_id: ID!) {
             requestProfileChange {
-                rescindChangeRequest(_id: $_id)
+                deleteChangeRequest(_id: $_id)
             }
         }
     `,

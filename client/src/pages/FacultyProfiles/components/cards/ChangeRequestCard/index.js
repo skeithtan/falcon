@@ -8,7 +8,7 @@ import React from "react";
 import { UserAvatar } from "../../../../../components/UserAvatar";
 import { SUBDOCUMENT_TYPE } from "../../../../../enums/faculty.enums";
 import { getFullName, getObjectForUserType } from "../../../../../utils/user.util";
-import { ChangeRequestRescindAction } from "./actions/ChangeRequestRescindActions";
+import { ChangeRequestWithdrawAction } from "./actions/ChangeRequestWithdrawActions";
 import { ChangeRequestReviewActions } from "./actions/ChangeRequestReviewAction";
 import {
     DegreeFields,
@@ -67,7 +67,7 @@ const ChangeRequestBody = ({changeRequest}) => {
     }
 };
 
-const ChangeRequestCardFooter = ({user, approveChangeRequest, rejectChangeRequest, rescindChangeRequest}) => {
+const ChangeRequestCardFooter = ({user, approveChangeRequest, rejectChangeRequest, deleteChangeRequest}) => {
     const administrativeActions = (
         <ChangeRequestReviewActions
             approveChangeRequest={approveChangeRequest}
@@ -76,8 +76,8 @@ const ChangeRequestCardFooter = ({user, approveChangeRequest, rejectChangeReques
     );
 
     const facultyActions = (
-        <ChangeRequestRescindAction
-            rescindChangeRequest={rescindChangeRequest}
+        <ChangeRequestWithdrawAction
+            deleteChangeRequest={deleteChangeRequest}
         />
     );
 
@@ -95,7 +95,7 @@ const BaseChangeRequestCard = ({
     changeRequest,
     approveChangeRequest,
     rejectChangeRequest,
-    onRescindChangeRequest,
+    onDeleteChangeRequest,
 }) => (
     <Card>
         <ChangeRequestTopBar faculty={faculty} changeRequest={changeRequest} />
@@ -106,7 +106,7 @@ const BaseChangeRequestCard = ({
             user={user}
             approveChangeRequest={() => approveChangeRequest()}
             rejectChangeRequest={() => rejectChangeRequest()}
-            rescindChangeRequest={() => onRescindChangeRequest(changeRequest, faculty)}
+            deleteChangeRequest={() => onDeleteChangeRequest(changeRequest, faculty)}
         />
     </Card>
 );

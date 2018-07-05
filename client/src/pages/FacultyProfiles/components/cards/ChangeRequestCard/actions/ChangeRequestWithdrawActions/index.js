@@ -7,25 +7,25 @@ import RejectIcon from "@material-ui/icons/Close";
 import React, { Component } from "react";
 
 
-export class ChangeRequestRescindAction extends Component {
+export class ChangeRequestWithdrawAction extends Component {
     state = {
         isSubmitting: false,
         error: null,
     };
 
-    rescindChangeRequest = () => {
-        const {rescindChangeRequest} = this.props;
+    deleteChangeRequest = () => {
+        const {deleteChangeRequest} = this.props;
         this.setState({
             isSubmitting: true,
         });
 
-        rescindChangeRequest()
+        deleteChangeRequest()
             .catch(error => {
                 this.setState({
                     isSubmitting: false,
                     error: error.message,
                 });
-                console.log("An error occurred while rescinding change request", error);
+                console.log("An error occurred while withdrawing change request", error);
             });
     };
 
@@ -37,11 +37,11 @@ export class ChangeRequestRescindAction extends Component {
                     size="small"
                     color="primary"
                     disabled={this.state.isSubmitting}
-                    onClick={this.rescindChangeRequest}
+                    onClick={this.deleteChangeRequest}
                 >
                     <Grid container spacing={8} alignItems="center">
                         <Grid item>
-                            Rescind
+                            Withdraw
                         </Grid>
                         <Grid item>
                             <RejectIcon />
