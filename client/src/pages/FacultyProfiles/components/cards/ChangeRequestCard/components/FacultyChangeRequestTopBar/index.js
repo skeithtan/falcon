@@ -4,7 +4,6 @@ import Typography from "@material-ui/core/Typography";
 import ApprovedIcon from "@material-ui/icons/Check";
 import PendingIcon from "@material-ui/icons/ChromeReaderMode";
 import RejectedIcon from "@material-ui/icons/Close";
-import moment from "moment";
 import React from "react";
 import { SUBDOCUMENT_TYPE } from "../../../../../../../enums/faculty.enums";
 import { CHANGE_REQUEST_STATUSES } from "../../../../../../../enums/review_profile_change.enums";
@@ -29,24 +28,24 @@ const getBackgroundClass = (changeRequest, classes) => {
 const getIcon = (changeRequest, classes) => {
     switch (changeRequest.status) {
         case PENDING.identifier:
-            return <PendingIcon className={classes.icon}/>;
+            return <PendingIcon className={classes.icon} />;
         case APPROVED.identifier:
-            return <ApprovedIcon className={classes.icon}/>;
+            return <ApprovedIcon className={classes.icon} />;
         case REJECTED.identifier:
-            return <RejectedIcon className={classes.icon}/>;
+            return <RejectedIcon className={classes.icon} />;
         default:
             throw new Error(`Error: Attempted to get icon for unknown change request status ${changeRequest.status}`);
     }
 };
 
 const renderPendingMessage = () => (
-    <Typography variant="subheading">
+    <Typography>
         This change request is <strong>pending</strong> and is awaiting review.
     </Typography>
 );
 
 const renderApprovedMessage = () => (
-    <Typography variant="subheading">
+    <Typography>
         This change request has been <strong>approved</strong>.
     </Typography>
 );
@@ -54,7 +53,7 @@ const renderApprovedMessage = () => (
 const renderRejectedMessage = rejectionReason => (
     <Grid container direction="column" spacing={8}>
         <Grid item>
-            <Typography variant="subheading">
+            <Typography>
                 This change request has been <strong>rejected</strong>.
             </Typography>
         </Grid>
@@ -71,51 +70,35 @@ const renderRejectedMessage = rejectionReason => (
 );
 
 const BaseFacultyChangeRequestTopBar = ({changeRequest, classes}) => {
-    const submitted = moment(changeRequest.submitted).fromNow();
     const subdocumentType = SUBDOCUMENT_TYPE[changeRequest.subdocumentType].name;
     const backgroundClass = getBackgroundClass(changeRequest, classes);
 
     return (
         <Toolbar className={`${backgroundClass} ${classes.topBar}`}>
-            <Grid container direction="column">
+            <Grid container spacing={16} direction="row" alignItems="center">
+
                 <Grid item>
-                    <Grid container direction="row" justify="space-between" alignItems="center">
+                    {getIcon(changeRequest, classes)}
+                </Grid>
+
+                <Grid item>
+                    <Grid container direction="column">
                         <Grid item>
-
-                            <Grid container spacing={16} direction="row" alignItems="center">
-
-                                <Grid item>
-                                    {getIcon(changeRequest, classes)}
-                                </Grid>
-
-                                <Grid item>
-                                    <Grid container direction="column">
-                                        <Grid item>
-                                            <Typography>
-                                                <strong>You</strong> submitted a change request to add
-                                                this <strong>{subdocumentType}</strong>.
-                                            </Typography>
-                                        </Grid>
-
-                                        <Grid item>
-                                            {changeRequest.status === PENDING.identifier && renderPendingMessage()}
-                                            {changeRequest.status === APPROVED.identifier && renderApprovedMessage()}
-                                            {changeRequest.status === REJECTED.identifier && renderRejectedMessage(
-                                                changeRequest.rejectionReason)}
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-
-                            </Grid>
+                            <Typography>
+                                <strong>You</strong> submitted a change request to add
+                                this <strong>{subdocumentType}</strong>.
+                            </Typography>
                         </Grid>
 
                         <Grid item>
-                            <Typography color="textSecondary">
-                                {submitted}
-                            </Typography>
+                            {changeRequest.status === PENDING.identifier && renderPendingMessage()}
+                            {changeRequest.status === APPROVED.identifier && renderApprovedMessage()}
+                            {changeRequest.status === REJECTED.identifier && renderRejectedMessage(
+                                changeRequest.rejectionReason)}
                         </Grid>
                     </Grid>
                 </Grid>
+
             </Grid>
         </Toolbar>
     );

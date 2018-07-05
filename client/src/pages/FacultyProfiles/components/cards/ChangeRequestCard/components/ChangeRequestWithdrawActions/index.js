@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import RejectIcon from "@material-ui/icons/Close";
 import React, { Component } from "react";
+import { CHANGE_REQUEST_STATUSES } from "../../../../../../../enums/review_profile_change.enums";
 
 
 export class ChangeRequestWithdrawAction extends Component {
@@ -41,8 +42,12 @@ export class ChangeRequestWithdrawAction extends Component {
                 >
                     <Grid container spacing={8} alignItems="center">
                         <Grid item>
-                            Withdraw
+                            {
+                                this.props.changeRequestStatus === CHANGE_REQUEST_STATUSES.PENDING.identifier ?
+                                    "Withdraw" : "Dismiss"
+                            }
                         </Grid>
+
                         <Grid item>
                             <RejectIcon />
                         </Grid>

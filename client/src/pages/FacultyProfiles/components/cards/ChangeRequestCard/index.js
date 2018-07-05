@@ -33,7 +33,13 @@ const ChangeRequestBody = ({changeRequest}) => {
     }
 };
 
-const ChangeRequestCardFooter = ({user, approveChangeRequest, rejectChangeRequest, deleteChangeRequest}) => {
+const ChangeRequestCardFooter = ({
+    user,
+    approveChangeRequest,
+    rejectChangeRequest,
+    deleteChangeRequest,
+    changeRequestStatus,
+}) => {
     const administrativeActions = (
         <ChangeRequestReviewActions
             approveChangeRequest={approveChangeRequest}
@@ -43,6 +49,7 @@ const ChangeRequestCardFooter = ({user, approveChangeRequest, rejectChangeReques
 
     const facultyActions = (
         <ChangeRequestWithdrawAction
+            changeRequestStatus={changeRequestStatus}
             deleteChangeRequest={deleteChangeRequest}
         />
     );
@@ -63,13 +70,12 @@ const BaseChangeRequestCard = ({
     rejectChangeRequest,
     onDeleteChangeRequest,
 }) => {
-
     const administrativeTopBar = (
-        <AdministrativeChangeRequestTopBar changeRequest={changeRequest} faculty={faculty}/>
+        <AdministrativeChangeRequestTopBar changeRequest={changeRequest} faculty={faculty} />
     );
 
     const facultyTopBar = (
-        <FacultyChangeRequestTopBar changeRequest={changeRequest}/>
+        <FacultyChangeRequestTopBar changeRequest={changeRequest} />
     );
 
     const topBar = getObjectForUserType(user, {
@@ -87,6 +93,7 @@ const BaseChangeRequestCard = ({
 
             <ChangeRequestCardFooter
                 user={user}
+                changeRequestStatus={changeRequest.status}
                 approveChangeRequest={() => approveChangeRequest()}
                 rejectChangeRequest={() => rejectChangeRequest()}
                 deleteChangeRequest={() => onDeleteChangeRequest(changeRequest, faculty)}
