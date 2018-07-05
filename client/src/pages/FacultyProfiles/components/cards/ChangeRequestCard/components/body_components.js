@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
-import { DEGREE, INSTRUCTIONAL_MATERIAL, PRESENTATION, RECOGNITION } from "../../../../../enums/faculty.enums";
-import { formatMonthYearDate } from "../../../../../utils/faculty.util";
-import { ExtensionWorkRoles } from "../../faculty_detail_tabs/ExtensionWorksTab";
+import { FormDisplayListItem } from "../../../../../../components/FormDisplayListItem/index";
+import { DEGREE, INSTRUCTIONAL_MATERIAL, PRESENTATION, RECOGNITION } from "../../../../../../enums/faculty.enums";
+import { formatMonthYearDate } from "../../../../../../utils/faculty.util";
+import { ExtensionWorkRoles } from "../../../faculty_detail_tabs/ExtensionWorksTab/index";
 
 
 export const DegreeFields = ({changeRequest: degree}) => (

@@ -1,3 +1,4 @@
+import { CHANGE_REQUEST_STATUSES } from "../../enums/review_profile_change.enums";
 import { normalizeChangeRequests } from "../../utils/change_request.util";
 import {
     CHANGE_REQUEST_FETCH_ERROR,
@@ -30,6 +31,9 @@ export function changeRequests(state = initialState, action) {
                     ...state.changeRequests,
                 },
             };
+
+            // Set default status to PENDING
+            action.changeRequest.status = CHANGE_REQUEST_STATUSES.PENDING.identifier;
 
             if (state.changeRequests[action.facultyId]) {
                 newState.changeRequests[action.facultyId].push(action.changeRequest);
