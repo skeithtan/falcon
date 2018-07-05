@@ -49,7 +49,7 @@ const reviewProfileChangeRequest = async (object, {_id}) => {
 
             await faculty.save();
 
-            changeRequest.status = "ACCEPTED";
+            changeRequest.status = "APPROVED";
             await changeRequest.save();
 
             return newSubdocument;
