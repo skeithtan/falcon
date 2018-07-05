@@ -1,4 +1,4 @@
-import Grid from "@material-ui/core/es/Grid";
+import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";

@@ -22,9 +22,9 @@ class BaseFalconAppBar extends Component {
         return (
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar className={classes.toolbar} disableGutters>
-                    <Grid container justify="space-between" alignItems="center">
+                    <Grid container justify="space-between" alignItems="center" wrap="nowrap">
                         <Grid item>
-                            <Grid container alignItems="center">
+                            <Grid container alignItems="center" wrap="nowrap">
                                 <Grid item>
                                     <IconButton
                                         color="inherit"
@@ -51,7 +51,7 @@ class BaseFalconAppBar extends Component {
                         </Grid>
 
                         <Grid item>
-                            <Grid container spacing={8} alignItems="center">
+                            <Grid container spacing={8} alignItems="center" wrap="nowrap">
                                 {user.permissions.REVIEW_PROFILE_CHANGE_REQUEST &&
                                 <Grid item>
                                     <NotificationsButton />
