@@ -22,17 +22,13 @@ class BaseDegreeCard extends Component {
         removeDegreeModalIsShowing: false,
     };
 
-    toggleDegreeFormModal = shouldShow => {
-        this.setState({
-            degreeModalIsShowing: shouldShow,
-        });
-    };
+    toggleDegreeFormModal = shouldShow => this.setState({
+        degreeModalIsShowing: shouldShow,
+    });
 
-    toggleRemoveDegreeModal = shouldShow => {
-        this.setState({
-            removeDegreeModalIsShowing: shouldShow,
-        });
-    };
+    toggleRemoveDegreeModal = shouldShow => this.setState({
+        removeDegreeModalIsShowing: shouldShow,
+    });
 
     renderRows = degrees => degrees.map(degree =>
         <TableRow key={degree._id}>
