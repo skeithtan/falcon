@@ -62,7 +62,7 @@ export class ChangeRequestWithdrawAction extends Component {
 
         return (
             <Toolbar>
-                <Grid container alignItems="center" justify="space-between">
+                <Grid container alignItems="center" justify="space-between" wrap="nowrap">
 
                     <Grid item>
                         <Grid container spacing={8} alignItems="center">
