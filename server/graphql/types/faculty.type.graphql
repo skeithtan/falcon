@@ -92,7 +92,8 @@ enum Employment {
     FULL_TIME_TEMPORARY,
     PART_TIME,
     ADJUNCT,
-    INACTIVE
+    ON_LEAVE,
+    TERMINATED
 }
 
 type Faculty {
