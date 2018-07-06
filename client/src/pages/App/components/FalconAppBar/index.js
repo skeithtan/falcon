@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
-import { NotificationsButton } from "../NotificationsButton";
+import { NotificationsButton } from "../notifications/NotificationsButton";
 import { PageDrawer } from "../PageDrawer/index";
 import { UserButton } from "../UserButton/index";
 import { wrap } from "./wrapper";
@@ -52,11 +52,9 @@ class BaseFalconAppBar extends Component {
 
                         <Grid item>
                             <Grid container spacing={8} alignItems="center" wrap="nowrap">
-                                {user.permissions.REVIEW_PROFILE_CHANGE_REQUEST &&
                                 <Grid item>
                                     <NotificationsButton />
                                 </Grid>
-                                }
                                 <Grid item>
                                     <UserButton />
                                 </Grid>
