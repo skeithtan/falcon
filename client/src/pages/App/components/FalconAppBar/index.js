@@ -17,7 +17,7 @@ class BaseFalconAppBar extends Component {
     };
 
     render() {
-        const {classes, activePage, user} = this.props;
+        const {classes, activePage} = this.props;
 
         return (
             <AppBar position="static" className={classes.appBar}>

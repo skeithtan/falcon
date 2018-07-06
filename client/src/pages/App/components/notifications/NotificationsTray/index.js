@@ -4,21 +4,32 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator/index";
+import { EmptyState } from "../../../../../components/states/EmptyState";
+import { getObjectForUserType } from "../../../../../utils/user.util";
 import { wrap } from "./wrapper";
 
 
 class BaseNotificationsTray extends Component {
     componentDidMount() {
         const {
+            user,
             faculties,
             changeRequests,
             fetchAllFaculties,
-            fetchChangeRequests,
+            fetchAllChangeRequests,
+            fetchMyChangeRequests,
         } = this.props;
 
         if (!faculties.faculties && !faculties.isLoading) {
             fetchAllFaculties();
         }
+
+        const fetchChangeRequests = getObjectForUserType(user, {
+            DEAN: fetchAllChangeRequests,
+            ASSOCIATE_DEAN: fetchAllChangeRequests,
+            CLERK: fetchAllChangeRequests,
+            FACULTY: fetchMyChangeRequests,
+        });
 
         if (!changeRequests.changeRequests && !changeRequests.changeRequests) {
             fetchChangeRequests();
@@ -59,6 +70,9 @@ class BaseNotificationsTray extends Component {
                         }
 
                         {!isLoading && notifications.map(notification => notification(onClose))}
+                        {!isLoading && notifications.length === 0 &&
+                        <EmptyState bigMessage="No notifications found" />
+                        }
                     </div>
                 </div>
             </Popover>
