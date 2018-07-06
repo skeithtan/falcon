@@ -1,4 +1,4 @@
-import { badge } from "../../../../components/styles";
+import { badge } from "../../../../../components/styles";
 
 
 export const styles = theme => ({

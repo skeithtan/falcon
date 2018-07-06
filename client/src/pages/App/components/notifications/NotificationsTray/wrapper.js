@@ -1,8 +1,8 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { initiateFetchChangeRequests } from "../../../../utils/change_request.util";
-import { initiateFetchAllFacultiesSummary } from "../../../../utils/faculty.util";
+import { initiateFetchChangeRequests } from "../../../../../utils/change_request.util";
+import { initiateFetchAllFacultiesSummary } from "../../../../../utils/faculty.util";
 import { styles } from "./styles";
 
 

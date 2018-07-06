@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import React, { Component, Fragment } from "react";
-import { NotificationsTray } from "../NotificationsTray";
+import { NotificationsTray } from "../NotificationsTray/index";
 import { wrap } from "./wrapper";
 
 
@@ -31,18 +31,15 @@ class BaseNotificationsButton extends Component {
         const {anchor} = this.state;
         const {
             classes,
-            changeRequests: {
-                changeRequests: allChangeRequests,
-            },
+            notifications,
         } = this.props;
 
-        const badge = allChangeRequests && Object.keys(allChangeRequests).length;
-        const withBadge = badge && badge > 0;
+        const withBadge = notifications.notifications.length > 0;
 
         return (
             <Fragment>
                 {withBadge ?
-                    <Badge badgeContent={badge} classes={{badge: classes.badge}}>
+                    <Badge badgeContent={notifications.notifications.length} classes={{badge: classes.badge}}>
                         {this.renderNotificationButton()}
                     </Badge> :
                     this.renderNotificationButton()
@@ -52,6 +49,7 @@ class BaseNotificationsButton extends Component {
                     open={Boolean(anchor)}
                     onClose={() => this.toggleNotificationTray(null)}
                     anchorEl={anchor}
+                    notifications={notifications}
                 />
             </Fragment>
         );
