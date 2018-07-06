@@ -39,27 +39,27 @@ const getIcon = (changeRequest, classes) => {
 };
 
 const renderPendingMessage = () => (
-    <Typography>
+    <Typography variant="subheading">
         This change request is <strong>pending</strong> and is awaiting review.
     </Typography>
 );
 
 const renderApprovedMessage = () => (
-    <Typography>
+    <Typography variant="subheading">
         This change request has been <strong>approved</strong>.
     </Typography>
 );
 
 const renderRejectedMessage = rejectionReason => (
-    <Grid container direction="column" spacing={8}>
+    <Grid container direction="column" spacing={16}>
         <Grid item>
-            <Typography>
+            <Typography variant="subheading">
                 This change request has been <strong>rejected</strong>.
             </Typography>
         </Grid>
         <Grid item>
-            <Typography variant="body2">
-                The following reason was given:
+            <Typography variant="caption">
+                <strong>The following reason was given:</strong>
             </Typography>
 
             <Typography variant="body1">
@@ -75,7 +75,7 @@ const BaseFacultyChangeRequestTopBar = ({changeRequest, classes}) => {
 
     return (
         <Toolbar className={`${backgroundClass} ${classes.topBar}`}>
-            <Grid container spacing={16} direction="row" alignItems="center">
+            <Grid container spacing={16} direction="row" alignItems="center" wrap="nowrap">
 
                 <Grid item>
                     {getIcon(changeRequest, classes)}
@@ -84,7 +84,7 @@ const BaseFacultyChangeRequestTopBar = ({changeRequest, classes}) => {
                 <Grid item>
                     <Grid container direction="column">
                         <Grid item>
-                            <Typography>
+                            <Typography variant="caption">
                                 <strong>You</strong> submitted a change request to add
                                 this <strong>{subdocumentType}</strong>.
                             </Typography>
