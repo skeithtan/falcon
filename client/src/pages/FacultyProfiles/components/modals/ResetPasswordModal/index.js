@@ -11,7 +11,7 @@ import StepContent from "@material-ui/core/StepContent";
 import StepLabel from "@material-ui/core/StepLabel";
 import Stepper from "@material-ui/core/Stepper";
 import Typography from "@material-ui/core/Typography";
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { resetFacultyPassword } from "../../../../../services/faculty/faculty";
 import { getPossessivePronoun } from "../../../../../utils/faculty.util";
 import { generateTemporaryPassword, getFullName } from "../../../../../utils/user.util";
@@ -32,52 +32,61 @@ const steps = [
     },
 ];
 
-const ResetConfirmation = ({faculty, errors}) => {
-    const fullName = getFullName(faculty.user);
-    const possessivePronoun = getPossessivePronoun(faculty);
+class ResetConfirmation extends PureComponent {
+    render() {
+        const {faculty, errors} = this.props;
+        const fullName = getFullName(faculty.user);
+        const possessivePronoun = getPossessivePronoun(faculty);
 
-    return (
-        <DialogContentText>
-            Are you sure you want to reset <b>{fullName}</b>'s password? {fullName} won't
-            be able to sign in to {possessivePronoun} account
-            again with {possessivePronoun} old password.
+        return (
+            <DialogContentText>
+                Are you sure you want to reset <b>{fullName}</b>'s password? {fullName} won't
+                be able to sign in to {possessivePronoun} account
+                again with {possessivePronoun} old password.
 
-            {errors &&
-            <Typography color="error">
-                An error occurred: {errors}
-            </Typography>
-            }
-        </DialogContentText>
-    );
-};
+                {errors &&
+                <Typography color="error">
+                    An error occurred: {errors}
+                </Typography>
+                }
+            </DialogContentText>
+        );
+    }
+}
 
-const ResettingStep = ({faculty}) => {
-    const fullName = getFullName(faculty.user);
-    return (
-        <Grid container spacing={16} direction="column">
-            <Grid item>
-                <DialogContentText>
-                    Resetting <b>{fullName}</b>'s password
-                </DialogContentText>
+class ResettingStep extends PureComponent {
+    render() {
+        const {faculty} = this.props;
+        const fullName = getFullName(faculty.user);
+        return (
+            <Grid container spacing={16} direction="column">
+                <Grid item>
+                    <DialogContentText>
+                        Resetting <b>{fullName}</b>'s password
+                    </DialogContentText>
+                </Grid>
+                <Grid item>
+                    <CircularProgress size={50} />
+                </Grid>
             </Grid>
-            <Grid item>
-                <CircularProgress size={50} />
-            </Grid>
-        </Grid>
-    );
-};
+        );
+    }
+}
 
-const ResetSuccess = ({faculty, newPassword}) => {
-    const fullName = getFullName(faculty.user);
+class ResetSuccess extends PureComponent {
+    render() {
+        const {faculty, newPassword} = this.props;
+        const fullName = getFullName(faculty.user);
 
-    return (
-        <DialogContentText>
-            <b>{fullName}</b>'s password has been reset. The new password is <b>{newPassword}</b>.
-            Keep this password elsewhere because once this dialog is dismissed, it can never be viewed
-            again.
-        </DialogContentText>
-    );
-};
+        return (
+            <DialogContentText>
+                <b>{fullName}</b>'s password has been reset. The new password is <b>{newPassword}</b>.
+                Keep this password elsewhere because once this dialog is dismissed, it can never be viewed
+                again.
+            </DialogContentText>
+        );
+    }
+}
 
 export class ResetPasswordModal extends Component {
     state = {

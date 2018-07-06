@@ -1,6 +1,6 @@
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
-import React from "react";
+import React, { PureComponent } from "react";
 import { getObjectForUserType } from "../../../../../utils/user.util";
 import { AdministrativeChangeRequestTopBar } from "./components/AdministrativeChangeRequestTopBar";
 import {
@@ -16,91 +16,91 @@ import { FacultyChangeRequestTopBar } from "./components/FacultyChangeRequestTop
 import { wrap } from "./wrapper";
 
 
-const ChangeRequestBody = ({changeRequest}) => {
-    switch (changeRequest.subdocumentType) {
-        case "Degree":
-            return <DegreeFields changeRequest={changeRequest} />;
-        case "Recognition":
-            return <RecognitionFields changeRequest={changeRequest} />;
-        case "Presentation":
-            return <PresentationFields changeRequest={changeRequest} />;
-        case "InstructionalMaterial":
-            return <InstructionalMaterialFields changeRequest={changeRequest} />;
-        case "ExtensionWork":
-            return <ExtensionWorkFields changeRequest={changeRequest} />;
-        default:
-            throw new Error(`Attempted to render change request body for unknown subdocument type ${changeRequest.subdocumentType}`);
+class ChangeRequestBody extends PureComponent {
+    render() {
+        const { changeRequest } = this.props;
+        switch (changeRequest.subdocumentType) {
+            case "Degree":
+                return <DegreeFields changeRequest={changeRequest} />;
+            case "Recognition":
+                return <RecognitionFields changeRequest={changeRequest} />;
+            case "Presentation":
+                return <PresentationFields changeRequest={changeRequest} />;
+            case "InstructionalMaterial":
+                return <InstructionalMaterialFields changeRequest={changeRequest} />;
+            case "ExtensionWork":
+                return <ExtensionWorkFields changeRequest={changeRequest} />;
+            default:
+                throw new Error(`Attempted to render change request body for unknown subdocument type ${changeRequest.subdocumentType}`);
+        }
     }
-};
+}
 
-const ChangeRequestCardFooter = ({
-    user,
-    approveChangeRequest,
-    rejectChangeRequest,
-    deleteChangeRequest,
-    changeRequestStatus,
-}) => {
-    const administrativeFooter = (
+class ChangeRequestCardFooter extends PureComponent {
+    renderAdministrativeFooter = () => (
         <ChangeRequestAdministrativeFooter
-            approveChangeRequest={approveChangeRequest}
-            rejectChangeRequest={rejectChangeRequest}
-            changeRequestStatus={changeRequestStatus}
+            approveChangeRequest={this.props.approveChangeRequest}
+            rejectChangeRequest={this.props.rejectChangeRequest}
+            changeRequestStatus={this.props.changeRequestStatus}
         />
     );
 
-    const facultyActions = (
+    renderFacultyFooter = () => (
         <ChangeRequestFacultyFooter
-            changeRequestStatus={changeRequestStatus}
-            deleteChangeRequest={deleteChangeRequest}
+            changeRequestStatus={this.props.changeRequestStatus}
+            deleteChangeRequest={this.props.deleteChangeRequest}
         />
     );
 
-    return getObjectForUserType(user, {
-        CLERK: administrativeFooter,
-        DEAN: administrativeFooter,
-        ASSOCIATE_DEAN: administrativeFooter,
-        FACULTY: facultyActions,
-    });
-};
+    render() {
+        const { user } = this.props;
+        console.log("Hey");
 
-const BaseChangeRequestCard = ({
-    user,
-    faculty,
-    changeRequest,
-    approveChangeRequest,
-    rejectChangeRequest,
-    onDeleteChangeRequest,
-}) => {
-    const administrativeTopBar = (
-        <AdministrativeChangeRequestTopBar changeRequest={changeRequest} faculty={faculty} />
+        return getObjectForUserType(user, {
+            CLERK: this.renderAdministrativeFooter,
+            DEAN: this.renderAdministrativeFooter,
+            ASSOCIATE_DEAN: this.renderAdministrativeFooter,
+            FACULTY: this.renderFacultyFooter,
+        })();
+    }
+}
+
+
+class BaseChangeRequestCard extends PureComponent {
+    renderAdministrativeTopBar = () => (
+        <AdministrativeChangeRequestTopBar changeRequest={this.props.changeRequest} faculty={this.props.faculty} />
     );
 
-    const facultyTopBar = (
-        <FacultyChangeRequestTopBar changeRequest={changeRequest} />
+    renderFacultyTopBar = () => (
+        <FacultyChangeRequestTopBar changeRequest={this.props.changeRequest} />
     );
 
-    const topBar = getObjectForUserType(user, {
-        CLERK: administrativeTopBar,
-        DEAN: administrativeTopBar,
-        ASSOCIATE_DEAN: administrativeTopBar,
-        FACULTY: facultyTopBar,
-    });
+    render() {
+        const { changeRequest, faculty, user, approveChangeRequest, rejectChangeRequest, onDeleteChangeRequest } = this.props;
+        const renderTopBar = getObjectForUserType(user, {
+            CLERK: this.renderAdministrativeTopBar,
+            DEAN: this.renderAdministrativeTopBar,
+            ASSOCIATE_DEAN: this.renderAdministrativeTopBar,
+            FACULTY: this.renderFacultyTopBar,
+        });
 
-    return (
-        <Card>
-            {topBar}
-            <Divider />
-            <ChangeRequestBody changeRequest={changeRequest} />
+        return (
+            <Card>
+                {renderTopBar()}
+                <Divider />
+                <ChangeRequestBody changeRequest={changeRequest} />
 
-            <ChangeRequestCardFooter
-                user={user}
-                changeRequestStatus={changeRequest.status}
-                approveChangeRequest={() => approveChangeRequest()}
-                rejectChangeRequest={rejectionReason => rejectChangeRequest(rejectionReason)}
-                deleteChangeRequest={() => onDeleteChangeRequest(changeRequest, faculty)}
-            />
-        </Card>
-    );
-};
+                <ChangeRequestCardFooter
+                    user={user}
+                    changeRequestStatus={changeRequest.status}
+                    approveChangeRequest={() => approveChangeRequest()}
+                    rejectChangeRequest={rejectionReason => rejectChangeRequest(rejectionReason)}
+                    deleteChangeRequest={() => onDeleteChangeRequest(changeRequest, faculty)}
+                />
+            </Card>
+        );
+    }
+}
+
 
 export const ChangeRequestCard = wrap(BaseChangeRequestCard);

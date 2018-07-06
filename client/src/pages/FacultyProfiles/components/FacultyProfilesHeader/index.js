@@ -5,77 +5,81 @@ import Paper from "@material-ui/core/Paper";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import SearchIcon from "@material-ui/icons/Search";
-import React from "react";
+import React, { PureComponent } from "react";
 import { FACULTY_PROFILES_PAGE } from "../../../index";
 import { CHANGE_REQUESTS_TAB, TABS } from "../faculty_detail_tabs";
 import { wrap } from "./wrapper";
 
 
-const renderTabLabel = (tab, badge, classes) => {
-    if (badge && badge > 0 && tab.identifier === CHANGE_REQUESTS_TAB.identifier) {
+class BaseFacultyProfilesHeader extends PureComponent {
+    renderTabLabel = (tab, badge, classes) => {
+        if (badge && badge > 0 && tab.identifier === CHANGE_REQUESTS_TAB.identifier) {
+            return (
+                <Badge color="error" badgeContent={badge} classes={{ root: classes.badgeContainer, badge: classes.badge }}>
+                    {tab.name}
+                </Badge>
+            );
+        }
+
+        return tab.name;
+    };
+
+    render() {
+        const {
+            match,
+            classes,
+            history,
+            searchKeyword,
+            changeRequests: {
+                changeRequests: allChangeRequests,
+            },
+            onSearchInputChange,
+        } = this.props;
+
+        const activeFacultyId = match.params.facultyId;
+        const activeTabIndex = TABS.findIndex(tab => tab.path === match.params.activeTab);
+
+        const badge = allChangeRequests &&
+            allChangeRequests[activeFacultyId] &&
+            allChangeRequests[activeFacultyId].length;
+
         return (
-            <Badge color="error" badgeContent={badge} classes={{root: classes.badgeContainer, badge: classes.badge}}>
-                {tab.name}
-            </Badge>
+            <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
+                <div className={classes.searchWrapper}>
+                    <Paper className={classes.searchPaper}>
+                        <Input
+                            className={classes.searchInput}
+                            fullWidth
+                            type="search"
+                            value={searchKeyword}
+                            onChange={event => onSearchInputChange(event.target.value)}
+                            startAdornment={
+                                <InputAdornment position="start" className={classes.searchAdornment}>
+                                    <SearchIcon />
+                                </InputAdornment>
+                            }
+                            placeholder="Search faculties" />
+                    </Paper>
+                </div>
+
+                {activeFacultyId &&
+                    <Tabs
+                        value={activeTabIndex}
+                        classes={{ root: classes.tabs, indicator: classes.tabsIndicator }}
+                        scrollable
+                    >
+                        {TABS.map(tab => (
+                            <Tab
+                                key={tab.identifier}
+                                label={this.renderTabLabel(tab, badge, classes)}
+                                onClick={() => history.push(`/${FACULTY_PROFILES_PAGE.path}/${activeFacultyId}/${tab.path}`)}
+                            />
+                        ))}
+                    </Tabs>
+                }
+            </div>
         );
     }
-
-    return tab.name;
-};
-
-const BaseFacultyProfilesHeader = ({
-    match,
-    classes,
-    history,
-    searchKeyword,
-    changeRequests: {
-        changeRequests: allChangeRequests,
-    },
-    onSearchInputChange,
-}) => {
-    const activeFacultyId = match.params.facultyId;
-    const activeTabIndex = TABS.findIndex(tab => tab.path === match.params.activeTab);
-
-    const badge = allChangeRequests &&
-        allChangeRequests[activeFacultyId] &&
-        allChangeRequests[activeFacultyId].length;
-
-    return (
-        <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
-            <div className={classes.searchWrapper}>
-                <Paper className={classes.searchPaper}>
-                    <Input
-                        className={classes.searchInput}
-                        fullWidth
-                        type="search"
-                        value={searchKeyword}
-                        onChange={event => onSearchInputChange(event.target.value)}
-                        startAdornment={
-                            <InputAdornment position="start" className={classes.searchAdornment}>
-                                <SearchIcon />
-                            </InputAdornment>
-                        }
-                        placeholder="Search faculties" />
-                </Paper>
-            </div>
-
-            {activeFacultyId &&
-            <Tabs
-                value={activeTabIndex}
-                classes={{root: classes.tabs, indicator: classes.tabsIndicator}}
-                scrollable
-            >
-                {TABS.map(tab => (
-                    <Tab
-                        key={tab.identifier}
-                        label={renderTabLabel(tab, badge, classes)}
-                        onClick={() => history.push(`/${FACULTY_PROFILES_PAGE.path}/${activeFacultyId}/${tab.path}`)}
-                    />
-                ))}
-            </Tabs>
-            }
-        </div>
-    );
-};
+}
 
 export const FacultyProfilesHeader = wrap(BaseFacultyProfilesHeader);

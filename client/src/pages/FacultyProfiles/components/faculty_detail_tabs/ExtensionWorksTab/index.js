@@ -5,7 +5,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { FormDisplayExpansionPanelDetails } from "../../../../../components/FormDisplayExpansionPanelDetails";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
 import { EmptyState } from "../../../../../components/states/EmptyState";
@@ -18,25 +18,28 @@ import { RemoveExtensionWorkModal } from "../../modals/RemoveExtensionWorkModal"
 import { wrap } from "./wrapper";
 
 
-export const ExtensionWorkRoles = ({roles}) => {
-    if (roles.length === 0) {
+export class ExtensionWorkRoles extends PureComponent {
+    render() {
+        const {roles} = this.props;
+        if (roles.length === 0) {
+            return (
+                <Typography>
+                    <i>There are no assigned roles</i>
+                </Typography>
+            );
+        }
+
         return (
-            <Typography>
-                <i>There are no assigned roles</i>
-            </Typography>
+            <Grid container spacing={8}>
+                {roles.map(role => (
+                    <Grid item key={role}>
+                        <Chip label={EXTENSION_WORK.ROLES[role].name} />
+                    </Grid>
+                ))}
+            </Grid>
         );
     }
-
-    return (
-        <Grid container spacing={8}>
-            {roles.map(role => (
-                <Grid item key={role}>
-                    <Chip label={EXTENSION_WORK.ROLES[role].name} />
-                </Grid>
-            ))}
-        </Grid>
-    );
-};
+}
 
 class BaseExtensionWorksTab extends Component {
     state = {

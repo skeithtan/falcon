@@ -5,19 +5,25 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import Error from "@material-ui/icons/Error";
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { wrap } from "../common_state_wrapper";
 
 
-const ErrorDetailsDialog = ({open, onClose, debug}) => (
-    <Dialog open={open}
-            onClose={onClose}>
-        <DialogTitle id="alert-dialog-title">Error details</DialogTitle>
-        <DialogContent>
-            <DialogContentText>{String(debug)}</DialogContentText>
-        </DialogContent>
-    </Dialog>
-);
+class ErrorDetailsDialog extends PureComponent {
+    render() {
+        const { open, onClose, debug } = this.props;
+        return (
+            <Dialog open={open}
+                onClose={onClose}>
+                <DialogTitle id="alert-dialog-title">Error details</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>{String(debug)}</DialogContentText>
+                </DialogContent>
+            </Dialog>
+        );
+
+    }
+}
 
 class BaseErrorState extends Component {
     state = {
@@ -25,7 +31,7 @@ class BaseErrorState extends Component {
     };
 
     render() {
-        const {classes, debug, onRetryButtonClick, message} = this.props;
+        const { classes, debug, onRetryButtonClick, message } = this.props;
         return (
             <div className={classes.blankState}>
 
@@ -44,20 +50,20 @@ class BaseErrorState extends Component {
                     </Typography>
 
                     {onRetryButtonClick &&
-                    <Button color="primary" onClick={onRetryButtonClick} variant="raised">
-                        Retry
+                        <Button color="primary" onClick={onRetryButtonClick} variant="raised">
+                            Retry
                     </Button>
                     }
 
                     {debug &&
-                    <Button color="primary" onClick={() => this.setState({detailsOpen: true})}>
-                        View error details
+                        <Button color="primary" onClick={() => this.setState({ detailsOpen: true })}>
+                            View error details
                     </Button>
                     }
 
                     <ErrorDetailsDialog open={this.state.detailsOpen}
-                                        onClose={() => this.setState({detailsOpen: false})}
-                                        debug={debug} />
+                        onClose={() => this.setState({ detailsOpen: false })}
+                        debug={debug} />
                 </div>
 
             </div>
