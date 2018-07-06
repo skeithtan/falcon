@@ -55,9 +55,10 @@ const reviewProfileChangeRequest = async (object, {_id}) => {
             return newSubdocument;
         },
 
-        async reject({rejectionReason}) {
-            changeRequest.rejectionReason = rejectionReason;
+        async reject({reason}) {
+            changeRequest.rejectionReason = reason;
             changeRequest.status = "REJECTED";
+
             await changeRequest.save();
             return true;
         },
