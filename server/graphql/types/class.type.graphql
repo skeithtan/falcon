@@ -37,20 +37,42 @@ type Class {
     faculty: Faculty
 }
 
-enum YearTerm {
+enum Term {
     FIRST,
     SECOND,
     THIRD
 }
 
-type Term {
-    first: [Class!]!
-    second: [Class!]!
-    third: [Class!]!
+enum FacultyFeedbackStatus {
+    ACCEPTED,
+    REJECTED
 }
 
-type AcademicYear {
+type FacultyFeedback {
+    status: FacultyFeedbackStatus,
+    rejectionReason: String
+}
+
+type FacultyResponse {
+    faculty: ID!
+    availability: JSON!,
+    feedback: FacultyFeedback!
+}
+
+enum TermScheduleStatus {
+    INITIALIZING,
+    TIME_CONSTRAINT_GATHERING,
+    SCHEDULING,
+    FEEDBACK_GATHERING,
+    PUBLISHED,
+    ARCHIVED
+}
+
+type TermSchedule {
     _id: ID!
     startYear: Int!
-    termsClasses: Term!
+    term: Term,
+    facultyPool: [FacultyResponse!]!,
+    classes: [Class!]!,
+    status: TermScheduleStatus!
 }

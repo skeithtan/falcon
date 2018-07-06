@@ -1,4 +1,12 @@
 import mongoose, { Schema } from "mongoose";
+import {
+    FACULTY_FEEDBACK,
+    MEETING_DAYS,
+    MEETING_HOURS,
+    SUBJECT_CATEGORIES,
+    TERM_STATUSES,
+    TERMS,
+} from "./enums/class.enums";
 import { Faculty } from "./faculty.model";
 
 
@@ -32,7 +40,7 @@ const SubjectSchema = new Schema({
     }],
     category: {
         type: String,
-        enum: ["PEDAGOGICAL", "GENERAL", "SPECIALIZATION", "ELECTIVE", "PROFESSIONAL"],
+        enum: SUBJECT_CATEGORIES,
         required: true,
     },
 });
@@ -43,14 +51,14 @@ const ClassSchema = new Schema({
         ref: "Subject",
         required: true,
     },
-    meetingDays: {
+    meetingDay: {
         type: String,
-        enum: ["M_TH", "T_F"],
+        enum: MEETING_DAYS,
         required: true,
     },
-    meetingHours: {
+    meetingHour: {
         type: String,
-        enum: ["7-9", "9-11", "11-1", "1-3", "3-5"],
+        enum: MEETING_HOURS,
         required: true,
     },
     room: {
@@ -73,31 +81,60 @@ const ClassSchema = new Schema({
     },
 });
 
-const TermClasses = new Schema({
-    _id: false,
-    facultyPool: [{
+const DayAvailability = {
+    "7-9": Boolean,
+    "9-11": Boolean,
+    "11-1": Boolean,
+    "1-3": Boolean,
+    "3-5": Boolean,
+};
+
+const FacultyResponseSchema = new Schema({
+    faculty: {
         type: Schema.Types.ObjectId,
         ref: "Faculty",
         required: true,
-    }],
-    classes: [ClassSchema],
+    },
+    availability: {
+        "M_TH": DayAvailability,
+        "T_F": DayAvailability,
+    },
+    feedback: {
+        status: {
+            type: String,
+            enum: FACULTY_FEEDBACK,
+        },
+        rejectionReason: {
+            type: String,
+            required: function () {
+                return this.feedback.status === "REJECTED";
+            },
+        },
+    },
 });
 
-const AcademicYearSchema = new Schema({
+const TermScheduleSchema = new Schema({
     startYear: {
         type: Number,
         required: true,
         unique: true,
     },
-    termsClasses: {
-        first: [TermClasses],
-        second: [TermClasses],
-        third: [TermClasses],
+    term: {
+        type: String,
+        required: true,
+        enum: TERMS,
+    },
+    facultyPool: [FacultyResponseSchema],
+    classes: [ClassSchema],
+    status: {
+        type: String,
+        required: true,
+        enum: TERM_STATUSES,
     },
 });
 
 const Subject = mongoose.model("Subject", SubjectSchema);
 const Course = mongoose.model("Course", CourseSchema);
-const AcademicYear = mongoose.model("AcademicYear", AcademicYearSchema);
-export { Subject, Course, AcademicYear };
+const Term = mongoose.model("TermSchedule", TermScheduleSchema);
+export { Subject, Course, Term };
 
