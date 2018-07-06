@@ -15,9 +15,13 @@ export const EMPLOYMENT = {
         identifier: "ADJUNCT",
         name: "Adjunct",
     },
-    "INACTIVE": {
-        identifier: "INACTIVE",
-        name: "Inactive",
+    "ON_LEAVE": {
+        identifier: "ON_LEAVE",
+        name: "On leave",
+    },
+    "TERMINATED": {
+        identifier: "TERMINATED",
+        name: "Terminated",
     },
 };
 
