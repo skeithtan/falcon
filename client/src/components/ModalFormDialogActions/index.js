@@ -1,8 +1,8 @@
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React, { Component } from "react";
 import { wrap } from "./wrapper";
@@ -58,18 +58,23 @@ class BaseModalFormDialogActions extends Component {
                 justify="space-between"
                 alignItems="center"
                 className={classes.container}
+                wrap="nowrap"
             >
                 <Grid item>
                     {showKeepForm && this.renderKeepForm()}
                 </Grid>
 
-                <Grid item>
-                    <Grid container spacing={8} alignItems="center" wrap="nowrap">
+                <Grid item md={true}>
+                    <Grid container spacing={8} alignItems="center" justify="flex-end" wrap="nowrap">
                         {isSubmitting && this.renderSubmitting()}
                         {error && this.renderError(error)}
                         <Grid item>
-                            <Button color="primary" disabled={isSubmitting || disabled}
-                                    onClick={handleSubmit}>{buttonName}</Button>
+                            <Button
+                                color="primary"
+                                disabled={isSubmitting || disabled}
+                                onClick={handleSubmit}>
+                                {buttonName}
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
