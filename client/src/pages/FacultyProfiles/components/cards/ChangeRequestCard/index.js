@@ -10,8 +10,8 @@ import {
     PresentationFields,
     RecognitionFields,
 } from "./components/body_components";
-import { ChangeRequestReviewActions } from "./components/ChangeRequestReviewAction";
-import { ChangeRequestWithdrawAction } from "./components/ChangeRequestWithdrawActions";
+import { ChangeRequestAdministrativeFooter } from "./components/ChangeRequestAdministrativeFooter";
+import { ChangeRequestFacultyFooter } from "./components/ChangeRequestFacultyFooter";
 import { FacultyChangeRequestTopBar } from "./components/FacultyChangeRequestTopBar";
 import { wrap } from "./wrapper";
 
@@ -40,24 +40,25 @@ const ChangeRequestCardFooter = ({
     deleteChangeRequest,
     changeRequestStatus,
 }) => {
-    const administrativeActions = (
-        <ChangeRequestReviewActions
+    const administrativeFooter = (
+        <ChangeRequestAdministrativeFooter
             approveChangeRequest={approveChangeRequest}
             rejectChangeRequest={rejectChangeRequest}
+            changeRequestStatus={changeRequestStatus}
         />
     );
 
     const facultyActions = (
-        <ChangeRequestWithdrawAction
+        <ChangeRequestFacultyFooter
             changeRequestStatus={changeRequestStatus}
             deleteChangeRequest={deleteChangeRequest}
         />
     );
 
     return getObjectForUserType(user, {
-        CLERK: administrativeActions,
-        DEAN: administrativeActions,
-        ASSOCIATE_DEAN: administrativeActions,
+        CLERK: administrativeFooter,
+        DEAN: administrativeFooter,
+        ASSOCIATE_DEAN: administrativeFooter,
         FACULTY: facultyActions,
     });
 };
@@ -95,7 +96,7 @@ const BaseChangeRequestCard = ({
                 user={user}
                 changeRequestStatus={changeRequest.status}
                 approveChangeRequest={() => approveChangeRequest()}
-                rejectChangeRequest={() => rejectChangeRequest()}
+                rejectChangeRequest={rejectionReason => rejectChangeRequest(rejectionReason)}
                 deleteChangeRequest={() => onDeleteChangeRequest(changeRequest, faculty)}
             />
         </Card>

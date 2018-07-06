@@ -26,9 +26,9 @@ class BaseChangeRequestsTab extends Component {
         return onApproveChangeRequest(changeRequest, faculty);
     };
 
-    rejectChangeRequest = changeRequest => {
+    rejectChangeRequest = (changeRequest, rejectionReason) => {
         const {onRejectChangeRequest, faculty} = this.props;
-        return onRejectChangeRequest(changeRequest, faculty);
+        return onRejectChangeRequest(changeRequest, rejectionReason, faculty);
     };
 
     fetchChangeRequests = () => {
@@ -36,8 +36,10 @@ class BaseChangeRequestsTab extends Component {
             user,
             fetchChangeRequests,
             fetchMyChangeRequests,
-            isLoading,
-            changeRequests,
+            changeRequests: {
+                changeRequests: allChangeRequests,
+                isLoading,
+            },
         } = this.props;
 
         const fetch = getObjectForUserType(user, {
@@ -47,7 +49,7 @@ class BaseChangeRequestsTab extends Component {
             FACULTY: fetchMyChangeRequests,
         });
 
-        if (!isLoading && !changeRequests) {
+        if (!isLoading && !allChangeRequests) {
             fetch();
         }
     };
@@ -90,8 +92,8 @@ class BaseChangeRequestsTab extends Component {
                 user={this.props.user}
                 faculty={this.props.faculty}
                 changeRequest={changeRequest}
-                approveChangeRequest={() => this.approveChangeRequest(changeRequest, this.props.faculty)}
-                rejectChangeRequest={() => this.rejectChangeRequest(changeRequest, this.props.faculty)}
+                approveChangeRequest={() => this.approveChangeRequest(changeRequest)}
+                rejectChangeRequest={rejectionReason => this.rejectChangeRequest(changeRequest, rejectionReason)}
             />
         </Grid>
     ));
@@ -99,10 +101,12 @@ class BaseChangeRequestsTab extends Component {
     render() {
         const {
             classes,
-            isLoading,
-            errors,
             faculty,
-            changeRequests: allChangeRequests,
+            changeRequests: {
+                changeRequests: allChangeRequests,
+                isLoading,
+                errors,
+            },
         } = this.props;
 
         const changeRequests = allChangeRequests && allChangeRequests[faculty._id];

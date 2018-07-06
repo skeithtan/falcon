@@ -2,19 +2,17 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { SUBDOCUMENT_TYPE } from "../../../../../enums/faculty.enums";
-import { changeRequestIsDismissed } from "../../../../../redux/actions/change_requests.actions";
+import { CHANGE_REQUEST_STATUSES } from "../../../../../enums/review_profile_change.enums";
+import { changeRequestIsUpdated } from "../../../../../redux/actions/change_requests.actions";
 import { facultyIsUpdated } from "../../../../../redux/actions/faculty.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import {
-    approveChangeRequest,
-    rejectChangeRequest,
-} from "../../../../../services/faculty/change_requests";
+import { approveChangeRequest, rejectChangeRequest } from "../../../../../services/faculty/change_requests";
 import { initiateFetchChangeRequests, initiateFetchMyChangeRequests } from "../../../../../utils/change_request.util";
 import { styles } from "../styles";
 
 
 const mapStateToProps = state => ({
-    ...state.changeRequests,
+    changeRequests: state.changeRequests,
     user: state.authentication.user,
 });
 
@@ -28,10 +26,15 @@ const mapDispatchToProps = dispatch => ({
     },
 
     onApproveChangeRequest(changeRequest, faculty) {
+        const newChangeRequest = {
+            ...changeRequest,
+            status: CHANGE_REQUEST_STATUSES.APPROVED.identifier,
+        };
+
         return approveChangeRequest(changeRequest._id)
             .then(result => result.data.reviewProfileChangeRequest.approve)
             .then(newSubdocument => {
-                dispatch(changeRequestIsDismissed(changeRequest, faculty._id));
+                dispatch(changeRequestIsUpdated(newChangeRequest, faculty._id));
 
                 const newFaculty = {
                     ...faculty,
@@ -47,10 +50,16 @@ const mapDispatchToProps = dispatch => ({
             });
     },
 
-    onRejectChangeRequest(changeRequest, faculty) {
-        return rejectChangeRequest(changeRequest._id)
+    onRejectChangeRequest(changeRequest, rejectionReason, faculty) {
+        const newChangeRequest = {
+            ...changeRequest,
+            status: CHANGE_REQUEST_STATUSES.REJECTED.identifier,
+            rejectionReason: rejectionReason,
+        };
+
+        return rejectChangeRequest(changeRequest._id, rejectionReason)
             .then(() => {
-                dispatch(changeRequestIsDismissed(changeRequest, faculty._id));
+                dispatch(changeRequestIsUpdated(newChangeRequest, faculty._id));
                 dispatch(toastIsShowing("Change request successfully rejected"));
             });
     },

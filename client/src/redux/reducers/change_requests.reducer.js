@@ -77,9 +77,7 @@ export function changeRequests(state = initialState, action) {
                 return changeRequest;
             });
 
-            return {
-                ...newState,
-            };
+            return newState;
         case CHANGE_REQUEST_IS_FETCHED:
             return {
                 ...state,
