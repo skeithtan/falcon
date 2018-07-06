@@ -1,4 +1,4 @@
-import { AcademicYear, Course, Subject } from "../../models/class.model";
+import { Term, Course, Subject } from "../../models/class.model";
 import { CLERK } from "../../models/user.model";
 import { getDifference } from "../../utils/array";
 import { addSubjectToFaculties, removeSubjectFromFaculties } from "../../utils/faculty_subject_link";
@@ -98,28 +98,12 @@ async function mutateClass(object, {academicYearId, term}) {
     };
 }
 
-function academicYears() {
-    const makePopulateObject = term => {
-        return {
-            path: `termsClasses.${term}.subject`,
-            model: "Subject",
-        };
-    };
-    return AcademicYear.find({})
-                       .populate(makePopulateObject("first"))
-                       .populate(makePopulateObject("second"))
-                       .populate(makePopulateObject("third"))
-                       .exec();
-}
-
 export const queryResolvers = {
     subjects: limitAccess(subjects, {allowed: AUTHENTICATED_USERS, action: "Get all subjects"}),
-    academicYears: limitAccess(academicYears, {allowed: NO_FACULTY, action: "Get all terms"}),
 };
 
 export const mutationResolvers = {
     subject: limitAccess(mutateSubject, {allowed: CLERK, action: "Mutate subject"}),
-    academicYear: limitAccess(mutateAcademicYear, {allowed: CLERK, action: "Mutate academic year"}),
     course: limitAccess(mutateCourse, {allowed: CLERK, action: "Mutate course"}),
     class: limitAccess(mutateClass, {allowed: CLERK, action: "Mutate class"}),
 };
