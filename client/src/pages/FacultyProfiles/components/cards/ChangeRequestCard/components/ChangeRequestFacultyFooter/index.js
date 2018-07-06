@@ -3,39 +3,31 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import AcceptIcon from "@material-ui/icons/Check";
 import RejectIcon from "@material-ui/icons/Close";
 import React, { Component } from "react";
+import { CHANGE_REQUEST_STATUSES } from "../../../../../../../enums/review_profile_change.enums";
 
 
-export class ChangeRequestReviewActions extends Component {
+export class ChangeRequestFacultyFooter extends Component {
     state = {
         isSubmitting: false,
         error: null,
     };
 
-    submitAction = action => {
+    deleteChangeRequest = () => {
+        const {deleteChangeRequest} = this.props;
         this.setState({
             isSubmitting: true,
         });
 
-        action().catch(error => {
-            this.setState({
-                isSubmitting: false,
-                error: error.message,
+        deleteChangeRequest()
+            .catch(error => {
+                this.setState({
+                    isSubmitting: false,
+                    error: error.message,
+                });
+                console.log("An error occurred while withdrawing change request", error);
             });
-            console.log("An error occurred while reviewing change request", error);
-        });
-    };
-
-    approveChangeRequest = () => {
-        const {approveChangeRequest} = this.props;
-        this.submitAction(approveChangeRequest);
-    };
-
-    rejectChangeRequest = () => {
-        const {rejectChangeRequest} = this.props;
-        this.submitAction(rejectChangeRequest);
     };
 
     renderButtons = () => (
@@ -46,32 +38,18 @@ export class ChangeRequestReviewActions extends Component {
                     size="small"
                     color="primary"
                     disabled={this.state.isSubmitting}
-                    onClick={this.rejectChangeRequest}
+                    onClick={this.deleteChangeRequest}
                 >
                     <Grid container spacing={8} alignItems="center" wrap="nowrap">
                         <Grid item>
-                            Reject
+                            {
+                                this.props.changeRequestStatus === CHANGE_REQUEST_STATUSES.PENDING.identifier ?
+                                    "Withdraw" : "Dismiss"
+                            }
                         </Grid>
+
                         <Grid item>
                             <RejectIcon />
-                        </Grid>
-                    </Grid>
-                </Button>
-            </Grid>
-            <Grid item>
-                <Button
-                    variant="flat"
-                    size="small"
-                    color="primary"
-                    disabled={this.state.isSubmitting}
-                    onClick={this.approveChangeRequest}
-                >
-                    <Grid container spacing={8} alignItems="center" wrap="nowrap">
-                        <Grid item>
-                            Accept
-                        </Grid>
-                        <Grid item>
-                            <AcceptIcon />
                         </Grid>
                     </Grid>
                 </Button>
@@ -84,10 +62,10 @@ export class ChangeRequestReviewActions extends Component {
 
         return (
             <Toolbar>
-                <Grid container alignItems="center" justify="space-between">
+                <Grid container alignItems="center" justify="space-between" wrap="nowrap">
 
                     <Grid item>
-                        <Grid container spacing={8} alignItems="center">
+                        <Grid container spacing={8} alignItems="center" wrap="nowrap">
                             {isSubmitting &&
                             <Grid item>
                                 <CircularProgress size={24} />
