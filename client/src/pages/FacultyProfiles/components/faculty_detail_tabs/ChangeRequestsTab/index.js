@@ -114,7 +114,14 @@ class BaseChangeRequestsTab extends Component {
         return (
             <div className={classes.cardsContainer}>
                 {changeRequests && changeRequests.length > 0 &&
-                <Grid container spacing={32} direction="column" className={classes.changeRequestsContainer}>
+                <Grid
+                    container
+                    spacing={16}
+                    alignItems="stretch"
+                    direction="column"
+                    wrap="nowrap"
+                    className={classes.changeRequestsContainer}
+                >
                     <Grid item>
                         <Card>
                             <TableToolbar
@@ -123,18 +130,7 @@ class BaseChangeRequestsTab extends Component {
                             />
                         </Card>
                     </Grid>
-
-                    <Grid item>
-                        <Grid
-                            container
-                            spacing={16}
-                            alignItems="stretch"
-                            direction="column"
-                            wrap="nowrap"
-                        >
-                            {this.renderChangeRequests(changeRequests)}
-                        </Grid>
-                    </Grid>
+                    {this.renderChangeRequests(changeRequests)}
                 </Grid>
                 }
 

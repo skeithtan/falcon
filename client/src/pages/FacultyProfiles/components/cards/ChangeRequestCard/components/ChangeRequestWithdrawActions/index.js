@@ -31,7 +31,7 @@ export class ChangeRequestWithdrawAction extends Component {
     };
 
     renderButtons = () => (
-        <Grid container spacing={32} justify="flex-end">
+        <Grid container spacing={32} justify="flex-end" wrap="nowrap">
             <Grid item>
                 <Button
                     variant="flat"
@@ -40,7 +40,7 @@ export class ChangeRequestWithdrawAction extends Component {
                     disabled={this.state.isSubmitting}
                     onClick={this.deleteChangeRequest}
                 >
-                    <Grid container spacing={8} alignItems="center">
+                    <Grid container spacing={8} alignItems="center" wrap="nowrap">
                         <Grid item>
                             {
                                 this.props.changeRequestStatus === CHANGE_REQUEST_STATUSES.PENDING.identifier ?

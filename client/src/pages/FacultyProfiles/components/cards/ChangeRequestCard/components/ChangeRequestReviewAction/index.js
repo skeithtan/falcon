@@ -39,7 +39,7 @@ export class ChangeRequestReviewActions extends Component {
     };
 
     renderButtons = () => (
-        <Grid container spacing={32} justify="flex-end">
+        <Grid container spacing={32} justify="flex-end" wrap="nowrap">
             <Grid item>
                 <Button
                     variant="flat"
@@ -48,7 +48,7 @@ export class ChangeRequestReviewActions extends Component {
                     disabled={this.state.isSubmitting}
                     onClick={this.rejectChangeRequest}
                 >
-                    <Grid container spacing={8} alignItems="center">
+                    <Grid container spacing={8} alignItems="center" wrap="nowrap">
                         <Grid item>
                             Reject
                         </Grid>
@@ -66,7 +66,7 @@ export class ChangeRequestReviewActions extends Component {
                     disabled={this.state.isSubmitting}
                     onClick={this.approveChangeRequest}
                 >
-                    <Grid container spacing={8} alignItems="center">
+                    <Grid container spacing={8} alignItems="center" wrap="nowrap">
                         <Grid item>
                             Accept
                         </Grid>

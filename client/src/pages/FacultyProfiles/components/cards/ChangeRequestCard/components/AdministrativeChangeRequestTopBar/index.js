@@ -14,13 +14,13 @@ export const AdministrativeChangeRequestTopBar = ({faculty, changeRequest}) => {
     return (
         <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
-                <Grid item>
-                    <Grid container direction="row" alignItems="center" spacing={16}>
+                <Grid item md={10}>
+                    <Grid container direction="row" alignItems="center" spacing={16} wrap="nowrap">
                         <Grid item>
                             <UserAvatar user={faculty.user} />
                         </Grid>
                         <Grid item>
-                            <Typography>
+                            <Typography variant="body1">
                                 <strong>{getFullName(faculty.user)}</strong> wants to add
                                 this <strong>{subdocumentType}</strong>
                             </Typography>
