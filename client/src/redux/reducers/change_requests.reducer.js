@@ -6,6 +6,7 @@ import {
     CHANGE_REQUEST_IS_DISMISSED,
     CHANGE_REQUEST_IS_FETCHED,
     CHANGE_REQUEST_IS_LOADING,
+    CHANGE_REQUEST_IS_UPDATED,
 } from "../actions/change_requests.actions";
 
 
@@ -59,7 +60,26 @@ export function changeRequests(state = initialState, action) {
                 changeRequest._id !== action.changeRequest._id,
             );
 
+            // No reason to keep an empty changeRequest array - just delete it.
+            if (newState.changeRequests[action.facultyId].length === 0) {
+                delete newState.changeRequests[action.facultyId];
+            }
+
             return newState;
+        case CHANGE_REQUEST_IS_UPDATED:
+            newState = {...state};
+
+            newState.changeRequests[action.facultyId] = newState.changeRequests[action.facultyId].map(changeRequest => {
+                if (changeRequest._id === action.changeRequest._id) {
+                    return action.changeRequest;
+                }
+
+                return changeRequest;
+            });
+
+            return {
+                ...newState,
+            };
         case CHANGE_REQUEST_IS_FETCHED:
             return {
                 ...state,
