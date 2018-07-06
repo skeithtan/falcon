@@ -2,14 +2,14 @@ import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator/index";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { getObjectForUserType } from "../../../../../utils/user.util";
 import { wrap } from "./wrapper";
 
 
-class BaseNotificationsTray extends Component {
+class BaseNotificationsTray extends PureComponent {
     componentDidMount() {
         const {
             user,
