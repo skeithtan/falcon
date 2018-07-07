@@ -6,18 +6,13 @@ input SubjectInput {
     faculties: [ID!]
 }
 
-input CourseInput {
-    code: String
-    name: String
-}
-
 input ClassInput {
     subject: String
     meetingDays: MeetingDay
     meetingHours: String
     room: String
     enrollmentCap: Int
-    course: CourseInput
+    course: String
 }
 
 type SubjectMutations {
@@ -25,24 +20,24 @@ type SubjectMutations {
     update(_id: ID!, newSubject: SubjectInput!): Subject!
 }
 
-type CourseMutations {
-    add(newCourse: CourseInput!): Course!
-    update(_id: ID!, newCourse: CourseInput!): Course!
-}
-
-type AcademicYearMutations {
-    add(startYear: Int!): AcademicYear!
-    setTermClasses(academicYearId: ID!, term: YearTerm!, classes: [ClassInput!]!): [Class!]!
+type StatusMutations {
+    advance: TermScheduleStatus!
+    return: TermScheduleStatus!
 }
 
 type ClassMutations {
     add(newClass: ClassInput!): Class!
-    remove(classId: ID!): Boolean!
+    remove(_id: ID!): Boolean!
+}
+
+type TermMutations {
+    setFacultyPool(faculties: [ID!]!): [FacultyResponse!]!
+    classes: ClassMutations!
+    status: StatusMutations!
 }
 
 extend type Mutation {
     subject: SubjectMutations!
-    course: CourseMutations!
-    academicYear: AcademicYearMutations!
-    class(academicYearId: ID!, term: YearTerm!): ClassMutations!
+    termSchedule(_id: ID!): TermMutations!
+    addTermSchedule(startYear: Int!, term: Term!): TermSchedule!
 }

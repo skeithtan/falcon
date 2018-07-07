@@ -15,12 +15,6 @@ enum SubjectCategory {
     PROFESSIONAL
 }
 
-type Course {
-    _id: ID!
-    code: String!
-    name: String!
-}
-
 enum MeetingDay {
     M_TH,
     T_F
@@ -33,8 +27,8 @@ type Class {
     meetingHours: String!
     room: String!
     enrollmentCap: Int!
-    course: Course!
-    faculty: Faculty
+    faculty: ID
+    courseCode: String!
 }
 
 enum Term {

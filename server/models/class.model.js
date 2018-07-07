@@ -7,23 +7,11 @@ import {
     TERM_STATUSES,
     TERMS,
 } from "./enums/class.enums";
-import { Faculty } from "./faculty.model";
 
-
-const CourseSchema = new Schema({
-    code: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-});
 
 const SubjectSchema = new Schema({
     code: {
-        type: String,
+        type: String, 
         required: true,
     },
     name: {
@@ -74,10 +62,9 @@ const ClassSchema = new Schema({
         ref: "Faculty",
         required: false,
     },
-    course: {
-        type: Schema.Types.ObjectId,
-        ref: "Course",
-        required: true,
+    courseCode: {
+        type: String,
+        required: true
     },
 });
 
@@ -134,7 +121,6 @@ const TermScheduleSchema = new Schema({
 });
 
 const Subject = mongoose.model("Subject", SubjectSchema);
-const Course = mongoose.model("Course", CourseSchema);
-const Term = mongoose.model("TermSchedule", TermScheduleSchema);
-export { Subject, Course, Term };
+const TermSchedule = mongoose.model("TermSchedule", TermScheduleSchema);
+export { Subject, TermSchedule };
 
