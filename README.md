@@ -1,4 +1,4 @@
-<p align="center"><img src="Falcon/logo1.png" alt="falcon" height="300px"></p>
+<p align="center"><img src="Falcon/long_logo.png" alt="falcon" height="160px"></p>
 
 # The Falcon Innovation Project
 
