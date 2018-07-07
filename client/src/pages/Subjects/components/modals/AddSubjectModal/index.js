@@ -18,8 +18,8 @@ import { ErrorState } from "../../../../../components/states/ErrorState/index";
 import { SUBJECT_CATEGORIES } from "../../../../../enums/class.enums";
 import { validateForm } from "../../../../../utils/forms.util";
 import { getFullName } from "../../../../../utils/user.util";
-import { SUBJECTS_PAGE } from "../../../../index";
 import { wrap } from "./wrapper";
+import { makeURL } from "../../../../../utils/url.util";
 
 
 function getFormErrors(form) {
@@ -52,7 +52,12 @@ class BaseAddSubjectModal extends ModalFormComponent {
         const {submitAddSubject, history} = this.props;
         return () => submitAddSubject(form)
             .then(newSubject => {
-                history.push(`/${SUBJECTS_PAGE.path}/${newSubject._id}`);
+                const url = makeURL()
+                    .subjects()
+                    .selectSubject(newSubject._id)
+                    .build();
+
+                history.push(url);
                 return newSubject;
             });
     }

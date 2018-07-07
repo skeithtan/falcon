@@ -1,24 +1,31 @@
 import React, { PureComponent } from "react";
-import { FACULTY_PROFILES_PAGE } from "../../pages";
 import { UserChip } from "../UserChip";
 import { wrapper } from "./wrapper";
+import { makeURL } from "../../utils/url.util";
 
-
-function onChipClick({faculty, clickable, history}) {
-    if (!clickable) {
-        return null;
-    }
-
-    return history.push(`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/overview`);
-}
 
 class BaseFacultyChip extends PureComponent {
+    onFacultyChipClick = () => {
+        const {faculty, clickable, history} = this.props;
+        if (!clickable) {
+            return null;
+        }
+
+        return history.push(
+            makeURL()
+                .facultyProfiles()
+                .selectFaculty(faculty._id)
+                .overview()
+                .build()
+        );
+    };
+
     render() {
-        const {faculty, clickable, history, handleDelete, showDeleteButton} = this.props;
+        const {faculty, handleDelete, showDeleteButton} = this.props;
         return (
             <UserChip
                 user={faculty.user}
-                onClick={() => onChipClick({faculty, clickable, history})}
+                onClick={this.onFacultyChipClick}
                 showDeleteButton={showDeleteButton}
                 handleDelete={showDeleteButton ? handleDelete : null}
             />
