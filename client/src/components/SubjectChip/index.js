@@ -2,26 +2,32 @@ import Chip from "@material-ui/core/Chip";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import React, { PureComponent } from "react";
-import { SUBJECTS_PAGE } from "../../pages";
 import { wrap } from "./wrapper";
+import { makeURL } from "../../utils/url.util";
 
-
-function onChipClick({subject, clickable, history}) {
-    if (!clickable) {
-        return null;
-    }
-
-    return history.push(`/${SUBJECTS_PAGE.path}/${subject._id}`);
-}
 
 class BaseSubjectChip extends PureComponent {
+    onSubjectChipClick = () => {
+        const { subject, clickable, history } = this.props;
+        if (!clickable) {
+            return null;
+        }
+
+        return history.push(
+            makeURL()
+                .subjects()
+                .selectSubject(subject._id)
+                .build()
+        );
+    }
+
     render() {
-        const {classes, subject, clickable, history, handleDelete, showDeleteButton} = this.props;
+        const {classes, subject, handleDelete, showDeleteButton} = this.props;
         return (
             <Tooltip disableFocusListener title={subject.name}>
                 <Chip
                     className={classes.chip}
-                    onClick={() => onChipClick({subject, clickable, history})}
+                    onClick={this.onSubjectChipClick}
                     onDelete={showDeleteButton ? handleDelete : null}
                     label={
                         <Typography
