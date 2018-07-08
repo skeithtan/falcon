@@ -1,5 +1,5 @@
 import { TermSchedule, Subject } from "../../models/class.model";
-import { CLERK, FACULTY } from "../../models/user.model";
+import { CLERK, FACULTY, DEAN, ASSOCIATE_DEAN } from "../../models/user.model";
 import { getDifference } from "../../utils/array";
 import {
     addSubjectToFaculties,
@@ -221,11 +221,11 @@ export const mutationResolvers = {
         action: "Mutate subject",
     }),
     addTermSchedule: limitAccess(addTermSchedule, {
-        allowed: NO_FACULTY,
+        allowed: [DEAN, ASSOCIATE_DEAN],
         action: "Add termSchedule",
     }),
     termSchedule: limitAccess(mutateTerm, {
-        allowed: NO_FACULTY,
+        allowed: [DEAN, ASSOCIATE_DEAN],
         action: "Mutate termSchedule",
     }),
     setFacultyAvailability: limitAccess(setFacultyAvailability, {
