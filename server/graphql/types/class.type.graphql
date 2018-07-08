@@ -22,7 +22,7 @@ enum MeetingDay {
 
 type Class {
     _id: ID!
-    subject: Subject!
+    subject: ID!
     meetingDays: MeetingDay!
     meetingHours: String!
     room: String!
