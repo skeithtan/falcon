@@ -288,6 +288,7 @@ class BaseProfilePrintPreview extends Component {
                 fullScreen
                 open={open}
                 onClose={onClose}
+                transitionDuration={300}
                 TransitionComponent={Transition}
             >
                 <div className={classes.printPreviewModal}>
