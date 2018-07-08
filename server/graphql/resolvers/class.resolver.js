@@ -16,7 +16,6 @@ import { TERM_STATUSES } from "../../models/enums/class.enums";
 import { getUserFromContext } from "../../utils/user_from_context";
 import { Faculty } from "../../models/faculty.model";
 
-
 const DEFAULT_DAY_AVAILABILITY = {
     "7-9": false,
     "9-11": false,
@@ -66,6 +65,8 @@ const mutateSubject = () => ({
         return subject;
     },
 });
+
+const termSchedules = () => TermSchedule.find().exec();
 
 const mutateClasses = termSchedule => ({
     async add({ newClass: newClassInput }) {
@@ -207,6 +208,10 @@ export const queryResolvers = {
     subjects: limitAccess(subjects, {
         allowed: AUTHENTICATED_USERS,
         action: "Get all subjects",
+    }),
+    termSchedules: limitAccess(termSchedules, {
+        allowed: NO_FACULTY,
+        action: "Get all TermSchedules",
     }),
 };
 

@@ -1,6 +1,7 @@
 extend type Query {
     subjects: [Subject]!
     classes(term: Int!, year: Int!): [Class]!
+    termSchedules: [TermSchedule!]!
 
     faculties: [Faculty]!
     faculty(_id: ID!): Faculty!
