@@ -1,10 +1,6 @@
-import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
-import { ErrorState } from "../../../../components/states/ErrorState";
 import { makeURL } from "../../../../utils/url.util";
 import { getFullName } from "../../../../utils/user.util";
 import { FACULTY_PROFILES_PAGE } from "../../../index";
@@ -12,17 +8,7 @@ import { TABS } from "../faculty_detail_tabs";
 import { wrap } from "./wrapper";
 
 
-function facultyIsFetched(faculty) {
-    // Birth date should be present if faculty is fetched
-    return Boolean(faculty.birthDate);
-}
-
-class BaseFacultyDetail extends Component {
-    state = {
-        isLoading: false,
-        errors: null,
-    };
-
+class BaseFacultyDetail extends PureComponent {
     renderSelectFacultyState = () => (
         <div className={this.props.classes.selectFacultyState}>
             <Typography variant="headline" className={this.props.classes.selectFacultyText}>
@@ -37,7 +23,8 @@ class BaseFacultyDetail extends Component {
             path={`/${FACULTY_PROFILES_PAGE.path}/${activeFaculty._id}/${tab.path}`}
             render={() => React.createElement(tab.component, {
                 faculty: activeFaculty,
-            })} />
+            })} 
+            />
     ));
 
     componentDidMount() {
@@ -55,7 +42,6 @@ class BaseFacultyDetail extends Component {
 
     onNewFacultySelect(facultyId) {
         const activeFaculty = this.getActiveFaculty(facultyId);
-        this.fetchFacultyDetails(activeFaculty);
 
         if (activeFaculty) {
             FacultyDetail.setDocumentTitle(activeFaculty);
@@ -67,56 +53,6 @@ class BaseFacultyDetail extends Component {
         document.title = `${fullName}'s Profile - Faculty Profiles - Falcon`;
     }
 
-    fetchFacultyDetails = activeFaculty => {
-        const {getFacultyDetails} = this.props;
-
-        if (!activeFaculty) {
-            // There's nothing to fetch when the faculty doesn't exist
-            this.setState({isLoading: false});
-            return;
-        }
-
-        if (facultyIsFetched(activeFaculty)) {
-            this.setState({isLoading: false});
-            return;
-        }
-
-        this.setState({
-            isLoading: true,
-            errors: null,
-        });
-
-        getFacultyDetails(activeFaculty)
-            .then(() => this.setState({
-                isLoading: false,
-                errors: null,
-            }))
-            .catch(error => {
-                console.log("An error occurred while fetching faculty details", error);
-                this.setState({
-                    isLoading: false,
-                    errors: [error.message],
-                });
-            });
-    };
-
-    renderLoading = () => (
-        <Grid container style={{height: "100%"}}>
-            <FullPageLoadingIndicator size={100} />
-        </Grid>
-    );
-
-    renderErrors = errors => (
-        <div className={this.props.classes.stateContainer}>
-            <Card>
-                <ErrorState
-                    onRetryButtonClick={() => this.componentDidMount()}
-                    message="An error occurred while trying to fetch faculty details."
-                    debug={errors[0]} />
-            </Card>
-        </div>
-    );
-
     getActiveFaculty = facultyId => {
         const {faculty: {faculties}} = this.props;
         return !facultyId ? null : faculties.find(faculty => faculty._id === facultyId);
@@ -124,7 +60,6 @@ class BaseFacultyDetail extends Component {
 
     render() {
         const {match: {params: {facultyId}}, classes} = this.props;
-        const {isLoading, errors} = this.state;
 
         // We don't have a selected faculty if the URL has no facultyID
         const noSelectedFaculty = !facultyId;
@@ -133,8 +68,6 @@ class BaseFacultyDetail extends Component {
 
         // Faculty is not found when we have a faculty ID in the URL but null is the result of array search
         const facultyNotFound = !activeFaculty && facultyId;
-
-        const isFetched = activeFaculty ? facultyIsFetched(activeFaculty) : false;
 
         const defaultTabURL =
             activeFaculty ?
@@ -153,7 +86,7 @@ class BaseFacultyDetail extends Component {
 
         return (
             <div className={classes.facultyDetail}>
-                {activeFaculty && isFetched &&
+                {activeFaculty &&
                 <Switch>
                     {this.renderTabs(activeFaculty)}
                     <Route render={() => (
@@ -167,9 +100,6 @@ class BaseFacultyDetail extends Component {
                 }
 
                 {noSelectedFaculty && this.renderSelectFacultyState()}
-
-                {isLoading && this.renderLoading()}
-                {errors && this.renderErrors(errors)}
             </div>
         );
     }
