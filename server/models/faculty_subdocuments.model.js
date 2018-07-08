@@ -90,7 +90,7 @@ export const InstructionalMaterialSchema = new Schema({
     level: {
         type: String,
         enum: STUDENT_LEVELS,
-        required: function () {
+        required: function() {
             return this.audience === "STUDENT";
         },
     },
@@ -101,10 +101,12 @@ export const ExtensionWorkSchema = new Schema({
         type: String,
         required: true,
     },
-    roles: [{
-        type: String,
-        enum: EXTENSION_WORK_ROLES,
-    }],
+    roles: [
+        {
+            type: String,
+            enum: EXTENSION_WORK_ROLES,
+        },
+    ],
     venue: {
         type: String,
         required: true,
