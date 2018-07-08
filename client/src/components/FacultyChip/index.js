@@ -1,26 +1,36 @@
-import React from "react";
-import { FACULTY_PROFILES_PAGE } from "../../pages";
+import React, { PureComponent } from "react";
 import { UserChip } from "../UserChip";
 import { wrapper } from "./wrapper";
+import { makeURL } from "../../utils/url.util";
 
 
-function onChipClick({faculty, clickable, history}) {
-    if (!clickable) {
-        return null;
+class BaseFacultyChip extends PureComponent {
+    onFacultyChipClick = () => {
+        const {faculty, clickable, history} = this.props;
+        if (!clickable) {
+            return null;
+        }
+
+        return history.push(
+            makeURL()
+                .facultyProfiles()
+                .selectFaculty(faculty._id)
+                .overview()
+                .build()
+        );
+    };
+
+    render() {
+        const {faculty, handleDelete, showDeleteButton} = this.props;
+        return (
+            <UserChip
+                user={faculty.user}
+                onClick={this.onFacultyChipClick}
+                showDeleteButton={showDeleteButton}
+                handleDelete={showDeleteButton ? handleDelete : null}
+            />
+        );
     }
-
-    return history.push(`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/overview`);
 }
 
-const BaseFacultyChip = ({faculty, clickable, history, handleDelete, showDeleteButton}) => (
-    <UserChip
-        user={faculty.user}
-        onClick={() => onChipClick({faculty, clickable, history})}
-        showDeleteButton={showDeleteButton}
-        handleDelete={showDeleteButton ? handleDelete : null}
-    />
-);
-
 export const FacultyChip = wrapper(BaseFacultyChip);
-
-

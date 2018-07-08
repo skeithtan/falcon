@@ -1,12 +1,12 @@
 import moment from "moment";
 import { facultyListFetchError, facultyListIsFetched, facultyListIsLoading } from "../redux/actions/faculty.actions";
 import { SEX } from "../enums/faculty.enums";
-import { fetchAllFacultiesSummary } from "../services/faculty/faculty";
+import { fetchAllFaculties } from "../services/faculty/faculty";
 
 
-export const initiateFetchAllFacultiesSummary = dispatch => {
+export const initiatefetchAllFaculties = dispatch => {
     dispatch(facultyListIsLoading());
-    return fetchAllFacultiesSummary()
+    return fetchAllFaculties()
         .then(result => {
             if (result.data) {
                 dispatch(facultyListIsFetched(result.data.faculties));

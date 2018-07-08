@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { getDefaultPageForUser, getPagesForUser } from "../../utils/user.util";
 import { GENERAL_PAGES, getPageFromPath, SIGN_IN_PAGE } from "../index";
@@ -9,7 +9,7 @@ import { Toast } from "./components/Toast";
 import { wrap } from "./wrapper";
 
 
-class BaseApp extends Component {
+class BaseApp extends PureComponent {
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.handlePath();
     }

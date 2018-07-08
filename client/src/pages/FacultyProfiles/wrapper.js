@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
 import { initiateFetchChangeRequests } from "../../utils/change_request.util";
-import { initiateFetchAllFacultiesSummary } from "../../utils/faculty.util";
+import { initiatefetchAllFaculties } from "../../utils/faculty.util";
 import { styles } from "./styles";
 
 
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchAllFaculties() {
-        initiateFetchAllFacultiesSummary(dispatch);
+        initiatefetchAllFaculties(dispatch);
     },
 
     fetchChangeRequests() {

@@ -1,12 +1,17 @@
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import React from "react";
+import React, { PureComponent } from "react";
 import { wrap } from "./wrapper";
 
 
-const BaseFormDisplayExpansionPanelDetails = ({classes, children}) => (
-    <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-        {children}
-    </ExpansionPanelDetails>
-);
+class BaseFormDisplayExpansionPanelDetails extends PureComponent {
+    render() {
+        const {classes, children} = this.props;
+        return (
+            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                {children}
+            </ExpansionPanelDetails>
+        );
+    }
+}
 
 export const FormDisplayExpansionPanelDetails = wrap(BaseFormDisplayExpansionPanelDetails);

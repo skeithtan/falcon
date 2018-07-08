@@ -1,6 +1,6 @@
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { ErrorState } from "../../../../../components/states/ErrorState";
@@ -10,7 +10,7 @@ import { ChangeRequestCard } from "../../cards/ChangeRequestCard";
 import { wrap } from "./wrapper";
 
 
-class BaseChangeRequestsTab extends Component {
+class BaseChangeRequestsTab extends PureComponent {
     componentDidMount() {
         this.fetchChangeRequests();
     }

@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { makeURL } from "../../../../utils/url.util";
 import { FacultyCard } from "../cards/FacultyCard";
@@ -8,7 +8,7 @@ import { OverviewCard } from "../cards/OverviewCard";
 import { wrap } from "./wrapper";
 
 
-class BaseSubjectsDetail extends Component {
+class BaseSubjectsDetail extends PureComponent {
     renderSelectSubjectState = () => (
         <div className={this.props.classes.selectSubjectState}>
             <Typography variant="headline" className={this.props.classes.selectSubjectText}>

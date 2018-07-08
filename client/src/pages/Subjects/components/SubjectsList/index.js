@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import { EmptySearchResultsState } from "../../../../components/states/EmptySearchResultsState";
 import { EmptyState } from "../../../../components/states/EmptyState";
@@ -14,29 +14,32 @@ import { AddSubjectModal } from "../modals/AddSubjectModal";
 import { wrap } from "./wrapper";
 
 
-const SubjectItem = ({classes, subject, active}) => {
-    const {activeListItem, listItem} = classes;
-    const className = active ? [activeListItem, listItem].join(" ") : listItem;
-    const subjectPageURL = makeURL()
-        .subjects()
-        .selectSubject(subject._id)
-        .build();
+class SubjectItem extends PureComponent {
+    render() {
+        const {classes, subject, active} = this.props;
+        const {activeListItem, listItem} = classes;
+        const className = active ? [activeListItem, listItem].join(" ") : listItem;
+        const subjectPageURL = makeURL()
+            .subjects()
+            .selectSubject(subject._id)
+            .build();
 
-    return (
-        <ListItem
-            button
-            component={Link}
-            className={className}
-            onClick={() => document.title = `${subject.code} (${subject.name}) - Falcon`}
-            to={subjectPageURL}
-        >
-            <ListItemText
-                primary={subject.code}
-                secondary={subject.name}
-            />
-        </ListItem>
-    );
-};
+        return (
+            <ListItem
+                button
+                component={Link}
+                className={className}
+                onClick={() => document.title = `${subject.code} (${subject.name}) - Falcon`}
+                to={subjectPageURL}
+            >
+                <ListItemText
+                    primary={subject.code}
+                    secondary={subject.name}
+                />
+            </ListItem>
+        );
+    }
+}
 
 class BaseSubjectsList extends Component {
     state = {

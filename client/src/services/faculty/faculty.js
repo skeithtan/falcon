@@ -71,27 +71,14 @@ const fullFacultyDetails = [
     teachingSubjects,
 ].join("");
 
-export const fetchAllFacultiesSummary = () => client.query({
+export const fetchAllFaculties = () => client.query({
     query: gql`
         query {
             faculties {
-                ${facultySummary}
-            }
-        }
-    `,
-});
-
-export const fetchFacultyDetails = _id => client.query({
-    query: gql`
-        query($_id: ID!) {
-            faculty(_id: $_id) {
                 ${fullFacultyDetails}
             }
         }
     `,
-    variables: {
-        _id,
-    },
 });
 
 export const fetchMyProfile = () => client.query({

@@ -13,7 +13,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import moment from "moment";
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import ReactToPrint from "react-to-print";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
@@ -29,7 +29,7 @@ import { TeachingSubjectsPrintComponent } from "../print_components/TeachingSubj
 import { wrap } from "./wrapper";
 
 
-class PrintContent extends Component {
+class PrintContent extends PureComponent {
     render() {
         const {
             classes,

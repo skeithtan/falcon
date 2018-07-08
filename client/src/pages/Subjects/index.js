@@ -1,5 +1,5 @@
 import Grid from "@material-ui/core/Grid";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Route } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
@@ -9,7 +9,7 @@ import { SubjectsList } from "./components/SubjectsList";
 import { wrap } from "./wrapper";
 
 
-class BaseSubjectsPage extends Component {
+class BaseSubjectsPage extends PureComponent {
     componentDidMount() {
         const {subjects, isLoading, fetchData} = this.props;
         if (!subjects && !isLoading) {

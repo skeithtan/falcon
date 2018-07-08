@@ -1,5 +1,5 @@
 import Grid from "@material-ui/core/Grid";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Route } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
@@ -9,7 +9,7 @@ import { FacultyProfilesHeader } from "./components/FacultyProfilesHeader";
 import { wrap } from "./wrapper";
 
 
-class BaseFacultyProfilesPage extends Component {
+class BaseFacultyProfilesPage extends PureComponent {
     componentDidMount() {
         document.title = "Faculty Profiles - Falcon";
         this.fetchFaculties();

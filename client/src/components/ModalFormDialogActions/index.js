@@ -4,11 +4,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { wrap } from "./wrapper";
 
 
-class BaseModalFormDialogActions extends Component {
+class BaseModalFormDialogActions extends PureComponent {
     renderSubmitting = () => (
         <Grid item>
             <Grid container spacing={8} alignItems="center" wrap="nowrap">

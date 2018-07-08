@@ -1,35 +1,38 @@
 import Avatar from "@material-ui/core/Avatar";
-import React from "react";
+import React, { PureComponent } from "react";
 import { getFullName, getInitials } from "../../utils/user.util";
 import { wrap } from "./wrapper";
 
 
-const UserAvatarInitials = ({initials, fullName, className, onClick}) => (
-    <Avatar className={className} onClick={onClick} alt={fullName}>{initials}</Avatar>
-);
+class BaseUserAvatar extends PureComponent {
+    renderUserAvatarInitials = (fullName, initials) => (
+        <Avatar
+            className={`${this.props.classes.avatar} ${this.props.className}`}
+            onClick={this.props.onClick}
+            alt={fullName}
+        >
+            {initials}
+        </Avatar>
+    );
 
-const UserAvatarPhoto = ({photo, fullName, className, onClick}) => (
-    <Avatar className={className} onClick={onClick} alt={fullName} src={photo} />
-);
+    renderUserAvatarPhoto = (fullName, photo) => (
+        <Avatar
+            className={`${this.props.classes.avatar} ${this.props.className}`}
+            onClick={this.props.onClick}
+            alt={fullName}
+            src={photo}
+        />
+    );
 
-const BaseUserAvatar = ({classes, user, className, onClick}) => {
-    const fullName = getFullName(user);
-    const initials = getInitials(user);
-    const photo = user.photo;
-
-    return photo ?
-        <UserAvatarPhoto
-            photo={photo}
-            fullName={fullName}
-            className={`${classes.avatar} ${className}`}
-            onClick={onClick}
-        /> :
-        <UserAvatarInitials
-            initials={initials}
-            fullName={fullName}
-            className={`${classes.avatar} ${className}`}
-            onClick={onClick}
-        />;
-};
+    render() {
+        const {user} = this.props;
+        const fullName = getFullName(user);
+        const initials = getInitials(user);
+        const photo = user.photo;
+        return photo ?
+            this.renderUserAvatarPhoto(fullName, photo) :
+            this.renderUserAvatarInitials(fullName, initials);
+    }
+}
 
 export const UserAvatar = wrap(BaseUserAvatar);

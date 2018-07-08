@@ -20,6 +20,8 @@ const getNotificationsForAdmin = state => {
     } = state;
     const notifications = [];
 
+    let key = 0;
+
     // Gather ChangeRequest notifications
     if (changeRequests && faculties) {
         Object.entries(changeRequests).forEach(([facultyId, facultyChangeRequests]) => {
@@ -28,6 +30,7 @@ const getNotificationsForAdmin = state => {
 
             notifications.push(onClose => (
                 <NotificationItem
+                    key={key}
                     renderAvatar={() => <UserAvatar user={faculty.user} />}
                     renderText={() => (
                         <Typography>
@@ -39,6 +42,8 @@ const getNotificationsForAdmin = state => {
                     onClose={onClose}
                 />
             ));
+
+            key += 1;
         });
     }
 
@@ -52,6 +57,7 @@ const getNotificationsForFaculty = state => {
     const {changeRequests, myProfile} = state;
     const profile = myProfile.profile;
     const notifications = [];
+    let key = 0;
 
     if (changeRequests.changeRequests && profile && changeRequests.changeRequests[profile._id]) {
         const myChangeRequests = changeRequests.changeRequests[profile._id];
@@ -64,6 +70,7 @@ const getNotificationsForFaculty = state => {
 
                 notifications.push(onClose => (
                     <NotificationItem
+                        key={key}
                         renderText={() => (
                             <Typography>
                                 A <strong>{changeRequests.subdocumentType}</strong> change request
@@ -75,6 +82,8 @@ const getNotificationsForFaculty = state => {
                         onClose={onClose}
                     />
                 ));
+
+                key += 1;
             });
     }
 

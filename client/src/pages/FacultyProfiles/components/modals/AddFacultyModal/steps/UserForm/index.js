@@ -4,7 +4,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { Uploader } from "../../../../../../../components/Uploader";
 import { validateForm } from "../../../../../../../utils/forms.util";
 import { wrap } from "./wrapper";
@@ -38,7 +38,7 @@ function getUserFormErrors(form, existingFaculties) {
     });
 }
 
-class BaseUserForm extends Component {
+class BaseUserForm extends PureComponent {
     render() {
         const {handleFormChange, form, handleNext} = this.props;
         const {hasErrors, fieldErrors} = getUserFormErrors(form, this.props.faculties);

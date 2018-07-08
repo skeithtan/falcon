@@ -1,6 +1,6 @@
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
@@ -11,7 +11,7 @@ import { MyProfileHeader } from "./components/MyProfileHeader";
 import { wrap } from "./wrapper";
 
 
-class BaseMyProfilePage extends Component {
+class BaseMyProfilePage extends PureComponent {
     componentDidMount() {
         document.title = "My Profile - Falcon";
 
