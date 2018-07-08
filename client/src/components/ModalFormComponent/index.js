@@ -12,23 +12,11 @@ export class ModalFormComponent extends Component {
     // To be implemented by subclass
     mapPropsToForm = props => ({});
 
-    componentDidMount() {
+    onEnter = () => {
         if (this.props.action === "update") {
             this.setState({
                 form: this.mapPropsToForm(this.props),
             });
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!prevProps.open && this.props.open) {
-            this.resetForm();
-
-            if (this.props.action === "update") {
-                this.setState({
-                    form: this.mapPropsToForm(this.props),
-                });
-            }
         }
     }
 
@@ -144,7 +132,13 @@ export class ModalFormComponent extends Component {
         const {open} = this.props;
 
         return (
-            <Dialog open={open} onClose={this.closeModal} maxWidth={false}>
+            <Dialog 
+                open={open} 
+                onExited={this.resetForm}
+                onEnter={this.onEnter}
+                onClose={this.closeModal} 
+                scroll="body"
+            >
                 <DialogTitle>{this.modalTitle}</DialogTitle>
                 <DialogContent>
                     {this.renderDialogContent()}
