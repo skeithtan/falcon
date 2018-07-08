@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +12,7 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:600|Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700|Roboto:300,400,500" rel="stylesheet">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -29,7 +30,14 @@
             background: #ECEFF1;
         }
 
-        html, body, #root {
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body,
+        #root {
             height: 100%;
             margin: 0;
             overflow: hidden;
@@ -45,12 +53,13 @@
     <script>UPLOADCARE_PUBLIC_KEY = "3163b1e4d3c5f916ace7";</script>
     <title>Falcon</title>
 </head>
+
 <body>
-<noscript>
-    You need to enable JavaScript to run this app.
-</noscript>
-<div id="root"></div>
-<!--
+    <noscript>
+        You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <!--
   This HTML file is a template.
   If you open it directly in the browser, you will see an empty page.
 
@@ -61,4 +70,5 @@
   To create a production bundle, use `npm run build` or `yarn build`.
 -->
 </body>
+
 </html>
