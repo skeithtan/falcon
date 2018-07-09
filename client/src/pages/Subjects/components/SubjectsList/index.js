@@ -76,7 +76,7 @@ class BaseSubjectsList extends Component {
 
     renderList = subjects => {
         const {
-            match: {params: {subjectId}},
+            subjectId,
             classes,
             searchKeyword,
         } = this.props;

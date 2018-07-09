@@ -20,7 +20,7 @@ class BaseSubjectsDetail extends PureComponent {
     getActiveSubject = subjectId => this.props.subjects.find(subject => subject._id === subjectId);
 
     render() {
-        const {match: {params: {subjectId}}, isLoading, errors, classes} = this.props;
+        const {subjectId, isLoading, errors, classes} = this.props;
 
         const noSelectedSubject = !subjectId;
         const activeSubject = this.getActiveSubject(subjectId);

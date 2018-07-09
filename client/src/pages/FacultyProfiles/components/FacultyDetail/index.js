@@ -28,12 +28,12 @@ class BaseFacultyDetail extends PureComponent {
     ));
 
     componentDidMount() {
-        this.onNewFacultySelect(this.props.match.params.facultyId);
+        this.onNewFacultySelect(this.props.facultyId);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const oldFacultyId = prevProps.match.params.facultyId;
-        const newFacultyId = this.props.match.params.facultyId;
+        const oldFacultyId = prevProps.facultyId;
+        const newFacultyId = this.props.facultyId;
 
         if (oldFacultyId !== newFacultyId) {
             this.onNewFacultySelect(newFacultyId);
@@ -59,7 +59,7 @@ class BaseFacultyDetail extends PureComponent {
     };
 
     render() {
-        const {match: {params: {facultyId}}, classes} = this.props;
+        const {facultyId, classes} = this.props;
 
         // We don't have a selected faculty if the URL has no facultyID
         const noSelectedFaculty = !facultyId;

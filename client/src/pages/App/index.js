@@ -62,8 +62,8 @@ class BaseApp extends PureComponent {
 
     renderRoutes = () => {
         const {user} = this.props;
-        const pageToRoute = ({identifier, path, component}) => (
-            <Route key={identifier} path={"/" + path} component={component} />
+        const pageToRoute = ({identifier, path, component, pathParameter = ""}) => (
+            <Route key={identifier} path={"/" + path + pathParameter} component={component} />
         );
 
         // If we have a user, add the pages for the user type in the pages

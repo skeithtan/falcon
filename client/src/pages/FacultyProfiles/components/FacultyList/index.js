@@ -50,7 +50,8 @@ class BaseFacultyList extends Component {
 
     renderList = faculties => {
         const {
-            match: {params: {facultyId, activeTab}},
+            facultyId,
+            activeTabPath,
             classes,
             searchKeyword,
         } = this.props;
@@ -66,7 +67,7 @@ class BaseFacultyList extends Component {
                 {faculties.map(faculty =>
                     <FacultyListItem
                         key={faculty._id}
-                        activeTab={activeTab}
+                        activeTab={activeTabPath}
                         faculty={faculty}
                         active={facultyId === faculty._id}
                     />,

@@ -58,7 +58,12 @@ class BaseFacultyProfilesPage extends PureComponent {
     render() {
         const {
             classes,
-            match,
+            match: {
+                params: {
+                    facultyId,
+                    activeTab: activeTabPath
+                }
+            },
             isLoading,
             errors,
             faculties,
@@ -78,11 +83,20 @@ class BaseFacultyProfilesPage extends PureComponent {
 
         return (
             <div className={classes.facultyProfiles}>
-                <Route path={`${match.url}/:facultyId?/:activeTab?`} component={FacultyProfilesHeader} />
+                <FacultyProfilesHeader
+                    facultyId={facultyId}
+                    activeTabPath={activeTabPath}
+                />
 
                 <div className={`${classes.facultyProfilesBody} ${classes.split}`}>
-                    <Route path={`${match.url}/:facultyId?/:activeTab?`} component={FacultyList} />
-                    <Route path={`${match.url}/:facultyId?/:activeTab?`} component={FacultyDetail} />
+                    <FacultyList
+                        facultyId={facultyId}
+                        activeTabPath={activeTabPath}
+                    />
+                    <FacultyDetail
+                        facultyId={facultyId}
+                        activeTabPath={activeTabPath}
+                    />
                 </div>
             </div>
         );

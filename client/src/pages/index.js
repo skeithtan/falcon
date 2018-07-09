@@ -20,6 +20,7 @@ export const FACULTY_PROFILES_PAGE = {
     component: FacultyProfilesPage,
     name: "Faculty Profiles",
     theme: TEAL_THEME,
+    pathParameter: "/:facultyId?/:activeTab?",
 };
 
 export const MY_PROFILE_PAGE = {
@@ -36,6 +37,7 @@ export const SUBJECTS_PAGE = {
     component: SubjectsPage,
     name: "Subjects",
     theme: GREEN_THEME,
+    pathParameter: "/:subjectId?",
 };
 
 export const FACULTY_LOADING_PAGE = {

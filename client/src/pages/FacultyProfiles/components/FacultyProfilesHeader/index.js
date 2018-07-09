@@ -26,7 +26,8 @@ class BaseFacultyProfilesHeader extends PureComponent {
 
     render() {
         const {
-            match,
+            facultyId,
+            activeTabPath,
             classes,
             history,
             searchKeyword,
@@ -36,12 +37,11 @@ class BaseFacultyProfilesHeader extends PureComponent {
             onSearchInputChange,
         } = this.props;
 
-        const activeFacultyId = match.params.facultyId;
-        const activeTabIndex = TABS.findIndex(tab => tab.path === match.params.activeTab);
+        const activeTabIndex = TABS.findIndex(tab => tab.path === activeTabPath);
 
         const badge = allChangeRequests &&
-            allChangeRequests[activeFacultyId] &&
-            allChangeRequests[activeFacultyId].length;
+            allChangeRequests[facultyId] &&
+            allChangeRequests[facultyId].length;
 
         return (
             <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
@@ -62,7 +62,7 @@ class BaseFacultyProfilesHeader extends PureComponent {
                     </Paper>
                 </div>
 
-                {activeFacultyId &&
+                {facultyId &&
                     <Tabs
                         value={activeTabIndex}
                         classes={{ root: classes.tabs, indicator: classes.tabsIndicator }}
@@ -72,7 +72,7 @@ class BaseFacultyProfilesHeader extends PureComponent {
                             <Tab
                                 key={tab.identifier}
                                 label={this.renderTabLabel(tab, badge, classes)}
-                                onClick={() => history.push(`/${FACULTY_PROFILES_PAGE.path}/${activeFacultyId}/${tab.path}`)}
+                                onClick={() => history.push(`/${FACULTY_PROFILES_PAGE.path}/${facultyId}/${tab.path}`)}
                             />
                         ))}
                     </Tabs>
