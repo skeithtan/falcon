@@ -16,7 +16,7 @@ export const styles = theme => ({
         paddingRight: theme.spacing.unit * 2,
     },
     searchInput: {
-        padding: 6,
+        padding: theme.spacing.unit,
         boxSizing: "border-box",
     },
     searchAdornment: {

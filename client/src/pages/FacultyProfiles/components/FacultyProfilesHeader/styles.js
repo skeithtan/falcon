@@ -1,5 +1,6 @@
-import { lighten } from '@material-ui/core/styles/colorManipulator';
+import { lighten } from "@material-ui/core/styles/colorManipulator";
 import { appBarExtension, badge, split } from "../../../../components/styles";
+
 
 export const styles = theme => ({
     facultyProfilesHeader: appBarExtension(theme),
@@ -15,7 +16,7 @@ export const styles = theme => ({
         paddingRight: theme.spacing.unit * 2,
     },
     searchInput: {
-        padding: 6,
+        padding: theme.spacing.unit,
         boxSizing: "border-box",
     },
     searchAdornment: {
@@ -27,11 +28,14 @@ export const styles = theme => ({
             color: "#fff",
         },
     },
+    tabsFlexContainer: {
+        height: "100%",
+    },
     tabsIndicator: {
         background: theme.palette.common.white,
     },
     badgeContainer: {
-        padding: `0 ${theme.spacing.unit * 2}px 0 0px`
+        padding: `0 ${theme.spacing.unit * 2}px 0 0px`,
     },
     badge: {
         ...badge(theme),

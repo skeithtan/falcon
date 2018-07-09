@@ -15,7 +15,8 @@ class BaseFacultyProfilesHeader extends PureComponent {
     renderTabLabel = (tab, badge, classes) => {
         if (badge && badge > 0 && tab.identifier === CHANGE_REQUESTS_TAB.identifier) {
             return (
-                <Badge color="error" badgeContent={badge} classes={{ root: classes.badgeContainer, badge: classes.badge }}>
+                <Badge color="error" badgeContent={badge}
+                       classes={{root: classes.badgeContainer, badge: classes.badge}}>
                     {tab.name}
                 </Badge>
             );
@@ -43,6 +44,12 @@ class BaseFacultyProfilesHeader extends PureComponent {
             allChangeRequests[facultyId] &&
             allChangeRequests[facultyId].length;
 
+        const tabsClasses = {
+            root: classes.tabs,
+            indicator: classes.tabsIndicator,
+            flexContainer: classes.tabsFlexContainer,
+        };
+
         return (
             <div className={`${classes.facultyProfilesHeader} ${classes.split}`}>
                 <div className={classes.searchWrapper}>
@@ -63,19 +70,19 @@ class BaseFacultyProfilesHeader extends PureComponent {
                 </div>
 
                 {facultyId &&
-                    <Tabs
-                        value={activeTabIndex}
-                        classes={{ root: classes.tabs, indicator: classes.tabsIndicator }}
-                        scrollable
-                    >
-                        {TABS.map(tab => (
-                            <Tab
-                                key={tab.identifier}
-                                label={this.renderTabLabel(tab, badge, classes)}
-                                onClick={() => history.push(`/${FACULTY_PROFILES_PAGE.path}/${facultyId}/${tab.path}`)}
-                            />
-                        ))}
-                    </Tabs>
+                <Tabs
+                    value={activeTabIndex}
+                    classes={tabsClasses}
+                    scrollable
+                >
+                    {TABS.map(tab => (
+                        <Tab
+                            key={tab.identifier}
+                            label={this.renderTabLabel(tab, badge, classes)}
+                            onClick={() => history.push(`/${FACULTY_PROFILES_PAGE.path}/${facultyId}/${tab.path}`)}
+                        />
+                    ))}
+                </Tabs>
                 }
             </div>
         );

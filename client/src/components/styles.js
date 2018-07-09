@@ -81,6 +81,6 @@ export const badge = theme => ({
 
 export const appBarExtension = theme => ({
     background: theme.palette.primary.main,
-    minHeight: 52,
+    minHeight: 56,
     flexGrow: 0,
 });
