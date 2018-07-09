@@ -32,7 +32,17 @@ class BaseSubjectsPage extends PureComponent {
     );
 
     render() {
-        const {classes, match, isLoading, errors, subjects} = this.props;
+        const {
+            classes,
+            match: {
+                params: {
+                    subjectId
+                },
+            },
+            isLoading,
+            errors,
+            subjects
+        } = this.props;
 
         if (isLoading) {
             return this.renderLoading();
@@ -50,8 +60,8 @@ class BaseSubjectsPage extends PureComponent {
             <div className={classes.subjects}>
                 <SubjectsHeader />
                 <div className={`${classes.subjectsBody} ${classes.split}`}>
-                    <Route path={`${match.url}/:subjectId?`} component={SubjectsList} />
-                    <Route path={`${match.url}/:subjectId?`} component={SubjectsDetail} />
+                    <SubjectsList subjectId={subjectId} />
+                    <SubjectsDetail subjectId={subjectId} />
                 </div>
             </div>
         );
