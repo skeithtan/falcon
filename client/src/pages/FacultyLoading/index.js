@@ -1,14 +1,14 @@
 import Grid from "@material-ui/core/Grid";
 import React, { Component } from "react";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
-import { ErrorState } from "../../components/states/ErrorState";
 import { EmptyState } from "../../components/states/EmptyState";
-import {
-    termToPlan,
-    formatAcademicYear,
-} from "../../utils/faculty_loading.util";
-import { wrap } from "./wrapper";
+import { ErrorState } from "../../components/states/ErrorState";
+import { TERM_STATUSES } from "../../enums/class.enums";
+import { formatAcademicYear, termToPlan } from "../../utils/faculty_loading.util";
+import { makeURL } from "../../utils/url.util";
 import { PlanNextTermModal } from "./components/modals/PlanNextTermModal";
+import { wrap } from "./wrapper";
+
 
 class BaseFacultyLoadingPage extends Component {
     state = {
@@ -23,38 +23,121 @@ class BaseFacultyLoadingPage extends Component {
     componentDidMount() {
         document.title = "Faculty Loading - Falcon";
         this.fetchTermSchedules();
+        this.handlePath();
     }
 
+    componentDidUpdate() {
+        this.handlePath();
+    }
+
+    redirectToDefaultTermSchedule = termSchedules => {
+        const termScheduleToShow = this.getDefaultTermSchedule(termSchedules);
+
+        this.props.history.push(
+            makeURL()
+                .facultyLoading()
+                .selectTermSchedule(termScheduleToShow._id)
+                .mondayThursday()
+                .build(),
+        );
+    };
+
+    handlePath = () => {
+        const {
+            match: {
+                params: {termScheduleId, meetingDay},
+            },
+            history,
+            termSchedules,
+        } = this.props;
+
+        // We need termSchedules to determine how to deal with URL
+        if (!termSchedules || termSchedules.length === 0) {
+            return;
+        }
+
+        // If we don't have a selected term schedule
+        if (!termScheduleId) {
+            // Pick one for the user
+            this.redirectToDefaultTermSchedule(termSchedules);
+            return;
+        }
+
+        const termSchedule = this.getTermScheduleFromId(
+            termSchedules,
+            termScheduleId,
+        );
+
+        // If we do have a termScheduleId but it's invalid
+        if (!termSchedule) {
+            this.redirectToDefaultTermSchedule(termSchedules);
+            return;
+        }
+
+        if (!meetingDay) {
+            history.push(
+                makeURL()
+                    .facultyLoading()
+                    .selectTermSchedule(termScheduleId)
+                    .mondayThursday()
+                    .build(),
+            );
+        }
+    };
+
+    getDefaultTermSchedule = termSchedules => {
+        // Find the current term schedule
+        let termScheduleToShow = termSchedules.find(
+            termSchedule =>
+                termSchedule.status !== TERM_STATUSES.ARCHIVED.identifier,
+        );
+
+        // If we can't find one that isn't archived
+        if (!termScheduleToShow) {
+            // Just get the first one
+            termScheduleToShow = termSchedules[0];
+        }
+
+        return termScheduleToShow;
+    };
+
+    getTermScheduleFromId = (termSchedules, termScheduleId) =>
+        termSchedules.find(termSchedule => termSchedule._id === termScheduleId);
+
     fetchTermSchedules = () => {
-        const { isLoading, termSchedules, fetchData } = this.props;
+        const {isLoading, termSchedules, fetchData} = this.props;
         if (!termSchedules && !isLoading) {
             fetchData();
         }
     };
 
     renderLoading = () => (
-        <Grid container style={{ height: "100%" }}>
+        <Grid container style={{height: "100%"}}>
             <FullPageLoadingIndicator size={100} />
         </Grid>
     );
 
     renderEmptyState = () => {
+        const {user} = this.props;
+
         const showAddButton = Boolean(termToPlan);
         let addButtonText = null;
 
         if (termToPlan) {
             addButtonText = `Plan ${
                 termToPlan.term.name
-            } Term of ${formatAcademicYear(termToPlan.startYear)}`;
+                } Term of ${formatAcademicYear(termToPlan.startYear)}`;
         }
 
         return (
             <EmptyState
-                bigMessage="There are no term schedules found"
-                smallMessage="Term schedules planned will be shown here"
+                bigMessage="There are no term schedules found."
+                smallMessage="Term schedules planned will be shown here."
                 onAddButtonClick={() => this.togglePlanNextTermModal(true)}
                 addButtonText={addButtonText}
-                showAddButton={showAddButton}
+                showAddButton={
+                    showAddButton && user.permissions.MUTATE_TERM_SCHEDULES
+                }
             />
         );
     };
@@ -69,7 +152,7 @@ class BaseFacultyLoadingPage extends Component {
 
     nextTermExists = termSchedules => {
         // Ensure termToPlan does not already exist in termSchedules
-        return termSchedules.every(({ startYear, term }) => {
+        return termSchedules.every(({startYear, term}) => {
             return (
                 startYear !== termToPlan.startYear &&
                 term !== termToPlan.term.identifier
@@ -78,7 +161,7 @@ class BaseFacultyLoadingPage extends Component {
     };
 
     get shouldShowPlanNextTermModal() {
-        const { termSchedules } = this.props;
+        const {termSchedules} = this.props;
 
         if (!termSchedules) {
             return false;
@@ -92,21 +175,21 @@ class BaseFacultyLoadingPage extends Component {
     }
 
     render() {
-        const { classes, isLoading, termSchedules, errors } = this.props;
-        const { planNextTermModalIsShowing } = this.state;
+        const {classes, isLoading, termSchedules, errors} = this.props;
+        const {planNextTermModalIsShowing} = this.state;
 
         return (
             <div className={classes.facultyLoadingContainer}>
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
                 {termSchedules &&
-                    termSchedules.length === 0 &&
-                    this.renderEmptyState()}
+                termSchedules.length === 0 &&
+                this.renderEmptyState()}
                 {termSchedules && termSchedules.length > 0 && "TODO"}
 
                 {this.shouldShowPlanNextTermModal && (
                     <PlanNextTermModal
-                        isOpen={planNextTermModalIsShowing}
+                        open={planNextTermModalIsShowing}
                         onClose={() => this.togglePlanNextTermModal(false)}
                         term={termToPlan.term}
                         startYear={termToPlan.startYear}
