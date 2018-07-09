@@ -1,6 +1,7 @@
 import moment from "moment";
 import { TERMS } from "../enums/class.enums";
 
+
 const now = moment();
 
 const PLANNING_MONTHS = [
@@ -19,9 +20,9 @@ const PLANNING_MONTHS = [
 ];
 const getTermToPlan = () => {
     const monthNow = now.format("MMMM");
-    const yearNow = Number(now.format("YYYY"), 10);
+    const yearNow = Number(now.format("YYYY"));
 
-    for (const { term, months } of PLANNING_MONTHS) {
+    for (const {term, months} of PLANNING_MONTHS) {
         if (months.includes(monthNow)) {
             return {
                 term,
