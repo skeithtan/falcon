@@ -26,7 +26,7 @@ const getTermToPlan = () => {
             return {
                 term,
                 // Third term's start year is always the year before
-                startYear: term === TERMS.THIRD ? (yearNow - 1) : yearNow,
+                startYear: term === TERMS.THIRD ? yearNow - 1 : yearNow,
             };
         }
     }
@@ -35,3 +35,6 @@ const getTermToPlan = () => {
 };
 
 export const termToPlan = getTermToPlan();
+
+export const formatAcademicYear = startYear =>
+    `${startYear} - ${startYear + 1}`;
