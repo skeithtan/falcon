@@ -54,7 +54,6 @@ class ChangeRequestCardFooter extends PureComponent {
 
     render() {
         const { user } = this.props;
-        console.log("Hey");
 
         return getObjectForUserType(user, {
             CLERK: this.renderAdministrativeFooter,

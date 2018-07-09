@@ -8,10 +8,6 @@ export const page = theme => ({
     flexDirection: "column",
 });
 
-export const formContainer = theme => ({
-    width: 720,
-});
-
 export const form = theme => ({
     padding: theme.spacing.unit,
 });
@@ -38,10 +34,6 @@ export const card = theme => ({
 });
 
 export const genericModalStyle = theme => ({
-    container: {
-        ...formContainer(theme),
-    },
-
     form: {
         ...form(theme),
     },
