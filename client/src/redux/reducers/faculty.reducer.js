@@ -6,7 +6,6 @@ import {
     FACULTY_LIST_IS_LOADING,
 } from "../actions/faculty.actions";
 
-
 const initialState = {
     faculties: null,
     isLoading: false,
@@ -25,7 +24,7 @@ export function faculty(state = initialState, action) {
             return {
                 faculties: null,
                 isLoading: false,
-                errors: action.errors
+                errors: action.errors,
             };
         case FACULTY_IS_ADDED:
             return {
@@ -52,9 +51,9 @@ export function faculty(state = initialState, action) {
             return {
                 faculties: action.faculties,
                 errors: null,
-                isLoading: false
+                isLoading: false,
             };
         default:
-            return state
+            return state;
     }
 }
