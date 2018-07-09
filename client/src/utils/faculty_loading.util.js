@@ -39,3 +39,9 @@ export const termToPlan = getTermToPlan();
 
 export const formatAcademicYear = startYear =>
     `${startYear} - ${startYear + 1}`;
+
+export const termScheduleToString = termSchedule => {
+    const term = TERMS[termSchedule.term].name;
+    const academicYear = formatAcademicYear(termSchedule.startYear);
+    return `${term} term ${academicYear}`;
+};
