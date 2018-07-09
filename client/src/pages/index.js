@@ -46,6 +46,7 @@ export const FACULTY_LOADING_PAGE = {
     component: FacultyLoadingPage,
     name: "Faculty Loading",
     theme: BLUE_THEME,
+    pathParameter: "/:termScheduleId?/:meetingDay?"
 };
 
 export const USER_SETTINGS_PAGE = {

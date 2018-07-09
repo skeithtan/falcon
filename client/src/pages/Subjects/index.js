@@ -1,6 +1,5 @@
 import Grid from "@material-ui/core/Grid";
 import React, { PureComponent } from "react";
-import { Route } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
 import { SubjectsDetail } from "./components/SubjectsDetail";
@@ -36,12 +35,12 @@ class BaseSubjectsPage extends PureComponent {
             classes,
             match: {
                 params: {
-                    subjectId
+                    subjectId,
                 },
             },
             isLoading,
             errors,
-            subjects
+            subjects,
         } = this.props;
 
         if (isLoading) {
