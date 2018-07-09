@@ -1,10 +1,39 @@
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "recompose/compose";
+import {
+    termSchedulesIsLoading,
+    termSchedulesFetchError,
+    termSchedulesIsFetched,
+} from "../../redux/actions/faculty_loading.actions";
 import { styles } from "./styles";
+import { fetchAllTermSchedules } from "../../services/classes/term_schedule";
 
+const mapStateToProps = state => ({
+    ...state.facultyLoading,
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchData() {
+        dispatch(termSchedulesIsLoading());
+        return fetchAllTermSchedules()
+            .then(result => result.data.termSchedules)
+            .then(termSchedules => {
+                dispatch(termSchedulesIsFetched(termSchedules));
+                return termSchedules;
+            })
+            .catch(error => {
+                dispatch(termSchedulesFetchError([error.message]));
+            });
+    },
+});
 
 export const wrap = compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
     withStyles(styles),
-    withRouter,
+    withRouter
 );
