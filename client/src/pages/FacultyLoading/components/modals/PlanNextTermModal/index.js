@@ -3,7 +3,7 @@ import React from "react";
 import { ConfirmActionModal } from "../../../../../components/ConfirmActionModal";
 import { formatAcademicYear } from "../../../../../utils/faculty_loading.util";
 import { wrap } from "./wrapper";
-
+import { makeURL } from "../../../../../utils/url.util";
 
 class BasePlanNextTermModal extends ConfirmActionModal {
     get dialogTitle() {
@@ -31,7 +31,16 @@ class BasePlanNextTermModal extends ConfirmActionModal {
     }
 
     get submitAction() {
-        // TODO
+        const { onConfirmPlanNextTerm, startYear, term, history } = this.props;
+        return () =>
+            onConfirmPlanNextTerm(startYear, term).then(newTermSchedule =>
+                history.push(
+                    makeURL()
+                        .facultyLoading()
+                        .selectTermSchedule(newTermSchedule._id)
+                        .build()
+                )
+            );
     }
 
     get toastSuccessMessage() {
