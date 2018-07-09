@@ -98,8 +98,10 @@ export const addClassToTerm = (termScheduleId, newClass) =>
         mutation: gql`
             mutation($termScheduleId: ID!, $newClass: ClassInput!) {
                 termSchedule(_id: $termScheduleId) {
-                    add(newClass: $newClass) {
-                        ${classFields}
+                    classes {
+                        add(newClass: $newClass) {
+                            ${classFields}
+                        }
                     }
                 }
             }
@@ -115,7 +117,9 @@ export const removeClassFromTerm = (termScheduleId, classId) =>
         mutation: gql`
             mutation($termScheduleId: ID!, $classId: ID!) {
                 termSchedule(_id: $termScheduleId) {
-                    remove(_id: $classId)
+                    classes {
+                        remove(_id: $classId)
+                    }
                 }
             }
         `,
