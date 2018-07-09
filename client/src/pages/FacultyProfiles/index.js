@@ -1,6 +1,5 @@
 import Grid from "@material-ui/core/Grid";
 import React, { PureComponent } from "react";
-import { Route } from "react-router-dom";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../components/states/ErrorState";
 import { FacultyDetail } from "./components/FacultyDetail";
@@ -61,8 +60,8 @@ class BaseFacultyProfilesPage extends PureComponent {
             match: {
                 params: {
                     facultyId,
-                    activeTab: activeTabPath
-                }
+                    activeTab: activeTabPath,
+                },
             },
             isLoading,
             errors,
