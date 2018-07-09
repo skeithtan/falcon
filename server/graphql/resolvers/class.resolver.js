@@ -161,7 +161,8 @@ async function mutateTerm(object, { _id }) {
 }
 
 async function addTermSchedule(object, { startYear, term }) {
-    const termSchedule = await TermSchedule.find({ startYear, term }).exec();
+    const termSchedule = await TermSchedule.findOne({ startYear, term }).exec();
+
     if (termSchedule) {
         return termSchedule;
     }
