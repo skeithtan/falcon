@@ -7,7 +7,7 @@ import { facultyProfiles } from "./faculty_profiles.reducer";
 import { myProfile } from "./my_profile.reducer";
 import { subject } from "./subject.reducer";
 import { toast } from "./toast.reducer";
-
+import { facultyLoading } from "./faculty_loading.reducer";
 
 const appReducer = combineReducers({
     authentication,
@@ -17,6 +17,7 @@ const appReducer = combineReducers({
     myProfile,
     toast,
     changeRequests,
+    facultyLoading,
 });
 
 export const reducer = (state, action) => {
