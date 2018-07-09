@@ -1,11 +1,12 @@
 import Grid from "@material-ui/core/Grid";
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../components/states/EmptyState";
 import { ErrorState } from "../../components/states/ErrorState";
 import { TERM_STATUSES } from "../../enums/class.enums";
 import { formatAcademicYear, termToPlan } from "../../utils/faculty_loading.util";
 import { makeURL } from "../../utils/url.util";
+import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 import { PlanNextTermModal } from "./components/modals/PlanNextTermModal";
 import { wrap } from "./wrapper";
 
@@ -33,7 +34,7 @@ class BaseFacultyLoadingPage extends Component {
     redirectToDefaultTermSchedule = termSchedules => {
         const termScheduleToShow = this.getDefaultTermSchedule(termSchedules);
 
-        this.props.history.push(
+        this.props.history.replace(
             makeURL()
                 .facultyLoading()
                 .selectTermSchedule(termScheduleToShow._id)
@@ -75,7 +76,17 @@ class BaseFacultyLoadingPage extends Component {
         }
 
         if (!meetingDay) {
-            history.push(
+            history.replace(
+                makeURL()
+                    .facultyLoading()
+                    .selectTermSchedule(termScheduleId)
+                    .mondayThursday()
+                    .build(),
+            );
+        }
+
+        if (!this.meetingDayIsValid(meetingDay)) {
+            history.replace(
                 makeURL()
                     .facultyLoading()
                     .selectTermSchedule(termScheduleId)
@@ -84,6 +95,8 @@ class BaseFacultyLoadingPage extends Component {
             );
         }
     };
+
+    meetingDayIsValid = meetingDay => ["monday-thursday", "tuesday-friday"].includes(meetingDay);
 
     getDefaultTermSchedule = termSchedules => {
         // Find the current term schedule
@@ -174,18 +187,35 @@ class BaseFacultyLoadingPage extends Component {
         return this.nextTermExists(termSchedules);
     }
 
+    renderFacultyLoading = (termSchedule, meetingDay) => {
+        return (
+            <Fragment>
+                <FacultyLoadingHeader activeTermSchedule={termSchedule} meetingDay={meetingDay}/>
+            </Fragment>
+        )
+    };
+
     render() {
-        const {classes, isLoading, termSchedules, errors} = this.props;
+        const {
+            classes,
+            match: {
+                params: {termScheduleId, meetingDay},
+            },
+            isLoading,
+            termSchedules,
+            errors,
+        } = this.props;
+
         const {planNextTermModalIsShowing} = this.state;
+        const termSchedule = termSchedules && this.getTermScheduleFromId(termSchedules, termScheduleId);
+        const meetingDayIsValid = this.meetingDayIsValid(meetingDay);
 
         return (
             <div className={classes.facultyLoadingContainer}>
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
-                {termSchedules &&
-                termSchedules.length === 0 &&
-                this.renderEmptyState()}
-                {termSchedules && termSchedules.length > 0 && "TODO"}
+                {termSchedules && termSchedules.length === 0 && this.renderEmptyState()}
+                {termSchedule && meetingDayIsValid && this.renderFacultyLoading(termSchedule, meetingDay)}
 
                 {this.shouldShowPlanNextTermModal && (
                     <PlanNextTermModal
