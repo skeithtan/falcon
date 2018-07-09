@@ -78,3 +78,9 @@ export const badge = theme => ({
     background: red["600"],
     color: "white !important",
 });
+
+export const appBarExtension = theme => ({
+    background: theme.palette.primary.main,
+    minHeight: 52,
+    flexGrow: 0,
+});
