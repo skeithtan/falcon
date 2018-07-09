@@ -1,36 +1,36 @@
 export const EMPLOYMENT = {
-    "FULL_TIME_PERMANENT": {
+    FULL_TIME_PERMANENT: {
         identifier: "FULL_TIME_PERMANENT",
         name: "Permanent Full Time",
     },
-    "FULL_TIME_TEMPORARY": {
+    FULL_TIME_TEMPORARY: {
         identifier: "FULL_TIME_PERMANENT",
         name: "Temporary Full Time",
     },
-    "PART_TIME": {
+    PART_TIME: {
         identifier: "PART_TIME",
         name: "Part Time",
     },
-    "ADJUNCT": {
+    ADJUNCT: {
         identifier: "ADJUNCT",
         name: "Adjunct",
     },
-    "ON_LEAVE": {
+    ON_LEAVE: {
         identifier: "ON_LEAVE",
         name: "On leave",
     },
-    "TERMINATED": {
+    TERMINATED: {
         identifier: "TERMINATED",
         name: "Terminated",
     },
 };
 
 export const SEX = {
-    "M": {
+    M: {
         identifier: "M",
         name: "Male",
     },
-    "F": {
+    F: {
         identifier: "F",
         name: "Female",
     },
@@ -38,19 +38,19 @@ export const SEX = {
 
 export const DEGREE = {
     LEVEL: {
-        "ASSOCIATE": {
+        ASSOCIATE: {
             identifier: "ASSOCIATE",
             name: "Associate",
         },
-        "BACHELOR": {
+        BACHELOR: {
             identifier: "BACHELOR",
             name: "Bachelor",
         },
-        "MASTER": {
+        MASTER: {
             identifier: "MASTER",
             name: "Master",
         },
-        "DOCTORATE": {
+        DOCTORATE: {
             identifier: "DOCTORATE",
             name: "Doctorate",
         },
@@ -59,27 +59,27 @@ export const DEGREE = {
 
 export const EXTENSION_WORK = {
     ROLES: {
-        "LECTURER": {
+        LECTURER: {
             identifier: "LECTURER",
             name: "Lecturer",
         },
-        "TRAINER": {
+        TRAINER: {
             identifier: "TRAINER",
             name: "Trainer",
         },
-        "RESOURCE_SPEAKER": {
+        RESOURCE_SPEAKER: {
             identifier: "RESOURCE_SPEAKER",
             name: "Resource Speaker",
         },
-        "FACILITATOR": {
+        FACILITATOR: {
             identifier: "FACILITATOR",
             name: "Facilitator",
         },
-        "COACH": {
+        COACH: {
             identifier: "COACH",
             name: "Coach",
         },
-        "MATERIAL_WRITER": {
+        MATERIAL_WRITER: {
             identifier: "MATERIAL_WRITER",
             name: "Material Writer",
         },
@@ -88,37 +88,37 @@ export const EXTENSION_WORK = {
 
 export const INSTRUCTIONAL_MATERIAL = {
     MEDIUM: {
-        "PRINT": {
+        PRINT: {
             identifier: "PRINT",
             name: "Print",
         },
-        "MODULE": {
+        MODULE: {
             identifier: "MODULE",
             name: "Module",
         },
-        "VIDEO": {
+        VIDEO: {
             identifier: "VIDEO",
             name: "Video",
         },
-        "SLIDE": {
+        SLIDE: {
             identifier: "SLIDE",
             name: "Slide",
         },
-        "DIGITAL_FILE": {
+        DIGITAL_FILE: {
             identifier: "DIGITAL_FILE",
             name: "Digital File",
         },
-        "AUDIO": {
+        AUDIO: {
             identifier: "AUDIO",
             name: "Audio",
         },
     },
     AUDIENCE: {
-        "STUDENT": {
+        STUDENT: {
             identifier: "STUDENT",
             name: "Student",
         },
-        "TEACHER": {
+        TEACHER: {
             identifier: "TEACHER",
             name: "Teacher",
         },
@@ -127,19 +127,19 @@ export const INSTRUCTIONAL_MATERIAL = {
 
 export const RECOGNITION = {
     BASIS: {
-        "RESEARCH": {
+        RESEARCH: {
             identifier: "RESEARCH",
             name: "Research",
         },
-        "SCHOLARSHIP": {
+        SCHOLARSHIP: {
             identifier: "SCHOLARSHIP",
             name: "Scholarship",
         },
-        "EXTENSION_WORK": {
+        EXTENSION_WORK: {
             identifier: "EXTENSION_WORK",
             name: "Extension Work",
         },
-        "INSTRUCTION": {
+        INSTRUCTION: {
             identifier: "INSTRUCTION",
             name: "Instruction",
         },
@@ -148,33 +148,33 @@ export const RECOGNITION = {
 
 export const PRESENTATION = {
     CATEGORY: {
-        "INSTITUTIONAL": {
+        INSTITUTIONAL: {
             identifier: "INSTITUTIONAL",
             name: "Institutional",
         },
-        "REGIONAL": {
+        REGIONAL: {
             identifier: "REGIONAL",
             name: "Regional",
         },
-        "NATIONAL": {
+        NATIONAL: {
             identifier: "NATIONAL",
             name: "National",
         },
-        "INTERNATIONAL": {
+        INTERNATIONAL: {
             identifier: "INTERNATIONAL",
             name: "International",
         },
     },
     MEDIUM: {
-        "PAPER": {
+        PAPER: {
             identifier: "PAPER",
             name: "Paper",
         },
-        "POSTER": {
+        POSTER: {
             identifier: "POSTER",
             name: "Poster",
         },
-        "RESEARCH": {
+        RESEARCH: {
             identifier: "RESEARCH",
             name: "Research",
         },
@@ -182,23 +182,23 @@ export const PRESENTATION = {
 };
 
 export const SUBDOCUMENT_TYPE = {
-    "Degree": {
+    Degree: {
         name: "Degree",
         facultyKey: "degrees",
     },
-    "Recognition": {
+    Recognition: {
         name: "Recognition",
         facultyKey: "recognitions",
     },
-    "Presentation": {
+    Presentation: {
         name: "Presentation",
         facultyKey: "presentations",
     },
-    "InstructionalMaterial": {
+    InstructionalMaterial: {
         name: "Instructional Material",
         facultyKey: "instructionalMaterials",
     },
-    "ExtensionWork": {
+    ExtensionWork: {
         name: "Extension Work",
         facultyKey: "extensionWorks",
     },

@@ -1,13 +1,13 @@
 export const CHANGE_REQUEST_STATUSES = {
-    "PENDING": {
+    PENDING: {
         identifier: "PENDING",
         name: "pending",
     },
-    "APPROVED": {
+    APPROVED: {
         identifier: "APPROVED",
         name: "approved",
     },
-    "REJECTED": {
+    REJECTED: {
         identifier: "REJECTED",
         name: "rejected",
     },
