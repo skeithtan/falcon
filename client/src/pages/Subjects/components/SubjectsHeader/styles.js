@@ -1,13 +1,9 @@
 import { lighten } from "@material-ui/core/styles/colorManipulator";
-import { split } from "../../../../components/styles";
+import { appBarExtension, split } from "../../../../components/styles";
 
 
 export const styles = theme => ({
-    subjectsHeader: {
-        background: theme.palette.primary.main,
-        minHeight: 52,
-        flexGrow: 0,
-    },
+    subjectsHeader: appBarExtension(theme),
     searchPaper: {
         background: lighten(theme.palette.primary.light, 0.7),
         transitionDuration: theme.transitions.duration.short,

@@ -1,12 +1,8 @@
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import { badge, split } from "../../../../components/styles";
+import { appBarExtension, badge, split } from "../../../../components/styles";
 
 export const styles = theme => ({
-    facultyProfilesHeader: {
-        background: theme.palette.primary.main,
-        minHeight: 52,
-        flexGrow: 0,
-    },
+    facultyProfilesHeader: appBarExtension(theme),
     searchPaper: {
         background: lighten(theme.palette.primary.light, 0.7),
         transitionDuration: theme.transitions.duration.short,
