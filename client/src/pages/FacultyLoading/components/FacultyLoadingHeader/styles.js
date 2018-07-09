@@ -1,11 +1,11 @@
 import { lighten } from "@material-ui/core/styles/colorManipulator";
-import { appBarExtension } from "../../../../components/styles";
+import { appBarExtension, split } from "../../../../components/styles";
 
 
 export const styles = theme => ({
     facultyLoadingHeader: {
         ...appBarExtension(theme),
-        paddingLeft: theme.spacing.unit * 3,
+        ...split(theme),
     },
     termSchedulesPaper: {
         background: lighten(theme.palette.primary.light, 0.7),
@@ -14,9 +14,25 @@ export const styles = theme => ({
             background: lighten(theme.palette.primary.light, 0.95),
         },
     },
-    termSchedulesSelect: {
-        padding: theme.spacing.unit,
+    termSchedulesSelectWrapper: {
         paddingLeft: theme.spacing.unit * 2,
         paddingRight: theme.spacing.unit * 2,
+    },
+    termSchedulesSelect: {
+        padding: theme.spacing.unit,
+        width: "100%",
+        boxSizing: "border-box",
+    },
+    tabs: {
+        color: theme.palette.common.white,
+        "&:focus": {
+            color: "#fff",
+        },
+    },
+    tabsFlexContainer: {
+        height: "100%",
+    },
+    tabsIndicator: {
+        background: theme.palette.common.white,
     },
 });
