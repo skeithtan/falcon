@@ -1,5 +1,5 @@
 import moment from "moment";
-import { TERMS } from "../enums/class.enums";
+import { TERMS, MEETING_DAYS } from "../enums/class.enums";
 
 
 const now = moment();
@@ -43,5 +43,7 @@ export const formatAcademicYear = startYear =>
 export const termScheduleToString = termSchedule => {
     const term = TERMS[termSchedule.term].name;
     const academicYear = formatAcademicYear(termSchedule.startYear);
-    return `${term} term ${academicYear}`;
+    return `${term} Term ${academicYear}`;
 };
+
+export const meetingDaysFromPath = path => Object.values(MEETING_DAYS).find(meetingDays => meetingDays.path ===  path)
