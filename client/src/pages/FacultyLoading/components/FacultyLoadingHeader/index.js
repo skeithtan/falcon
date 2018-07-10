@@ -36,7 +36,7 @@ class BaseFacultyLoadingHeader extends Component {
     };
 
     renderMeetingDaysTabs = () => {
-        const {meetingDay, classes, activeTermSchedule, history} = this.props;
+        const {meetingDays, classes, activeTermSchedule, history} = this.props;
 
         const tabsClasses = {
             root: classes.tabs,
@@ -45,7 +45,7 @@ class BaseFacultyLoadingHeader extends Component {
         };
 
         const onTabClick = path => {
-            if (path === meetingDay) {
+            if (path === meetingDays) {
                 return;
             }
 
@@ -54,7 +54,7 @@ class BaseFacultyLoadingHeader extends Component {
 
         return (
             <Tabs
-                value={meetingDay}
+                value={meetingDays}
                 classes={tabsClasses}
                 scrollable
             >
