@@ -4,8 +4,9 @@ import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndica
 import { EmptyState } from "../../components/states/EmptyState";
 import { ErrorState } from "../../components/states/ErrorState";
 import { TERM_STATUSES } from "../../enums/class.enums";
-import { formatAcademicYear, termToPlan } from "../../utils/faculty_loading.util";
+import { formatAcademicYear, termScheduleToString, termToPlan } from "../../utils/faculty_loading.util";
 import { makeURL } from "../../utils/url.util";
+import { FacultyLoadingBody } from "./components/FacultyLoadingBody";
 import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 import { PlanNextTermModal } from "./components/modals/PlanNextTermModal";
 import { wrap } from "./wrapper";
@@ -187,12 +188,14 @@ class BaseFacultyLoadingPage extends Component {
         return this.nextTermExists(termSchedules);
     }
 
-    renderFacultyLoading = (termSchedule, meetingDay) => {
+    renderFacultyLoading = (termSchedule, meetingDays) => {
+        document.title = `${termScheduleToString(termSchedule)} - Faculty Loading - Falcon`;
         return (
             <Fragment>
-                <FacultyLoadingHeader activeTermSchedule={termSchedule} meetingDay={meetingDay}/>
+                <FacultyLoadingHeader activeTermSchedule={termSchedule} meetingDays={meetingDays} />
+                <FacultyLoadingBody activeTermSchedule={termSchedule} meetingDays={meetingDays} />
             </Fragment>
-        )
+        );
     };
 
     render() {
