@@ -19,7 +19,7 @@ export const pageContainer = theme => ({
 
     // Constrain content to margins
     width: "90%",
-    maxWidth: 1200,
+    maxWidth: 1400,
 
     // Center the page container
     marginLeft: "auto",
