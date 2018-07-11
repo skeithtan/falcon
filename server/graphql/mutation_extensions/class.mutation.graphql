@@ -13,6 +13,7 @@ input ClassInput {
     room: String
     enrollmentCap: Int
     course: String
+    section: String
 }
 
 type SubjectMutations {

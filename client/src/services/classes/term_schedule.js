@@ -18,7 +18,8 @@ const classFields = `
     room
     enrollmentCap
     faculty
-    courseCode
+    course
+    section
 `;
 
 const termScheduleFields = `

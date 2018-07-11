@@ -29,6 +29,7 @@ type Class {
     enrollmentCap: Int!
     faculty: ID
     course: String!
+    section: String!
 }
 
 enum Term {
