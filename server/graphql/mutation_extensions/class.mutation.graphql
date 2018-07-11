@@ -7,7 +7,7 @@ input SubjectInput {
 }
 
 input ClassInput {
-    subject: String
+    subject: ID!
     meetingDays: MeetingDay
     meetingHours: String
     room: String
