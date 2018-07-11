@@ -77,12 +77,12 @@ export const setFacultyAvailability = (availability, termScheduleId) =>
         },
     });
 
-export const setFacultyPool = (termScheduleId, faculties) =>
+export const addFacultiesToPool = (termScheduleId, faculties) =>
     client.mutate({
         mutation: gql`
             mutation($termScheduleId: ID!, $faculties: [ID!]!) {
                 termSchedule(_id: $termScheduleId) {
-                    setFacultyPool(faculties: $faculties) {
+                    addFacultiesToPool(faculties: $faculties) {
                         ${facultyResponseFields}
                     }
                 }

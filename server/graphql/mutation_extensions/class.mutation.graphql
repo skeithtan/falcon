@@ -32,7 +32,7 @@ type ClassMutations {
 }
 
 type TermMutations {
-    setFacultyPool(faculties: [ID!]!): [FacultyResponse!]!
+    addFacultiesToPool(faculties: [ID!]!): [FacultyResponse!]!
     classes: ClassMutations!
     status: StatusMutations!
 }
