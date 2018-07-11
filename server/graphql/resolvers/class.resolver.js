@@ -71,7 +71,6 @@ const termSchedules = () => TermSchedule.find().exec();
 
 const mutateClasses = termSchedule => ({
     async add({ newClass: newClassInput }) {
-        console.log("New class", newClassInput);
         const newClass = termSchedule.classes.create(newClassInput);
         termSchedule.classes.push(newClass);
         await termSchedule.save();
