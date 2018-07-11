@@ -77,6 +77,22 @@ const mutateClasses = termSchedule => ({
         return newClass;
     },
 
+    async setFaculty({_id, facultyId}) {
+        const classSchedule = termSchedule.classes.id(_id);
+        if (!classSchedule) {
+            throw new DoesNotExistError(`Class of ID ${_id} does not exist`);
+        }
+
+        const faculty = await Faculty.findById(facultyId).exec();
+        if (!faculty) {
+            throw new DoesNotExistError(`Faculty of ID ${facultyId} does not exist`);
+        }
+
+        classSchedule.faculty = faculty._id;
+        await termSchedule.save();
+        return classSchedule;
+    },
+
     async remove({ _id }) {
         const oldClass = termSchedule.classes.id(_id);
         oldClass.remove();

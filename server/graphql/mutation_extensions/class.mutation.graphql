@@ -28,6 +28,7 @@ type StatusMutations {
 
 type ClassMutations {
     add(newClass: ClassInput!): Class!
+    setFaculty(_id: ID!, facultyId: ID!): Class!
     remove(_id: ID!): Boolean!
 }
 
