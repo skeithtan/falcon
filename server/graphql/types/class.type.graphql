@@ -28,7 +28,7 @@ type Class {
     room: String!
     enrollmentCap: Int!
     faculty: ID
-    courseCode: String!
+    course: String!
 }
 
 enum Term {

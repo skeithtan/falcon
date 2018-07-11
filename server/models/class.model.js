@@ -39,12 +39,12 @@ const ClassSchema = new Schema({
         ref: "Subject",
         required: true,
     },
-    meetingDay: {
+    meetingDays: {
         type: String,
         enum: MEETING_DAYS,
         required: true,
     },
-    meetingHour: {
+    meetingHours: {
         type: String,
         enum: MEETING_HOURS,
         required: true,
@@ -62,7 +62,7 @@ const ClassSchema = new Schema({
         ref: "Faculty",
         required: false,
     },
-    courseCode: {
+    course: {
         type: String,
         required: true
     },
