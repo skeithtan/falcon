@@ -22,6 +22,7 @@ const DEFAULT_DAY_AVAILABILITY = {
     "11-1": false,
     "1-3": false,
     "3-5": false,
+    "5-7": false,
 };
 
 const subjects = () => Subject.find();
@@ -70,6 +71,7 @@ const termSchedules = () => TermSchedule.find().exec();
 
 const mutateClasses = termSchedule => ({
     async add({ newClass: newClassInput }) {
+        console.log("New class", newClassInput);
         const newClass = termSchedule.classes.create(newClassInput);
         termSchedule.classes.push(newClass);
         await termSchedule.save();
@@ -119,7 +121,7 @@ const mutateStatus = termSchedule => ({
 });
 
 async function mutateTerm(object, { _id }) {
-    const termSchedule = await TermSchedule.findById(id).exec();
+    const termSchedule = await TermSchedule.findById(_id).exec();
     if (!termSchedule) {
         throw new DoesNotExistError(`TermSchedule of ID ${_id} does not exist`);
     }
@@ -155,7 +157,7 @@ async function mutateTerm(object, { _id }) {
             return facultyPool;
         },
 
-        course: mutateClasses(termSchedule),
+        classes: mutateClasses(termSchedule),
         status: mutateStatus(termSchedule),
     };
 }

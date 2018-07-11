@@ -108,4 +108,8 @@ export const MEETING_HOURS = {
         identifier: "3-5",
         name: "3 PM - 5  PM",
     },
+    "5-7": {
+        identifier: "5-7",
+        name: "5 PM - 7 PM",
+    }
 };
