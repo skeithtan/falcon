@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { UserChip } from "../UserChip";
-import { wrapper } from "./wrapper";
+import { wrap } from "./wrapper";
 import { makeURL } from "../../utils/url.util";
 
 
@@ -33,4 +33,4 @@ class BaseFacultyChip extends PureComponent {
     }
 }
 
-export const FacultyChip = wrapper(BaseFacultyChip);
+export const FacultyChip = wrap(BaseFacultyChip);

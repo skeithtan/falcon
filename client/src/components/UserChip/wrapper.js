@@ -3,6 +3,6 @@ import compose from "recompose/compose";
 import { chip } from "../styles";
 
 
-export const wrapper = compose(
+export const wrap = compose(
     withStyles(chip),
 );

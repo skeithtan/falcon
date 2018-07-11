@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { PureComponent } from "react";
 import { getFullName } from "../../utils/user.util";
 import { UserAvatar } from "../UserAvatar";
-import { wrapper } from "./wrapper";
+import { wrap } from "./wrapper";
 
 
 class BaseUserChip extends PureComponent {
@@ -28,4 +28,4 @@ class BaseUserChip extends PureComponent {
     }
 }
 
-export const UserChip = wrapper(BaseUserChip);
+export const UserChip = wrap(BaseUserChip);
