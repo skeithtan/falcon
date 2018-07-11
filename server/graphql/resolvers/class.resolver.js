@@ -129,28 +129,31 @@ async function mutateTerm(object, { _id }) {
         async setFacultyPool({ faculties: newFacultiesId }) {
             const facultyPool = termSchedule.facultyPool;
             const oldFacultiesId = facultyPool.map(
-                facultyResponse => facultyResponse.faculty._id
-            );
-            const addedFaculties = newFacultiesId.filter(id =>
-                oldFacultiesId.includes(id)
+                facultyResponse => facultyResponse.faculty._id.toString()
             );
 
-            const newFacultyResponses = addedFaculties.map(facultyId =>
+            const { addedItems, removedItems } = getDifference(newFacultiesId, oldFacultiesId);
+
+            addedItems.forEach(facultyId => facultyPool.push(
                 facultyPool.create({
                     faculty: facultyId,
                     availability: {
                         M_TH: { ...DEFAULT_DAY_AVAILABILITY },
                         T_F: { ...DEFAULT_DAY_AVAILABILITY },
                     },
-                    feedback: {
-                        status: null,
-                    },
-                })
+                    feedback: null,
+                }))
             );
 
-            newFacultyResponses.forEach(newFacultyResponse =>
-                facultyPool.push(newFacultyResponse)
-            );
+            removedItems.forEach(facultyId => {
+                try {
+                    facultyPool
+                        .find(facultyResponse => facultyResponse.faculty._id.toString() === facultyId)
+                        .remove()
+                } catch (e) {
+                    throw new ValidationError(`Could not find faculty with id ${facultyId}`);
+                }
+            });
 
             await termSchedule.save();
             return facultyPool;

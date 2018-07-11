@@ -8,10 +8,9 @@ import {
     TERMS,
 } from "./enums/class.enums";
 
-
 const SubjectSchema = new Schema({
     code: {
-        type: String, 
+        type: String,
         required: true,
     },
     name: {
@@ -22,10 +21,12 @@ const SubjectSchema = new Schema({
         type: String,
         required: true,
     },
-    faculties: [{
-        type: Schema.Types.ObjectId,
-        ref: "Faculty",
-    }],
+    faculties: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Faculty",
+        },
+    ],
     category: {
         type: String,
         enum: SUBJECT_CATEGORIES,
@@ -64,7 +65,11 @@ const ClassSchema = new Schema({
     },
     course: {
         type: String,
-        required: true
+        required: true,
+    },
+    section: {
+        type: String,
+        required: true,
     },
 });
 
@@ -83,17 +88,18 @@ const FacultyResponseSchema = new Schema({
         required: true,
     },
     availability: {
-        "M_TH": DayAvailability,
-        "T_F": DayAvailability,
+        M_TH: DayAvailability,
+        T_F: DayAvailability,
     },
     feedback: {
+        required: false,
         status: {
             type: String,
             enum: FACULTY_FEEDBACK,
         },
         rejectionReason: {
             type: String,
-            required: function () {
+            required: function() {
                 return this.feedback.status === "REJECTED";
             },
         },
@@ -123,4 +129,3 @@ const TermScheduleSchema = new Schema({
 const Subject = mongoose.model("Subject", SubjectSchema);
 const TermSchedule = mongoose.model("TermSchedule", TermScheduleSchema);
 export { Subject, TermSchedule };
-
