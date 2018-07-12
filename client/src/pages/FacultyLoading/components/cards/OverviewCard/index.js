@@ -1,5 +1,6 @@
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -25,17 +26,30 @@ export class OverviewCard extends PureComponent {
         return (
             <Card>
                 <Toolbar>
-                    <Typography variant="title">
-                        {termScheduleToString(activeTermSchedule)}
-                    </Typography>
+                    <Grid 
+                        container 
+                        justify="space-between" 
+                        alignItems="center"
+                    >
+                        <Grid item>
+                            <Typography variant="title">
+                                {termScheduleToString(activeTermSchedule)}
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Button variant="outlined" color="primary">
+                                Proceed to get faculty availability
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Toolbar>
                 <Stepper activeStep={activeStepIndex}>
-                        {steps.map(({ identifier, name }) => (
-                            <Step key={identifier}>
-                                <StepLabel>{name}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
+                    {steps.map(({ identifier, name }) => (
+                        <Step key={identifier}>
+                            <StepLabel>{name}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
             </Card>
         );
     }
