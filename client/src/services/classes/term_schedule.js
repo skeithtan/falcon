@@ -1,5 +1,6 @@
-import { client } from "../../client";
 import gql from "../../../node_modules/graphql-tag";
+import { client } from "../../client";
+import { classFields } from "./classes.service";
 
 const facultyResponseFields = `
     faculty
@@ -8,18 +9,6 @@ const facultyResponseFields = `
         status
         rejectionReason
     }
-`;
-
-const classFields = `
-    _id
-    subject
-    meetingDays
-    meetingHours
-    room
-    enrollmentCap
-    faculty
-    course
-    section
 `;
 
 const termScheduleFields = `

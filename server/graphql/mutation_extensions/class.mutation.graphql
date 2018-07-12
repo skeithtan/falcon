@@ -7,13 +7,14 @@ input SubjectInput {
 }
 
 input ClassInput {
-    subject: ID!
+    subject: ID
     meetingDays: MeetingDay
     meetingHours: String
     room: String
     enrollmentCap: Int
     course: String
     section: String
+    faculty: ID
 }
 
 type SubjectMutations {
@@ -28,7 +29,7 @@ type StatusMutations {
 
 type ClassMutations {
     add(newClass: ClassInput!): Class!
-    setFaculty(_id: ID!, facultyId: ID!): Class!
+    update(_id: ID!, newClass: ClassInput!): Class!
     remove(_id: ID!): Boolean!
 }
 

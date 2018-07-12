@@ -77,18 +77,22 @@ const mutateClasses = termSchedule => ({
         return newClass;
     },
 
-    async setFaculty({_id, facultyId}) {
+    async update({ _id, newClass: newClassInput }) {
         const classSchedule = termSchedule.classes.id(_id);
         if (!classSchedule) {
             throw new DoesNotExistError(`Class of ID ${_id} does not exist`);
         }
 
-        const faculty = await Faculty.findById(facultyId).exec();
-        if (!faculty) {
-            throw new DoesNotExistError(`Faculty of ID ${facultyId} does not exist`);
+        if (newClassInput.faculty) {
+            const faculty = await Faculty.findById(newClassInput.faculty).exec();
+            if (!faculty) {
+                throw new DoesNotExistError(
+                    `Faculty of ID ${facultyId} does not exist`
+                );
+            }
         }
 
-        classSchedule.faculty = faculty._id;
+        classSchedule.set(newClassInput);
         await termSchedule.save();
         return classSchedule;
     },
@@ -144,24 +148,25 @@ async function mutateTerm(object, { _id }) {
     return {
         async addFacultiesToPool({ faculties: newFacultiesId }) {
             const facultyPool = termSchedule.facultyPool;
-            const oldFacultiesId = facultyPool.map(
-                facultyResponse => facultyResponse.faculty._id.toString()
+            const oldFacultiesId = facultyPool.map(facultyResponse =>
+                facultyResponse.faculty._id.toString()
             );
-
 
             newFacultiesId
                 // Cannot have duplicates
                 .filter(facultyId => !oldFacultiesId.includes(facultyId))
-                .forEach(facultyId => facultyPool.push(
-                facultyPool.create({
-                    faculty: facultyId,
-                    availability: {
-                        M_TH: { ...DEFAULT_DAY_AVAILABILITY },
-                        T_F: { ...DEFAULT_DAY_AVAILABILITY },
-                    },
-                    feedback: null,
-                }))
-            );
+                .forEach(facultyId =>
+                    facultyPool.push(
+                        facultyPool.create({
+                            faculty: facultyId,
+                            availability: {
+                                M_TH: { ...DEFAULT_DAY_AVAILABILITY },
+                                T_F: { ...DEFAULT_DAY_AVAILABILITY },
+                            },
+                            feedback: null,
+                        })
+                    )
+                );
 
             await termSchedule.save();
             return facultyPool;
