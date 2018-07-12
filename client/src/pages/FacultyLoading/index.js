@@ -28,7 +28,7 @@ class BaseFacultyLoadingPage extends Component {
         this.handlePath();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         this.handlePath();
     }
 
@@ -47,9 +47,8 @@ class BaseFacultyLoadingPage extends Component {
     handlePath = () => {
         const {
             match: {
-                params: {termScheduleId, meetingDay},
+                params: {termScheduleId},
             },
-            history,
             termSchedules,
         } = this.props;
 
@@ -75,29 +74,8 @@ class BaseFacultyLoadingPage extends Component {
             this.redirectToDefaultTermSchedule(termSchedules);
             return;
         }
-
-        if (!meetingDay) {
-            history.replace(
-                makeURL()
-                    .facultyLoading()
-                    .selectTermSchedule(termScheduleId)
-                    .mondayThursday()
-                    .build(),
-            );
-        }
-
-        if (!this.meetingDayIsValid(meetingDay)) {
-            history.replace(
-                makeURL()
-                    .facultyLoading()
-                    .selectTermSchedule(termScheduleId)
-                    .mondayThursday()
-                    .build(),
-            );
-        }
     };
 
-    meetingDayIsValid = meetingDay => ["monday-thursday", "tuesday-friday"].includes(meetingDay);
 
     getDefaultTermSchedule = termSchedules => {
         // Find the current term schedule
@@ -211,14 +189,13 @@ class BaseFacultyLoadingPage extends Component {
 
         const {planNextTermModalIsShowing} = this.state;
         const termSchedule = termSchedules && this.getTermScheduleFromId(termSchedules, termScheduleId);
-        const meetingDayIsValid = this.meetingDayIsValid(meetingDay);
 
         return (
             <div className={classes.facultyLoadingContainer}>
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
                 {termSchedules && termSchedules.length === 0 && this.renderEmptyState()}
-                {termSchedule && meetingDayIsValid && this.renderFacultyLoading(termSchedule, meetingDay)}
+                {termSchedule && this.renderFacultyLoading(termSchedule, meetingDay)}
 
                 {this.shouldShowPlanNextTermModal && (
                     <PlanNextTermModal

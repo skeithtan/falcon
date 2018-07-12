@@ -1,16 +1,24 @@
+import AddIcon from "@material-ui/icons/Add";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import React, { PureComponent } from "react";
 import { OverviewCard } from "../cards/OverviewCard";
 import { wrap } from "./wrapper";
-import Grid from "@material-ui/core/Grid";
 import { ScheduleCard } from "../cards/ScheduleCard";
 import { FacultiesCard } from "../cards/FacultiesCard";
 
 class BaseFacultyLoadingBody extends PureComponent {
     renderScheduleFaculties = (activeTermSchedule, meetingDays) => (
-        <Grid container spacing={16} direction="row" alignItems="stretch">
+        <Grid
+            container
+            className={this.props.classes.scheduleFacultiesContainer}
+            spacing={16}
+            direction="row"
+            alignItems="stretch"
+        >
             <Grid item xs={3}>
                 <FacultiesCard
-                    activeTermSchedule={activeTermSchedule}
+                    facultyResponses={activeTermSchedule.facultyPool}
                     meetingDays={meetingDays}
                 />
             </Grid>
@@ -30,6 +38,7 @@ class BaseFacultyLoadingBody extends PureComponent {
                 <div className={classes.cardsContainer}>
                     <Grid
                         container
+                        className={this.props.classes.scheduleFacultiesContainer}
                         spacing={16}
                         alignItems="stretch"
                         direction="column"
@@ -41,7 +50,7 @@ class BaseFacultyLoadingBody extends PureComponent {
                                 meetingDays={meetingDays}
                             />
                         </Grid>
-                        <Grid item>
+                        <Grid item xs>
                             {this.renderScheduleFaculties(
                                 activeTermSchedule,
                                 meetingDays
@@ -49,6 +58,15 @@ class BaseFacultyLoadingBody extends PureComponent {
                         </Grid>
                     </Grid>
                 </div>
+
+                <Button
+                    variant="extendedFab"
+                    color="primary"
+                    className={classes.floatingActionButton}
+                >
+                    <AddIcon />
+                    Add Class
+                </Button>
             </div>
         );
     }
