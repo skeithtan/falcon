@@ -59,6 +59,7 @@ export const split = theme => ({
 
 export const chip = theme => ({
     chip: {
+        display: "flex",
         background: lighten(theme.palette.primary.light, 0.9),
 
         "&:hover, &:focus": {
