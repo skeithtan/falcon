@@ -43,7 +43,7 @@ class BaseScheduleCalendar extends PureComponent {
             wrap="nowrap"
         >
             {Object.values(MEETING_HOURS).map(({ name, identifier }) => (
-                <Grid item xs key={identifier}>
+                <Grid item xs={2} key={identifier}>
                     <Typography color="textSecondary" align="center">
                         {name}
                     </Typography>
@@ -55,7 +55,7 @@ class BaseScheduleCalendar extends PureComponent {
     renderCalendarBody = (classSchedules, faculties, subjects) => (
         <Grid container spacing={8} direction="row" wrap="nowrap">
             {Object.values(MEETING_HOURS).map(meetingHours => (
-                <Grid item xs key={meetingHours.identifier}>
+                <Grid item xs={2} key={meetingHours.identifier}>
                     <CalendarClassesColumn
                         classes={this.props.classes}
                         classSchedules={classSchedules.filter(
