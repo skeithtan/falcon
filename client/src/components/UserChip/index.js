@@ -12,6 +12,7 @@ class BaseUserChip extends PureComponent {
         return (
             <Chip
                 className={classes.chip}
+                classes={{label: classes.chipText}}
                 avatar={<UserAvatar user={user} />}
                 onClick={onClick}
                 onDelete={showDeleteButton ? handleDelete : null}

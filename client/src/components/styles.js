@@ -1,7 +1,6 @@
 import red from "@material-ui/core/colors/red";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 
-
 export const page = theme => ({
     height: "100%",
     display: "flex",
@@ -67,6 +66,9 @@ export const chip = theme => ({
         },
     },
     chipText: {
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
         color: theme.palette.primary.dark,
     },
 });

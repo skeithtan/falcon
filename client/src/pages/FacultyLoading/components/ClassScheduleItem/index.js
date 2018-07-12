@@ -46,7 +46,7 @@ class BaseClassScheduleItem extends Component {
                         </Typography>
                     </Grid>
                     {faculty && (
-                        <Grid item>
+                        <Grid item zeroMinWidth>
                             <UserChip user={faculty.user} />
                         </Grid>
                     )}
