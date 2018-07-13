@@ -51,8 +51,6 @@ class BaseFacultyLoadingBody extends Component {
             subjects,
         } = this.props;
 
-        console.log(faculties, subjects);
-
         const { addClassScheduleModalIsShowing } = this.state;
 
         const shouldShowAddClassSchedule =

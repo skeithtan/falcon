@@ -8,7 +8,7 @@ import { ClassScheduleItem } from "../ClassScheduleItem";
 
 class CalendarClassesColumn extends PureComponent {
     render() {
-        const { classSchedules, faculties, subjects } = this.props;
+        const { classSchedules, faculties, subjects, onRemoveClassSchedule } = this.props;
         return (
             <Grid container spacing={8} direction="column" wrap="nowrap">
                 {classSchedules.map(classSchedule => (
@@ -25,6 +25,7 @@ class CalendarClassesColumn extends PureComponent {
                             subject={subjects.find(
                                 subject => subject._id === classSchedule.subject
                             )}
+                            onRemoveClassSchedule={() => onRemoveClassSchedule(classSchedule)}
                         />
                     </Grid>
                 ))}
@@ -52,27 +53,30 @@ class BaseScheduleCalendar extends PureComponent {
         </Grid>
     );
 
-    renderCalendarBody = (classSchedules, faculties, subjects) => (
-        <Grid container spacing={8} direction="row" wrap="nowrap">
-            {Object.values(MEETING_HOURS).map(meetingHours => (
-                <Grid item xs={2} key={meetingHours.identifier}>
-                    <CalendarClassesColumn
-                        classes={this.props.classes}
-                        classSchedules={classSchedules.filter(
-                            classSchedule =>
-                                classSchedule.meetingHours ===
-                                meetingHours.identifier
-                        )}
-                        faculties={faculties}
-                        subjects={subjects}
-                    />
-                </Grid>
-            ))}
-        </Grid>
-    );
-
+    renderCalendarBody = () => {
+        const { classSchedules, faculties, subjects, onRemoveClassSchedule } = this.props;
+        return (
+            <Grid container spacing={8} direction="row" wrap="nowrap">
+                {Object.values(MEETING_HOURS).map(meetingHours => (
+                    <Grid item xs={2} key={meetingHours.identifier}>
+                        <CalendarClassesColumn
+                            classes={this.props.classes}
+                            classSchedules={classSchedules.filter(
+                                classSchedule =>
+                                    classSchedule.meetingHours ===
+                                    meetingHours.identifier
+                            )}
+                            faculties={faculties}
+                            subjects={subjects}
+                            onRemoveClassSchedule={onRemoveClassSchedule}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
+        );
+    };
     render() {
-        const { classes, classSchedules, faculties, subjects } = this.props;
+        const { classes } = this.props;
         return (
             <Grid
                 className={classes.scheduleCalendarContainer}
@@ -86,11 +90,7 @@ class BaseScheduleCalendar extends PureComponent {
                     <Divider light />
                 </Grid>
                 <Grid item xs className={classes.scheduleCalendarBodyContainer}>
-                    {this.renderCalendarBody(
-                        classSchedules,
-                        faculties,
-                        subjects
-                    )}
+                    {this.renderCalendarBody()}
                 </Grid>
             </Grid>
         );

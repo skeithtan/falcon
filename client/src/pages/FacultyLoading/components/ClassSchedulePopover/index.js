@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
@@ -8,12 +8,27 @@ import Popover from "@material-ui/core/Popover";
 import { FacultyChip } from "../../../../components/FacultyChip";
 import { MEETING_DAYS, MEETING_HOURS } from "../../../../enums/class.enums";
 import { wrap } from "./wrapper";
+import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
 
-class BaseClassSchedulePopover extends PureComponent {
+class BaseClassSchedulePopover extends Component {
+    state = {
+        removeClassScheduleModalIsShowing: false,
+    };
+
+    toggleRemoveClassScheduleModal = shouldShow =>
+        this.setState({
+            removeClassScheduleModalIsShowing: shouldShow,
+        });
+
     renderButtons = () => (
         <Fragment>
             <Button color="primary">Update class</Button>
-            <Button color="primary">Remove class</Button>
+            <Button
+                color="primary"
+                onClick={() => this.toggleRemoveClassScheduleModal(true)}
+            >
+                Remove class
+            </Button>
         </Fragment>
     );
 
@@ -63,7 +78,17 @@ class BaseClassSchedulePopover extends PureComponent {
     };
 
     render() {
-        const { open, onClose, anchorEl, classes } = this.props;
+        const {
+            open,
+            onClose,
+            anchorEl,
+            classes,
+            classSchedule,
+            subject,
+            onRemoveClassSchedule
+        } = this.props;
+        const { removeClassScheduleModalIsShowing } = this.state;
+
         return (
             <Popover
                 open={open}
@@ -88,6 +113,14 @@ class BaseClassSchedulePopover extends PureComponent {
                     </Grid>
                 </CardContent>
                 <CardActions>{this.renderButtons()}</CardActions>
+
+                <RemoveClassScheduleModal
+                    open={removeClassScheduleModalIsShowing}
+                    onClose={() => this.toggleRemoveClassScheduleModal(false)}
+                    onRemoveClassSchedule={onRemoveClassSchedule}
+                    classSchedule={classSchedule}
+                    subject={subject}
+                />
             </Popover>
         );
     }

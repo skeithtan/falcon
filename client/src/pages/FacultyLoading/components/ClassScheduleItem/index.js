@@ -22,7 +22,7 @@ class BaseClassScheduleItem extends Component {
 
     render() {
         const { anchorEl } = this.state;
-        const { classSchedule, faculty, subject, classes } = this.props;
+        const { classSchedule, faculty, subject, classes, onRemoveClassSchedule } = this.props;
         let containerClasses = [classes.classScheduleItemContainer];
         containerClasses.push(
             faculty
@@ -58,6 +58,7 @@ class BaseClassScheduleItem extends Component {
                     classSchedule={classSchedule}
                     faculty={faculty}
                     subject={subject}
+                    onRemoveClassSchedule={onRemoveClassSchedule}
                 />
             </div>
         );

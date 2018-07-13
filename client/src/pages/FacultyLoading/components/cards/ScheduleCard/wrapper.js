@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { initiatefetchAllFaculties } from "../../../../../utils/faculty.util";
 import { fetchSubjectList } from "../../../../../utils/subject.util";
 import { termScheduleIsUpdated } from "../../../../../redux/actions/faculty_loading.actions";
-import { updateClassSchedule } from "../../../../../services/classes/classes.service";
+import { updateClassSchedule, removeClassSchedule } from "../../../../../services/classes/classes.service";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 
 const mapStateToProps = state => ({
@@ -20,6 +20,17 @@ const mapDispatchToProps = dispatch => ({
     },
     fetchAllSubjects() {
         fetchSubjectList(dispatch);
+    },
+    onRemoveClassSchedule(termSchedule, classSchedule) {
+        return removeClassSchedule(termSchedule._id, classSchedule._id).then(() => {
+            const newTermSchedule = {
+                ...termSchedule,
+                classes: termSchedule.classes.filter(
+                    ({_id}) => _id !== classSchedule._id
+                ),
+            };
+            dispatch(termScheduleIsUpdated(newTermSchedule));
+        });
     },
     onSetFaculty(faculty, oldClassSchedule, termSchedule) {
         const newClassSchedule = {
@@ -51,7 +62,7 @@ const mapDispatchToProps = dispatch => ({
         };
 
         dispatch(termScheduleIsUpdated(newTermSchedule));
-        updateClassSchedule(
+        return updateClassSchedule(
             newTermSchedule._id,
             newClassSchedule._id,
             newClassSchedule
