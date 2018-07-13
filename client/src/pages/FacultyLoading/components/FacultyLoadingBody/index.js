@@ -1,13 +1,23 @@
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { OverviewCard } from "../cards/OverviewCard";
 import { wrap } from "./wrapper";
 import { ScheduleCard } from "../cards/ScheduleCard";
 import { FacultiesCard } from "../cards/FacultiesCard";
+import { ClassScheduleModal } from "../modals/ClassScheduleModal";
 
-class BaseFacultyLoadingBody extends PureComponent {
+class BaseFacultyLoadingBody extends Component {
+    state = {
+        addClassScheduleModalIsShowing: false,
+    };
+
+    toggleAddClassScheduleModal = shouldShow =>
+        this.setState({
+            addClassScheduleModalIsShowing: shouldShow,
+        });
+
     renderScheduleFaculties = (activeTermSchedule, meetingDays) => (
         <Grid
             container
@@ -32,13 +42,33 @@ class BaseFacultyLoadingBody extends PureComponent {
     );
 
     render() {
-        const { classes, activeTermSchedule, meetingDays } = this.props;
+        const {
+            classes,
+            activeTermSchedule,
+            meetingDays,
+            user,
+            faculties,
+            subjects,
+        } = this.props;
+
+        console.log(faculties, subjects);
+
+        const { addClassScheduleModalIsShowing } = this.state;
+
+        const shouldShowAddClassSchedule =
+            user.permissions.MUTATE_TERM_SCHEDULES &&
+            faculties !== null &&
+            subjects !== null &&
+            activeTermSchedule !== null;
+
         return (
             <div className={classes.facultyLoadingBody}>
                 <div className={classes.cardsContainer}>
                     <Grid
                         container
-                        className={this.props.classes.scheduleFacultiesContainer}
+                        className={
+                            this.props.classes.scheduleFacultiesContainer
+                        }
                         spacing={16}
                         alignItems="stretch"
                         direction="column"
@@ -59,14 +89,28 @@ class BaseFacultyLoadingBody extends PureComponent {
                     </Grid>
                 </div>
 
-                <Button
-                    variant="extendedFab"
-                    color="primary"
-                    className={classes.floatingActionButton}
-                >
-                    <AddIcon />
-                    Add Class
-                </Button>
+                {shouldShowAddClassSchedule && (
+                    <Button
+                        variant="extendedFab"
+                        color="primary"
+                        className={classes.floatingActionButton}
+                        onClick={() => this.toggleAddClassScheduleModal(true)}
+                    >
+                        <AddIcon />
+                        Add Class
+                    </Button>
+                )}
+
+                {shouldShowAddClassSchedule && (
+                    <ClassScheduleModal
+                        action="add"
+                        open={addClassScheduleModalIsShowing}
+                        subjects={subjects}
+                        faculties={faculties}
+                        termSchedule={activeTermSchedule}
+                        onClose={() => this.toggleAddClassScheduleModal(false)}
+                    />
+                )}
             </div>
         );
     }
