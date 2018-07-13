@@ -36,6 +36,9 @@ export const genericModalStyle = theme => ({
     form: {
         ...form(theme),
     },
+    activeItem: {
+        ...activeItem(theme),
+    },
 });
 
 export const activeItem = theme => ({

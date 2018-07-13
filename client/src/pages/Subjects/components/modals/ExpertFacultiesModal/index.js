@@ -40,8 +40,11 @@ class BaseExpertFacultiesModal extends ModalFormComponent {
     );
 
     renderMenuItems = faculties => faculties.map(faculty => {
-        const selected = this.state.form.selectedFaculties.includes(faculty._id);
-        const className = selected ? this.props.classes.selectedItem : "";
+        const { form : { selectedFaculties } } = this.state;
+        const { classes } = this.props;
+
+        const selected = selectedFaculties.includes(faculty._id);
+        const className = selected ? classes.activeItem : "";
         const fullName = getFullName(faculty.user);
         return (
             <MenuItem
