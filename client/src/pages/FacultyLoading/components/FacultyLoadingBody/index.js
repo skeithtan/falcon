@@ -54,7 +54,7 @@ class BaseFacultyLoadingBody extends Component {
         const { addClassScheduleModalIsShowing } = this.state;
 
         const shouldShowAddClassSchedule =
-            user.permissions.MUTATE_TERM_SCHEDULES &&
+            user.permissions.POPULATE_TERM_SCHEDULES &&
             faculties !== null &&
             subjects !== null &&
             activeTermSchedule !== null;
