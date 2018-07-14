@@ -44,7 +44,6 @@ class BaseClassScheduleItem extends Component {
         }
 
         if (isOver) {
-            console.log("Is over");
             containerClasses.push("hoveringFaculty");
         }
 

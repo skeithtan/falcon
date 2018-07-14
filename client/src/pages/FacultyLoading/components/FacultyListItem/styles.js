@@ -1,11 +1,19 @@
+import { activeItem } from "../../../../components/styles";
+
 export const styles = theme => ({
     facultyListItemContainer: {
         cursor: "grab",
-        transition: "300ms all",
+        transition: "200ms all",
         padding: theme.spacing.unit * 2,
 
         "&:hover": {
-            background: theme.palette.grey["200"],
+            ...activeItem(theme),
+            boxShadow: theme.shadows[2],
+
+            "& h3": {
+                fontWeight: theme.typography.fontWeightMedium,
+                color: theme.palette.primary.main,
+            },
         },
-    }
+    },
 });

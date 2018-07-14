@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
 import DragIndicator from "@material-ui/icons/DragIndicator";
 import Grid from "@material-ui/core/Grid";
 import { UserAvatar } from "../../../../components/UserAvatar";
@@ -11,32 +11,41 @@ class BaseFacultyListItem extends Component {
     render() {
         const { classes, faculty, connectDragSource } = this.props;
         return connectDragSource(
-            <div>
-                <Card className={classes.facultyListItemContainer}>
-                    <Grid
-                        container
-                        spacing={8}
-                        alignItems="center"
-                        justify="space-between"
-                    >
-                        <Grid item>
-                            <Grid container spacing={16} direction="row">
-                                <Grid item>
-                                    <UserAvatar user={faculty.user} />
-                                </Grid>
-                                <Grid item>
-                                    <ListItemText
-                                        primary={getFullName(faculty.user)}
-                                        secondary={`T-${faculty.idNumber}`}
-                                    />
-                                </Grid>
+            <div className={classes.facultyListItemContainer}>
+                <Grid
+                    container
+                    spacing={8}
+                    alignItems="center"
+                    justify="space-between"
+                    wrap="nowrap"
+                >
+                    <Grid item xs>
+                        <Grid
+                            container
+                            spacing={16}
+                            direction="row"
+                            wrap="nowrap"
+                        >
+                            <Grid item>
+                                <UserAvatar user={faculty.user} />
+                            </Grid>
+                            <Grid item xs>
+                                <Typography
+                                    variant="subheading"
+                                    color="inherit"
+                                >
+                                    {getFullName(faculty.user)}
+                                </Typography>
+                                <Typography variant="caption">
+                                    T-{faculty.idNumber}
+                                </Typography>
                             </Grid>
                         </Grid>
-                        <Grid item>
-                            <DragIndicator color="action" />
-                        </Grid>
                     </Grid>
-                </Card>
+                    <Grid item>
+                        <DragIndicator color="action" />
+                    </Grid>
+                </Grid>
             </div>
         );
     }

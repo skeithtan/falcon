@@ -9,7 +9,7 @@ export const styles = theme => ({
 
         "&.hoveringFaculty": {
             paddingTop: theme.spacing.unit * 2,
-            paddingBottom: theme.spacing.unit * 14,
+            paddingBottom: theme.spacing.unit * 16,
             boxShadow: theme.shadows[8],
         },
     },

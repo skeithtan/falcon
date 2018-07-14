@@ -42,17 +42,13 @@ class BaseFacultiesCard extends Component {
         });
 
     renderEmptyState = () => (
-        <Card>
-            <EmptyState
-                bigMessage="No faculties found"
-                smallMessage="When faculties are added, you can see them here"
-                onAddButtonClick={() => this.toggleAddFacultyModal(true)}
-                addButtonText="Add a faculty"
-                showAddButton={
-                    this.props.user.permissions.MUTATE_TERM_SCHEDULES
-                }
-            />
-        </Card>
+        <EmptyState
+            bigMessage="No faculties found"
+            smallMessage="When faculties are added, you can see them here"
+            onAddButtonClick={() => this.toggleAddFacultyModal(true)}
+            addButtonText="Add a faculty"
+            showAddButton={this.props.user.permissions.MUTATE_TERM_SCHEDULES}
+        />
     );
 
     renderLoading = () => (
@@ -62,23 +58,15 @@ class BaseFacultiesCard extends Component {
     );
 
     renderErrors = errors => (
-        <Card>
-            <ErrorState
-                onRetryButtonClick={this.props.fetchAllFaculties}
-                message="An error occurred while trying to fetch faculties."
-                debug={errors[0]}
-            />
-        </Card>
+        <ErrorState
+            onRetryButtonClick={this.props.fetchAllFaculties}
+            message="An error occurred while trying to fetch faculties."
+            debug={errors[0]}
+        />
     );
 
     renderList = facultyResponses => (
-        <Grid
-            container
-            direction="column"
-            spacing={8}
-            alignItems="stretch"
-            wrap="nowrap"
-        >
+        <Grid container direction="column" alignItems="stretch" wrap="nowrap">
             {facultyResponses.map(facultyResponse => (
                 <Grid item key={facultyResponse.faculty}>
                     <FacultyListItem
@@ -122,40 +110,45 @@ class BaseFacultiesCard extends Component {
         return this.renderList(facultyResponses);
     };
 
-    render() {
+    renderToolbar = () => {
         return (
-            <Grid container spacing={16} direction="column" wrap="nowrap">
-                <Grid item>
-                    <Card>
-                        <Toolbar>
-                            <Grid
-                                container
-                                alignItems="center"
-                                justify="space-between"
+            <Toolbar>
+                <Grid container alignItems="center" justify="space-between">
+                    <Grid item>
+                        <Typography variant="title">Faculties</Typography>
+                    </Grid>
+                    <Grid item>
+                        <Tooltip title="Add faculty to term schedule">
+                            <IconButton
+                                color="primary"
+                                onClick={() => this.toggleAddFacultyModal(true)}
                             >
-                                <Grid item>
-                                    <Typography variant="title">
-                                        Faculties
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Tooltip title="Add faculty to term schedule">
-                                        <IconButton
-                                            color="primary"
-                                            onClick={() =>
-                                                this.toggleAddFacultyModal(true)
-                                            }
-                                        >
-                                            <AddIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid>
-                            </Grid>
-                        </Toolbar>
-                    </Card>
+                                <AddIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Grid>
                 </Grid>
-                <Grid item>{this.renderCardContent()}</Grid>
-            </Grid>
+            </Toolbar>
+        );
+    };
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <Card className={classes.facultiesCardContainer}>
+                <Grid
+                    className={classes.facultiesCardContainer}
+                    container
+                    direction="column"
+                    wrap="nowrap"
+                >
+                    <Grid item>{this.renderToolbar()}</Grid>
+                    <Grid item xs className={classes.facultiesListContainer}>
+                        {this.renderCardContent()}
+                    </Grid>
+                </Grid>
+            </Card>
         );
     }
 }
