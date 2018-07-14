@@ -3,7 +3,7 @@ import React, { PureComponent } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { makeURL } from "../../../../utils/url.util";
 import { getFullName } from "../../../../utils/user.util";
-import { FACULTY_PROFILES_PAGE } from "../../../index";
+import { FACULTY_PROFILES_PAGE } from "../../..";
 import { TABS } from "../faculty_detail_tabs";
 import { wrap } from "./wrapper";
 

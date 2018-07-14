@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { PureComponent } from "react";
 import pnuLogo from "../../../../images/pnu-logo.png";
 import { getPagesForUser } from "../../../../utils/user.util";
-import { getPageFromPath } from "../../../index";
+import { getPageFromPath } from "../../..";
 import { wrap } from "./wrapper";
 
 

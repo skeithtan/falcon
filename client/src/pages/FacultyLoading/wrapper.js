@@ -7,7 +7,7 @@ import {
     termSchedulesIsFetched,
     termSchedulesIsLoading,
 } from "../../redux/actions/faculty_loading.actions";
-import { fetchAllTermSchedules } from "../../services/classes/term_schedule";
+import { fetchAllTermSchedules } from "../../services/classes/term_schedule.service";
 import { styles } from "./styles";
 
 

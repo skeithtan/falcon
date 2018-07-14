@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import React, { Component, Fragment } from "react";
-import { NotificationsTray } from "../NotificationsTray/index";
+import { NotificationsTray } from "../NotificationsTray";
 import { wrap } from "./wrapper";
 
 

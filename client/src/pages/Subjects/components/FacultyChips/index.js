@@ -1,7 +1,7 @@
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import React, { Component } from "react";
-import { FacultyChip } from "../../../../components/FacultyChip/index";
+import { FacultyChip } from "../../../../components/FacultyChip";
 import { UnassignSubjectModal } from "../../../../components/UnassignSubjectModal";
 
 

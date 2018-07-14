@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import DragIndicator from "@material-ui/icons/DragIndicator";
 import Grid from "@material-ui/core/Grid";
 import { UserAvatar } from "../../../../components/UserAvatar";
-import { ListItemText } from "../../../../../node_modules/@material-ui/core";
+import { ListItemText } from "@material-ui/core";
 import { getFullName } from "../../../../utils/user.util";
 import { wrap } from "./wrapper";
 

@@ -1,7 +1,7 @@
 import { client } from "../../client";
-import gql from "../../../node_modules/graphql-tag";
+import gql from "graphql-tag";
 
-export const classFields = `
+export const fields = `
     _id
     subject
     meetingDays
@@ -20,7 +20,7 @@ export const addClassSchedule = (termScheduleId, newClass) =>
             termSchedule(_id: $termScheduleId) {
                 classes {
                     add(newClass: $newClass) {
-                        ${classFields}
+                        ${fields}
                     }
                 }
             }
@@ -39,7 +39,7 @@ export const updateClassSchedule = (termScheduleId, _id, newClass) =>
             termSchedule(_id: $termScheduleId) {
                 classes {
                     update(_id: $classId, newClass: $newClass) {
-                        ${classFields}
+                        ${fields}
                     }
                 }
             }

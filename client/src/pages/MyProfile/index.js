@@ -6,7 +6,7 @@ import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndica
 import { ErrorState } from "../../components/states/ErrorState";
 import { makeURL } from "../../utils/url.util";
 import { TABS } from "../FacultyProfiles/components/faculty_detail_tabs";
-import { MY_PROFILE_PAGE } from "../index";
+import { MY_PROFILE_PAGE } from "..";
 import { MyProfileHeader } from "./components/MyProfileHeader";
 import { wrap } from "./wrapper";
 

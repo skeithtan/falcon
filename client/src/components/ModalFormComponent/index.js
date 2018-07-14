@@ -3,7 +3,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import React, { Component } from "react";
-import { ModalFormDialogActions } from "../ModalFormDialogActions/index";
+import { ModalFormDialogActions } from "../ModalFormDialogActions";
 
 
 export class ModalFormComponent extends Component {

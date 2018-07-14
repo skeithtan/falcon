@@ -1,8 +1,8 @@
 import React, { Fragment, PureComponent } from "react";
-import { FormDisplayListItem } from "../../../../../../components/FormDisplayListItem/index";
+import { FormDisplayListItem } from "../../../../../../components/FormDisplayListItem";
 import { DEGREE, INSTRUCTIONAL_MATERIAL, PRESENTATION, RECOGNITION } from "../../../../../../enums/faculty.enums";
 import { formatMonthYearDate } from "../../../../../../utils/faculty.util";
-import { ExtensionWorkRoles } from "../../../faculty_detail_tabs/ExtensionWorksTab/index";
+import { ExtensionWorkRoles } from "../../../faculty_detail_tabs/ExtensionWorksTab";
 
 
 export class DegreeFields extends PureComponent {

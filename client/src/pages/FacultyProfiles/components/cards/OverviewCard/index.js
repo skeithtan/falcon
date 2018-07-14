@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import PrintIcon from "@material-ui/icons/Print";
-import moment from "moment/moment";
+import moment from "moment";
 import React, { Component } from "react";
 import { FormDisplayListItem } from "../../../../../components/FormDisplayListItem";
 import { UserAvatar } from "../../../../../components/UserAvatar";

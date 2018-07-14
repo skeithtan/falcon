@@ -33,8 +33,13 @@ type ClassMutations {
     remove(_id: ID!): Boolean!
 }
 
+type FacultiesMutations {
+    add(faculties: [ID!]!): [FacultyResponse!]!
+    remove(_id: ID!): Boolean!
+}
+
 type TermMutations {
-    addFacultiesToPool(faculties: [ID!]!): [FacultyResponse!]!
+    faculties: FacultiesMutations!
     classes: ClassMutations!
     status: StatusMutations!
 }

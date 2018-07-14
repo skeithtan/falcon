@@ -1,7 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 import { getFullName } from "../../utils/user.util";
-import { ConfirmActionModal } from "../ConfirmActionModal/index";
+import { ConfirmActionModal } from "../ConfirmActionModal";
 import { wrap } from "./wrapper";
 
 

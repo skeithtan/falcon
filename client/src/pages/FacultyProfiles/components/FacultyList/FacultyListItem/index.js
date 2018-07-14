@@ -3,10 +3,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
-import { UserAvatar } from "../../../../../components/UserAvatar/index";
+import { UserAvatar } from "../../../../../components/UserAvatar";
 import { getFullName } from "../../../../../utils/user.util";
-import { FACULTY_PROFILES_PAGE } from "../../../../index";
-import { OVERVIEW_TAB } from "../../faculty_detail_tabs/index";
+import { FACULTY_PROFILES_PAGE } from "../../../..";
+import { OVERVIEW_TAB } from "../../faculty_detail_tabs";
 import { wrap } from "./wrapper";
 
 

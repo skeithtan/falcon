@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
 import { NotificationsButton } from "../notifications/NotificationsButton";
-import { PageDrawer } from "../PageDrawer/index";
-import { UserButton } from "../UserButton/index";
+import { PageDrawer } from "../PageDrawer";
+import { UserButton } from "../UserButton";
 import { wrap } from "./wrapper";
 
 

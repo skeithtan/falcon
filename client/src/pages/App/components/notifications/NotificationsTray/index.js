@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import React, { PureComponent } from "react";
-import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator/index";
+import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { getObjectForUserType } from "../../../../../utils/user.util";
 import { wrap } from "./wrapper";

@@ -1,15 +1,7 @@
-import gql from "../../../node_modules/graphql-tag";
+import gql from "graphql-tag";
 import { client } from "../../client";
-import { classFields } from "./classes.service";
-
-const facultyResponseFields = `
-    faculty
-    availability
-    feedback {
-        status
-        rejectionReason
-    }
-`;
+import { fields as classScheduleFields } from "./classes.service";
+import { fields as facultyResponseFields } from "./faculties.service";
 
 const termScheduleFields = `
     _id
@@ -20,7 +12,7 @@ const termScheduleFields = `
         ${facultyResponseFields}
     }
     classes {
-        ${classFields}
+        ${classScheduleFields}
     }
 `;
 
@@ -90,7 +82,7 @@ export const addClassToTerm = (termScheduleId, newClass) =>
                 termSchedule(_id: $termScheduleId) {
                     classes {
                         add(newClass: $newClass) {
-                            ${classFields}
+                            ${classScheduleFields}
                         }
                     }
                 }

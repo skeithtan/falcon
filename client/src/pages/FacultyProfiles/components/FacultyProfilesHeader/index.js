@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { PureComponent } from "react";
-import { FACULTY_PROFILES_PAGE } from "../../../index";
+import { FACULTY_PROFILES_PAGE } from "../../..";
 import { CHANGE_REQUESTS_TAB, TABS } from "../faculty_detail_tabs";
 import { wrap } from "./wrapper";
 

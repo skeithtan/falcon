@@ -1,10 +1,10 @@
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { UserAvatar } from "../../../../components/UserAvatar/index";
+import { UserAvatar } from "../../../../components/UserAvatar";
 import { CHANGE_REQUEST_STATUSES } from "../../../../enums/review_profile_change.enums";
 import { makeURL } from "../../../../utils/url.util";
 import { getFullName, getObjectForUserType } from "../../../../utils/user.util";
-import { NotificationItem } from "./NotificationItem/index";
+import { NotificationItem } from "./NotificationItem";
 
 
 const getNotificationsForAdmin = state => {

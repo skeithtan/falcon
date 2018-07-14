@@ -2,7 +2,7 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import React, { PureComponent } from "react";
 import { TABS } from "../../../FacultyProfiles/components/faculty_detail_tabs";
-import { MY_PROFILE_PAGE } from "../../../index";
+import { MY_PROFILE_PAGE } from "../../..";
 import { wrap } from "./wrapper";
 
 

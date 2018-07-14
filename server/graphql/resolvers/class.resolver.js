@@ -139,6 +139,40 @@ const mutateStatus = termSchedule => ({
     },
 });
 
+const mutateFaculties = termSchedule => ({
+    async add({faculties: newFacultiesId}) {
+        const facultyPool = termSchedule.facultyPool;
+        const oldFacultiesId = facultyPool.map(facultyResponse =>
+            facultyResponse.faculty._id.toString()
+        );
+
+        newFacultiesId
+            // Cannot have duplicates
+            .filter(facultyId => !oldFacultiesId.includes(facultyId))
+            .forEach(facultyId =>
+                facultyPool.push(
+                    facultyPool.create({
+                        faculty: facultyId,
+                        availability: {
+                            M_TH: { ...DEFAULT_DAY_AVAILABILITY },
+                            T_F: { ...DEFAULT_DAY_AVAILABILITY },
+                        },
+                        feedback: null,
+                    })
+                )
+            );
+
+        await termSchedule.save();
+        return facultyPool;
+    },
+    async remove({_id}) {
+        const facultyResponse = termSchedule.facultyPool.id(_id);
+        facultyResponse.remove();
+        await termSchedule.save();
+        return true;
+    }
+});
+
 async function mutateTerm(object, { _id }) {
     const termSchedule = await TermSchedule.findById(_id).exec();
     if (!termSchedule) {
@@ -146,32 +180,7 @@ async function mutateTerm(object, { _id }) {
     }
 
     return {
-        async addFacultiesToPool({ faculties: newFacultiesId }) {
-            const facultyPool = termSchedule.facultyPool;
-            const oldFacultiesId = facultyPool.map(facultyResponse =>
-                facultyResponse.faculty._id.toString()
-            );
-
-            newFacultiesId
-                // Cannot have duplicates
-                .filter(facultyId => !oldFacultiesId.includes(facultyId))
-                .forEach(facultyId =>
-                    facultyPool.push(
-                        facultyPool.create({
-                            faculty: facultyId,
-                            availability: {
-                                M_TH: { ...DEFAULT_DAY_AVAILABILITY },
-                                T_F: { ...DEFAULT_DAY_AVAILABILITY },
-                            },
-                            feedback: null,
-                        })
-                    )
-                );
-
-            await termSchedule.save();
-            return facultyPool;
-        },
-
+        faculties: mutateFaculties(termSchedule),
         classes: mutateClasses(termSchedule),
         status: mutateStatus(termSchedule),
     };
