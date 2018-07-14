@@ -22,7 +22,16 @@ class BaseClassScheduleItem extends Component {
 
     render() {
         const { anchorEl } = this.state;
-        const { classSchedule, faculty, subject, classes, onRemoveClassSchedule } = this.props;
+        const {
+            classSchedule,
+            faculty,
+            subject,
+            classes,
+            onRemoveClassSchedule,
+            connectDropTarget,
+            isOver,
+        } = this.props;
+
         let containerClasses = [classes.classScheduleItemContainer];
         containerClasses.push(
             faculty
@@ -34,11 +43,16 @@ class BaseClassScheduleItem extends Component {
             containerClasses.push("selected");
         }
 
-        return (
+        if (isOver) {
+            console.log("Is over");
+            containerClasses.push("hoveringFaculty");
+        }
+
+        return connectDropTarget(
             <div className={containerClasses.join(" ")}>
                 <Grid container spacing={16} onClick={this.handleClick}>
                     <Grid item>
-                        <Typography variant="subheading" color="inherit">
+                        <Typography variant="body2" color="inherit">
                             {subject.code} {classSchedule.section}
                         </Typography>
                         <Typography color="inherit">

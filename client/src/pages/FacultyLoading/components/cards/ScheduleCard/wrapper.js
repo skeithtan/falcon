@@ -6,8 +6,31 @@ import { connect } from "react-redux";
 import { initiatefetchAllFaculties } from "../../../../../utils/faculty.util";
 import { fetchSubjectList } from "../../../../../utils/subject.util";
 import { termScheduleIsUpdated } from "../../../../../redux/actions/faculty_loading.actions";
-import { updateClassSchedule, removeClassSchedule } from "../../../../../services/classes/classes.service";
+import {
+    updateClassSchedule,
+    removeClassSchedule,
+} from "../../../../../services/classes/classes.service";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
+
+const mapClassScheduleToGraphQLInput = ({
+    subject,
+    meetingDays,
+    meetingHours,
+    room,
+    enrollmentCap,
+    course,
+    section,
+    faculty,
+}) => ({
+    subject,
+    meetingDays,
+    meetingHours,
+    room,
+    enrollmentCap,
+    course,
+    section,
+    faculty: faculty === "" ? null : faculty,
+});
 
 const mapStateToProps = state => ({
     faculties: state.faculty,
@@ -22,15 +45,17 @@ const mapDispatchToProps = dispatch => ({
         fetchSubjectList(dispatch);
     },
     onRemoveClassSchedule(termSchedule, classSchedule) {
-        return removeClassSchedule(termSchedule._id, classSchedule._id).then(() => {
-            const newTermSchedule = {
-                ...termSchedule,
-                classes: termSchedule.classes.filter(
-                    ({_id}) => _id !== classSchedule._id
-                ),
-            };
-            dispatch(termScheduleIsUpdated(newTermSchedule));
-        });
+        return removeClassSchedule(termSchedule._id, classSchedule._id).then(
+            () => {
+                const newTermSchedule = {
+                    ...termSchedule,
+                    classes: termSchedule.classes.filter(
+                        ({ _id }) => _id !== classSchedule._id
+                    ),
+                };
+                dispatch(termScheduleIsUpdated(newTermSchedule));
+            }
+        );
     },
     onSetFaculty(faculty, oldClassSchedule, termSchedule) {
         const newClassSchedule = {
@@ -62,10 +87,14 @@ const mapDispatchToProps = dispatch => ({
         };
 
         dispatch(termScheduleIsUpdated(newTermSchedule));
+
+        const newClassScheduleInput = mapClassScheduleToGraphQLInput(
+            newClassSchedule
+        );
         return updateClassSchedule(
             newTermSchedule._id,
             newClassSchedule._id,
-            newClassSchedule
+            newClassScheduleInput
         )
             .then(result => {
                 if (result.errors) {

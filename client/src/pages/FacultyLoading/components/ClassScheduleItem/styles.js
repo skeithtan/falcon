@@ -3,14 +3,17 @@ import BlueGrey from "@material-ui/core/colors/blueGrey";
 
 export const styles = theme => ({
     classScheduleItemContainer: {
-        borderLeft: "4px solid",
         padding: theme.spacing.unit * 2,
         transition: "all 200ms",
         cursor: "pointer",
+
+        "&.hoveringFaculty": {
+            paddingTop: theme.spacing.unit * 2,
+            paddingBottom: theme.spacing.unit * 14,
+        },
     },
 
     classScheduleWithFaculty: {
-        borderColor: theme.palette.primary.main,
         background: lighten(theme.palette.primary.main, 0.92),
         color: theme.palette.primary.dark,
 
@@ -19,13 +22,17 @@ export const styles = theme => ({
         },
 
         "&.selected": {
-            background: lighten(theme.palette.primary.main, 0.85),
+            background: lighten(theme.palette.primary.main, 0.7),
+        },
+
+        "&.hoveringFaculty": {
+            background: theme.palette.primary.light,
+            color: theme.palette.common.white,
         },
     },
 
     classScheduleWithoutFaculty: {
-        borderColor: BlueGrey["300"],
-        background: lighten(BlueGrey["400"], 0.95),
+        background: lighten(BlueGrey["400"], 0.9),
         color: darken(BlueGrey["900"], 0.2),
 
         "&:hover": {
@@ -33,7 +40,18 @@ export const styles = theme => ({
         },
 
         "&.selected": {
-            background: lighten(BlueGrey["400"], 0.85),
+            background: lighten(BlueGrey["400"], 0.7),
         },
+
+        "&.hoveringFaculty": {
+            background: BlueGrey["400"],
+            color: theme.palette.common.white,
+        },
+    },
+
+    classScheduleAvatar: {
+        height: 32,
+        width: 32,
+        fontSize: 16,
     },
 });

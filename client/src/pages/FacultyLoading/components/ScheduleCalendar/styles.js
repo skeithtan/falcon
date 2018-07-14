@@ -9,7 +9,8 @@ export const styles = theme => ({
         paddingBottom: theme.spacing.unit,
     },
     calendarColumnHead: {
-        padding: theme.spacing.unit * 2,
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
     },
     calendarColumnClassesContainer: {
         minHeight: 400,

@@ -9,34 +9,35 @@ import { wrap } from "./wrapper";
 
 class BaseFacultyListItem extends Component {
     render() {
-        const { classes, faculty } = this.props;
-
-        return (
-            <Card className={classes.facultyListItemContainer}>
-                <Grid
-                    container
-                    spacing={8}
-                    alignItems="center"
-                    justify="space-between"
-                >
-                    <Grid item>
-                        <Grid container spacing={16} direction="row">
-                            <Grid item>
-                                <UserAvatar user={faculty.user} />
-                            </Grid>
-                            <Grid item>
-                                <ListItemText
-                                    primary={getFullName(faculty.user)}
-                                    secondary={`T-${faculty.idNumber}`}
-                                />
+        const { classes, faculty, connectDragSource } = this.props;
+        return connectDragSource(
+            <div>
+                <Card className={classes.facultyListItemContainer}>
+                    <Grid
+                        container
+                        spacing={8}
+                        alignItems="center"
+                        justify="space-between"
+                    >
+                        <Grid item>
+                            <Grid container spacing={16} direction="row">
+                                <Grid item>
+                                    <UserAvatar user={faculty.user} />
+                                </Grid>
+                                <Grid item>
+                                    <ListItemText
+                                        primary={getFullName(faculty.user)}
+                                        secondary={`T-${faculty.idNumber}`}
+                                    />
+                                </Grid>
                             </Grid>
                         </Grid>
+                        <Grid item>
+                            <DragIndicator color="action" />
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <DragIndicator color="action" />
-                    </Grid>
-                </Grid>
-            </Card>
+                </Card>
+            </div>
         );
     }
 }

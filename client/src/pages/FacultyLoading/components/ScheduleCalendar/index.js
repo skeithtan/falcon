@@ -8,7 +8,13 @@ import { ClassScheduleItem } from "../ClassScheduleItem";
 
 class CalendarClassesColumn extends PureComponent {
     render() {
-        const { classSchedules, faculties, subjects, onRemoveClassSchedule } = this.props;
+        const {
+            classSchedules,
+            faculties,
+            subjects,
+            onRemoveClassSchedule,
+            onSetFaculty,
+        } = this.props;
         return (
             <Grid container spacing={8} direction="column" wrap="nowrap">
                 {classSchedules.map(classSchedule => (
@@ -25,7 +31,10 @@ class CalendarClassesColumn extends PureComponent {
                             subject={subjects.find(
                                 subject => subject._id === classSchedule.subject
                             )}
-                            onRemoveClassSchedule={() => onRemoveClassSchedule(classSchedule)}
+                            onRemoveClassSchedule={() =>
+                                onRemoveClassSchedule(classSchedule)
+                            }
+                            onSetFaculty={faculty => onSetFaculty(faculty, classSchedule)}
                         />
                     </Grid>
                 ))}
@@ -54,7 +63,13 @@ class BaseScheduleCalendar extends PureComponent {
     );
 
     renderCalendarBody = () => {
-        const { classSchedules, faculties, subjects, onRemoveClassSchedule } = this.props;
+        const {
+            classSchedules,
+            faculties,
+            subjects,
+            onRemoveClassSchedule,
+            onSetFaculty,
+        } = this.props;
         return (
             <Grid container spacing={8} direction="row" wrap="nowrap">
                 {Object.values(MEETING_HOURS).map(meetingHours => (
@@ -69,6 +84,7 @@ class BaseScheduleCalendar extends PureComponent {
                             faculties={faculties}
                             subjects={subjects}
                             onRemoveClassSchedule={onRemoveClassSchedule}
+                            onSetFaculty={onSetFaculty}
                         />
                     </Grid>
                 ))}
