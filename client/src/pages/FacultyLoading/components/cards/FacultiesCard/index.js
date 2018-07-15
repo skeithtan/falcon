@@ -11,6 +11,7 @@ import { wrap } from "./wrapper";
 import { EmptyState } from "../../../../../components/states/EmptyState";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../../components/states/ErrorState";
+import { AddFacultyModal } from "../../modals/AddFacultyModal";
 
 class BaseFacultiesCard extends Component {
     state = {
@@ -88,7 +89,7 @@ class BaseFacultiesCard extends Component {
     renderCardContent = () => {
         const {
             faculties: { faculties, isLoading, errors },
-            facultyResponses,
+            termSchedule: { facultyPool },
         } = this.props;
 
         if (isLoading) {
@@ -99,7 +100,7 @@ class BaseFacultiesCard extends Component {
             return this.renderErrors(errors);
         }
 
-        if (facultyResponses.length === 0) {
+        if (facultyPool.length === 0) {
             return this.renderEmptyState();
         }
 
@@ -107,10 +108,16 @@ class BaseFacultiesCard extends Component {
             return null;
         }
 
-        return this.renderList(facultyResponses);
+        return this.renderList(facultyPool);
     };
 
     renderToolbar = () => {
+        const {
+            faculties: { faculties },
+            termSchedule,
+        } = this.props;
+        const { addFacultyModalIsShowing } = this.state;
+
         return (
             <Toolbar>
                 <Grid container alignItems="center" justify="space-between">
@@ -118,16 +125,29 @@ class BaseFacultiesCard extends Component {
                         <Typography variant="title">Faculties</Typography>
                     </Grid>
                     <Grid item>
-                        <Tooltip title="Add faculty to term schedule">
-                            <IconButton
-                                color="primary"
-                                onClick={() => this.toggleAddFacultyModal(true)}
-                            >
-                                <AddIcon />
-                            </IconButton>
-                        </Tooltip>
+                        {faculties !== null && (
+                            <Tooltip disableFocusListener title="Add faculty to term schedule">
+                                <IconButton
+                                    color="primary"
+                                    onClick={() =>
+                                        this.toggleAddFacultyModal(true)
+                                    }
+                                >
+                                    <AddIcon />
+                                </IconButton>
+                            </Tooltip>
+                        )}
                     </Grid>
                 </Grid>
+                {faculties !== null && (
+                    <AddFacultyModal
+                        action="update"
+                        open={addFacultyModalIsShowing}
+                        onClose={() => this.toggleAddFacultyModal(false)}
+                        allFaculties={faculties}
+                        termSchedule={termSchedule}
+                    />
+                )}
             </Toolbar>
         );
     };

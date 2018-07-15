@@ -28,7 +28,7 @@ class BaseFacultyLoadingBody extends Component {
         >
             <Grid item xs={3}>
                 <FacultiesCard
-                    facultyResponses={activeTermSchedule.facultyPool}
+                    termSchedule={activeTermSchedule}
                     meetingDays={meetingDays}
                 />
             </Grid>
