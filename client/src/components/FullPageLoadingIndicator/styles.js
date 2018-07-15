@@ -7,5 +7,6 @@ export const styles = theme => ({
         padding: theme.spacing.unit * 5,
         boxSizing: "border-box",
         flexGrow: 1,
+        cursor: "wait",
     },
 });
