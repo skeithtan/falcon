@@ -1,14 +1,18 @@
 import React, { Component, Fragment } from "react";
-import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Popover from "@material-ui/core/Popover";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { FacultyChip } from "../../../../components/FacultyChip";
 import { MEETING_DAYS, MEETING_HOURS } from "../../../../enums/class.enums";
 import { wrap } from "./wrapper";
 import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
+import { makeURL } from "../../../../utils/url.util";
 
 class BaseClassSchedulePopover extends Component {
     state = {
@@ -33,10 +37,41 @@ class BaseClassSchedulePopover extends Component {
     );
 
     renderOverview = () => {
-        const { subject, classSchedule } = this.props;
+        const { subject, classSchedule, history } = this.props;
+
+        const onSubjectClick = () =>
+            history.push(
+                makeURL()
+                    .subjects()
+                    .selectSubject(subject._id)
+                    .build()
+            );
+
         return (
             <Fragment>
-                <Typography variant="subheading">{subject.name}</Typography>
+                <Grid
+                    container
+                    spacing={16}
+                    direction="row"
+                    justify="space-between"
+                    wrap="nowrap"
+                >
+                    <Grid item xs>
+                        <Typography variant="subheading">
+                            {subject.name}{" "}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Tooltip disableFocusListener title="View subject">
+                            <IconButton
+                                aria-label="View subject"
+                                onClick={onSubjectClick}
+                            >
+                                <OpenInNewIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Grid>
+                </Grid>
                 <Typography color="textSecondary">
                     {classSchedule.course}
                 </Typography>
@@ -85,7 +120,7 @@ class BaseClassSchedulePopover extends Component {
             classes,
             classSchedule,
             subject,
-            onRemoveClassSchedule
+            onRemoveClassSchedule,
         } = this.props;
         const { removeClassScheduleModalIsShowing } = this.state;
 
