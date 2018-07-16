@@ -110,7 +110,6 @@ const TermScheduleSchema = new Schema({
     startYear: {
         type: Number,
         required: true,
-        unique: true,
     },
     term: {
         type: String,
