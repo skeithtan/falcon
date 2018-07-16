@@ -49,7 +49,7 @@ class BaseFacultiesCard extends Component {
             smallMessage="When faculties are added, you can see them here"
             onAddButtonClick={() => this.toggleAddFacultyModal(true)}
             addButtonText="Add a faculty"
-            showAddButton={this.props.user.permissions.MUTATE_TERM_SCHEDULES}
+            showAddButton={this.canSchedule}
         />
     );
 
@@ -69,10 +69,7 @@ class BaseFacultiesCard extends Component {
 
     get canSchedule() {
         const { termSchedule } = this.props;
-        return [
-            TERM_STATUSES.SCHEDULING.identifier,
-            TERM_STATUSES.PUBLISHED.identifier,
-        ].includes(termSchedule.status);
+        return termSchedule.status === TERM_STATUSES.SCHEDULING.identifier;
     }
 
     renderList = facultyResponses => (

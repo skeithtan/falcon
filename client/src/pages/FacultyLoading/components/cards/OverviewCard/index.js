@@ -39,7 +39,11 @@ class BaseOverviewCard extends Component {
         const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
         const canAdvanceTermSchedule =
             canMutateTermSchedule &&
-            activeTermSchedule.status !== TERM_STATUSES.PUBLISHED.identifier;
+            activeTermSchedule.status !== TERM_STATUSES.PUBLISHED.identifier &&
+            activeTermSchedule.status !== TERM_STATUSES.ARCHIVED.identifier;
+
+        const isArchived =
+            activeTermSchedule.status === TERM_STATUSES.ARCHIVED.identifier;
 
         return (
             <Card>
@@ -50,6 +54,16 @@ class BaseOverviewCard extends Component {
                                 {termScheduleToString(activeTermSchedule)}
                             </Typography>
                         </Grid>
+
+                        {isArchived && (
+                            <Grid item>
+                                <Typography variant="subheading" color="textSecondary">
+                                    This term has been archived{" "}
+                                    and is only available for viewing
+                                </Typography>
+                            </Grid>
+                        )}
+
                         {canAdvanceTermSchedule && (
                             <Grid item>
                                 <Button
@@ -65,13 +79,15 @@ class BaseOverviewCard extends Component {
                         )}
                     </Grid>
                 </Toolbar>
-                <Stepper activeStep={activeStepIndex}>
-                    {steps.map(({ identifier, name }) => (
-                        <Step key={identifier}>
-                            <StepLabel>{name}</StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
+                {!isArchived && (
+                    <Stepper activeStep={activeStepIndex}>
+                        {steps.map(({ identifier, name }) => (
+                            <Step key={identifier}>
+                                <StepLabel>{name}</StepLabel>
+                            </Step>
+                        ))}
+                    </Stepper>
+                )}
 
                 {canAdvanceTermSchedule && (
                     <AdvanceTermModal

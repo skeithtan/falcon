@@ -9,7 +9,17 @@ import { wrap } from "./wrapper";
 
 class BaseFacultyLoadingHeader extends Component {
     renderTermScheduleSelect = () => {
-        const { termSchedules, activeTermSchedule, classes } = this.props;
+        const {
+            termSchedules: { archived, current },
+            activeTermSchedule,
+            classes,
+        } = this.props;
+        const termSchedules = [...archived];
+
+        if (current) {
+            termSchedules.push(current);
+        }
+
         return (
             <div className={classes.termSchedulesSelectWrapper}>
                 <Paper className={classes.termSchedulesPaper}>
@@ -17,7 +27,7 @@ class BaseFacultyLoadingHeader extends Component {
                         className={classes.termSchedulesSelect}
                         value={activeTermSchedule._id}
                     >
-                        {[termSchedules.current, ...termSchedules.archived].map(
+                        {termSchedules.map(
                             termSchedule => (
                                 <MenuItem
                                     key={termSchedule._id}

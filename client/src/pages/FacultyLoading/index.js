@@ -4,13 +4,16 @@ import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndica
 import { EmptyState } from "../../components/states/EmptyState";
 import { ErrorState } from "../../components/states/ErrorState";
 import { TERM_STATUSES } from "../../enums/class.enums";
-import { formatAcademicYear, termScheduleToString, termToPlan } from "../../utils/faculty_loading.util";
+import {
+    formatAcademicYear,
+    termScheduleToString,
+    termToPlan,
+} from "../../utils/faculty_loading.util";
 import { makeURL } from "../../utils/url.util";
 import { FacultyLoadingBody } from "./components/FacultyLoadingBody";
 import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 import { PlanNextTermModal } from "./components/modals/PlanNextTermModal";
 import { wrap } from "./wrapper";
-
 
 class BaseFacultyLoadingPage extends Component {
     state = {
@@ -33,27 +36,31 @@ class BaseFacultyLoadingPage extends Component {
     }
 
     redirectToDefaultTermSchedule = termSchedules => {
-        const termScheduleToShow = this.getDefaultTermSchedule(termSchedules);
+        const termScheduleToShow = this.getDefaultTermSchedule();
 
         this.props.history.replace(
             makeURL()
                 .facultyLoading()
                 .selectTermSchedule(termScheduleToShow._id)
                 .mondayThursday()
-                .build(),
+                .build()
         );
     };
 
     handlePath = () => {
         const {
             match: {
-                params: {termScheduleId},
+                params: { termScheduleId },
             },
             termSchedules,
         } = this.props;
 
         // We need termSchedules to determine how to deal with URL
-        if (!termSchedules || termSchedules.length === 0) {
+        // If there are is no defaultTermSchedule, that means there are no term schedules at all
+        if (
+            termSchedules === null ||
+            !this.getDefaultTermSchedule()
+        ) {
             return;
         }
 
@@ -64,10 +71,7 @@ class BaseFacultyLoadingPage extends Component {
             return;
         }
 
-        const termSchedule = this.getTermScheduleFromId(
-            termSchedules,
-            termScheduleId,
-        );
+        const termSchedule = this.getTermScheduleFromId(termScheduleId);
 
         // If we do have a termScheduleId but it's invalid
         if (!termSchedule) {
@@ -76,38 +80,36 @@ class BaseFacultyLoadingPage extends Component {
         }
     };
 
-
-    getDefaultTermSchedule = termSchedules => {
-        // Find the current term schedule
-        let termScheduleToShow = termSchedules.current;
-
-        // If we can't find one that isn't archived
-        if (!termScheduleToShow) {
-            // Just get the first one
-            termScheduleToShow = termSchedules[0];
-        }
-
-        return termScheduleToShow;
+    getDefaultTermSchedule = () => {
+        const { current, archived } = this.props.termSchedules;
+        return current ? current : archived[0];
     };
 
-    getTermScheduleFromId = (termSchedules, termScheduleId) =>
-        [termSchedules.current, ...termSchedules.archived].find(termSchedule => termSchedule._id === termScheduleId);
+    getTermScheduleFromId = termScheduleId => {
+        const { current, archived } = this.props.termSchedules;
+        const termSchedules = [...archived];
+        if (current) {
+            termSchedules.push(current);
+        }
+
+        return termSchedules.find(termSchedule => termSchedule._id === termScheduleId);
+    };
 
     fetchTermSchedules = () => {
-        const {isLoading, termSchedules, fetchData} = this.props;
+        const { isLoading, termSchedules, fetchData } = this.props;
         if (!termSchedules && !isLoading) {
             fetchData();
         }
     };
 
     renderLoading = () => (
-        <Grid container style={{height: "100%"}}>
+        <Grid container style={{ height: "100%" }}>
             <FullPageLoadingIndicator size={100} />
         </Grid>
     );
 
     renderEmptyState = () => {
-        const {user} = this.props;
+        const { user } = this.props;
 
         const showAddButton = Boolean(termToPlan);
         let addButtonText = null;
@@ -115,7 +117,7 @@ class BaseFacultyLoadingPage extends Component {
         if (termToPlan) {
             addButtonText = `Plan ${
                 termToPlan.term.name
-                } Term of ${formatAcademicYear(termToPlan.startYear)}`;
+            } Term of ${formatAcademicYear(termToPlan.startYear)}`;
         }
 
         return (
@@ -141,7 +143,7 @@ class BaseFacultyLoadingPage extends Component {
 
     nextTermExists = termSchedules => {
         // Ensure termToPlan does not already exist in termSchedules
-        return termSchedules.every(({startYear, term}) => {
+        return termSchedules.every(({ startYear, term }) => {
             return (
                 startYear !== termToPlan.startYear &&
                 term !== termToPlan.term.identifier
@@ -150,7 +152,7 @@ class BaseFacultyLoadingPage extends Component {
     };
 
     get shouldShowPlanNextTermModal() {
-        const {termSchedules} = this.props;
+        const { termSchedules } = this.props;
 
         if (!termSchedules) {
             return false;
@@ -164,11 +166,19 @@ class BaseFacultyLoadingPage extends Component {
     }
 
     renderFacultyLoading = (termSchedule, meetingDays) => {
-        document.title = `${termScheduleToString(termSchedule)} - Faculty Loading - Falcon`;
+        document.title = `${termScheduleToString(
+            termSchedule
+        )} - Faculty Loading - Falcon`;
         return (
             <Fragment>
-                <FacultyLoadingHeader activeTermSchedule={termSchedule} meetingDays={meetingDays} />
-                <FacultyLoadingBody activeTermSchedule={termSchedule} meetingDays={meetingDays} />
+                <FacultyLoadingHeader
+                    activeTermSchedule={termSchedule}
+                    meetingDays={meetingDays}
+                />
+                <FacultyLoadingBody
+                    activeTermSchedule={termSchedule}
+                    meetingDays={meetingDays}
+                />
             </Fragment>
         );
     };
@@ -177,22 +187,28 @@ class BaseFacultyLoadingPage extends Component {
         const {
             classes,
             match: {
-                params: {termScheduleId, meetingDay},
+                params: { termScheduleId, meetingDay },
             },
             isLoading,
             termSchedules,
             errors,
         } = this.props;
 
-        const {planNextTermModalIsShowing} = this.state;
-        const termSchedule = termSchedules && this.getTermScheduleFromId(termSchedules, termScheduleId);
+        const { planNextTermModalIsShowing } = this.state;
+        const termSchedule =
+            termSchedules !== null &&
+            this.getTermScheduleFromId(termScheduleId);
+
+        const noTermSchedules =
+            termSchedules !== null && !this.getDefaultTermSchedule();
 
         return (
             <div className={classes.facultyLoadingContainer}>
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
-                {termSchedules && termSchedules.length === 0 && this.renderEmptyState()}
-                {termSchedule && this.renderFacultyLoading(termSchedule, meetingDay)}
+                {noTermSchedules && this.renderEmptyState()}
+                {termSchedule &&
+                    this.renderFacultyLoading(termSchedule, meetingDay)}
 
                 {this.shouldShowPlanNextTermModal && (
                     <PlanNextTermModal
