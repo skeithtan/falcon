@@ -12,6 +12,7 @@ import { EmptyState } from "../../../../../components/states/EmptyState";
 import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../../components/states/ErrorState";
 import { AddFacultyModal } from "../../modals/AddFacultyModal";
+import { TERM_STATUSES } from "../../../../../enums/class.enums";
 
 class BaseFacultiesCard extends Component {
     state = {
@@ -66,6 +67,14 @@ class BaseFacultiesCard extends Component {
         />
     );
 
+    get canSchedule() {
+        const { termSchedule } = this.props;
+        return [
+            TERM_STATUSES.SCHEDULING.identifier,
+            TERM_STATUSES.PUBLISHED.identifier,
+        ].includes(termSchedule.status);
+    }
+
     renderList = facultyResponses => (
         <Grid container direction="column" alignItems="stretch" wrap="nowrap">
             {facultyResponses.map(facultyResponse => (
@@ -73,6 +82,7 @@ class BaseFacultiesCard extends Component {
                     <FacultyListItem
                         facultyResponse={facultyResponse}
                         faculty={this.getFacultyFromId(facultyResponse.faculty)}
+                        canSchedule={this.canSchedule}
                     />
                 </Grid>
             ))}
@@ -126,7 +136,10 @@ class BaseFacultiesCard extends Component {
                     </Grid>
                     <Grid item>
                         {faculties !== null && (
-                            <Tooltip disableFocusListener title="Add faculty to term schedule">
+                            <Tooltip
+                                disableFocusListener
+                                title="Add faculty to term schedule"
+                            >
                                 <IconButton
                                     color="primary"
                                     onClick={() =>

@@ -3,15 +3,20 @@ import Typography from "@material-ui/core/Typography";
 import DragIndicator from "@material-ui/icons/DragIndicator";
 import Grid from "@material-ui/core/Grid";
 import { UserAvatar } from "../../../../components/UserAvatar";
-import { ListItemText } from "@material-ui/core";
 import { getFullName } from "../../../../utils/user.util";
 import { wrap } from "./wrapper";
 
 class BaseFacultyListItem extends Component {
     render() {
-        const { classes, faculty, connectDragSource } = this.props;
+        const { classes, faculty, connectDragSource, canDrag } = this.props;
+
+        const rootClasses = [classes.facultyListItemContainer];
+        if (canDrag) {
+            rootClasses.push("canDrag");
+        }
+
         return connectDragSource(
-            <div className={classes.facultyListItemContainer}>
+            <div className={rootClasses.join(" ")}>
                 <Grid
                     container
                     spacing={8}
@@ -42,9 +47,11 @@ class BaseFacultyListItem extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item>
-                        <DragIndicator color="action" />
-                    </Grid>
+                    {canDrag && (
+                        <Grid item>
+                            <DragIndicator color="action" />
+                        </Grid>
+                    )}
                 </Grid>
             </div>
         );

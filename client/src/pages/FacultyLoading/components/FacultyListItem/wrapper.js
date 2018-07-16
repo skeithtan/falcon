@@ -8,10 +8,13 @@ const facultySource = {
     beginDrag: props => ({
         faculty: props.faculty,
     }),
+
+    canDrag: props => props.canSchedule,
 };
 
 const collect = (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
+    canDrag: monitor.canDrag(),
 });
 
 export const wrap = compose(
