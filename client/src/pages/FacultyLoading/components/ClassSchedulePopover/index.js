@@ -9,7 +9,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { FacultyChip } from "../../../../components/FacultyChip";
-import { MEETING_DAYS, MEETING_HOURS } from "../../../../enums/class.enums";
+import {
+    MEETING_DAYS,
+    MEETING_HOURS,
+    TERM_STATUSES,
+} from "../../../../enums/class.enums";
 import { wrap } from "./wrapper";
 import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
 import { makeURL } from "../../../../utils/url.util";
@@ -25,18 +29,22 @@ class BaseClassSchedulePopover extends Component {
         });
 
     renderButtons = () => (
-        <Grid container justify="space-between">
+        <Grid container justify="space-between" alignItems="flex-end">
             <Grid item>
                 <Button color="primary">Update class</Button>
             </Grid>
-            <Grid item>
-                <Button
-                    color="primary"
-                    onClick={() => this.toggleRemoveClassScheduleModal(true)}
-                >
-                    Remove class
-                </Button>
-            </Grid>
+            {this.shouldShowRemoveTermSchedule && (
+                <Grid item>
+                    <Button
+                        color="primary"
+                        onClick={() =>
+                            this.toggleRemoveClassScheduleModal(true)
+                        }
+                    >
+                        Remove class
+                    </Button>
+                </Grid>
+            )}
         </Grid>
     );
 
@@ -116,6 +124,11 @@ class BaseClassSchedulePopover extends Component {
         return <FacultyChip clickable faculty={faculty} />;
     };
 
+    get shouldShowRemoveTermSchedule() {
+        const { termSchedule } = this.props;
+        return termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
+    }
+
     render() {
         const {
             open,
@@ -124,7 +137,7 @@ class BaseClassSchedulePopover extends Component {
             classes,
             classSchedule,
             subject,
-            onRemoveClassSchedule,
+            termSchedule,
         } = this.props;
         const { removeClassScheduleModalIsShowing } = this.state;
 
@@ -151,15 +164,20 @@ class BaseClassSchedulePopover extends Component {
                         <Grid item>{this.renderFaculty()}</Grid>
                     </Grid>
                 </CardContent>
+
                 <CardActions>{this.renderButtons()}</CardActions>
 
-                <RemoveClassScheduleModal
-                    open={removeClassScheduleModalIsShowing}
-                    onClose={() => this.toggleRemoveClassScheduleModal(false)}
-                    onRemoveClassSchedule={onRemoveClassSchedule}
-                    classSchedule={classSchedule}
-                    subject={subject}
-                />
+                {this.shouldShowRemoveTermSchedule && (
+                    <RemoveClassScheduleModal
+                        open={removeClassScheduleModalIsShowing}
+                        onClose={() =>
+                            this.toggleRemoveClassScheduleModal(false)
+                        }
+                        classSchedule={classSchedule}
+                        termSchedule={termSchedule}
+                        subject={subject}
+                    />
+                )}
             </Popover>
         );
     }

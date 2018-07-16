@@ -2,13 +2,17 @@ import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
 import { DropTarget } from "react-dnd";
+import { connect } from "react-redux";
 import { DropTypes } from "../../../../enums/drop_types.enums";
+import { updateClassSchedule } from "../../../../services/classes/classes.service";
+import { termScheduleIsUpdated } from "../../../../redux/actions/faculty_loading.actions";
+import { toastIsShowing } from "../../../../redux/actions/toast.actions";
 
 const classScheduleItemTarget = {
     drop(props, monitor) {
-        const { onSetFaculty } = props;
+        const { termSchedule, classSchedule, onSetFaculty } = props;
         const { faculty } = monitor.getItem();
-        onSetFaculty(faculty);
+        onSetFaculty(faculty, classSchedule, termSchedule);
     },
 };
 
@@ -17,7 +21,80 @@ const collect = (connect, monitor) => ({
     isOver: monitor.isOver(),
 });
 
+const mapClassScheduleToGraphQLInput = ({
+    subject,
+    meetingDays,
+    meetingHours,
+    room,
+    enrollmentCap,
+    course,
+    section,
+    faculty,
+}) => ({
+    subject,
+    meetingDays,
+    meetingHours,
+    room,
+    enrollmentCap,
+    course,
+    section,
+    faculty: faculty === "" ? null : faculty,
+});
+
+const mapDispatchToProps = dispatch => ({
+    onSetFaculty(faculty, oldClassSchedule, termSchedule) {
+        const newClassSchedule = {
+            ...oldClassSchedule,
+            faculty: faculty._id,
+        };
+
+        const oldTermSchedule = { ...termSchedule };
+
+        const newTermSchedule = {
+            ...oldTermSchedule,
+            classes: oldTermSchedule.classes.map(classSchedule => {
+                if (newClassSchedule._id === classSchedule._id) {
+                    return newClassSchedule;
+                }
+
+                return classSchedule;
+            }),
+        };
+
+        const revertToOldSchedule = errors => {
+            console.log(errors);
+            dispatch(termScheduleIsUpdated(oldTermSchedule));
+            dispatch(
+                toastIsShowing(
+                    "An error occurred while updating class schedule"
+                )
+            );
+        };
+
+        dispatch(termScheduleIsUpdated(newTermSchedule));
+
+        const newClassScheduleInput = mapClassScheduleToGraphQLInput(
+            newClassSchedule
+        );
+        return updateClassSchedule(
+            newTermSchedule._id,
+            newClassSchedule._id,
+            newClassScheduleInput
+        )
+            .then(result => {
+                if (result.errors) {
+                    revertToOldSchedule(result.errors);
+                }
+            })
+            .catch(error => revertToOldSchedule(error));
+    },
+});
+
 export const wrap = compose(
+    connect(
+        null,
+        mapDispatchToProps
+    ),
     DropTarget(DropTypes.FACULTY, classScheduleItemTarget, collect),
     withStyles(styles)
 );

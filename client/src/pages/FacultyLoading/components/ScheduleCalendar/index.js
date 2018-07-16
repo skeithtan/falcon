@@ -12,8 +12,7 @@ class CalendarClassesColumn extends PureComponent {
             classSchedules,
             faculties,
             subjects,
-            onRemoveClassSchedule,
-            onSetFaculty,
+            termSchedule,
         } = this.props;
         return (
             <Grid container spacing={8} direction="column" wrap="nowrap">
@@ -31,10 +30,7 @@ class CalendarClassesColumn extends PureComponent {
                             subject={subjects.find(
                                 subject => subject._id === classSchedule.subject
                             )}
-                            onRemoveClassSchedule={() =>
-                                onRemoveClassSchedule(classSchedule)
-                            }
-                            onSetFaculty={faculty => onSetFaculty(faculty, classSchedule)}
+                            termSchedule={termSchedule}
                         />
                     </Grid>
                 ))}
@@ -67,8 +63,7 @@ class BaseScheduleCalendar extends PureComponent {
             classSchedules,
             faculties,
             subjects,
-            onRemoveClassSchedule,
-            onSetFaculty,
+            termSchedule,
         } = this.props;
         return (
             <Grid container spacing={8} direction="row" wrap="nowrap">
@@ -83,8 +78,7 @@ class BaseScheduleCalendar extends PureComponent {
                             )}
                             faculties={faculties}
                             subjects={subjects}
-                            onRemoveClassSchedule={onRemoveClassSchedule}
-                            onSetFaculty={onSetFaculty}
+                            termSchedule={termSchedule}
                         />
                     </Grid>
                 ))}

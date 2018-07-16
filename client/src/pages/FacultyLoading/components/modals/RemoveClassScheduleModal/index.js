@@ -29,8 +29,8 @@ class BaseRemoveClassScheduleModal extends ConfirmActionModal {
     }
 
     get submitAction() {
-        const {onRemoveClassSchedule} = this.props;
-        return onRemoveClassSchedule;
+        const {onRemoveClassSchedule, termSchedule, classSchedule} = this.props;
+        return () => onRemoveClassSchedule(termSchedule, classSchedule);
     }
 
     get toastSuccessMessage() {

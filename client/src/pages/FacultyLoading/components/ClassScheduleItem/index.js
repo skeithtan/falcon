@@ -27,9 +27,9 @@ class BaseClassScheduleItem extends Component {
             faculty,
             subject,
             classes,
-            onRemoveClassSchedule,
             connectDropTarget,
             isOver,
+            termSchedule
         } = this.props;
 
         let containerClasses = [classes.classScheduleItemContainer];
@@ -71,7 +71,7 @@ class BaseClassScheduleItem extends Component {
                     classSchedule={classSchedule}
                     faculty={faculty}
                     subject={subject}
-                    onRemoveClassSchedule={onRemoveClassSchedule}
+                    termSchedule={termSchedule}
                 />
             </div>
         );
