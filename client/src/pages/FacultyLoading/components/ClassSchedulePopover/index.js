@@ -141,6 +141,11 @@ class BaseClassSchedulePopover extends Component {
         } = this.props;
         const { removeClassScheduleModalIsShowing } = this.state;
 
+        const canMutateClassSchedule = [
+            TERM_STATUSES.INITIALIZING.identifier,
+            TERM_STATUSES.SCHEDULING.identifier,
+        ].includes(termSchedule.status);
+
         return (
             <Popover
                 open={open}
@@ -165,7 +170,9 @@ class BaseClassSchedulePopover extends Component {
                     </Grid>
                 </CardContent>
 
-                <CardActions>{this.renderButtons()}</CardActions>
+                {canMutateClassSchedule && (
+                    <CardActions>{this.renderButtons()}</CardActions>
+                )}
 
                 {this.shouldShowRemoveTermSchedule && (
                     <RemoveClassScheduleModal
