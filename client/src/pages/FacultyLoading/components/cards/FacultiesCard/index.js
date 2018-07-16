@@ -128,6 +128,10 @@ class BaseFacultiesCard extends Component {
         } = this.props;
         const { addFacultyModalIsShowing } = this.state;
 
+        const shouldShowAddFacultiesButton =
+            faculties !== null &&
+            termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
+
         return (
             <Toolbar>
                 <Grid container alignItems="center" justify="space-between">
@@ -135,7 +139,7 @@ class BaseFacultiesCard extends Component {
                         <Typography variant="title">Faculties</Typography>
                     </Grid>
                     <Grid item>
-                        {faculties !== null && (
+                        {shouldShowAddFacultiesButton && (
                             <Tooltip
                                 disableFocusListener
                                 title="Add faculty to term schedule"

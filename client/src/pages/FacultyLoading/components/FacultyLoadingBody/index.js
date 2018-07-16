@@ -7,6 +7,7 @@ import { wrap } from "./wrapper";
 import { ScheduleCard } from "../cards/ScheduleCard";
 import { FacultiesCard } from "../cards/FacultiesCard";
 import { ClassScheduleModal } from "../modals/ClassScheduleModal";
+import { TERM_STATUSES } from "../../../../enums/class.enums";
 
 class BaseFacultyLoadingBody extends Component {
     state = {
@@ -55,6 +56,7 @@ class BaseFacultyLoadingBody extends Component {
 
         const shouldShowAddClassSchedule =
             user.permissions.POPULATE_TERM_SCHEDULES &&
+            activeTermSchedule.status === TERM_STATUSES.INITIALIZING.identifier &&
             faculties !== null &&
             subjects !== null &&
             activeTermSchedule !== null;
