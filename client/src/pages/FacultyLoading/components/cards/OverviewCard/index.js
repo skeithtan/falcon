@@ -6,9 +6,11 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Toolbar from "@material-ui/core/Toolbar";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { termScheduleToString } from "../../../../../utils/faculty_loading.util";
 import { TERM_STATUSES } from "../../../../../enums/class.enums";
+import { wrap } from "./wrapper";
+import { AdvanceTermModal } from "../../modals/AdvanceTermModal";
 
 const steps = Object.values(TERM_STATUSES)
     // Remove archived
@@ -16,31 +18,51 @@ const steps = Object.values(TERM_STATUSES)
         ({ identifier }) => identifier !== TERM_STATUSES.ARCHIVED.identifier
     );
 
-export class OverviewCard extends PureComponent {
+class BaseOverviewCard extends Component {
+    state = {
+        advanceTermModalIsShowing: false,
+    };
+
+    toggleAdvanceTermModal = shouldShow =>
+        this.setState({
+            advanceTermModalIsShowing: shouldShow,
+        });
+
     render() {
-        const { activeTermSchedule } = this.props;
+        const { activeTermSchedule, user } = this.props;
+        const { advanceTermModalIsShowing } = this.state;
+
         const activeStepIndex = steps.findIndex(
             step => step.identifier === activeTermSchedule.status
         );
 
+        const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
+        const canAdvanceTermSchedule =
+            canMutateTermSchedule &&
+            activeTermSchedule.status !== TERM_STATUSES.PUBLISHED.identifier;
+
         return (
             <Card>
                 <Toolbar>
-                    <Grid 
-                        container 
-                        justify="space-between" 
-                        alignItems="center"
-                    >
+                    <Grid container justify="space-between" alignItems="center">
                         <Grid item>
                             <Typography variant="title">
                                 {termScheduleToString(activeTermSchedule)}
                             </Typography>
                         </Grid>
-                        <Grid item>
-                            <Button variant="outlined" color="primary">
-                                Proceed to get faculty availability
-                            </Button>
-                        </Grid>
+                        {canAdvanceTermSchedule && (
+                            <Grid item>
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    onClick={() =>
+                                        this.toggleAdvanceTermModal(true)
+                                    }
+                                >
+                                    Proceed to get faculty availability
+                                </Button>
+                            </Grid>
+                        )}
                     </Grid>
                 </Toolbar>
                 <Stepper activeStep={activeStepIndex}>
@@ -50,7 +72,17 @@ export class OverviewCard extends PureComponent {
                         </Step>
                     ))}
                 </Stepper>
+
+                {canAdvanceTermSchedule && (
+                    <AdvanceTermModal
+                        open={advanceTermModalIsShowing}
+                        onClose={() => this.toggleAdvanceTermModal(false)}
+                        termSchedule={activeTermSchedule}
+                    />
+                )}
             </Card>
         );
     }
 }
+
+export const OverviewCard = wrap(BaseOverviewCard);
