@@ -21,7 +21,13 @@ export const fetchAllTermSchedules = () =>
         query: gql`
         query {
             termSchedules {
-                ${termScheduleFields}
+                current {
+                    ${termScheduleFields}
+                }
+
+                archived {
+                    ${termScheduleFields}
+                }
             }
         }
     `,

@@ -67,7 +67,18 @@ const mutateSubject = () => ({
     },
 });
 
-const termSchedules = () => TermSchedule.find().exec();
+const termSchedules = () => ({
+    current() {
+        // Regex specifies that the status string must be exactly "ARCHIVED"
+        // More information: https://simple-regex.com/build/5b4c4ffbba250
+        return TermSchedule.findOne({
+            status: { $not: /(?:ARCHIVED)$/ },
+        }).exec();
+    },
+    archived() {
+        return TermSchedule.find({ status: "ARCHIVED" }).exec();
+    },
+});
 
 const mutateClasses = termSchedule => ({
     async add({ newClass: newClassInput }) {
@@ -84,7 +95,9 @@ const mutateClasses = termSchedule => ({
         }
 
         if (newClassInput.faculty) {
-            const faculty = await Faculty.findById(newClassInput.faculty).exec();
+            const faculty = await Faculty.findById(
+                newClassInput.faculty
+            ).exec();
             if (!faculty) {
                 throw new DoesNotExistError(
                     `Faculty of ID ${facultyId} does not exist`
@@ -140,7 +153,7 @@ const mutateStatus = termSchedule => ({
 });
 
 const mutateFaculties = termSchedule => ({
-    async add({faculties: newFacultiesId}) {
+    async add({ faculties: newFacultiesId }) {
         const facultyPool = termSchedule.facultyPool;
         const oldFacultiesId = facultyPool.map(facultyResponse =>
             facultyResponse.faculty._id.toString()
@@ -165,12 +178,12 @@ const mutateFaculties = termSchedule => ({
         await termSchedule.save();
         return facultyPool;
     },
-    async remove({_id}) {
+    async remove({ _id }) {
         const facultyResponse = termSchedule.facultyPool.id(_id);
         facultyResponse.remove();
         await termSchedule.save();
         return true;
-    }
+    },
 });
 
 async function mutateTerm(object, { _id }) {

@@ -79,10 +79,7 @@ class BaseFacultyLoadingPage extends Component {
 
     getDefaultTermSchedule = termSchedules => {
         // Find the current term schedule
-        let termScheduleToShow = termSchedules.find(
-            termSchedule =>
-                termSchedule.status !== TERM_STATUSES.ARCHIVED.identifier,
-        );
+        let termScheduleToShow = termSchedules.current;
 
         // If we can't find one that isn't archived
         if (!termScheduleToShow) {
@@ -94,7 +91,7 @@ class BaseFacultyLoadingPage extends Component {
     };
 
     getTermScheduleFromId = (termSchedules, termScheduleId) =>
-        termSchedules.find(termSchedule => termSchedule._id === termScheduleId);
+        [termSchedules.current, ...termSchedules.archived].find(termSchedule => termSchedule._id === termScheduleId);
 
     fetchTermSchedules = () => {
         const {isLoading, termSchedules, fetchData} = this.props;

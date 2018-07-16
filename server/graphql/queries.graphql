@@ -1,7 +1,12 @@
+type TermSchedulesQuery {
+    current: TermSchedule
+    archived: [TermSchedule!]!
+}
+
 extend type Query {
     subjects: [Subject]!
     classes(term: Int!, year: Int!): [Class]!
-    termSchedules: [TermSchedule!]!
+    termSchedules: TermSchedulesQuery
 
     faculties: [Faculty]!
     faculty(_id: ID!): Faculty!

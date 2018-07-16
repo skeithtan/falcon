@@ -7,24 +7,32 @@ import { termScheduleToString } from "../../../../utils/faculty_loading.util";
 import { makeURL } from "../../../../utils/url.util";
 import { wrap } from "./wrapper";
 
-
 class BaseFacultyLoadingHeader extends Component {
     renderTermScheduleSelect = () => {
-        const {termSchedules, activeTermSchedule, classes} = this.props;
+        const { termSchedules, activeTermSchedule, classes } = this.props;
         return (
             <div className={classes.termSchedulesSelectWrapper}>
                 <Paper className={classes.termSchedulesPaper}>
-                    <Select className={classes.termSchedulesSelect} value={activeTermSchedule._id}>
-                        {termSchedules.map(termSchedule => (
-                            <MenuItem
-                                key={termSchedule._id}
-                                value={termSchedule._id}
-                                component={Link}
-                                to={makeURL().facultyLoading().selectTermSchedule(termSchedule._id).mondayThursday().build()}
-                            >
-                                {termScheduleToString(termSchedule)}
-                            </MenuItem>
-                        ))}
+                    <Select
+                        className={classes.termSchedulesSelect}
+                        value={activeTermSchedule._id}
+                    >
+                        {[termSchedules.current, ...termSchedules.archived].map(
+                            termSchedule => (
+                                <MenuItem
+                                    key={termSchedule._id}
+                                    value={termSchedule._id}
+                                    component={Link}
+                                    to={makeURL()
+                                        .facultyLoading()
+                                        .selectTermSchedule(termSchedule._id)
+                                        .mondayThursday()
+                                        .build()}
+                                >
+                                    {termScheduleToString(termSchedule)}
+                                </MenuItem>
+                            )
+                        )}
                     </Select>
                 </Paper>
             </div>
@@ -32,7 +40,7 @@ class BaseFacultyLoadingHeader extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         return (
             <div className={classes.facultyLoadingHeader}>
