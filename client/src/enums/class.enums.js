@@ -26,10 +26,6 @@ export const TERM_STATUSES = {
         identifier: "INITIALIZING",
         name: "Add classes and faculties",
     },
-    TIME_CONSTRAINT_GATHERING: {
-        identifier: "TIME_CONSTRAINT_GATHERING",
-        name: "Get faculty availability",
-    },
     SCHEDULING: {
         identifier: "SCHEDULING",
         name: "Schedule faculty",

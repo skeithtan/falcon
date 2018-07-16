@@ -90,5 +90,5 @@ export const appBarExtension = theme => ({
     minHeight: 56,
     flexGrow: 0,
     boxShadow: "0 0.2rem 0.4rem rgba(0,0,0,0.23)",
-    zIndex: theme.zIndex.appBar
+    zIndex: theme.zIndex.appBar,
 });

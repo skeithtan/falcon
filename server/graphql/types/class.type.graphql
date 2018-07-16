@@ -56,7 +56,6 @@ type FacultyResponse {
 
 enum TermScheduleStatus {
     INITIALIZING,
-    TIME_CONSTRAINT_GATHERING,
     SCHEDULING,
     FEEDBACK_GATHERING,
     PUBLISHED,
