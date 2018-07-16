@@ -9,6 +9,7 @@ import {
     FACULTY_LOADING_PAGE,
     FACULTY_PROFILES_PAGE,
     MY_PROFILE_PAGE,
+    MY_SCHEDULE_PAGE,
     SUBJECTS_PAGE,
     USER_SETTINGS_PAGE,
 } from "../pages";
@@ -69,7 +70,7 @@ export const getPagesForUser = user => {
         USER_SETTINGS_PAGE,
     ];
 
-    const facultyPages = [MY_PROFILE_PAGE];
+    const facultyPages = [MY_PROFILE_PAGE, MY_SCHEDULE_PAGE];
 
     return getObjectForUserType(user, {
         DEAN: administrativePages,
@@ -84,5 +85,5 @@ export const getDefaultPageForUser = user =>
         DEAN: FACULTY_LOADING_PAGE,
         ASSOCIATE_DEAN: FACULTY_LOADING_PAGE,
         CLERK: FACULTY_PROFILES_PAGE,
-        FACULTY: MY_PROFILE_PAGE, // TODO: Replace with MySchedule
+        FACULTY: MY_SCHEDULE_PAGE,
     });

@@ -4,8 +4,14 @@ import { MyProfilePage } from "./MyProfile";
 import { NotFoundPage } from "./NotFound";
 import { SignInPage } from "./SignIn";
 import { SubjectsPage } from "./Subjects";
-import { BLUE_THEME, GREEN_THEME, GREY_THEME, INDIGO_THEME, PINK_THEME, TEAL_THEME } from "./themes";
-
+import {
+    BLUE_THEME,
+    GREEN_THEME,
+    GREY_THEME,
+    INDIGO_THEME,
+    PINK_THEME,
+    TEAL_THEME,
+} from "./themes";
 
 export const SIGN_IN_PAGE = {
     identifier: "SIGN_IN_PAGE",
@@ -46,7 +52,15 @@ export const FACULTY_LOADING_PAGE = {
     component: FacultyLoadingPage,
     name: "Faculty Loading",
     theme: BLUE_THEME,
-    pathParameter: "/:termScheduleId?/:meetingDay?"
+    pathParameter: "/:termScheduleId?/:meetingDay?",
+};
+
+export const MY_SCHEDULE_PAGE = {
+    identifier: "MY_SCHEDULE_PAGE",
+    path: "my-schedule",
+    component: null,
+    name: "My Schedule",
+    theme: BLUE_THEME,
 };
 
 export const USER_SETTINGS_PAGE = {
@@ -73,10 +87,7 @@ export const PAGES = [
     MY_PROFILE_PAGE,
 ];
 
-export const GENERAL_PAGES = [
-    NOT_FOUND_PAGE,
-    SIGN_IN_PAGE,
-];
+export const GENERAL_PAGES = [NOT_FOUND_PAGE, SIGN_IN_PAGE];
 
 export function getPageFromPath(candidatePath) {
     const page = PAGES.find(page => page.path === candidatePath);
