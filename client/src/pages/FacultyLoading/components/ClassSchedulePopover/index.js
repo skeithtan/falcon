@@ -25,15 +25,19 @@ class BaseClassSchedulePopover extends Component {
         });
 
     renderButtons = () => (
-        <Fragment>
-            <Button color="primary">Update class</Button>
-            <Button
-                color="primary"
-                onClick={() => this.toggleRemoveClassScheduleModal(true)}
-            >
-                Remove class
-            </Button>
-        </Fragment>
+        <Grid container justify="space-between">
+            <Grid item>
+                <Button color="primary">Update class</Button>
+            </Grid>
+            <Grid item>
+                <Button
+                    color="primary"
+                    onClick={() => this.toggleRemoveClassScheduleModal(true)}
+                >
+                    Remove class
+                </Button>
+            </Grid>
+        </Grid>
     );
 
     renderOverview = () => {
@@ -51,7 +55,7 @@ class BaseClassSchedulePopover extends Component {
             <Fragment>
                 <Grid
                     container
-                    spacing={16}
+                    spacing={8}
                     direction="row"
                     justify="space-between"
                     wrap="nowrap"
