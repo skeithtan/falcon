@@ -79,6 +79,7 @@ class BaseFacultiesCard extends Component {
                     <FacultyListItem
                         facultyResponse={facultyResponse}
                         faculty={this.getFacultyFromId(facultyResponse.faculty)}
+                        termSchedule={this.props.termSchedule}
                         canSchedule={this.canSchedule}
                     />
                 </Grid>
