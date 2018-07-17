@@ -7,7 +7,7 @@ import { ValidationError } from "../errors/validation.error";
 
 const termScheduleToFacultyFormat = (termSchedule, faculty) => {
     const facultyResponse = termSchedule.facultyPool.find(
-        facultyResponse => facultyResponse.faculty === faculty._id
+        facultyResponse => String(facultyResponse.faculty) === String(faculty._id)
     );
     const classes = termSchedule.classes
         // Remove all classes without faculties
@@ -81,6 +81,7 @@ const setFacultyAvailability = async (object, { availability }, context) => {
 
     facultyResponse.availability = availability;
     await currentTermSchedule.save();
+
     return true;
 };
 
