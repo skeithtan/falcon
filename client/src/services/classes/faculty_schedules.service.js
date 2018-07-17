@@ -9,11 +9,11 @@ const fields = `
     status
     involved
     feedback {
+        submitted
         status
         rejectionReason
     }
     availability {
-        submitted
         M_TH
         T_F
     }
