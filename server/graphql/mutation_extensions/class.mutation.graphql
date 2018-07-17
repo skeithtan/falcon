@@ -48,5 +48,7 @@ extend type Mutation {
     subject: SubjectMutations!
     termSchedule(_id: ID!): TermMutations!
     addTermSchedule(startYear: Int!, term: Term!): TermSchedule!
-    setFacultyAvailability(availability: JSON!, termScheduleId: ID!): Boolean!
+
+    setFacultyAvailability(M_TH: [String!]!, T_F: [String!]!): Boolean!
+    setFacultyFeedback(status: FacultyFeedbackStatus!, rejectionReason: String): Boolean!
 }
