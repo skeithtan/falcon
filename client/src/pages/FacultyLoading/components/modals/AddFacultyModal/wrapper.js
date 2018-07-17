@@ -16,11 +16,7 @@ const mapDispatchToProps = dispatch => ({
         return addFacultiesToTerm(termSchedule._id, newFaculties)
             .then(response => response.data.termSchedule.faculties.add)
             .then(newFacultyResponses => {
-                newTermSchedule.facultyPool = [
-                    ...termSchedule.facultyPool,
-                    ...newFacultyResponses,
-                ];
-
+                newTermSchedule.facultyPool = newFacultyResponses;
                 dispatch(termScheduleIsUpdated(newTermSchedule));
                 return newFacultyResponses;
             });
