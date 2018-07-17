@@ -24,8 +24,8 @@ class BaseInitializingState extends Component {
         if (availability) {
             this.setState({
                 form: {
-                    M_TH: availability.M_TH,
-                    T_F: availability.T_F,
+                    M_TH: [...availability.M_TH],
+                    T_F: [...availability.T_F],
                 },
             });
         }
