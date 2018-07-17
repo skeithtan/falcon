@@ -35,18 +35,22 @@ export function facultyLoading(state = initialState, action) {
         case FACULTY_LOADING_TERM_SCHEDULE_IS_ADDED:
             return {
                 ...state,
-                termSchedules: [...state.termSchedules, action.termSchedule],
+                termSchedules: {
+                    current: action.termSchedules,
+                    // Move previously current to archived
+                    archived: [
+                        state.termSchedules.current,
+                        ...state.termSchedules.archived,
+                    ],
+                },
             };
         case FACULTY_LOADING_TERM_SCHEDULE_IS_UPDATED:
             return {
                 ...state,
-                termSchedules: state.termSchedules.map(termSchedule => {
-                    if (termSchedule._id === action.termSchedule._id) {
-                        return action.termSchedule;
-                    }
-
-                    return termSchedule;
-                }),
+                termSchedules: {
+                    current: action.termSchedule,
+                    archived: [...state.termSchedules.archived],
+                },
             };
         default:
             return state;
