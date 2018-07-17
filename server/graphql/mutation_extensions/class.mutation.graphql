@@ -17,6 +17,11 @@ input ClassInput {
     faculty: ID
 }
 
+input AvailabilityInput {
+    M_TH: [String!]!
+    T_F: [String!]!
+}
+
 type SubjectMutations {
     add(newSubject: SubjectInput!): Subject!
     update(_id: ID!, newSubject: SubjectInput!): Subject!
@@ -49,6 +54,6 @@ extend type Mutation {
     termSchedule(_id: ID!): TermMutations!
     addTermSchedule(startYear: Int!, term: Term!): TermSchedule!
 
-    setFacultyAvailability(M_TH: [String!]!, T_F: [String!]!): Boolean!
+    setFacultyAvailability(availability: AvailabilityInput!): Boolean!
     setFacultyFeedback(status: FacultyFeedbackStatus!, rejectionReason: String): Boolean!
 }

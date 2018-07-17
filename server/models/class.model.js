@@ -88,10 +88,6 @@ const FacultyResponseSchema = new Schema({
     availability: {
         required: false,
         type: {
-            submitted: {
-                type: Date,
-                required: true,
-            },
             M_TH: [MeetingHours],
             T_F: [MeetingHours],
         },
@@ -99,6 +95,10 @@ const FacultyResponseSchema = new Schema({
     feedback: {
         required: false,
         type: {
+            submitted: {
+                type: Date,
+                required: true,
+            },
             status: {
                 type: String,
                 enum: FACULTY_FEEDBACK,

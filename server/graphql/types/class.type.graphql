@@ -44,12 +44,12 @@ enum FacultyFeedbackStatus {
 }
 
 type FacultyFeedback {
+    submitted: String!
     status: FacultyFeedbackStatus!
     rejectionReason: String
 }
 
 type FacultyAvailability {
-    submitted: String!
     M_TH: [String!]
     T_F: [String!]
 }

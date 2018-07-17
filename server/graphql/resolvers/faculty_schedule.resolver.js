@@ -3,6 +3,7 @@ import { FACULTY } from "../../models/user.model";
 import { getUserFromContext } from "../../utils/user_from_context";
 import { Faculty } from "../../models/faculty.model";
 import { TermSchedule } from "../../models/class.model";
+import { ValidationError } from "../errors/validation.error";
 
 const termScheduleToFacultyFormat = (termSchedule, faculty) => {
     const facultyResponse = termSchedule.facultyPool.find(
@@ -56,6 +57,70 @@ const mySchedules = async (object, args, context) => {
     };
 };
 
+const setFacultyAvailability = async (object, { availability }, context) => {
+    const user = await getUserFromContext(context);
+    const faculty = await Faculty.findOne({ user: user._id }).exec();
+
+    const currentTermSchedule = await TermSchedule.findOne({
+        status: { $not: /(?:ARCHIVED)$/ },
+    }).exec();
+
+    if (!currentTermSchedule) {
+        throw new ValidationError("No current term schedule found");
+    }
+
+    const facultyResponse = currentTermSchedule.facultyPool.find(
+        response => response.faculty.toString() === faculty._id.toString()
+    );
+
+    if (!facultyResponse) {
+        throw new ValidationError(
+            "Current faculty is not involved in current term."
+        );
+    }
+
+    facultyResponse.availability = availability;
+    await currentTermSchedule.save();
+    return true;
+};
+
+const setFacultyFeedback = async (
+    object,
+    { status, rejectionReason },
+    context
+) => {
+    const user = await getUserFromContext(context);
+    const faculty = await Faculty.findOne({ user: user._id }).exec();
+
+    const currentTermSchedule = await TermSchedule.findOne({
+        status: { $not: /(?:ARCHIVED)$/ },
+    }).exec();
+
+    if (!currentTermSchedule) {
+        throw new ValidationError("No current term schedule found");
+    }
+
+    const facultyResponse = currentTermSchedule.facultyPool.find(
+        response => response.faculty.toString() === faculty._id.toString()
+    );
+
+    if (!facultyResponse) {
+        throw new ValidationError(
+            "Current faculty is not involved in current term."
+        );
+    }
+
+    facultyResponse.feedback.submitted = Date.now();
+    facultyResponse.feedback.status = status;
+
+    if (status === "REJECTED") {
+        facultyResponse.feedback.rejectionReason = rejectionReason;
+    }
+
+    await currentTermSchedule.save();
+    return true;
+};
+
 export const queryResolvers = {
     mySchedules: limitAccess(mySchedules, {
         allowed: FACULTY,
@@ -63,4 +128,13 @@ export const queryResolvers = {
     }),
 };
 
-export const mutationResolvers = {};
+export const mutationResolvers = {
+    setFacultyAvailability: limitAccess(setFacultyAvailability, {
+        allowed: FACULTY,
+        action: "Set current faculty availability",
+    }),
+    setFacultyFeedback: limitAccess(setFacultyFeedback, {
+        allowed: FACULTY,
+        action: "Set current faculty feedback",
+    }),
+};
