@@ -7,7 +7,7 @@ export const styles = theme => ({
         color: theme.palette.grey["200"],
 
         "&.checked": {
-            color: theme.palette.common.white,
+            color: theme.palette.primary.light,
         },
     },
     availabilitySquare: {
@@ -17,11 +17,11 @@ export const styles = theme => ({
         cursor: "pointer",
 
         "&.checked": {
-            background: theme.palette.primary.light,
+            background: lighten(theme.palette.primary.light, 0.9),
         },
 
         "&:hover": {
-            background: lighten(theme.palette.primary.light, 0.2),
+            background: lighten(theme.palette.primary.light, 0.8),
         },
     },
 });
