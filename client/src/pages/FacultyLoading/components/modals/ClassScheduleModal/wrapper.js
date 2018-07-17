@@ -3,8 +3,13 @@ import { withStyles } from "@material-ui/core/styles";
 import { genericModalStyle } from "../../../../../components/styles";
 import { connect } from "react-redux";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
-import { addClassSchedule } from "../../../../../services/classes/classes.service";
+import { addClassSchedule, updateClassSchedule } from "../../../../../services/classes/classes.service";
 import { termScheduleIsUpdated } from "../../../../../redux/actions/faculty_loading.actions";
+
+const mapStateToProps = state => ({
+    faculties: state.faculty.faculties,
+    subjects: state.subject.subjects,
+});
 
 const mapDispatchToProps = dispatch => ({
     showToast(message) {
@@ -14,25 +19,40 @@ const mapDispatchToProps = dispatch => ({
     submitAddClassSchedule(form, termSchedule) {
         return addClassSchedule(termSchedule._id, form)
             .then(result => result.data.termSchedule.classes.add)
-            .then(newClass => {
+            .then(newClassSchedule => {
                 const newTermSchedule = {
                     ...termSchedule,
-                    classes: [...termSchedule.classes, newClass]
+                    classes: [...termSchedule.classes, newClassSchedule],
                 };
 
                 dispatch(termScheduleIsUpdated(newTermSchedule));
-                return newClass;
+                return newClassSchedule;
             });
     },
 
-    submitUpdateClassSchedule(form) {
-        dispatch();
+    submitUpdateClassSchedule(form, termSchedule, oldClassSchedule) {
+        return updateClassSchedule(termSchedule._id, oldClassSchedule._id, form)
+            .then(result => result.data.termSchedule.classes.update)
+            .then(newClassSchedule => {
+                const newTermSchedule = {
+                    ...termSchedule,
+                    classes: termSchedule.classes.map(classSchedule => {
+                        if (classSchedule._id === oldClassSchedule._id) {
+                            return newClassSchedule;
+                        }
+                        return classSchedule;
+                    })
+                };
+
+                dispatch(termScheduleIsUpdated(newTermSchedule));
+                return newClassSchedule;
+            });
     },
 });
 
 export const wrap = compose(
     connect(
-        null,
+        mapStateToProps,
         mapDispatchToProps
     ),
     withStyles(genericModalStyle)

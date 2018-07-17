@@ -105,8 +105,6 @@ class BaseFacultyLoadingBody extends Component {
                     <ClassScheduleModal
                         action="add"
                         open={addClassScheduleModalIsShowing}
-                        subjects={subjects}
-                        faculties={faculties}
                         termSchedule={activeTermSchedule}
                         onClose={() => this.toggleAddClassScheduleModal(false)}
                     />

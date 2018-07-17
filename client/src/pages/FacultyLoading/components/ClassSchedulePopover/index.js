@@ -17,10 +17,12 @@ import {
 import { wrap } from "./wrapper";
 import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
 import { makeURL } from "../../../../utils/url.util";
+import { ClassScheduleModal } from "../modals/ClassScheduleModal";
 
 class BaseClassSchedulePopover extends Component {
     state = {
         removeClassScheduleModalIsShowing: false,
+        updateClassScheduleModalIsShowing: false,
     };
 
     toggleRemoveClassScheduleModal = shouldShow =>
@@ -28,10 +30,20 @@ class BaseClassSchedulePopover extends Component {
             removeClassScheduleModalIsShowing: shouldShow,
         });
 
+    toggleUpdateClassScheduleModal = shouldShow =>
+        this.setState({
+            updateClassScheduleModalIsShowing: shouldShow,
+        });
+
     renderButtons = () => (
         <Grid container justify="space-between" alignItems="flex-end">
             <Grid item>
-                <Button color="primary">Update class</Button>
+                <Button
+                    color="primary"
+                    onClick={() => this.toggleUpdateClassScheduleModal(true)}
+                >
+                    Update class
+                </Button>
             </Grid>
             {this.shouldShowRemoveTermSchedule && (
                 <Grid item>
@@ -111,7 +123,12 @@ class BaseClassSchedulePopover extends Component {
     };
 
     renderFaculty = () => {
-        const { faculty, onRemoveFacultyFromClassSchedule, termSchedule, classSchedule } = this.props;
+        const {
+            faculty,
+            onRemoveFacultyFromClassSchedule,
+            termSchedule,
+            classSchedule,
+        } = this.props;
 
         if (!faculty) {
             return (
@@ -126,7 +143,12 @@ class BaseClassSchedulePopover extends Component {
                 clickable
                 faculty={faculty}
                 showDeleteButton={this.canMutateClassSchedule}
-                handleDelete={() => onRemoveFacultyFromClassSchedule(termSchedule, classSchedule)}
+                handleDelete={() =>
+                    onRemoveFacultyFromClassSchedule(
+                        termSchedule,
+                        classSchedule
+                    )
+                }
             />
         );
     };
@@ -154,17 +176,18 @@ class BaseClassSchedulePopover extends Component {
             subject,
             termSchedule,
         } = this.props;
-        const { removeClassScheduleModalIsShowing } = this.state;
+
+        const {
+            removeClassScheduleModalIsShowing,
+            updateClassScheduleModalIsShowing,
+        } = this.state;
 
         return (
             <Popover
                 open={open}
                 onClose={onClose}
                 anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
             >
                 <CardContent className={classes.popoverContainer}>
                     <Grid
@@ -193,6 +216,18 @@ class BaseClassSchedulePopover extends Component {
                         classSchedule={classSchedule}
                         termSchedule={termSchedule}
                         subject={subject}
+                    />
+                )}
+
+                {this.canMutateClassSchedule && (
+                    <ClassScheduleModal
+                        action="update"
+                        open={updateClassScheduleModalIsShowing}
+                        onClose={() =>
+                            this.toggleUpdateClassScheduleModal(false)
+                        }
+                        classSchedule={classSchedule}
+                        termSchedule={termSchedule}
                     />
                 )}
             </Popover>

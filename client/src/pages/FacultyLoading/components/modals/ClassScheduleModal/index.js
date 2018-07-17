@@ -54,13 +54,31 @@ class BaseClassScheduleModal extends ModalFormComponent {
         };
     }
 
+    mapPropsToForm = ({ classSchedule }) => ({
+        subject: classSchedule.subject,
+        meetingDays: classSchedule.meetingDays,
+        meetingHours: classSchedule.meetingHours,
+        room: classSchedule.room,
+        enrollmentCap: classSchedule.enrollmentCap,
+        course: classSchedule.course,
+        section: classSchedule.section,
+    });
+
     get submitAddAction() {
         const { submitAddClassSchedule, termSchedule } = this.props;
         return () => submitAddClassSchedule(this.state.form, termSchedule);
     }
 
     get submitUpdateAction() {
-        // TODO
+        const {
+            submitUpdateClassSchedule,
+            termSchedule,
+            classSchedule,
+        } = this.props;
+        const { form } = this.state;
+
+        return () =>
+            submitUpdateClassSchedule(form, termSchedule, classSchedule);
     }
 
     get buttonName() {
@@ -93,6 +111,7 @@ class BaseClassScheduleModal extends ModalFormComponent {
             form: { subject: selectedSubject },
             isSubmitting,
         } = this.state;
+
         const { subjects, classes } = this.props;
 
         return (
