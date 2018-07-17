@@ -10,7 +10,6 @@ import { TimeAvailabilityCards } from "../TimeAvailabilityCards";
 class BaseInitializingState extends Component {
     state = {
         timeAvailabilityModalIsShowing: false,
-        formIsDirty: false,
         form: {
             M_TH: [],
             T_F: [],
@@ -21,6 +20,7 @@ class BaseInitializingState extends Component {
         const {
             termSchedule: { availability },
         } = this.props;
+
         if (availability) {
             this.setState({
                 form: {
@@ -30,8 +30,6 @@ class BaseInitializingState extends Component {
             });
         }
     }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {}
 
     toggleTimeAvailabilityModal = shouldShow =>
         this.setState({
@@ -79,10 +77,15 @@ class BaseInitializingState extends Component {
     renderActions = () => {
         const { termSchedule } = this.props;
 
-        const message =
-            termSchedule.availability === null
-                ? "You have not yet set your time availability for this term."
-                : "";
+        const pendingAvailability = termSchedule.availability === null;
+
+        const message = pendingAvailability
+            ? "You have not yet set your time availability for this term."
+            : "You have already submitted your time availability.";
+
+        const buttonName = pendingAvailability
+            ? "Submit time availability"
+            : "Update time availability";
 
         return (
             <Grid
@@ -98,7 +101,7 @@ class BaseInitializingState extends Component {
 
                 <Grid item>
                     <Button variant="outlined" color="primary">
-                        Submit time availability
+                        {buttonName}
                     </Button>
                 </Grid>
             </Grid>
@@ -106,7 +109,6 @@ class BaseInitializingState extends Component {
     };
 
     render() {
-        const { termSchedule, classes } = this.props;
         const { form } = this.state;
         return (
             <Grid
