@@ -71,8 +71,23 @@ enum TermScheduleStatus {
 type TermSchedule {
     _id: ID!
     startYear: Int!
-    term: Term
+    term: Term!
     facultyPool: [FacultyResponse!]!
     classes: [Class!]!
     status: TermScheduleStatus!
+}
+
+type FacultyTermSchedule {
+    status: TermScheduleStatus!
+    startYear: Int!
+    term: Term!
+    schedule: JSON
+    involved: Boolean!
+    availability: FacultyAvailability
+    feedback: FacultyFeedback
+}
+
+type MySchedule {
+    current: FacultyTermSchedule
+    archived: [FacultyTermSchedule!]!
 }
