@@ -22,8 +22,9 @@ const fields = `
     }
 `;
 
-export const fetchAllMySchedules = () => client.query({
-    query: gql`
+export const fetchAllMySchedules = () =>
+    client.query({
+        query: gql`
     query {
         mySchedules {
             current {
@@ -34,5 +35,36 @@ export const fetchAllMySchedules = () => client.query({
             }
         }
     }
-    `
-});
+    `,
+    });
+
+export const setFacultyAvailability = availability =>
+    client.mutate({
+        mutation: gql`
+            mutation($availability: AvailabilityInput!) {
+                setFacultyAvailability(availability: $availability)
+            }
+        `,
+        variables: {
+            availability,
+        },
+    });
+
+export const setFacultyFeedback = (status, rejectionReason) =>
+    client.mutate({
+        mutation: gql`
+            mutation(
+                $status: FacultyFeedbackStatus!
+                $rejectionReason: String
+            ) {
+                setFacultyFeedback(
+                    status: $status
+                    rejectionReason: $rejectionReason
+                )
+            }
+        `,
+        variables: {
+            status,
+            rejectionReason,
+        },
+    });

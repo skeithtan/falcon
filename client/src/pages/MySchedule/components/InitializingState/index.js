@@ -6,10 +6,11 @@ import Typography from "@material-ui/core/Typography";
 import { wrap } from "./wrapper";
 import { termScheduleToString } from "../../../../utils/faculty_loading.util";
 import { TimeAvailabilityCards } from "../TimeAvailabilityCards";
+import { ConfirmSubmitAvailabilityModal } from "../modals/ConfirmSubmitAvailabilityModal";
 
 class BaseInitializingState extends Component {
     state = {
-        timeAvailabilityModalIsShowing: false,
+        confirmSubmitAvailabilityModalIsShowing: false,
         form: {
             M_TH: [],
             T_F: [],
@@ -31,9 +32,9 @@ class BaseInitializingState extends Component {
         }
     }
 
-    toggleTimeAvailabilityModal = shouldShow =>
+    toggleConfirmSubmitAvailabilityModal = shouldShow =>
         this.setState({
-            timeAvailabilityModalIsShowing: shouldShow,
+            confirmSubmitAvailabilityModalIsShowing: shouldShow,
         });
 
     toggleAvailability(meetingDay, meetingHour) {
@@ -100,7 +101,13 @@ class BaseInitializingState extends Component {
                 </Grid>
 
                 <Grid item>
-                    <Button variant="outlined" color="primary">
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() =>
+                            this.toggleConfirmSubmitAvailabilityModal(true)
+                        }
+                    >
                         {buttonName}
                     </Button>
                 </Grid>
@@ -109,7 +116,10 @@ class BaseInitializingState extends Component {
     };
 
     render() {
-        const { form } = this.state;
+        const {
+            form,
+            confirmSubmitAvailabilityModalIsShowing,
+        } = this.state;
         return (
             <Grid
                 spacing={16}
@@ -128,6 +138,14 @@ class BaseInitializingState extends Component {
                         }
                     />
                 </Grid>
+
+                <ConfirmSubmitAvailabilityModal
+                    open={confirmSubmitAvailabilityModalIsShowing}
+                    onClose={() =>
+                        this.toggleConfirmSubmitAvailabilityModal(false)
+                    }
+                    availability={form}
+                />
             </Grid>
         );
     }

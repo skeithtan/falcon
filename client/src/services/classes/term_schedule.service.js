@@ -48,22 +48,6 @@ export const addTermSchedule = (startYear, term) =>
         },
     });
 
-export const setFacultyAvailability = (availability, termScheduleId) =>
-    client.mutate({
-        mutation: gql`
-            mutation($availability: JSON!, $termScheduleId: ID!) {
-                setFacultyAvailability(
-                    availaibility: $availability
-                    termScheduleId: $termScheduleId
-                )
-            }
-        `,
-        variables: {
-            availability,
-            termScheduleId,
-        },
-    });
-
 export const addFacultiesToPool = (termScheduleId, faculties) =>
     client.mutate({
         mutation: gql`
