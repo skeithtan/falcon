@@ -51,7 +51,6 @@ class BaseClassScheduleModal extends ModalFormComponent {
             enrollmentCap: "",
             course: "",
             section: "",
-            faculty: "",
         };
     }
 
@@ -356,15 +355,6 @@ class BaseClassScheduleModal extends ModalFormComponent {
                                     {fieldErrors.section[0]}
                                 </FormHelperText>
                             )}
-                        </FormControl>
-                    </Grid>
-                    <Grid item>
-                        <FormControl fullWidth>
-                            <InputLabel>Assigned Faculty</InputLabel>
-                            {this.renderSelectFaculty()}
-                            <FormHelperText>
-                                You can also assign the faculty later.
-                            </FormHelperText>
                         </FormControl>
                     </Grid>
                 </Grid>
