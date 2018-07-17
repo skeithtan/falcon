@@ -3,7 +3,11 @@ import { client } from "../../client";
 
 export const fields = `
     faculty
-    availability
+    availability {
+        submitted
+        M_TH
+        T_F
+    } 
     feedback {
         status
         rejectionReason
