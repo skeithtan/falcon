@@ -4,9 +4,9 @@ type Name {
 }
 
 enum Authorization {
-    DEAN,
-    ASSOCIATE_DEAN,
-    FACULTY,
+    DEAN
+    ASSOCIATE_DEAN
+    FACULTY
     CLERK
 }
 

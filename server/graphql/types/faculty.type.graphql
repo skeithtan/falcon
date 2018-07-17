@@ -1,13 +1,13 @@
 enum PresentationCategory {
-    INSTITUTIONAL,
-    REGIONAL,
-    NATIONAL,
+    INSTITUTIONAL
+    REGIONAL
+    NATIONAL
     INTERNATIONAL
 }
 
 enum PresentationMedium {
-    PAPER,
-    POSTER,
+    PAPER
+    POSTER
     RESEARCH
 }
 
@@ -24,9 +24,9 @@ type Presentation {
 }
 
 enum RecognitionBasis {
-    RESEARCH,
-    SCHOLARSHIP,
-    EXTENSION_WORK,
+    RESEARCH
+    SCHOLARSHIP
+    EXTENSION_WORK
     INSTRUCTION
 }
 
@@ -39,16 +39,16 @@ type Recognition {
 }
 
 enum InstructionalMaterialMedium {
-    PRINT,
-    MODULE,
-    VIDEO,
-    SLIDE,
-    DIGITAL_FILE,
+    PRINT
+    MODULE
+    VIDEO
+    SLIDE
+    DIGITAL_FILE
     AUDIO
 }
 
 enum InstructionalMaterialAudience {
-    STUDENT,
+    STUDENT
     TEACHER
 }
 
@@ -69,9 +69,9 @@ type ExtensionWork {
 }
 
 enum DegreeLevel {
-    ASSOCIATE,
-    BACHELOR,
-    MASTER,
+    ASSOCIATE
+    BACHELOR
+    MASTER
     DOCTORATE
 }
 
@@ -83,16 +83,16 @@ type Degree {
 }
 
 enum Sex {
-    M,
+    M
     F
 }
 
 enum Employment {
-    FULL_TIME_PERMANENT,
-    FULL_TIME_TEMPORARY,
-    PART_TIME,
-    ADJUNCT,
-    ON_LEAVE,
+    FULL_TIME_PERMANENT
+    FULL_TIME_TEMPORARY
+    PART_TIME
+    ADJUNCT
+    ON_LEAVE
     TERMINATED
 }
 

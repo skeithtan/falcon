@@ -16,15 +16,6 @@ import { TERM_STATUSES } from "../../models/enums/class.enums";
 import { getUserFromContext } from "../../utils/user_from_context";
 import { Faculty } from "../../models/faculty.model";
 
-const DEFAULT_DAY_AVAILABILITY = {
-    "7-9": false,
-    "9-11": false,
-    "11-1": false,
-    "1-3": false,
-    "3-5": false,
-    "5-7": false,
-};
-
 const subjects = () => Subject.find();
 
 const mutateSubject = () => ({
@@ -166,10 +157,7 @@ const mutateFaculties = termSchedule => ({
                 facultyPool.push(
                     facultyPool.create({
                         faculty: facultyId,
-                        availability: {
-                            M_TH: { ...DEFAULT_DAY_AVAILABILITY },
-                            T_F: { ...DEFAULT_DAY_AVAILABILITY },
-                        },
+                        availability: null,
                         feedback: null,
                     })
                 )

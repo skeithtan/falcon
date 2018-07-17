@@ -8,15 +8,15 @@ type Subject {
 }
 
 enum SubjectCategory {
-    PEDAGOGICAL,
-    GENERAL,
-    SPECIALIZATION,
-    ELECTIVE,
+    PEDAGOGICAL
+    GENERAL
+    SPECIALIZATION
+    ELECTIVE
     PROFESSIONAL
 }
 
 enum MeetingDay {
-    M_TH,
+    M_TH
     T_F
 }
 
@@ -33,40 +33,46 @@ type Class {
 }
 
 enum Term {
-    FIRST,
-    SECOND,
+    FIRST
+    SECOND
     THIRD
 }
 
 enum FacultyFeedbackStatus {
-    ACCEPTED,
+    ACCEPTED
     REJECTED
 }
 
 type FacultyFeedback {
-    status: FacultyFeedbackStatus,
+    status: FacultyFeedbackStatus!
     rejectionReason: String
+}
+
+type FacultyAvailability {
+    submitted: String!
+    M_TH: [String!]
+    T_F: [String!]
 }
 
 type FacultyResponse {
     faculty: ID!
-    availability: JSON!,
-    feedback: FacultyFeedback!
+    availability: FacultyAvailability
+    feedback: FacultyFeedback
 }
 
 enum TermScheduleStatus {
-    INITIALIZING,
-    SCHEDULING,
-    FEEDBACK_GATHERING,
-    PUBLISHED,
+    INITIALIZING
+    SCHEDULING
+    FEEDBACK_GATHERING
+    PUBLISHED
     ARCHIVED
 }
 
 type TermSchedule {
     _id: ID!
     startYear: Int!
-    term: Term,
-    facultyPool: [FacultyResponse!]!,
-    classes: [Class!]!,
+    term: Term
+    facultyPool: [FacultyResponse!]!
+    classes: [Class!]!
     status: TermScheduleStatus!
 }

@@ -1,6 +1,6 @@
 enum ChangeRequestStatus {
-    PENDING,
-    APPROVED,
+    PENDING
+    APPROVED
     REJECTED
 }
 

@@ -3,7 +3,6 @@ import React, { Component, Fragment } from "react";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../components/states/EmptyState";
 import { ErrorState } from "../../components/states/ErrorState";
-import { TERM_STATUSES } from "../../enums/class.enums";
 import {
     formatAcademicYear,
     termScheduleToString,

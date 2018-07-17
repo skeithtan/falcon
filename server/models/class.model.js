@@ -73,12 +73,10 @@ const ClassSchema = new Schema({
     },
 });
 
-const DayAvailability = {
-    "7-9": Boolean,
-    "9-11": Boolean,
-    "11-1": Boolean,
-    "1-3": Boolean,
-    "3-5": Boolean,
+const MeetingHours = {
+    type: String,
+    required: true,
+    enum: MEETING_HOURS,
 };
 
 const FacultyResponseSchema = new Schema({
@@ -88,8 +86,13 @@ const FacultyResponseSchema = new Schema({
         required: true,
     },
     availability: {
-        M_TH: DayAvailability,
-        T_F: DayAvailability,
+        required: false,
+        submitted: {
+            type: Date,
+            required: true,
+        },
+        M_TH: [MeetingHours],
+        T_F: [MeetingHours],
     },
     feedback: {
         required: false,
