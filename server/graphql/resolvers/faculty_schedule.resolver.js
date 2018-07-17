@@ -15,6 +15,7 @@ const termScheduleToFacultyFormat = (termSchedule, faculty) => {
         .filter(assignedFaculty => assignedFaculty._id === faculty._id);
 
     return {
+        _id: termSchedule._id,
         status: termSchedule.status,
         startYear: termSchedule.startYear,
         term: termSchedule.term,

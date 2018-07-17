@@ -78,6 +78,7 @@ type TermSchedule {
 }
 
 type FacultyTermSchedule {
+    _id: ID!
     status: TermScheduleStatus!
     startYear: Int!
     term: Term!
