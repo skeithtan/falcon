@@ -25,7 +25,14 @@ const fields = `
 export const fetchAllMySchedules = () => client.query({
     query: gql`
     query {
-        mySchedule
+        mySchedules {
+            current {
+                ${fields}
+            }
+            archived {
+                ${fields}
+            }
+        }
     }
     `
-})
+});

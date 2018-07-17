@@ -12,6 +12,7 @@ import {
     PINK_THEME,
     TEAL_THEME,
 } from "./themes";
+import { MySchedulePage } from "./MySchedule";
 
 export const SIGN_IN_PAGE = {
     identifier: "SIGN_IN_PAGE",
@@ -58,9 +59,10 @@ export const FACULTY_LOADING_PAGE = {
 export const MY_SCHEDULE_PAGE = {
     identifier: "MY_SCHEDULE_PAGE",
     path: "my-schedule",
-    component: null,
+    component: MySchedulePage,
     name: "My Schedule",
     theme: BLUE_THEME,
+    pathParameter: "/:termScheduleId?",
 };
 
 export const USER_SETTINGS_PAGE = {
@@ -85,6 +87,7 @@ export const PAGES = [
     SUBJECTS_PAGE,
     USER_SETTINGS_PAGE,
     MY_PROFILE_PAGE,
+    MY_SCHEDULE_PAGE,
 ];
 
 export const GENERAL_PAGES = [NOT_FOUND_PAGE, SIGN_IN_PAGE];

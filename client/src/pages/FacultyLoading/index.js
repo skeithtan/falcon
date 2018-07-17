@@ -34,7 +34,7 @@ class BaseFacultyLoadingPage extends Component {
         this.handlePath();
     }
 
-    redirectToDefaultTermSchedule = termSchedules => {
+    redirectToDefaultTermSchedule = () => {
         const termScheduleToShow = this.getDefaultTermSchedule();
 
         this.props.history.replace(

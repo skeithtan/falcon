@@ -3,6 +3,7 @@ import {
     MY_PROFILE_PAGE,
     SUBJECTS_PAGE,
     FACULTY_LOADING_PAGE,
+    MY_SCHEDULE_PAGE,
 } from "../pages";
 import {
     CHANGE_REQUESTS_TAB,
@@ -67,6 +68,11 @@ export const makeURL = () => {
                     makeEndpoint(INSTRUCTIONAL_MATERIALS_TAB.path),
                 extensionWorks: () => makeEndpoint(EXTENSION_WORKS_TAB.path),
                 changeRequests: () => makeEndpoint(CHANGE_REQUESTS_TAB.path),
+            }),
+
+        mySchedule: () =>
+            makeEndpoint(MY_SCHEDULE_PAGE.path, {
+                selectTermSchedule: termScheduleId => makeEndpoint(termScheduleId),
             }),
     });
 };
