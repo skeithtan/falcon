@@ -45,7 +45,7 @@ const getArchivedSchedule = async faculty => {
     );
 };
 
-const mySchedule = async (object, args, context) => {
+const mySchedules = async (object, args, context) => {
     const user = await getUserFromContext(context);
     const faculty = await Faculty.findOne({ user: user._id }).exec();
 
@@ -56,7 +56,7 @@ const mySchedule = async (object, args, context) => {
 };
 
 export const queryResolvers = {
-    mySchedule: limitAccess(mySchedule, {
+    mySchedules: limitAccess(mySchedules, {
         allowed: FACULTY,
         action: "View my schedule",
     }),

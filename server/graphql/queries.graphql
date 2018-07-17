@@ -14,6 +14,6 @@ extend type Query {
 
     currentUser: User
     myProfile: Faculty!
-    mySchedule: MySchedule!
+    mySchedules: MySchedule!
     myChangeRequests(status: ChangeRequestStatus): [JSON!]!
 }
