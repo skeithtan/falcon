@@ -81,7 +81,7 @@ type FacultyTermSchedule {
     status: TermScheduleStatus!
     startYear: Int!
     term: Term!
-    schedule: JSON
+    classes: [Class!]!
     involved: Boolean!
     availability: FacultyAvailability
     feedback: FacultyFeedback
