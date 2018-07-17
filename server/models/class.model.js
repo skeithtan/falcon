@@ -87,23 +87,28 @@ const FacultyResponseSchema = new Schema({
     },
     availability: {
         required: false,
-        submitted: {
-            type: Date,
-            required: true,
+        type: {
+            submitted: {
+                type: Date,
+                required: true,
+            },
+            M_TH: [MeetingHours],
+            T_F: [MeetingHours],
         },
-        M_TH: [MeetingHours],
-        T_F: [MeetingHours],
     },
     feedback: {
         required: false,
-        status: {
-            type: String,
-            enum: FACULTY_FEEDBACK,
-        },
-        rejectionReason: {
-            type: String,
-            required: function() {
-                return this.feedback.status === "REJECTED";
+        type: {
+            status: {
+                type: String,
+                enum: FACULTY_FEEDBACK,
+                required: true,
+            },
+            rejectionReason: {
+                type: String,
+                required: function() {
+                    return this.feedback.status === "REJECTED";
+                },
             },
         },
     },
