@@ -7,6 +7,7 @@ import { DropTypes } from "../../../../enums/drop_types.enums";
 import { updateClassSchedule } from "../../../../services/classes/classes.service";
 import { termScheduleIsUpdated } from "../../../../redux/actions/faculty_loading.actions";
 import { toastIsShowing } from "../../../../redux/actions/toast.actions";
+import { mapClassScheduleToGraphQLInput } from "../../../../utils/faculty_loading.util";
 
 const classScheduleItemTarget = {
     drop(props, monitor) {
@@ -21,26 +22,6 @@ const collect = (connect, monitor) => ({
     isOver: monitor.isOver(),
 });
 
-const mapClassScheduleToGraphQLInput = ({
-    subject,
-    meetingDays,
-    meetingHours,
-    room,
-    enrollmentCap,
-    course,
-    section,
-    faculty,
-}) => ({
-    subject,
-    meetingDays,
-    meetingHours,
-    room,
-    enrollmentCap,
-    course,
-    section,
-    faculty: faculty === "" ? null : faculty,
-});
-
 const mapDispatchToProps = dispatch => ({
     onSetFaculty(faculty, oldClassSchedule, termSchedule) {
         const newClassSchedule = {
@@ -48,22 +29,20 @@ const mapDispatchToProps = dispatch => ({
             faculty: faculty._id,
         };
 
-        const oldTermSchedule = { ...termSchedule };
-
         const newTermSchedule = {
-            ...oldTermSchedule,
-            classes: oldTermSchedule.classes.map(classSchedule => {
-                if (newClassSchedule._id === classSchedule._id) {
-                    return newClassSchedule;
-                }
+            ...termSchedule, classes: termSchedule.classes.map(
+                classSchedule => {
+                    if (newClassSchedule._id === classSchedule._id) {
+                        return newClassSchedule;
+                    }
 
-                return classSchedule;
-            }),
-        };
+                    return classSchedule;
+                }
+            ) };
 
         const revertToOldSchedule = errors => {
             console.log(errors);
-            dispatch(termScheduleIsUpdated(oldTermSchedule));
+            dispatch(termScheduleIsUpdated(termSchedule));
             dispatch(
                 toastIsShowing(
                     "An error occurred while updating class schedule"

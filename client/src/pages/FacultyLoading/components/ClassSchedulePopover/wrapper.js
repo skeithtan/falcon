@@ -1,9 +1,66 @@
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
-import { styles } from "./styles";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { styles } from "./styles";
+import { updateClassSchedule } from "../../../../services/classes/classes.service";
+import { termScheduleIsUpdated } from "../../../../redux/actions/faculty_loading.actions";
+import { toastIsShowing } from "../../../../redux/actions/toast.actions";
+import { mapClassScheduleToGraphQLInput } from "../../../../utils/faculty_loading.util";
+
+const mapDispatchToProps = dispatch => ({
+    onRemoveFacultyFromClassSchedule(termSchedule, classSchedule) {
+        const newClassSchedule = {
+            ...classSchedule,
+            faculty: null,
+        };
+
+        const newTermSchedule = {
+            ...termSchedule,
+            classes: termSchedule.classes.map(classSchedule => {
+                if (newClassSchedule._id === classSchedule._id) {
+                    return newClassSchedule;
+                }
+
+                return classSchedule;
+            }),
+        };
+
+        const revertToOldSchedule = errors => {
+            console.log(errors);
+            dispatch(termScheduleIsUpdated(termSchedule));
+            dispatch(
+                toastIsShowing(
+                    "An error occurred while updating class schedule"
+                )
+            );
+        };
+
+        dispatch(termScheduleIsUpdated(newTermSchedule));
+
+        const newClassScheduleInput = mapClassScheduleToGraphQLInput(
+            newClassSchedule
+        );
+
+        return updateClassSchedule(
+            termSchedule._id,
+            classSchedule._id,
+            newClassScheduleInput
+        )
+            .then(result => {
+                if (result.errors) {
+                    revertToOldSchedule(result.errors);
+                }
+            })
+            .catch(error => revertToOldSchedule(error));
+    },
+});
 
 export const wrap = compose(
+    connect(
+        null,
+        mapDispatchToProps
+    ),
     withStyles(styles),
     withRouter
 );

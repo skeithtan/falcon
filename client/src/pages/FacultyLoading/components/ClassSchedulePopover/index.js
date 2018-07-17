@@ -111,7 +111,7 @@ class BaseClassSchedulePopover extends Component {
     };
 
     renderFaculty = () => {
-        const { faculty } = this.props;
+        const { faculty, onRemoveFacultyFromClassSchedule, termSchedule, classSchedule } = this.props;
 
         if (!faculty) {
             return (
@@ -121,12 +121,27 @@ class BaseClassSchedulePopover extends Component {
             );
         }
 
-        return <FacultyChip clickable faculty={faculty} />;
+        return (
+            <FacultyChip
+                clickable
+                faculty={faculty}
+                showDeleteButton={this.canMutateClassSchedule}
+                handleDelete={() => onRemoveFacultyFromClassSchedule(termSchedule, classSchedule)}
+            />
+        );
     };
 
     get shouldShowRemoveTermSchedule() {
         const { termSchedule } = this.props;
         return termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
+    }
+
+    get canMutateClassSchedule() {
+        const { termSchedule } = this.props;
+        return [
+            TERM_STATUSES.INITIALIZING.identifier,
+            TERM_STATUSES.SCHEDULING.identifier,
+        ].includes(termSchedule.status);
     }
 
     render() {
@@ -140,11 +155,6 @@ class BaseClassSchedulePopover extends Component {
             termSchedule,
         } = this.props;
         const { removeClassScheduleModalIsShowing } = this.state;
-
-        const canMutateClassSchedule = [
-            TERM_STATUSES.INITIALIZING.identifier,
-            TERM_STATUSES.SCHEDULING.identifier,
-        ].includes(termSchedule.status);
 
         return (
             <Popover
@@ -170,7 +180,7 @@ class BaseClassSchedulePopover extends Component {
                     </Grid>
                 </CardContent>
 
-                {canMutateClassSchedule && (
+                {this.canMutateClassSchedule && (
                     <CardActions>{this.renderButtons()}</CardActions>
                 )}
 

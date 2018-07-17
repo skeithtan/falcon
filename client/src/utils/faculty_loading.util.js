@@ -1,7 +1,6 @@
 import moment from "moment";
 import { TERMS, MEETING_DAYS } from "../enums/class.enums";
 
-
 const now = moment();
 
 const PLANNING_MONTHS = [
@@ -22,7 +21,7 @@ const getTermToPlan = () => {
     const monthNow = now.format("MMMM");
     const yearNow = Number(now.format("YYYY"));
 
-    for (const {term, months} of PLANNING_MONTHS) {
+    for (const { term, months } of PLANNING_MONTHS) {
         if (months.includes(monthNow)) {
             return {
                 term,
@@ -46,4 +45,25 @@ export const termScheduleToString = termSchedule => {
     return `${term} Term ${academicYear}`;
 };
 
-export const meetingDaysFromPath = path => Object.values(MEETING_DAYS).find(meetingDays => meetingDays.path ===  path)
+export const meetingDaysFromPath = path =>
+    Object.values(MEETING_DAYS).find(meetingDays => meetingDays.path === path);
+
+export const mapClassScheduleToGraphQLInput = ({
+    subject,
+    meetingDays,
+    meetingHours,
+    room,
+    enrollmentCap,
+    course,
+    section,
+    faculty,
+}) => ({
+    subject,
+    meetingDays,
+    meetingHours,
+    room,
+    enrollmentCap,
+    course,
+    section,
+    faculty: faculty === "" ? null : faculty,
+});
