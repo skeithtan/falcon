@@ -1,11 +1,8 @@
 import { falconLogo } from "../../../../components/styles";
 
-
 export const styles = theme => ({
     appBar: {
-        transitionProperty: "background",
-        transitionDuration: theme.transitions.duration.shorter,
-        boxShadow: theme.shadows[0],
+        boxShadow: "0 0.2rem 0.4rem rgba(0,0,0,0.23)",
     },
     toolbar: {
         paddingLeft: theme.spacing.unit,
