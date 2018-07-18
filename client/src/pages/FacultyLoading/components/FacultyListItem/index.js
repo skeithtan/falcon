@@ -29,7 +29,7 @@ class BaseFacultyListItem extends Component {
         return (
             <Grid container direction="column" wrap="nowrap">
                 <Grid item>
-                    <Typography variant="subheading">
+                    <Typography variant="body2">
                         {this.facultyFullname}
                     </Typography>
                 </Grid>
