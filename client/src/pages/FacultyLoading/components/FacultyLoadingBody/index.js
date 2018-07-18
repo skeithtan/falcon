@@ -26,14 +26,15 @@ class BaseFacultyLoadingBody extends Component {
             spacing={16}
             direction="row"
             alignItems="stretch"
+            wrap="nowrap"
         >
-            <Grid item xs={3}>
+            <Grid item xs={3} >
                 <FacultiesCard
                     termSchedule={activeTermSchedule}
                     meetingDays={meetingDays}
                 />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={9} lg={11} xl={12}>
                 <ScheduleCard
                     activeTermSchedule={activeTermSchedule}
                     meetingDays={meetingDays}
