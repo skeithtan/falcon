@@ -167,8 +167,24 @@ const mutateFaculties = termSchedule => ({
         return facultyPool;
     },
     async remove({ _id }) {
-        const facultyResponse = termSchedule.facultyPool.id(_id);
+        const facultyResponse = termSchedule.facultyPool.find(
+            response => String(response.faculty) === _id
+        );
+
+        // Remove faculty from pool
         facultyResponse.remove();
+
+        termSchedule.classes = termSchedule.classes.map(classSchedule => {
+            // Get all classes the faculty was assigned to
+            if (String(classSchedule.faculty) === _id) {
+                // And leave them unassigned
+                classSchedule.faculty = null;
+                return classSchedule;
+            }
+
+            return classSchedule;
+        });
+
         await termSchedule.save();
         return true;
     },
