@@ -10,6 +10,8 @@ export const styles = theme => ({
     cardsContainer: {
         ...pageContainer(theme),
         maxWidth: 1600,
+        paddingTop: 24,
+        paddingBottom: 24,
         height: "100%",
     },
     floatingActionButton: {
