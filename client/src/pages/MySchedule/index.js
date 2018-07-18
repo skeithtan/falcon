@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import Grid from "@material-ui/core/Grid";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { wrap } from "./wrapper";

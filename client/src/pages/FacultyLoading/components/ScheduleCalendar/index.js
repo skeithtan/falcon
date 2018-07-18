@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import Divider from "@material-ui/core/Divider";
 import { MEETING_HOURS } from "../../../../enums/class.enums";
 import Grid from "@material-ui/core/Grid";
 import { wrap } from "./wrapper";

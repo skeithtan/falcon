@@ -1,4 +1,4 @@
-import { page, pageContainer } from "../../components/styles";
+import { pageContainer } from "../../components/styles";
 
 export const styles = theme => ({
     myScheduleContainer: {

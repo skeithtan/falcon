@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { InitializingState } from "../InitializingState";
 
