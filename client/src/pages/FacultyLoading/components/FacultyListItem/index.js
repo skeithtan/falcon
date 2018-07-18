@@ -9,6 +9,7 @@ import { wrap } from "./wrapper";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { StatusChip } from "../StatusChip";
 import { FacultyListItemMenu } from "../FacultyListItemMenu";
+import { EMPLOYMENT } from "../../../../enums/faculty.enums";
 
 class BaseFacultyListItem extends Component {
     state = {
@@ -20,7 +21,66 @@ class BaseFacultyListItem extends Component {
     };
 
     renderSchedulingInfo = (faculty, facultyResponse, termSchedule) => {
-        return null; // TODO
+        const assignedClassesCount = termSchedule.classes.filter(
+            classSchedule => classSchedule.faculty === faculty._id
+        ).length;
+
+        const { min, max } = EMPLOYMENT[faculty.employment].load;
+
+        const isUnderloaded = assignedClassesCount < min;
+        const isOverloaded = assignedClassesCount > max;
+        const isMaximum = assignedClassesCount === max;
+        const isWithinRange = !isUnderloaded && !isOverloaded && !isMaximum;
+
+        const getLoadString = number => (number === 1 ? "load" : "loads");
+
+        return (
+            <Grid container direction="column" wrap="nowrap">
+                <Grid item>
+                    <Typography variant="body2">
+                        {this.facultyFullname}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    {isUnderloaded && (
+                        <StatusChip
+                            color="yellow"
+                            label={`
+                                ${min - assignedClassesCount} 
+                                ${getLoadString(min - assignedClassesCount)} 
+                                under
+                            `}
+                        />
+                    )}
+
+                    {isWithinRange && (
+                        <StatusChip
+                            color="green"
+                            label={`
+                                ${max - assignedClassesCount}
+                                ${getLoadString(max - assignedClassesCount)}
+                                to limit
+                            `}
+                        />
+                    )}
+
+                    {isMaximum && (
+                        <StatusChip color="green" label={`Full load`} />
+                    )}
+
+                    {isOverloaded && (
+                        <StatusChip
+                            color="red"
+                            label={`
+                            ${assignedClassesCount - max}
+                            ${getLoadString(assignedClassesCount - max)}
+                                over limit
+                         `}
+                        />
+                    )}
+                </Grid>
+            </Grid>
+        );
     };
 
     renderInitializingInfo = (faculty, facultyResponse, termSchedule) => {
