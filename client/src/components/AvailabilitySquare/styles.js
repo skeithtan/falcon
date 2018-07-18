@@ -1,9 +1,9 @@
-import { lighten } from "../../../../../node_modules/@material-ui/core/styles/colorManipulator";
+import { lighten } from "@material-ui/core/styles/colorManipulator";
 
 export const styles = theme => ({
     icon: {
-        height: 64,
-        width: 64,
+        height: 48,
+        width: 48,
         color: theme.palette.grey["200"],
 
         "&.checked": {
@@ -13,15 +13,19 @@ export const styles = theme => ({
     availabilitySquare: {
         transition: "200ms all",
         background: theme.palette.common.white,
-        height: 160,
-        cursor: "pointer",
+        height: 120,
+        
+        "&.clickable": {
+            height: 160,
+        },
 
         "&.checked": {
             background: lighten(theme.palette.primary.light, 0.9),
         },
 
-        "&:hover": {
+        "&.clickable:hover": {
             background: lighten(theme.palette.primary.light, 0.8),
+            cursor: "pointer",
         },
     },
 });

@@ -25,6 +25,10 @@ class BaseAvailabilitySquare extends PureComponent {
             rootClasses.push("checked");
         }
 
+        if (props.onClick) {
+            rootClasses.push("clickable");
+        }
+
         return (
             <Grid
                 {...props}

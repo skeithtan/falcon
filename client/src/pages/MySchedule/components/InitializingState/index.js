@@ -5,8 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { wrap } from "./wrapper";
 import { termScheduleToString } from "../../../../utils/faculty_loading.util";
-import { TimeAvailabilityCards } from "../TimeAvailabilityCards";
 import { ConfirmSubmitAvailabilityModal } from "../modals/ConfirmSubmitAvailabilityModal";
+import { TimeAvailabilityCards } from "../../../../components/TimeAvailabilityCards";
 
 class BaseInitializingState extends Component {
     state = {

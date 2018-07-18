@@ -4,11 +4,21 @@ import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { MEETING_DAYS, MEETING_HOURS } from "../../../../enums/class.enums";
 import { wrap } from "./wrapper";
 import { AvailabilitySquare } from "../AvailabilitySquare";
+import { MEETING_HOURS, MEETING_DAYS } from "../../enums/class.enums";
 
 class BaseTimeAvailabilityCards extends Component {
+    clickHandler(meetingDayIdentifier, meetingHourIdentifier) {
+        const { onChange } = this.props;
+
+        if (!onChange) {
+            return null;
+        }
+
+        return () => onChange(meetingDayIdentifier, meetingHourIdentifier);
+    }
+
     renderCardHeader = () => (
         <Grid
             className={this.props.classes.cardColumnHead}
@@ -39,12 +49,10 @@ class BaseTimeAvailabilityCards extends Component {
                         checked={this.props.availability[
                             meetingDayIdentifier
                         ].includes(identifier)}
-                        onClick={() =>
-                            this.props.onChange(
-                                meetingDayIdentifier,
-                                identifier
-                            )
-                        }
+                        onClick={this.clickHandler(
+                            meetingDayIdentifier,
+                            identifier
+                        )}
                     />
                 </Grid>
             ))}
