@@ -78,6 +78,7 @@ export const chip = theme => ({
 
 export const falconLogo = theme => ({
     fontFamily: "Raleway",
+    fontWeight: 700,
 });
 
 export const badge = theme => ({
