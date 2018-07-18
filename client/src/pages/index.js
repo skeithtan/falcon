@@ -18,6 +18,7 @@ export const SIGN_IN_PAGE = {
     identifier: "SIGN_IN_PAGE",
     path: "sign-in",
     component: SignInPage,
+    name: "Sign in",
     theme: INDIGO_THEME,
 };
 
