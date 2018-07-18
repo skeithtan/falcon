@@ -121,6 +121,7 @@ class BaseClassSchedulePopover extends Component {
 
     renderFaculty = () => {
         const {
+            classes,
             faculty,
             onRemoveFacultyFromClassSchedule,
             termSchedule,
@@ -136,17 +137,19 @@ class BaseClassSchedulePopover extends Component {
         }
 
         return (
-            <FacultyChip
-                clickable
-                faculty={faculty}
-                showDeleteButton={this.canMutateClassSchedule}
-                handleDelete={() =>
-                    onRemoveFacultyFromClassSchedule(
-                        termSchedule,
-                        classSchedule
-                    )
-                }
-            />
+            <div className={classes.facultyChipWrapper}>
+                <FacultyChip
+                    clickable
+                    faculty={faculty}
+                    showDeleteButton={this.canMutateClassSchedule}
+                    handleDelete={() =>
+                        onRemoveFacultyFromClassSchedule(
+                            termSchedule,
+                            classSchedule
+                        )
+                    }
+                />
+            </div>
         );
     };
 
