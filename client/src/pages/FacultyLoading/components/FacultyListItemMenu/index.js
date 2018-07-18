@@ -5,8 +5,18 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { FeedbackDisplay } from "../FeedbackDisplay";
 import { wrap } from "./wrapper";
+import { RemoveFacultyModal } from "../modals/RemoveFacultyModal";
 
 class BaseFacultyListItemMenu extends Component {
+    state = {
+        removeFacultyModalIsShowing: false,
+    };
+
+    toggleRemoveFacultyModal = shouldShow =>
+        this.setState({
+            removeFacultyModalIsShowing: shouldShow,
+        });
+
     renderFeedback = () => {
         const {
             facultyResponse: { feedback },
@@ -21,6 +31,19 @@ class BaseFacultyListItemMenu extends Component {
         );
     };
 
+    renderRemoveFacultyModal = () => {
+        const { faculty, termSchedule } = this.props;
+        const { removeFacultyModalIsShowing } = this.state;
+        return (
+            <RemoveFacultyModal
+                open={removeFacultyModalIsShowing}
+                onClose={() => this.toggleRemoveFacultyModal(false)}
+                faculty={faculty}
+                termSchedule={termSchedule}
+            />
+        );
+    };
+
     render() {
         const {
             classes,
@@ -30,7 +53,7 @@ class BaseFacultyListItemMenu extends Component {
             onClose,
             open,
         } = this.props;
-        
+
         const canViewTimeAvailability = facultyResponse.availability !== null;
         const canViewIndividualSchedule =
             termSchedule.status !== TERM_STATUSES.INITIALIZING.identifier;
@@ -57,9 +80,10 @@ class BaseFacultyListItemMenu extends Component {
                     View individual schedule
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={this.handleClose}>
+                <MenuItem onClick={() => this.toggleRemoveFacultyModal(true)}>
                     Remove this faculty from this term
                 </MenuItem>
+                {this.renderRemoveFacultyModal()}
             </Menu>
         );
     }
