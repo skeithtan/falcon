@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { InitializingState } from "../InitializingState";
+import { UninvolvedState } from "../UninvolvedState";
 
 class PublishedState extends Component {
     render() {
@@ -22,6 +23,11 @@ class SchedulingState extends Component {
 
 export const MyScheduleBody = props => {
     const { termSchedule } = props;
+    
+    if (!termSchedule.involved) {
+        return <UninvolvedState termSchedule={termSchedule} />;
+    }
+
     const { INITIALIZING, SCHEDULING, FEEDBACK_GATHERING } = TERM_STATUSES;
 
     switch (termSchedule.status) {
