@@ -7,8 +7,10 @@ import { ValidationError } from "../errors/validation.error";
 
 const termScheduleToFacultyFormat = (termSchedule, faculty) => {
     const facultyResponse = termSchedule.facultyPool.find(
-        facultyResponse => String(facultyResponse.faculty) === String(faculty._id)
+        facultyResponse =>
+            String(facultyResponse.faculty) === String(faculty._id)
     );
+
     const classes = termSchedule.classes
         // Remove all classes without faculties
         .filter(assignedFaculty => assignedFaculty !== null)
@@ -20,7 +22,7 @@ const termScheduleToFacultyFormat = (termSchedule, faculty) => {
         status: termSchedule.status,
         startYear: termSchedule.startYear,
         term: termSchedule.term,
-        involved: facultyResponse !== null,
+        involved: Boolean(facultyResponse),
         classes,
         availability: facultyResponse ? facultyResponse.availability : null,
         feedback: facultyResponse ? facultyResponse.feedback : null,
