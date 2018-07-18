@@ -6,11 +6,18 @@ import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { FeedbackDisplay } from "../FeedbackDisplay";
 import { wrap } from "./wrapper";
 import { RemoveFacultyModal } from "../modals/RemoveFacultyModal";
+import { FacultyAvailabilityModal } from "../modals/FacultyAvailabilityModal";
 
 class BaseFacultyListItemMenu extends Component {
     state = {
+        facultyAvailabilityModalIsShowing: false,
         removeFacultyModalIsShowing: false,
     };
+
+    toggleFacultyAvailabilityModal = shouldShow =>
+        this.setState({
+            facultyAvailabilityModalIsShowing: shouldShow,
+        });
 
     toggleRemoveFacultyModal = shouldShow =>
         this.setState({
@@ -44,6 +51,22 @@ class BaseFacultyListItemMenu extends Component {
         );
     };
 
+    renderFacultyAvailabilityModal = () => {
+        const {
+            faculty,
+            facultyResponse: { availability },
+        } = this.props;
+        const { facultyAvailabilityModalIsShowing } = this.state;
+        return (
+            <FacultyAvailabilityModal
+                open={facultyAvailabilityModalIsShowing}
+                onClose={() => this.toggleFacultyAvailabilityModal(false)}
+                faculty={faculty}
+                availability={availability}
+            />
+        );
+    };
+
     render() {
         const {
             classes,
@@ -68,7 +91,7 @@ class BaseFacultyListItemMenu extends Component {
                 {facultyResponse.feedback && this.renderFeedback()}
 
                 <MenuItem
-                    onClick={this.handleClose}
+                    onClick={() => this.toggleFacultyAvailabilityModal(true)}
                     disabled={!canViewTimeAvailability}
                 >
                     View time availability
@@ -84,6 +107,7 @@ class BaseFacultyListItemMenu extends Component {
                     Remove this faculty from this term
                 </MenuItem>
                 {this.renderRemoveFacultyModal()}
+                {facultyResponse.availability && this.renderFacultyAvailabilityModal()}
             </Menu>
         );
     }
