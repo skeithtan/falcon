@@ -8,7 +8,6 @@ import { FalconAppBar } from "./components/FalconAppBar/index";
 import { Toast } from "./components/Toast";
 import { wrap } from "./wrapper";
 
-
 class BaseApp extends PureComponent {
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.handlePath();
@@ -19,7 +18,7 @@ class BaseApp extends PureComponent {
     }
 
     handlePath = () => {
-        const {user, match, history} = this.props;
+        const { user, match, history } = this.props;
 
         const currentPath = match.params.currentPage;
         // Is the user in the sign in page or any of its descendants?
@@ -61,22 +60,31 @@ class BaseApp extends PureComponent {
     getActivePage = match => getPageFromPath(match.params.currentPage);
 
     renderRoutes = () => {
-        const {user} = this.props;
-        const pageToRoute = ({identifier, path, component, pathParameter = ""}) => (
-            <Route key={identifier} path={"/" + path + pathParameter} component={component} />
+        const { user } = this.props;
+        const pageToRoute = ({
+            identifier,
+            path,
+            component,
+            pathParameter = "",
+        }) => (
+            <Route
+                key={identifier}
+                path={"/" + path + pathParameter}
+                component={component}
+            />
         );
 
         // If we have a user, add the pages for the user type in the pages
         const pages = [
             ...GENERAL_PAGES,
-            ...user ? getPagesForUser(user) : [],
+            ...(user ? getPagesForUser(user) : []),
         ];
 
         return pages.map(pageToRoute);
     };
 
     render() {
-        const {user, match, classes} = this.props;
+        const { user, match, classes } = this.props;
         const activePage = this.getActivePage(match);
 
         return (
@@ -88,15 +96,13 @@ class BaseApp extends PureComponent {
                     alignItems="stretch"
                     wrap="nowrap"
                 >
-                    {user && activePage.identifier !== SIGN_IN_PAGE.identifier &&
-                    <Grid item>
-                        <FalconAppBar activePage={activePage} />
-                    </Grid>
-                    }
-                    <Grid
-                        item
-                        className={classes.pageContainer}
-                    >
+                    {user &&
+                        activePage.identifier !== SIGN_IN_PAGE.identifier && (
+                            <Grid item>
+                                <FalconAppBar activePage={activePage} />
+                            </Grid>
+                        )}
+                    <Grid item className={classes.pageContainer}>
                         <Switch>
                             {this.renderRoutes()}
                             <Redirect to="/404" />
