@@ -80,7 +80,7 @@ class BaseUpdateFacultyOverviewModal extends ModalFormComponent {
             email: "",
             photo: null,
             sex: SEX.M.identifier,
-            employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
+            employment: EMPLOYMENT.REGULAR.identifier,
             birthDate: "",
             idNumber: "",
         };

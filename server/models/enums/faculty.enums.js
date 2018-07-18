@@ -4,8 +4,9 @@ export const SEXES = [
 ];
 
 export const EMPLOYMENTS = [
-    "FULL_TIME_PERMANENT",
-    "FULL_TIME_TEMPORARY",
+    "REGULAR",
+    "PROFESSOR",
+    "ADMINISTRATOR",
     "PART_TIME",
     "ADJUNCT",
     "ON_LEAVE",

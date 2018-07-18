@@ -31,7 +31,7 @@ class BaseAddFacultyModal extends ModalFormComponent {
             password: generateTemporaryPassword(),
             photo: null,
             sex: SEX.M.identifier,
-            employment: EMPLOYMENT.FULL_TIME_PERMANENT.identifier,
+            employment: EMPLOYMENT.REGULAR.identifier,
             birthDate: "",
             idNumber: "",
         };

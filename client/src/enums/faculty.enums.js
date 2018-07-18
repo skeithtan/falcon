@@ -1,27 +1,59 @@
 export const EMPLOYMENT = {
-    FULL_TIME_PERMANENT: {
-        identifier: "FULL_TIME_PERMANENT",
-        name: "Permanent Full Time",
+    REGULAR: {
+        identifier: "REGULAR",
+        name: "Regular",
+        load: {
+            min: 3,
+            max: 5,
+        },
     },
-    FULL_TIME_TEMPORARY: {
-        identifier: "FULL_TIME_PERMANENT",
-        name: "Temporary Full Time",
+    PROFESSOR: {
+        identifier: "REGULAR",
+        name: "Professor",
+        load: {
+            min: 1,
+            max: 2,
+        },
+    },
+    ADMINISTRATOR: {
+        identifier: "REGULAR",
+        name: "Administrator",
+        load: {
+            min: 1,
+            max: 1,
+        },
     },
     PART_TIME: {
         identifier: "PART_TIME",
         name: "Part Time",
+        load: {
+            min: 1,
+            max: 4,
+        },
     },
     ADJUNCT: {
         identifier: "ADJUNCT",
         name: "Adjunct",
+        load: {
+            min: 1,
+            max: 2,
+        },
     },
     ON_LEAVE: {
         identifier: "ON_LEAVE",
         name: "On leave",
+        load: {
+            min: 0,
+            max: 0,
+        },
     },
     TERMINATED: {
         identifier: "TERMINATED",
         name: "Terminated",
+        load: {
+            min: 0,
+            max: 0,
+        },
     },
 };
 
