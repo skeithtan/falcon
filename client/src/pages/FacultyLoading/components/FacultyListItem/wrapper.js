@@ -7,6 +7,7 @@ import { DropTypes } from "../../../../enums/drop_types.enums";
 const facultySource = {
     beginDrag: props => ({
         faculty: props.faculty,
+        availability: props.facultyResponse.availability,
     }),
 
     canDrag: props => props.canSchedule,

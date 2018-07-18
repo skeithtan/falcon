@@ -1,27 +1,156 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
+import { findDOMNode } from "react-dom";
 import Grid from "@material-ui/core/Grid";
-import { wrap } from "./wrapper";
+import Typography from "@material-ui/core/Typography";
+import Popover from "@material-ui/core/Popover";
 import { UserChip } from "../../../../components/UserChip";
 import { ClassSchedulePopover } from "../ClassSchedulePopover";
+import { CompatibilityDisplay } from "../CompatibilityDisplay";
+import { wrap } from "./wrapper";
+
+class CompatibilityPopover extends Component {
+    render() {
+        const {
+            open,
+            anchorPosition,
+            faculty,
+            assignedClasses,
+            classSchedule,
+            availability,
+        } = this.props;
+
+        return (
+            <Popover
+                open={open}
+                anchorPosition={anchorPosition}
+                anchorReference="anchorPosition"
+                style={{ pointerEvents: "none" }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
+                disableRestoreFocus
+            >
+                <CompatibilityDisplay
+                    faculty={faculty}
+                    assignedClasses={assignedClasses}
+                    classSchedule={classSchedule}
+                    availability={availability}
+                />
+            </Popover>
+        );
+    }
+}
 
 class BaseClassScheduleItem extends Component {
     state = {
-        anchorEl: null,
+        classSchedulePopoverAnchorEl: null,
+        coordinates: null,
     };
 
-    handleClick = event =>
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const coordinates = findDOMNode(this.gridRef).getBoundingClientRect();
+
+        if (!coordinates) {
+            return;
+        }
+
+        const prevStateHasCoordinates = prevState.coordinates !== null;
+
+        if (!this.state.coordinates || !prevStateHasCoordinates) {
+            this.setState({ coordinates });
+
+            return;
+        }
+
+        const coordinatesChanged =
+            coordinates.x !== prevState.coordinates.x ||
+            coordinates.y !== prevState.coordinates.y;
+
+        if (coordinatesChanged) {
+            this.setState({ coordinates });
+        }
+    }
+
+    handleClassSchedulePopoverOpen = event =>
         this.setState({
-            anchorEl: event.currentTarget,
+            classSchedulePopoverAnchorEl: event.currentTarget,
         });
 
-    handleClose = () =>
+    handleClassSchedulePopoverClose = () =>
         this.setState({
-            anchorEl: null,
+            classSchedulePopoverAnchorEl: null,
         });
+
+    handleCompatibilityDisplayOpen = event => {
+        const { isOver } = this.props;
+        if (isOver)
+            this.setState({
+                compatibilityDisplayAnchorEl: event.currentTarget,
+            });
+    };
+
+    handleCompatibilityDisplayClose = () => {
+        console.log("Close");
+        this.setState({
+            compatibilityDisplayAnchorEl: null,
+        });
+    };
+
+    renderClassSchedulePopover = () => {
+        const { classSchedulePopoverAnchorEl } = this.state;
+        const { classSchedule, faculty, subject, termSchedule } = this.props;
+
+        return (
+            <ClassSchedulePopover
+                open={Boolean(classSchedulePopoverAnchorEl)}
+                anchorEl={classSchedulePopoverAnchorEl}
+                onClose={this.handleClassSchedulePopoverClose}
+                classSchedule={classSchedule}
+                faculty={faculty}
+                subject={subject}
+                termSchedule={termSchedule}
+            />
+        );
+    };
+
+    renderCompatibilityPopover = () => {
+        const {
+            classSchedule,
+            subject,
+            termSchedule,
+            hovering: { faculty, availability },
+            isOver,
+        } = this.props;
+
+        const { coordinates } = this.state;
+
+        if (!faculty || !coordinates) {
+            return null;
+        }
+
+        const assignedClasses = termSchedule.classes.filter(
+            item => item.faculty === faculty._id
+        );
+
+        return (
+            <CompatibilityPopover
+                open={isOver}
+                anchorPosition={{
+                    left: coordinates.x - 16, // Offset to box
+                    top: coordinates.y,
+                }}
+                faculty={faculty}
+                subject={subject}
+                availability={availability}
+                assignedClasses={assignedClasses}
+                classSchedule={classSchedule}
+            />
+        );
+    };
 
     render() {
-        const { anchorEl } = this.state;
+        const { classSchedulePopoverAnchorEl } = this.state;
         const {
             classSchedule,
             faculty,
@@ -29,7 +158,6 @@ class BaseClassScheduleItem extends Component {
             classes,
             connectDropTarget,
             isOver,
-            termSchedule
         } = this.props;
 
         let containerClasses = [classes.classScheduleItemContainer];
@@ -39,7 +167,7 @@ class BaseClassScheduleItem extends Component {
                 : classes.classScheduleWithoutFaculty
         );
 
-        if (anchorEl) {
+        if (classSchedulePopoverAnchorEl) {
             containerClasses.push("selected");
         }
 
@@ -49,7 +177,12 @@ class BaseClassScheduleItem extends Component {
 
         return connectDropTarget(
             <div className={containerClasses.join(" ")}>
-                <Grid container spacing={16} onClick={this.handleClick}>
+                <Grid
+                    container
+                    spacing={16}
+                    ref={ref => (this.gridRef = ref)}
+                    onClick={this.handleClassSchedulePopoverOpen}
+                >
                     <Grid item>
                         <Typography variant="body2" color="inherit">
                             {subject.code} {classSchedule.section}
@@ -64,15 +197,9 @@ class BaseClassScheduleItem extends Component {
                         </Grid>
                     )}
                 </Grid>
-                <ClassSchedulePopover
-                    open={Boolean(anchorEl)}
-                    anchorEl={anchorEl}
-                    onClose={() => this.setState({ anchorEl: null })}
-                    classSchedule={classSchedule}
-                    faculty={faculty}
-                    subject={subject}
-                    termSchedule={termSchedule}
-                />
+
+                {this.renderClassSchedulePopover()}
+                {this.renderCompatibilityPopover()}
             </div>
         );
     }

@@ -20,6 +20,9 @@ const classScheduleItemTarget = {
 const collect = (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
+    hovering: {
+        ...monitor.getItem(),
+    },
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -30,15 +33,15 @@ const mapDispatchToProps = dispatch => ({
         };
 
         const newTermSchedule = {
-            ...termSchedule, classes: termSchedule.classes.map(
-                classSchedule => {
-                    if (newClassSchedule._id === classSchedule._id) {
-                        return newClassSchedule;
-                    }
-
-                    return classSchedule;
+            ...termSchedule,
+            classes: termSchedule.classes.map(classSchedule => {
+                if (newClassSchedule._id === classSchedule._id) {
+                    return newClassSchedule;
                 }
-            ) };
+
+                return classSchedule;
+            }),
+        };
 
         const revertToOldSchedule = errors => {
             console.log(errors);
