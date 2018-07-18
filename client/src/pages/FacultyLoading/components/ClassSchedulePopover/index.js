@@ -72,37 +72,34 @@ class BaseClassSchedulePopover extends Component {
             );
 
         return (
-            <Fragment>
-                <Grid
-                    container
-                    spacing={8}
-                    direction="row"
-                    justify="space-between"
-                    wrap="nowrap"
-                >
-                    <Grid item xs>
-                        <Typography variant="subheading">
-                            {subject.name}{" "}
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Tooltip disableFocusListener title="View subject">
-                            <IconButton
-                                aria-label="View subject"
-                                onClick={onSubjectClick}
-                            >
-                                <OpenInNewIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </Grid>
+            <Grid
+                container
+                direction="row"
+                justify="space-between"
+                wrap="nowrap"
+            >
+                <Grid item xs>
+                    <Typography variant="subheading">
+                        {subject.name}{" "}
+                    </Typography>
+                    <Typography color="textSecondary">
+                        {classSchedule.course}
+                    </Typography>
+                    <Typography color="textSecondary">
+                        {classSchedule.section}
+                    </Typography>
                 </Grid>
-                <Typography color="textSecondary">
-                    {classSchedule.course}
-                </Typography>
-                <Typography color="textSecondary">
-                    {classSchedule.section}
-                </Typography>
-            </Fragment>
+                <Grid item>
+                    <Tooltip disableFocusListener title="View subject">
+                        <IconButton
+                            aria-label="View subject"
+                            onClick={onSubjectClick}
+                        >
+                            <OpenInNewIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+            </Grid>
         );
     };
 
@@ -194,7 +191,7 @@ class BaseClassSchedulePopover extends Component {
                         container
                         spacing={24}
                         direction="column"
-                        alignItems="flex-start"
+                        alignItems="stretch"
                         wrap="nowrap"
                     >
                         <Grid item>{this.renderOverview()}</Grid>
