@@ -96,9 +96,6 @@ class BaseScheduleCalendar extends PureComponent {
                 wrap="nowrap"
             >
                 <Grid item>{this.renderCalendarHeader()}</Grid>
-                <Grid item>
-                    <Divider light />
-                </Grid>
                 <Grid item xs className={classes.scheduleCalendarBodyContainer}>
                     {this.renderCalendarBody()}
                 </Grid>

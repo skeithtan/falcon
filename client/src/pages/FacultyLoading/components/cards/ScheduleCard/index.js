@@ -92,14 +92,15 @@ class BaseScheduleCard extends Component {
     };
 
     renderToolbar = () => {
-        const { meetingDays } = this.props;
+        const { classes, meetingDays } = this.props;
         return (
-            <Grid container justify="space-between">
+            <Grid container justify="space-between" alignItems="center">
                 <Grid item xs>
                     <Tabs
                         value={meetingDays}
                         indicatorColor="primary"
                         textColor="primary"
+                        classes={{ flexContainer: classes.tabsFlexContainer }}
                     >
                         {Object.values(MEETING_DAYS).map(({ name, path }) => (
                             <Tab
