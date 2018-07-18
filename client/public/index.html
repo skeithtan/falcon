@@ -44,6 +44,17 @@
             overflow-Y: hidden;
         }
 
+        #loading-wrapper {
+            height: 100%;
+            width: 100%;
+            font-family: "Raleway", "Roboto", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #90A4AE;
+            font-size: 2em;
+        }
+
         @media print {
             body {
                 height: auto;
@@ -59,7 +70,12 @@
     <noscript>
         You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+
+    <div id="root">
+        <div id="loading-wrapper">
+            <h1>Falcon</h1>
+        </div>
+    </div>
     <!--
   This HTML file is a template.
   If you open it directly in the browser, you will see an empty page.
