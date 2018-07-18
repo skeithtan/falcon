@@ -31,6 +31,7 @@ export const styles = theme => ({
         maxWidth: 1024,
         width: "100%",
         margin: 0,
+        display: "block",
     },
     printPage: {
         maxWidth: 1024,
