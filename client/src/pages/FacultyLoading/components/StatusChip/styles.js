@@ -1,7 +1,7 @@
 import { lighten, darken } from "@material-ui/core/styles/colorManipulator";
-import Red from "@material-ui/core/colors/red";
 import Amber from "@material-ui/core/colors/amber";
 import Green from "@material-ui/core/colors/green";
+import Red from "@material-ui/core/colors/red";
 
 export const styles = theme => ({
     yellow: {

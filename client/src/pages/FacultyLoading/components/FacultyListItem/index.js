@@ -1,15 +1,17 @@
-import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
+import React, { Component, Fragment } from "react";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Typography from "@material-ui/core/Typography";
 import { UserAvatar } from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user.util";
 import { wrap } from "./wrapper";
-import { TERM_STATUSES } from "../../../../enums/class.enums";
+import { TERM_STATUSES, FACULTY_FEEDBACK } from "../../../../enums/class.enums";
 import { StatusChip } from "../StatusChip";
+import { FeedbackDisplay } from "../FeedbackDisplay";
 
 class BaseFacultyListItem extends Component {
     state = {
@@ -36,7 +38,10 @@ class BaseFacultyListItem extends Component {
                 </Grid>
                 <Grid item>
                     {pendingAvailability && (
-                        <StatusChip color="yellow" label="Pending availability" />
+                        <StatusChip
+                            color="yellow"
+                            label="Pending availability"
+                        />
                     )}
                     {!pendingAvailability && (
                         <StatusChip
@@ -53,31 +58,51 @@ class BaseFacultyListItem extends Component {
         return getFullName(this.props.faculty.user);
     }
 
+    renderFeedback = () => {
+        const {
+            facultyResponse: { feedback },
+            faculty,
+        } = this.props;
+
+        return (
+            <Fragment>
+                <FeedbackDisplay feedback={feedback} faculty={faculty} />
+                <Divider />
+            </Fragment>
+        );
+    };
+
     renderMenu = () => {
         const { anchorEl } = this.state;
-        const { facultyResponse, termSchedule } = this.props;
+        const { classes, facultyResponse, termSchedule } = this.props;
         const canViewTimeAvailability = facultyResponse.availability !== null;
         const canViewIndividualSchedule =
             termSchedule.status !== TERM_STATUSES.INITIALIZING.identifier;
 
         return (
             <Menu
-                id="long-menu"
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={this.handleMenuClose}
+                classes={{ paper: classes.menuContainer }}
             >
+                {facultyResponse.feedback && this.renderFeedback()}
+                
                 <MenuItem
                     onClick={this.handleClose}
                     disabled={!canViewTimeAvailability}
                 >
-                    Time availability
+                    View time availability
                 </MenuItem>
                 <MenuItem
                     onClick={this.handleClose}
                     disabled={!canViewIndividualSchedule}
                 >
-                    Individual schedule
+                    View individual schedule
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={this.handleClose}>
+                    Remove this faculty from this term
                 </MenuItem>
             </Menu>
         );
