@@ -14,13 +14,17 @@ import Typography from "@material-ui/core/Typography";
 import React, { Component, PureComponent } from "react";
 import { resetFacultyPassword } from "../../../../../services/faculty/faculty";
 import { getPossessivePronoun } from "../../../../../utils/faculty.util";
-import { generateTemporaryPassword, getFullName } from "../../../../../utils/user.util";
-
+import {
+    generateTemporaryPassword,
+    getFullName,
+} from "../../../../../utils/user.util";
 
 const steps = [
     {
         label: "Confirmation",
-        content: (faculty, errors) => <ResetConfirmation faculty={faculty} errors={errors} />,
+        content: (faculty, errors) => (
+            <ResetConfirmation faculty={faculty} errors={errors} />
+        ),
     },
     {
         label: "Resetting...",
@@ -28,27 +32,28 @@ const steps = [
     },
     {
         label: "Reset Success",
-        content: (faculty, errors, newPassword) => <ResetSuccess faculty={faculty} newPassword={newPassword} />,
+        content: (faculty, errors, newPassword) => (
+            <ResetSuccess faculty={faculty} newPassword={newPassword} />
+        ),
     },
 ];
 
 class ResetConfirmation extends PureComponent {
     render() {
-        const {faculty, errors} = this.props;
+        const { faculty, errors } = this.props;
         const fullName = getFullName(faculty.user);
         const possessivePronoun = getPossessivePronoun(faculty);
 
         return (
             <DialogContentText>
-                Are you sure you want to reset <b>{fullName}</b>'s password? {fullName} won't
-                be able to sign in to {possessivePronoun} account
-                again with {possessivePronoun} old password.
-
-                {errors &&
-                <Typography color="error">
-                    An error occurred: {errors}
-                </Typography>
-                }
+                Are you sure you want to reset <b>{fullName}</b>'s password?{" "}
+                {fullName} won't be able to sign in to {possessivePronoun}{" "}
+                account again with {possessivePronoun} old password.
+                {errors && (
+                    <Typography color="error">
+                        An error occurred: {errors}
+                    </Typography>
+                )}
             </DialogContentText>
         );
     }
@@ -56,7 +61,7 @@ class ResetConfirmation extends PureComponent {
 
 class ResettingStep extends PureComponent {
     render() {
-        const {faculty} = this.props;
+        const { faculty } = this.props;
         const fullName = getFullName(faculty.user);
         return (
             <Grid container spacing={16} direction="column">
@@ -75,14 +80,14 @@ class ResettingStep extends PureComponent {
 
 class ResetSuccess extends PureComponent {
     render() {
-        const {faculty, newPassword} = this.props;
+        const { faculty, newPassword } = this.props;
         const fullName = getFullName(faculty.user);
 
         return (
             <DialogContentText>
-                <b>{fullName}</b>'s password has been reset. The new password is <b>{newPassword}</b>.
-                Keep this password elsewhere because once this dialog is dismissed, it can never be viewed
-                again.
+                <b>{fullName}</b>'s password has been reset. The new password is{" "}
+                <b>{newPassword}</b>. Keep this password elsewhere because once
+                this dialog is dismissed, it can never be viewed again.
             </DialogContentText>
         );
     }
@@ -97,13 +102,14 @@ export class ResetPasswordModal extends Component {
         errors: null,
     };
 
-    resetForm = () => this.setState({
-        isSubmitting: false,
-        doneSubmitting: false,
-        newPassword: null,
-        errors: null,
-        activeStep: 0,
-    });
+    resetForm = () =>
+        this.setState({
+            isSubmitting: false,
+            doneSubmitting: false,
+            newPassword: null,
+            errors: null,
+            activeStep: 0,
+        });
 
     closeModal = () => {
         if (this.state.isSubmitting || this.state.doneSubmitting) {
@@ -115,7 +121,7 @@ export class ResetPasswordModal extends Component {
     };
 
     onResetPasswordClick = () => {
-        const {faculty} = this.props;
+        const { faculty } = this.props;
         const newPassword = generateTemporaryPassword();
 
         this.setState({
@@ -133,7 +139,10 @@ export class ResetPasswordModal extends Component {
                 });
             })
             .catch(error => {
-                console.log("An error occurred while resetting password", error);
+                console.log(
+                    "An error occurred while resetting password",
+                    error
+                );
                 this.setState({
                     isSubmitting: false,
                     errors: [error.message],
@@ -143,7 +152,7 @@ export class ResetPasswordModal extends Component {
     };
 
     handleNext = () => {
-        const {activeStep} = this.state;
+        const { activeStep } = this.state;
         this.setState({
             activeStep: activeStep + 1,
         });
@@ -159,16 +168,21 @@ export class ResetPasswordModal extends Component {
     };
 
     render() {
-        const {faculty, open} = this.props;
-        const {newPassword, errors, activeStep} = this.state;
+        const { faculty, open } = this.props;
+        const { newPassword, errors, activeStep } = this.state;
 
         return (
-            <Dialog open={open} onClose={this.closeModal}>
+            <Dialog
+                open={open}
+                onClose={this.closeModal}
+                maxWidth="sm"
+                fullWidth
+            >
                 <DialogTitle>Reset Faculty Password</DialogTitle>
 
                 <DialogContent>
                     <Stepper activeStep={activeStep} orientation="vertical">
-                        {steps.map(({label, content}) => (
+                        {steps.map(({ label, content }) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
                                 <StepContent>
@@ -181,7 +195,9 @@ export class ResetPasswordModal extends Component {
                                             disabled={activeStep === 1}
                                             onClick={this.handleNext}
                                         >
-                                            {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                                            {activeStep === steps.length - 1
+                                                ? "Finish"
+                                                : "Next"}
                                         </Button>
                                     </DialogActions>
                                 </StepContent>
@@ -189,7 +205,6 @@ export class ResetPasswordModal extends Component {
                         ))}
                     </Stepper>
                 </DialogContent>
-
             </Dialog>
         );
     }
