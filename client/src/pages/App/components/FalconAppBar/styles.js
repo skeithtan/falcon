@@ -2,7 +2,7 @@ import { falconLogo } from "../../../../components/styles";
 
 export const styles = theme => ({
     appBar: {
-        boxShadow: "0 0.2rem 0.4rem rgba(0,0,0,0.23)",
+        boxShadow: "0 0.3rem 0.3rem rgba(0,0,0,0.23)",
     },
     toolbar: {
         paddingLeft: theme.spacing.unit,
