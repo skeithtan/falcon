@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
-import DragIndicator from "@material-ui/icons/DragIndicator";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { UserAvatar } from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user.util";
 import { wrap } from "./wrapper";
@@ -9,6 +12,10 @@ import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { StatusChip } from "../StatusChip";
 
 class BaseFacultyListItem extends Component {
+    state = {
+        anchorEl: null,
+    };
+
     renderFeedbackGatheringInfo = (faculty, facultyResponse, termSchedule) => {
         return null; // TODO
     };
@@ -29,9 +36,12 @@ class BaseFacultyListItem extends Component {
                 </Grid>
                 <Grid item>
                     {pendingAvailability && (
+                        <StatusChip color="yellow" label="Pending availability" />
+                    )}
+                    {!pendingAvailability && (
                         <StatusChip
-                            color="red"
-                            label="Pending availability"
+                            color="green"
+                            label="Availability submitted"
                         />
                     )}
                 </Grid>
@@ -42,6 +52,44 @@ class BaseFacultyListItem extends Component {
     get facultyFullname() {
         return getFullName(this.props.faculty.user);
     }
+
+    renderMenu = () => {
+        const { anchorEl } = this.state;
+        const { facultyResponse, termSchedule } = this.props;
+        const canViewTimeAvailability = facultyResponse.availability !== null;
+        const canViewIndividualSchedule =
+            termSchedule.status !== TERM_STATUSES.INITIALIZING.identifier;
+
+        return (
+            <Menu
+                id="long-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={this.handleMenuClose}
+            >
+                <MenuItem
+                    onClick={this.handleClose}
+                    disabled={!canViewTimeAvailability}
+                >
+                    Time availability
+                </MenuItem>
+                <MenuItem
+                    onClick={this.handleClose}
+                    disabled={!canViewIndividualSchedule}
+                >
+                    Individual schedule
+                </MenuItem>
+            </Menu>
+        );
+    };
+
+    handleMoreVertClick = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleMenuClose = () => {
+        this.setState({ anchorEl: null });
+    };
 
     renderInfo = () => {
         const { faculty, facultyResponse, termSchedule } = this.props;
@@ -102,12 +150,14 @@ class BaseFacultyListItem extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    {canDrag && (
-                        <Grid item>
-                            <DragIndicator color="action" />
-                        </Grid>
-                    )}
+                    <Grid item>
+                        <IconButton onClick={this.handleMoreVertClick}>
+                            <MoreVertIcon color="action" />
+                        </IconButton>
+                    </Grid>
                 </Grid>
+
+                {this.renderMenu()}
             </div>
         );
     }
