@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { UserAvatar } from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user.util";
 import { wrap } from "./wrapper";
-import { TERM_STATUSES } from "../../../../enums/class.enums";
+import { TERM_STATUSES, FACULTY_FEEDBACK } from "../../../../enums/class.enums";
 import { StatusChip } from "../StatusChip";
 import { FacultyListItemMenu } from "../FacultyListItemMenu";
 import { EMPLOYMENT } from "../../../../enums/faculty.enums";
@@ -16,8 +16,39 @@ class BaseFacultyListItem extends Component {
         anchorEl: null,
     };
 
-    renderFeedbackGatheringInfo = (faculty, facultyResponse, termSchedule) => {
-        return null; // TODO
+    renderFeedbackGatheringInfo = ({ feedback }) => {
+        const isPending = feedback === null;
+        return (
+            <Grid
+                container
+                direction="column"
+                alignItems="stretch"
+                wrap="nowrap"
+            >
+                <Grid item>
+                    <Typography variant="body2" color="inherit">
+                        {this.facultyFullname}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    {isPending && (
+                        <StatusChip color="yellow" label="Pending feedback" />
+                    )}
+
+                    {feedback &&
+                        feedback.status ===
+                            FACULTY_FEEDBACK.REJECTED.identifier(
+                                <StatusChip color="red" label="Rejected" />
+                            )}
+
+                    {feedback &&
+                        feedback.status ===
+                            FACULTY_FEEDBACK.ACCEPTED.identifier(
+                                <StatusChip color="green" label="Accepted" />
+                            )}
+                </Grid>
+            </Grid>
+        ); // TODO
     };
 
     renderSchedulingInfo = (faculty, termSchedule) => {
@@ -145,12 +176,8 @@ class BaseFacultyListItem extends Component {
                     facultyResponse,
                     termSchedule
                 );
-            case FEEDBACK_GATHERING:
-                return this.renderFeedbackGatheringInfo(
-                    faculty,
-                    facultyResponse,
-                    termSchedule
-                );
+            case FEEDBACK_GATHERING.identifier:
+                return this.renderFeedbackGatheringInfo(facultyResponse);
             default:
                 return this.renderSchedulingInfo(faculty, termSchedule);
         }
