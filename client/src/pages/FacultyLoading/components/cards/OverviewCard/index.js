@@ -18,9 +18,23 @@ const steps = Object.values(TERM_STATUSES)
         ({ identifier }) => identifier !== TERM_STATUSES.ARCHIVED.identifier
     );
 
+const getAdvanceButtonMessage = activeTermStatus => {
+    switch (activeTermStatus) {
+        case TERM_STATUSES.INITIALIZING.identifier:
+            return "Proceed to scheduling";
+        case TERM_STATUSES.SCHEDULING.identifier:
+            return "Get faculty feedback";
+        case TERM_STATUSES.FEEDBACK_GATHERING.identifier:
+            return "Publish schedule";
+        default:
+            return null;
+    }
+};
+
 class BaseOverviewCard extends Component {
     state = {
         advanceTermModalIsShowing: false,
+        returnTermModalIsShowing: false,
     };
 
     toggleAdvanceTermModal = shouldShow =>
@@ -28,19 +42,70 @@ class BaseOverviewCard extends Component {
             advanceTermModalIsShowing: shouldShow,
         });
 
+    toggleReturnTermModal = shouldShow =>
+        this.setState({
+            returnTermModalIsShowing: shouldShow,
+        });
+
+    renderButtons = () => {
+        const { activeTermSchedule } = this.props;
+        const {
+            advanceTermModalIsShowing,
+            returnTermModalIsShowing,
+        } = this.state;
+
+        const canReturnToPreviousState = ![
+            TERM_STATUSES.INITIALIZING.identifier,
+            TERM_STATUSES.PUBLISHED.identifier,
+            TERM_STATUSES.ARCHIVED.identifier,
+        ].includes(activeTermSchedule.status);
+
+        const canAdvanceTermSchedule = ![
+            TERM_STATUSES.PUBLISHED.identifier,
+            TERM_STATUSES.ARCHIVED.identifier,
+        ].includes(activeTermSchedule.status);
+
+        return (
+            <Grid container spacing={16} direction="row" alignItems="center">
+                {canReturnToPreviousState && (
+                    <Grid item>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => this.toggleReturnTermModal(true)}
+                        >
+                            Return to previous stage
+                        </Button>
+                    </Grid>
+                )}
+
+                <Grid item>
+                    <Button
+                        variant="raised"
+                        color="primary"
+                        onClick={() => this.toggleAdvanceTermModal(true)}
+                    >
+                        {getAdvanceButtonMessage(activeTermSchedule.status)}
+                    </Button>
+                </Grid>
+
+                {canAdvanceTermSchedule && (
+                    <AdvanceTermModal
+                        open={advanceTermModalIsShowing}
+                        onClose={() => this.toggleAdvanceTermModal(false)}
+                        termSchedule={activeTermSchedule}
+                    />
+                )}
+            </Grid>
+        );
+    };
+
     render() {
         const { activeTermSchedule, user } = this.props;
-        const { advanceTermModalIsShowing } = this.state;
-
+        const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
         const activeStepIndex = steps.findIndex(
             step => step.identifier === activeTermSchedule.status
         );
-
-        const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
-        const canAdvanceTermSchedule =
-            canMutateTermSchedule &&
-            activeTermSchedule.status !== TERM_STATUSES.PUBLISHED.identifier &&
-            activeTermSchedule.status !== TERM_STATUSES.ARCHIVED.identifier;
 
         const isArchived =
             activeTermSchedule.status === TERM_STATUSES.ARCHIVED.identifier;
@@ -57,25 +122,18 @@ class BaseOverviewCard extends Component {
 
                         {isArchived && (
                             <Grid item>
-                                <Typography variant="subheading" color="textSecondary">
-                                    This term has been archived{" "}
-                                    and is only available for viewing
+                                <Typography
+                                    variant="subheading"
+                                    color="textSecondary"
+                                >
+                                    This term has been archived and is only
+                                    available for viewing
                                 </Typography>
                             </Grid>
                         )}
 
-                        {canAdvanceTermSchedule && (
-                            <Grid item>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    onClick={() =>
-                                        this.toggleAdvanceTermModal(true)
-                                    }
-                                >
-                                    Proceed to get faculty availability
-                                </Button>
-                            </Grid>
+                        {canMutateTermSchedule && (
+                            <Grid item>{this.renderButtons()}</Grid>
                         )}
                     </Grid>
                 </Toolbar>
@@ -87,14 +145,6 @@ class BaseOverviewCard extends Component {
                             </Step>
                         ))}
                     </Stepper>
-                )}
-
-                {canAdvanceTermSchedule && (
-                    <AdvanceTermModal
-                        open={advanceTermModalIsShowing}
-                        onClose={() => this.toggleAdvanceTermModal(false)}
-                        termSchedule={activeTermSchedule}
-                    />
                 )}
             </Card>
         );
