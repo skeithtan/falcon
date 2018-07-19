@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Divider from "@material-ui/core/Divider";
+import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
@@ -110,7 +111,14 @@ class BaseFacultyListItemMenu extends Component {
                     onClick={() => this.toggleFacultyAvailabilityModal(true)}
                     disabled={!canViewTimeAvailability}
                 >
-                    View time availability
+                    <ListItemText
+                        primary="View time availability"
+                        secondary={
+                            canViewTimeAvailability
+                                ? null
+                                : "Faculty has not submitted their time availability"
+                        }
+                    />
                 </MenuItem>
                 <MenuItem
                     onClick={this.handleClose}
