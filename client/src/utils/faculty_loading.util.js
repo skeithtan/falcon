@@ -1,5 +1,5 @@
 import moment from "moment";
-import { TERMS, MEETING_DAYS } from "../enums/class.enums";
+import { TERMS, MEETING_DAYS, MEETING_HOURS } from "../enums/class.enums";
 
 const now = moment();
 
@@ -67,3 +67,41 @@ export const mapClassScheduleToGraphQLInput = ({
     section,
     faculty: faculty === "" ? null : faculty,
 });
+
+export const isThirdConsecutive = (
+    assignedClasses,
+    { meetingHours, meetingDays }
+) => {
+    // The first two meeting hours means it is never the third consecutive
+    if (meetingHours === "7-9" || meetingHours === "9-11") {
+        return false;
+    }
+
+    const assignedHoursForDay = assignedClasses
+        // Get only classes from the day itself
+        .filter(item => item.meetingDays === meetingDays)
+        // Get only the meeting hours of these classes
+        .map(item => item.meetingHours);
+
+    const twoMeetingHoursBefore = getTwoMeetingHoursBefore(meetingHours);
+    return twoMeetingHoursBefore.every(
+        hours => assignedHoursForDay.includes(hours)
+    );
+};
+
+const getTwoMeetingHoursBefore = meetingHours => {
+    const allMeetingHours = Object.values(MEETING_HOURS).map(
+        item => item.identifier
+    );
+    const candidateIndex = allMeetingHours.indexOf(meetingHours);
+
+    // Ensure this is at least the third or above, else null
+    if (candidateIndex < 2) {
+        return null;
+    }
+
+    return [
+        allMeetingHours[candidateIndex - 1],
+        allMeetingHours[candidateIndex - 2],
+    ];
+};
