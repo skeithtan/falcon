@@ -27,6 +27,7 @@ class BaseFacultyListItem extends Component {
 
         const { min, max } = EMPLOYMENT[faculty.employment].load;
 
+        const isUnassigned = assignedClassesCount === 0;
         const isUnderloaded = assignedClassesCount < min;
         const isOverloaded = assignedClassesCount > max;
         const isMaximum = assignedClassesCount === max;
@@ -42,42 +43,59 @@ class BaseFacultyListItem extends Component {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    {isUnderloaded && (
-                        <StatusChip
-                            color="yellow"
-                            label={`
+                    <Grid container spacing={8} direction="row" wrap="nowrap">
+                        {isUnassigned && (
+                            <Grid item>
+                                <StatusChip color="red" label="Unassigned" />
+                            </Grid>
+                        )}
+
+                        {!isUnassigned &&
+                            isUnderloaded && (
+                                <Grid item>
+                                    <StatusChip
+                                        color="yellow"
+                                        label={`
                                 ${min - assignedClassesCount} 
                                 ${getLoadString(min - assignedClassesCount)} 
                                 under
                             `}
-                        />
-                    )}
+                                    />
+                                </Grid>
+                            )}
 
-                    {isWithinRange && (
-                        <StatusChip
-                            color="green"
-                            label={`
+                        {isWithinRange && (
+                            <Grid item>
+                                <StatusChip
+                                    color="green"
+                                    label={`
                                 ${max - assignedClassesCount}
                                 ${getLoadString(max - assignedClassesCount)}
                                 to limit
                             `}
-                        />
-                    )}
+                                />
+                            </Grid>
+                        )}
 
-                    {isMaximum && (
-                        <StatusChip color="green" label={`Full load`} />
-                    )}
+                        {isMaximum && (
+                            <Grid item>
+                                <StatusChip color="green" label={`Full load`} />
+                            </Grid>
+                        )}
 
-                    {isOverloaded && (
-                        <StatusChip
-                            color="red"
-                            label={`
+                        {isOverloaded && (
+                            <Grid item>
+                                <StatusChip
+                                    color="red"
+                                    label={`
                             ${assignedClassesCount - max}
                             ${getLoadString(assignedClassesCount - max)}
                                 over limit
                          `}
-                        />
-                    )}
+                                />
+                            </Grid>
+                        )}
+                    </Grid>
                 </Grid>
             </Grid>
         );
