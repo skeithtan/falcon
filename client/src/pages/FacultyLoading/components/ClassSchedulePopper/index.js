@@ -1,28 +1,32 @@
-import React, { Component, Fragment } from "react";
-import Button from "@material-ui/core/Button";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import Popover from "@material-ui/core/Popover";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import OpenInNewIcon from "@material-ui/icons/OpenInNew";
-import { FacultyChip } from "../../../../components/FacultyChip";
 import {
     MEETING_DAYS,
     MEETING_HOURS,
     TERM_STATUSES,
 } from "../../../../enums/class.enums";
-import { wrap } from "./wrapper";
-import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
-import { makeURL } from "../../../../utils/url.util";
-import { ClassScheduleModal } from "../modals/ClassScheduleModal";
-import { CompatibilityDisplay } from "../CompatibilityDisplay";
+import React, { Component, Fragment } from "react";
 
-class BaseClassSchedulePopover extends Component {
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import { ClassScheduleModal } from "../modals/ClassScheduleModal";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Collapse from "@material-ui/core/Collapse";
+import { CompatibilityDisplay } from "../CompatibilityDisplay";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { FacultyChip } from "../../../../components/FacultyChip";
+import Grid from "@material-ui/core/Grid";
+import Grow from "@material-ui/core/Grow";
+import IconButton from "@material-ui/core/IconButton";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
+import Popper from "@material-ui/core/Popper";
+import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
+import { makeURL } from "../../../../utils/url.util";
+import { wrap } from "./wrapper";
+
+class BaseClassSchedulePopper extends Component {
     state = {
         removeClassScheduleModalIsShowing: false,
         updateClassScheduleModalIsShowing: false,
@@ -216,11 +220,8 @@ class BaseClassSchedulePopover extends Component {
         ].includes(termSchedule.status);
     }
 
-    render() {
+    renderPopperContent = () => {
         const {
-            open,
-            onClose,
-            anchorEl,
             classes,
             classSchedule,
             subject,
@@ -235,12 +236,7 @@ class BaseClassSchedulePopover extends Component {
         } = this.state;
 
         return (
-            <Popover
-                open={open}
-                onClose={onClose}
-                anchorEl={anchorEl}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            >
+            <Fragment>
                 <CardContent className={classes.popoverContainer}>
                     <Grid
                         container
@@ -286,9 +282,36 @@ class BaseClassSchedulePopover extends Component {
                             termSchedule={termSchedule}
                         />
                     )}
-            </Popover>
+            </Fragment>
+        );
+    };
+
+    render() {
+        const { open, anchorEl, onClose } = this.props;
+        return (
+            <Popper
+                open={open}
+                anchorEl={anchorEl}
+                placement="right"
+                transition
+            >
+                {({ TransitionProps }) => (
+                    <Grow {...TransitionProps} timeout={250}>
+                        <Card>
+                            <ClickAwayListener
+                                onClickAway={() => {
+                                    console.log("Clicked away");
+                                    onClose();
+                                }}
+                            >
+                                {this.renderPopperContent()}
+                            </ClickAwayListener>
+                        </Card>
+                    </Grow>
+                )}
+            </Popper>
         );
     }
 }
 
-export const ClassSchedulePopover = wrap(BaseClassSchedulePopover);
+export const ClassSchedulePopper = wrap(BaseClassSchedulePopper);

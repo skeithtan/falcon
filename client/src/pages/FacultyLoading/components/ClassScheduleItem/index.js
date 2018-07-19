@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import { findDOMNode } from "react-dom";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Popover from "@material-ui/core/Popover";
-import IncompatibleIcon from "@material-ui/icons/Error";
-import { UserChip } from "../../../../components/UserChip";
-import { ClassSchedulePopover } from "../ClassSchedulePopover";
+
+import { ClassSchedulePopper } from "../ClassSchedulePopper";
 import { CompatibilityDisplay } from "../CompatibilityDisplay";
-import { wrap } from "./wrapper";
+import Grid from "@material-ui/core/Grid";
+import IncompatibleIcon from "@material-ui/icons/Error";
+import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
+import { UserChip } from "../../../../components/UserChip";
 import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
+import { findDOMNode } from "react-dom";
+import { wrap } from "./wrapper";
 
 class BaseClassScheduleItem extends Component {
     state = {
-        classSchedulePopoverAnchorEl: null,
+        classSchedulePopperAnchorEl: null,
         coordinates: null,
     };
 
@@ -40,14 +41,14 @@ class BaseClassScheduleItem extends Component {
         }
     }
 
-    handleClassSchedulePopoverOpen = event =>
+    handleclassSchedulePopperOpen = event =>
         this.setState({
-            classSchedulePopoverAnchorEl: event.currentTarget,
+            classSchedulePopperAnchorEl: event.currentTarget,
         });
 
-    handleClassSchedulePopoverClose = () =>
+    handleclassSchedulePopperClose = () =>
         this.setState({
-            classSchedulePopoverAnchorEl: null,
+            classSchedulePopperAnchorEl: null,
         });
 
     handleCompatibilityDisplayOpen = event => {
@@ -65,16 +66,16 @@ class BaseClassScheduleItem extends Component {
         });
     };
 
-    renderClassSchedulePopover = () => {
-        const { classSchedulePopoverAnchorEl } = this.state;
+    renderclassSchedulePopper = () => {
+        const { classSchedulePopperAnchorEl } = this.state;
         const { classSchedule, faculty, subject, termSchedule } = this.props;
         const compatibility = this.compatibilityWithAssignedFaculty;
 
         return (
-            <ClassSchedulePopover
-                open={Boolean(classSchedulePopoverAnchorEl)}
-                anchorEl={classSchedulePopoverAnchorEl}
-                onClose={this.handleClassSchedulePopoverClose}
+            <ClassSchedulePopper
+                open={Boolean(classSchedulePopperAnchorEl)}
+                anchorEl={classSchedulePopperAnchorEl}
+                onClose={this.handleclassSchedulePopperClose}
                 classSchedule={classSchedule}
                 faculty={faculty}
                 subject={subject}
@@ -187,7 +188,7 @@ class BaseClassScheduleItem extends Component {
     };
 
     render() {
-        const { classSchedulePopoverAnchorEl } = this.state;
+        const { classSchedulePopperAnchorEl } = this.state;
         const {
             classSchedule,
             faculty,
@@ -205,7 +206,7 @@ class BaseClassScheduleItem extends Component {
                 : classes.classScheduleWithoutFaculty
         );
 
-        if (classSchedulePopoverAnchorEl) {
+        if (classSchedulePopperAnchorEl) {
             containerClasses.push("selected");
         }
 
@@ -220,7 +221,7 @@ class BaseClassScheduleItem extends Component {
                     spacing={16}
                     direction="column"
                     ref={ref => (this.gridRef = ref)}
-                    onClick={this.handleClassSchedulePopoverOpen}
+                    onClick={this.handleclassSchedulePopperOpen}
                 >
                     <Grid item>
                         <Typography variant="body2" color="inherit">
@@ -236,7 +237,7 @@ class BaseClassScheduleItem extends Component {
                     )}
                 </Grid>
 
-                {this.renderClassSchedulePopover()}
+                {this.renderclassSchedulePopper()}
                 {this.renderCompatibilityPopover()}
             </div>
         );

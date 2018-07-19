@@ -1,14 +1,19 @@
 import React, { Component, Fragment } from "react";
+
 import Divider from "@material-ui/core/Divider";
 import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { TERM_STATUSES } from "../../../../enums/class.enums";
-import { FeedbackDisplay } from "../FeedbackDisplay";
-import { RemoveFacultyModal } from "../modals/RemoveFacultyModal";
-import { FacultyAvailabilityModal } from "../modals/FacultyAvailabilityModal";
-import { makeURL } from "../../../../utils/url.util";
+
 import { wrap } from "./wrapper";
+
+import { FeedbackDisplay } from "../FeedbackDisplay";
+
+import { TERM_STATUSES } from "../../../../enums/class.enums";
+import { makeURL } from "../../../../utils/url.util";
+
+import { FacultyAvailabilityModal } from "../modals/FacultyAvailabilityModal";
+import { RemoveFacultyModal } from "../modals/RemoveFacultyModal";
 
 class BaseFacultyListItemMenu extends Component {
     state = {
