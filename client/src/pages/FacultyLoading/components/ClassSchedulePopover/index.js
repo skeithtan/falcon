@@ -130,6 +130,7 @@ class BaseClassSchedulePopover extends Component {
 
     renderFaculty = () => {
         const {
+            user,
             classes,
             faculty,
             onRemoveFacultyFromClassSchedule,
@@ -165,7 +166,10 @@ class BaseClassSchedulePopover extends Component {
                         <FacultyChip
                             clickable
                             faculty={faculty}
-                            showDeleteButton={this.canMutateClassSchedule}
+                            showDeleteButton={
+                                this.termStatusAllowsMutation &&
+                                user.permissions.MUTATE_TERM_SCHEDULE
+                            }
                             handleDelete={() =>
                                 onRemoveFacultyFromClassSchedule(
                                     termSchedule,
@@ -204,7 +208,7 @@ class BaseClassSchedulePopover extends Component {
         return termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
     }
 
-    get canMutateClassSchedule() {
+    get termStatusAllowsMutation() {
         const { termSchedule } = this.props;
         return [
             TERM_STATUSES.INITIALIZING.identifier,
@@ -222,6 +226,7 @@ class BaseClassSchedulePopover extends Component {
             subject,
             termSchedule,
             compatibility,
+            user,
         } = this.props;
 
         const {
@@ -252,9 +257,10 @@ class BaseClassSchedulePopover extends Component {
 
                 {compatibility && this.renderCompatibility()}
 
-                {this.canMutateClassSchedule && (
-                    <CardActions>{this.renderButtons()}</CardActions>
-                )}
+                {this.termStatusAllowsMutation &&
+                    user.permissions.POPULATE_TERM_SCHEDULES && (
+                        <CardActions>{this.renderButtons()}</CardActions>
+                    )}
 
                 {this.shouldShowRemoveTermSchedule && (
                     <RemoveClassScheduleModal
@@ -268,17 +274,18 @@ class BaseClassSchedulePopover extends Component {
                     />
                 )}
 
-                {this.canMutateClassSchedule && (
-                    <ClassScheduleModal
-                        action="update"
-                        open={updateClassScheduleModalIsShowing}
-                        onClose={() =>
-                            this.toggleUpdateClassScheduleModal(false)
-                        }
-                        classSchedule={classSchedule}
-                        termSchedule={termSchedule}
-                    />
-                )}
+                {this.termStatusAllowsMutation &&
+                    user.permissions.POPULATE_TERM_SCHEDULES && (
+                        <ClassScheduleModal
+                            action="update"
+                            open={updateClassScheduleModalIsShowing}
+                            onClose={() =>
+                                this.toggleUpdateClassScheduleModal(false)
+                            }
+                            classSchedule={classSchedule}
+                            termSchedule={termSchedule}
+                        />
+                    )}
             </Popover>
         );
     }

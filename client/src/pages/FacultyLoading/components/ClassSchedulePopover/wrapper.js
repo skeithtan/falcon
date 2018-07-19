@@ -8,6 +8,10 @@ import { termScheduleIsUpdated } from "../../../../redux/actions/faculty_loading
 import { toastIsShowing } from "../../../../redux/actions/toast.actions";
 import { mapClassScheduleToGraphQLInput } from "../../../../utils/faculty_loading.util";
 
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     onRemoveFacultyFromClassSchedule(termSchedule, classSchedule) {
         const newClassSchedule = {
@@ -58,7 +62,7 @@ const mapDispatchToProps = dispatch => ({
 
 export const wrap = compose(
     connect(
-        null,
+        mapStateToProps,
         mapDispatchToProps
     ),
     withStyles(styles),

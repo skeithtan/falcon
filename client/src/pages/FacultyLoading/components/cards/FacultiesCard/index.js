@@ -68,8 +68,11 @@ class BaseFacultiesCard extends Component {
     );
 
     get canSchedule() {
-        const { termSchedule } = this.props;
-        return termSchedule.status === TERM_STATUSES.SCHEDULING.identifier;
+        const { termSchedule, user } = this.props;
+        return (
+            termSchedule.status === TERM_STATUSES.SCHEDULING.identifier &&
+            user.permissions.MUTATE_TERM_SCHEDULES
+        );
     }
 
     renderList = facultyResponses => (

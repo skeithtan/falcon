@@ -79,6 +79,7 @@ class BaseFacultyListItemMenu extends Component {
             open,
             history,
             faculty,
+            user
         } = this.props;
 
         const canViewTimeAvailability = facultyResponse.availability !== null;
@@ -126,10 +127,16 @@ class BaseFacultyListItemMenu extends Component {
                 >
                     View individual schedule
                 </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => this.toggleRemoveFacultyModal(true)}>
-                    Remove this faculty from this term
-                </MenuItem>
+                {user.permissions.POPULATE_TERM_SCHEDULES && (
+                    <Fragment>
+                        <Divider />
+                        <MenuItem
+                            onClick={() => this.toggleRemoveFacultyModal(true)}
+                        >
+                            Remove faculty from this term
+                        </MenuItem>
+                    </Fragment>
+                )}
                 {this.renderRemoveFacultyModal()}
                 {facultyResponse.availability &&
                     this.renderFacultyAvailabilityModal()}
