@@ -95,13 +95,6 @@ export const computeFacultyClassCompatibility = (
         },
     },
     {
-        criteria: "Faculty is not at full load",
-        get verdict() {
-            const { max } = EMPLOYMENT[faculty.employment].load;
-            return assignedClasses.length < max;
-        },
-    },
-    {
         criteria: "Class is not the third consecutive",
         get verdict() {
             const { meetingHours, meetingDays } = classSchedule;
@@ -127,7 +120,7 @@ export const computeFacultyClassCompatibility = (
         },
     },
     {
-        criteria: "Class is the only class for this time slot",
+        criteria: "Does not conflict with other classes",
         get verdict() {
             const { meetingDays, meetingHours } = classSchedule;
 
