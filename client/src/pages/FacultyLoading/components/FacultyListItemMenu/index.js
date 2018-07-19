@@ -4,9 +4,10 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { FeedbackDisplay } from "../FeedbackDisplay";
-import { wrap } from "./wrapper";
 import { RemoveFacultyModal } from "../modals/RemoveFacultyModal";
 import { FacultyAvailabilityModal } from "../modals/FacultyAvailabilityModal";
+import { makeURL } from "../../../../utils/url.util";
+import { wrap } from "./wrapper";
 
 class BaseFacultyListItemMenu extends Component {
     state = {
@@ -75,6 +76,8 @@ class BaseFacultyListItemMenu extends Component {
             termSchedule,
             onClose,
             open,
+            history,
+            faculty,
         } = this.props;
 
         const canViewTimeAvailability = facultyResponse.availability !== null;
@@ -89,6 +92,19 @@ class BaseFacultyListItemMenu extends Component {
                 classes={{ paper: classes.menuContainer }}
             >
                 {facultyResponse.feedback && this.renderFeedback()}
+
+                <MenuItem
+                    onClick={() =>
+                        history.push(
+                            makeURL()
+                                .facultyProfiles()
+                                .selectFaculty(faculty._id)
+                                .build()
+                        )
+                    }
+                >
+                    Visit profile
+                </MenuItem>
 
                 <MenuItem
                     onClick={() => this.toggleFacultyAvailabilityModal(true)}
@@ -107,7 +123,8 @@ class BaseFacultyListItemMenu extends Component {
                     Remove this faculty from this term
                 </MenuItem>
                 {this.renderRemoveFacultyModal()}
-                {facultyResponse.availability && this.renderFacultyAvailabilityModal()}
+                {facultyResponse.availability &&
+                    this.renderFacultyAvailabilityModal()}
             </Menu>
         );
     }
