@@ -23,19 +23,20 @@ class CompatibilityItem extends PureComponent {
         ];
 
         return (
-            <Grid
-                container
-                spacing={16}
-                className={rootClasses.join(" ")}
-                direction="row"
-                alignItems="center"
-                wrap="nowrap"
-            >
-                <Grid item>{this.renderIcon()}</Grid>
-                <Grid item>
-                    <Typography color="inherit">{label}</Typography>
+            <div className={rootClasses.join(" ")}>
+                <Grid
+                    container
+                    spacing={16}
+                    direction="row"
+                    alignItems="center"
+                    wrap="nowrap"
+                >
+                    <Grid item>{this.renderIcon()}</Grid>
+                    <Grid item xs>
+                        <Typography color="inherit">{label}</Typography>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         );
     }
 }
@@ -45,7 +46,6 @@ class BaseCompatibilityDisplay extends PureComponent {
         const { classes, compatibility } = this.props;
         return (
             <Grid
-                spacing={8}
                 container
                 alignItems="stretch"
                 direction="column"

@@ -11,7 +11,7 @@ export const styles = theme => ({
         paddingTop: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
         paddingLeft: theme.spacing.unit * 3,
-        paddingRight: theme.spacing.unit * 4,
+        paddingRight: theme.spacing.unit * 3,
     },
     compatibleItem: {
         background: lighten(Green["400"], 0.9),
