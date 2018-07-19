@@ -8,10 +8,10 @@ export const styles = theme => ({
         height: 32,
     },
     item: {
-        paddingLeft: theme.spacing.unit * 4,
+        paddingTop: theme.spacing.unit,
+        paddingBottom: theme.spacing.unit,
+        paddingLeft: theme.spacing.unit * 3,
         paddingRight: theme.spacing.unit * 4,
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
     },
     compatibleItem: {
         background: lighten(Green["400"], 0.9),
