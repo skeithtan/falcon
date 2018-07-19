@@ -222,7 +222,6 @@ class BaseClassSchedulePopper extends Component {
 
     renderPopperContent = () => {
         const {
-            classes,
             classSchedule,
             subject,
             termSchedule,
@@ -237,7 +236,7 @@ class BaseClassSchedulePopper extends Component {
 
         return (
             <Fragment>
-                <CardContent className={classes.popoverContainer}>
+                <CardContent>
                     <Grid
                         container
                         spacing={24}
@@ -287,7 +286,7 @@ class BaseClassSchedulePopper extends Component {
     };
 
     render() {
-        const { open, anchorEl, onClose } = this.props;
+        const { classes, open, anchorEl, onClose } = this.props;
         return (
             <Popper
                 open={open}
@@ -297,7 +296,7 @@ class BaseClassSchedulePopper extends Component {
             >
                 {({ TransitionProps }) => (
                     <Grow {...TransitionProps} timeout={250}>
-                        <Card>
+                        <Card className={classes.popperContainer}>
                             <ClickAwayListener
                                 onClickAway={() => {
                                     console.log("Clicked away");

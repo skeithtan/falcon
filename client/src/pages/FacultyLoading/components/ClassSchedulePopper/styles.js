@@ -1,7 +1,8 @@
 export const styles = theme => ({
-    popoverContainer: {
-        minWdith: 256,
-        maxWidth: 280,
+    popperContainer: {
+        minWdith: 280,
+        maxWidth: 320,
+        boxShadow: theme.shadows[10]
     },
     facultyChipWrapper: {
         display: "inline-block",
