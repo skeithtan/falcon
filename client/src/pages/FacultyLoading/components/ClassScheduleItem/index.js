@@ -7,40 +7,7 @@ import { UserChip } from "../../../../components/UserChip";
 import { ClassSchedulePopover } from "../ClassSchedulePopover";
 import { CompatibilityDisplay } from "../CompatibilityDisplay";
 import { wrap } from "./wrapper";
-
-class CompatibilityPopover extends Component {
-    render() {
-        const {
-            open,
-            anchorPosition,
-            faculty,
-            assignedClasses,
-            classSchedule,
-            availability,
-        } = this.props;
-
-        return (
-            <Popover
-                open={open}
-                anchorPosition={anchorPosition}
-                anchorReference="anchorPosition"
-                style={{ pointerEvents: "none" }}
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
-                disableRestoreFocus
-            >
-                <CompatibilityDisplay
-                    faculty={faculty}
-                    assignedClasses={assignedClasses}
-                    classSchedule={classSchedule}
-                    availability={availability}
-                />
-            </Popover>
-        );
-    }
-}
+import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
 
 class BaseClassScheduleItem extends Component {
     state = {
@@ -100,6 +67,7 @@ class BaseClassScheduleItem extends Component {
     renderClassSchedulePopover = () => {
         const { classSchedulePopoverAnchorEl } = this.state;
         const { classSchedule, faculty, subject, termSchedule } = this.props;
+        const compatibility = this.compatibilityWithAssignedFaculty;
 
         return (
             <ClassSchedulePopover
@@ -110,14 +78,39 @@ class BaseClassScheduleItem extends Component {
                 faculty={faculty}
                 subject={subject}
                 termSchedule={termSchedule}
+                compatibility={compatibility}
             />
+        );
+    };
+
+    get compatibilityWithAssignedFaculty() {
+        const {
+            faculty,
+            classSchedule,
+            termSchedule,
+        } = this.props;
+
+        if (!faculty) {
+            return null;
+        }
+
+        const assignedClasses = termSchedule.classes.filter(
+            item => item.faculty === faculty._id
+        );
+
+        const response = termSchedule.facultyPool.find(response => response.faculty === faculty._id);
+
+        return computeFacultyClassCompatibility(
+            faculty,
+            assignedClasses,
+            classSchedule,
+            response.availability
         );
     };
 
     renderCompatibilityPopover = () => {
         const {
             classSchedule,
-            subject,
             termSchedule,
             hovering: { faculty, availability },
             isOver,
@@ -133,19 +126,34 @@ class BaseClassScheduleItem extends Component {
             item => item.faculty === faculty._id
         );
 
+        const compatibility = computeFacultyClassCompatibility(
+            faculty,
+            assignedClasses,
+            classSchedule,
+            availability
+        );
+
+        const anchorPosition = {
+            left: coordinates.x - 16, // Offset to box
+            top: coordinates.y,
+        };
+
+        const transformOrigin = {
+            vertical: "top",
+            horizontal: "right",
+        };
+
         return (
-            <CompatibilityPopover
+            <Popover
                 open={isOver}
-                anchorPosition={{
-                    left: coordinates.x - 16, // Offset to box
-                    top: coordinates.y,
-                }}
-                faculty={faculty}
-                subject={subject}
-                availability={availability}
-                assignedClasses={assignedClasses}
-                classSchedule={classSchedule}
-            />
+                anchorPosition={anchorPosition}
+                anchorReference="anchorPosition"
+                style={{ pointerEvents: "none" }}
+                transformOrigin={transformOrigin}
+                disableRestoreFocus
+            >
+                <CompatibilityDisplay compatibility={compatibility} />
+            </Popover>
         );
     };
 
