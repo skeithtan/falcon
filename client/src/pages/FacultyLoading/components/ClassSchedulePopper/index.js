@@ -172,7 +172,7 @@ class BaseClassSchedulePopper extends Component {
                             faculty={faculty}
                             showDeleteButton={
                                 this.termStatusAllowsMutation &&
-                                user.permissions.MUTATE_TERM_SCHEDULE
+                                user.permissions.MUTATE_TERM_SCHEDULES
                             }
                             handleDelete={() =>
                                 onRemoveFacultyFromClassSchedule(
