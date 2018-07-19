@@ -20,7 +20,7 @@ class BaseFacultyListItem extends Component {
         return null; // TODO
     };
 
-    renderSchedulingInfo = (faculty, facultyResponse, termSchedule) => {
+    renderSchedulingInfo = (faculty, termSchedule) => {
         const assignedClassesCount = termSchedule.classes.filter(
             classSchedule => classSchedule.faculty === faculty._id
         ).length;
@@ -36,66 +36,59 @@ class BaseFacultyListItem extends Component {
         const getLoadString = number => (number === 1 ? "load" : "loads");
 
         return (
-            <Grid container direction="column" wrap="nowrap">
+            <Grid
+                container
+                direction="column"
+                alignItems="stretch"
+                wrap="nowrap"
+            >
                 <Grid item>
                     <Typography variant="body2">
                         {this.facultyFullname}
                     </Typography>
                 </Grid>
-                <Grid item>
-                    <Grid container spacing={8} direction="row" wrap="nowrap">
-                        {isUnassigned && (
-                            <Grid item>
-                                <StatusChip color="red" label="Unassigned" />
-                            </Grid>
-                        )}
+                <Grid item xs>
+                    {isUnassigned && (
+                        <StatusChip color="red" label="Unassigned" />
+                    )}
 
-                        {!isUnassigned &&
-                            isUnderloaded && (
-                                <Grid item>
-                                    <StatusChip
-                                        color="yellow"
-                                        label={`
+                    {!isUnassigned &&
+                        isUnderloaded && (
+                            <StatusChip
+                                color="yellow"
+                                label={`
                                 ${min - assignedClassesCount} 
                                 ${getLoadString(min - assignedClassesCount)} 
                                 under
                             `}
-                                    />
-                                </Grid>
-                            )}
-
-                        {isWithinRange && (
-                            <Grid item>
-                                <StatusChip
-                                    color="green"
-                                    label={`
-                                ${max - assignedClassesCount}
-                                ${getLoadString(max - assignedClassesCount)}
-                                to limit
-                            `}
-                                />
-                            </Grid>
+                            />
                         )}
 
-                        {isMaximum && (
-                            <Grid item>
-                                <StatusChip color="green" label={`Full load`} />
-                            </Grid>
-                        )}
+                    {isWithinRange && (
+                        <StatusChip
+                            color="green"
+                            label={`
+                        ${max - assignedClassesCount}
+                        ${getLoadString(max - assignedClassesCount)}
+                        to limit
+                    `}
+                        />
+                    )}
 
-                        {isOverloaded && (
-                            <Grid item>
-                                <StatusChip
-                                    color="red"
-                                    label={`
-                            ${assignedClassesCount - max}
-                            ${getLoadString(assignedClassesCount - max)}
-                                over limit
-                         `}
-                                />
-                            </Grid>
-                        )}
-                    </Grid>
+                    {isMaximum && (
+                        <StatusChip color="green" label={`Full load`} />
+                    )}
+
+                    {isOverloaded && (
+                        <StatusChip
+                            color="red"
+                            label={`
+                   ${assignedClassesCount - max}
+                   ${getLoadString(assignedClassesCount - max)}
+                       over limit
+                `}
+                        />
+                    )}
                 </Grid>
             </Grid>
         );
@@ -159,11 +152,7 @@ class BaseFacultyListItem extends Component {
                     termSchedule
                 );
             default:
-                return this.renderSchedulingInfo(
-                    faculty,
-                    facultyResponse,
-                    termSchedule
-                );
+                return this.renderSchedulingInfo(faculty, termSchedule);
         }
     };
 

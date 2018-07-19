@@ -2,11 +2,13 @@ import React, { Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Popover from "@material-ui/core/Popover";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { FacultyChip } from "../../../../components/FacultyChip";
 import {
@@ -18,12 +20,19 @@ import { wrap } from "./wrapper";
 import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
 import { makeURL } from "../../../../utils/url.util";
 import { ClassScheduleModal } from "../modals/ClassScheduleModal";
+import { CompatibilityDisplay } from "../CompatibilityDisplay";
 
 class BaseClassSchedulePopover extends Component {
     state = {
         removeClassScheduleModalIsShowing: false,
         updateClassScheduleModalIsShowing: false,
+        expanded: false,
     };
+
+    handleExpandClick = shouldShow =>
+        this.setState({
+            expanded: shouldShow,
+        });
 
     toggleRemoveClassScheduleModal = shouldShow =>
         this.setState({
@@ -128,6 +137,8 @@ class BaseClassSchedulePopover extends Component {
             classSchedule,
         } = this.props;
 
+        const { expanded } = this.state;
+
         if (!faculty) {
             return (
                 <Typography color="textSecondary">
@@ -136,20 +147,55 @@ class BaseClassSchedulePopover extends Component {
             );
         }
 
+        const iconButtonClasses = [classes.expand];
+
+        if (expanded) {
+            iconButtonClasses.push(classes.expandOpen);
+        }
+
         return (
-            <div className={classes.facultyChipWrapper}>
-                <FacultyChip
-                    clickable
-                    faculty={faculty}
-                    showDeleteButton={this.canMutateClassSchedule}
-                    handleDelete={() =>
-                        onRemoveFacultyFromClassSchedule(
-                            termSchedule,
-                            classSchedule
-                        )
-                    }
-                />
-            </div>
+            <Grid
+                container
+                direction="row"
+                alignItems="center"
+                justify="space-between"
+            >
+                <Grid item xs>
+                    <div className={classes.facultyChipWrapper}>
+                        <FacultyChip
+                            clickable
+                            faculty={faculty}
+                            showDeleteButton={this.canMutateClassSchedule}
+                            handleDelete={() =>
+                                onRemoveFacultyFromClassSchedule(
+                                    termSchedule,
+                                    classSchedule
+                                )
+                            }
+                        />
+                    </div>
+                </Grid>
+                <Grid item>
+                    <IconButton
+                        className={iconButtonClasses.join(" ")}
+                        onClick={() => this.handleExpandClick(!expanded)}
+                        aria-expanded={expanded}
+                    >
+                        <ExpandMoreIcon />
+                    </IconButton>
+                </Grid>
+            </Grid>
+        );
+    };
+
+    renderCompatibility = () => {
+        const { compatibility } = this.props;
+        const { expanded } = this.state;
+
+        return (
+            <Collapse in={expanded} timeout="auto">
+                <CompatibilityDisplay compatibility={compatibility} />
+            </Collapse>
         );
     };
 
@@ -175,6 +221,7 @@ class BaseClassSchedulePopover extends Component {
             classSchedule,
             subject,
             termSchedule,
+            compatibility,
         } = this.props;
 
         const {
@@ -202,6 +249,8 @@ class BaseClassSchedulePopover extends Component {
                         <Grid item>{this.renderFaculty()}</Grid>
                     </Grid>
                 </CardContent>
+
+                {compatibility && this.renderCompatibility()}
 
                 {this.canMutateClassSchedule && (
                     <CardActions>{this.renderButtons()}</CardActions>
