@@ -1,11 +1,12 @@
-import React, { PureComponent } from "react";
+import React, { Fragment, PureComponent } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CompatibleIcon from "@material-ui/icons/Check";
 import IncompatibleIcon from "@material-ui/icons/ErrorOutline";
 import { EMPLOYMENT } from "../../../../enums/faculty.enums";
-import { wrap } from "./wrapper";
 import { Divider } from "../../../../../node_modules/@material-ui/core";
+import { isThirdConsecutive } from "../../../../utils/faculty_loading.util";
+import { wrap } from "./wrapper";
 
 class CompatibilityItem extends PureComponent {
     renderIcon = () => {
@@ -29,6 +30,7 @@ class CompatibilityItem extends PureComponent {
                 container
                 spacing={16}
                 className={rootClasses.join(" ")}
+                direction="row"
                 alignItems="center"
                 wrap="nowrap"
             >
@@ -36,7 +38,6 @@ class CompatibilityItem extends PureComponent {
                 <Grid item>
                     <Typography color="inherit">{label}</Typography>
                 </Grid>
-                <Divider />
             </Grid>
         );
     }
@@ -66,19 +67,37 @@ class BaseCompatibilityDisplay extends PureComponent {
     }
 
     get isNotThirdConsecutive() {
-        // TODO
-        return true;
+        const { assignedClasses, classSchedule } = this.props;
+        return !isThirdConsecutive(assignedClasses, classSchedule);
+    }
+
+    get isOnlySubjectForHours() {
+        const {
+            assignedClasses,
+            classSchedule: { meetingHours, meetingDays },
+        } = this.props;
+
+        return (
+            assignedClasses
+                // Get only assigned classes from that day
+                .filter(item => item.meetingDays === meetingDays)
+                // Ensure it's unique
+                .every(item => item.meetingHours !== meetingHours)
+        );
     }
 
     render() {
         const { classes } = this.props;
         return (
             <Grid
+                spacing={8}
                 container
-                alignItems="stretch"
+                // alignItems="stretch"
                 direction="column"
                 wrap="nowrap"
             >
+                <Grid item>
+                </Grid>
                 <Grid item>
                     <CompatibilityItem
                         classes={classes}
@@ -107,6 +126,14 @@ class BaseCompatibilityDisplay extends PureComponent {
                         isCompatible={this.isNotThirdConsecutive}
                     />
                 </Grid>
+                <Grid item>
+                    <CompatibilityItem
+                        classes={classes}
+                        label="Class is the only class for this time slot"
+                        isCompatible={this.isOnlySubjectForHours}
+                    />
+                </Grid>
+                <Grid item></Grid>
             </Grid>
         );
     }
