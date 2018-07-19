@@ -3,6 +3,7 @@ import { findDOMNode } from "react-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Popover from "@material-ui/core/Popover";
+import IncompatibleIcon from "@material-ui/icons/Error";
 import { UserChip } from "../../../../components/UserChip";
 import { ClassSchedulePopover } from "../ClassSchedulePopover";
 import { CompatibilityDisplay } from "../CompatibilityDisplay";
@@ -84,11 +85,7 @@ class BaseClassScheduleItem extends Component {
     };
 
     get compatibilityWithAssignedFaculty() {
-        const {
-            faculty,
-            classSchedule,
-            termSchedule,
-        } = this.props;
+        const { faculty, classSchedule, termSchedule } = this.props;
 
         if (!faculty) {
             return null;
@@ -98,7 +95,9 @@ class BaseClassScheduleItem extends Component {
             item => item.faculty === faculty._id
         );
 
-        const response = termSchedule.facultyPool.find(response => response.faculty === faculty._id);
+        const response = termSchedule.facultyPool.find(
+            response => response.faculty === faculty._id
+        );
 
         return computeFacultyClassCompatibility(
             faculty,
@@ -106,7 +105,7 @@ class BaseClassScheduleItem extends Component {
             classSchedule,
             response.availability
         );
-    };
+    }
 
     renderCompatibilityPopover = () => {
         const {
@@ -157,6 +156,36 @@ class BaseClassScheduleItem extends Component {
         );
     };
 
+    renderFacultyChip = () => {
+        const { faculty } = this.props;
+
+        const compatibility = this.compatibilityWithAssignedFaculty;
+        const isCompatible =
+            compatibility !== null &&
+            compatibility.every(item => item.isCompatible);
+
+        return (
+            <Grid
+                container
+                spacing={8}
+                direction="row"
+                wrap="nowrap"
+                alignItems="center"
+                justify="space-between"
+            >
+                <Grid item xs zeroMinWidth>
+                    <UserChip user={faculty.user} />
+                </Grid>
+
+                {!isCompatible && (
+                    <Grid item>
+                        <IncompatibleIcon color="error" />
+                    </Grid>
+                )}
+            </Grid>
+        );
+    };
+
     render() {
         const { classSchedulePopoverAnchorEl } = this.state;
         const {
@@ -169,6 +198,7 @@ class BaseClassScheduleItem extends Component {
         } = this.props;
 
         let containerClasses = [classes.classScheduleItemContainer];
+
         containerClasses.push(
             faculty
                 ? classes.classScheduleWithFaculty
@@ -188,6 +218,7 @@ class BaseClassScheduleItem extends Component {
                 <Grid
                     container
                     spacing={16}
+                    direction="column"
                     ref={ref => (this.gridRef = ref)}
                     onClick={this.handleClassSchedulePopoverOpen}
                 >
@@ -199,10 +230,9 @@ class BaseClassScheduleItem extends Component {
                             {classSchedule.room}
                         </Typography>
                     </Grid>
-                    {faculty && (
-                        <Grid item zeroMinWidth>
-                            <UserChip user={faculty.user} />
-                        </Grid>
+
+                    {faculty !== null && (
+                        <Grid item>{this.renderFacultyChip()}</Grid>
                     )}
                 </Grid>
 
