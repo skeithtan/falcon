@@ -265,11 +265,11 @@ export const mutationResolvers = {
         action: "Mutate subject",
     }),
     addTermSchedule: limitAccess(addTermSchedule, {
-        allowed: [DEAN, ASSOCIATE_DEAN],
+        allowed: [ASSOCIATE_DEAN],
         action: "Add termSchedule",
     }),
     termSchedule: limitAccess(mutateTerm, {
-        allowed: [CLERK, DEAN, ASSOCIATE_DEAN],
+        allowed: [CLERK, ASSOCIATE_DEAN],
         action: "Mutate termSchedule",
     }),
     setFacultyAvailability: limitAccess(setFacultyAvailability, {
