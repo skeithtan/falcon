@@ -9,11 +9,7 @@ export const styles = theme => ({
             ...activeItem(theme),
             cursor: "grab",
             boxShadow: theme.shadows[2],
-
-            "& h3": {
-                fontWeight: theme.typography.fontWeightMedium,
-                color: theme.palette.primary.main,
-            },
+            color: theme.palette.primary.main,
         },
     },
 });

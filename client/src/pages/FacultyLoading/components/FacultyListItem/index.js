@@ -43,7 +43,7 @@ class BaseFacultyListItem extends Component {
                 wrap="nowrap"
             >
                 <Grid item>
-                    <Typography variant="body2">
+                    <Typography variant="body2" color="inherit">
                         {this.facultyFullname}
                     </Typography>
                 </Grid>

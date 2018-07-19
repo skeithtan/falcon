@@ -79,7 +79,7 @@ class BaseFacultyListItemMenu extends Component {
             open,
             history,
             faculty,
-            user
+            user,
         } = this.props;
 
         const canViewTimeAvailability = facultyResponse.availability !== null;
@@ -88,6 +88,7 @@ class BaseFacultyListItemMenu extends Component {
 
         return (
             <Menu
+                disableAutoFocusItem
                 anchorEl={anchorEl}
                 onClose={onClose}
                 open={open}
@@ -111,6 +112,9 @@ class BaseFacultyListItemMenu extends Component {
                 <MenuItem
                     onClick={() => this.toggleFacultyAvailabilityModal(true)}
                     disabled={!canViewTimeAvailability}
+                    className={
+                        canViewTimeAvailability ? null : classes.extraPadding
+                    }
                 >
                     <ListItemText
                         primary="View time availability"
@@ -121,12 +125,16 @@ class BaseFacultyListItemMenu extends Component {
                         }
                     />
                 </MenuItem>
-                <MenuItem
-                    onClick={this.handleClose}
-                    disabled={!canViewIndividualSchedule}
-                >
-                    View individual schedule
-                </MenuItem>
+
+                {termSchedule.status !==
+                    TERM_STATUSES.INITIALIZING.identifier && (
+                    <MenuItem
+                        onClick={this.handleClose}
+                        disabled={!canViewIndividualSchedule}
+                    >
+                        View individual schedule
+                    </MenuItem>
+                )}
                 {user.permissions.POPULATE_TERM_SCHEDULES && (
                     <Fragment>
                         <Divider />
