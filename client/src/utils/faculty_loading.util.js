@@ -1,6 +1,5 @@
 import moment from "moment";
 import { TERMS, MEETING_DAYS, MEETING_HOURS } from "../enums/class.enums";
-import { EMPLOYMENT } from "../enums/faculty.enums";
 
 const now = moment();
 
@@ -78,13 +77,13 @@ export const computeFacultyClassCompatibility = (
 ) => [
     {
         criteria: "Subject is faculty's expertise",
-        get verdict() {
+        get isCompatible() {
             return faculty.teachingSubjects.includes(classSchedule.subject);
         },
     },
     {
         criteria: "Faculty is available at this time",
-        get verdict() {
+        get isCompatible() {
             if (!availability) {
                 return false;
             }
@@ -96,7 +95,7 @@ export const computeFacultyClassCompatibility = (
     },
     {
         criteria: "Class is not the third consecutive",
-        get verdict() {
+        get isCompatible() {
             const { meetingHours, meetingDays } = classSchedule;
             // The first two meeting hours means it is never the third consecutive
             if (meetingHours === "7-9" || meetingHours === "9-11") {
@@ -121,7 +120,7 @@ export const computeFacultyClassCompatibility = (
     },
     {
         criteria: "Does not conflict with other classes",
-        get verdict() {
+        get isCompatible() {
             const { meetingDays, meetingHours } = classSchedule;
 
             return (
