@@ -14,7 +14,8 @@ const facultySource = {
 };
 
 const collect = (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
+    dragSource: connect.dragSource(),
+    dragPreview: connect.dragPreview(),
     canDrag: monitor.canDrag(),
 });
 

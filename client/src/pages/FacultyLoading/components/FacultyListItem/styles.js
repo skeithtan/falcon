@@ -13,4 +13,8 @@ export const styles = theme => ({
             color: theme.palette.primary.main,
         },
     },
+    dragDivWrapper: {
+        position: "absolute",
+        zIndex: -999
+    },
 });

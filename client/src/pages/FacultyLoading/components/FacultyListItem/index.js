@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -15,6 +14,7 @@ import { FacultyListItemMenu } from "../FacultyListItemMenu";
 import { InitializingInfo } from "./info/InitializingInfo";
 import { SchedulingInfo } from "./info/SchedulingInfo";
 import { FeedbackGatheringInfo } from "./info/FeedbackGatheringInfo";
+import { UserChip } from "../../../../components/UserChip";
 
 class BaseFacultyListItem extends Component {
     state = {
@@ -64,7 +64,8 @@ class BaseFacultyListItem extends Component {
         const {
             classes,
             faculty,
-            connectDragSource,
+            dragSource,
+            dragPreview,
             canDrag,
             facultyResponse,
             termSchedule,
@@ -77,7 +78,7 @@ class BaseFacultyListItem extends Component {
             rootClasses.push("canDrag");
         }
 
-        return connectDragSource(
+        return dragSource(
             <div>
                 <ListItem className={rootClasses.join(" ")}>
                     <ListItemAvatar>
@@ -92,6 +93,11 @@ class BaseFacultyListItem extends Component {
                         }
                         secondary={this.renderSecondary()}
                     />
+                    {dragPreview(
+                        <div className={classes.dragDivWrapper}>
+                            <UserChip user={faculty.user} />
+                        </div>
+                    )}
                     <ListItemSecondaryAction>
                         <IconButton onClick={this.handleMoreVertClick}>
                             <MoreVertIcon color="action" />
