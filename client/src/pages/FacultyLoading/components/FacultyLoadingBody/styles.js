@@ -21,5 +21,11 @@ export const styles = theme => ({
     },
     scheduleFacultiesContainer: {
         height: "100%",
+        display: "grid",
+        gridTemplateColumns: "280px auto",
+        gridGap: "16px",
+    },
+    height100: {
+        height: "100%",
     },
 });

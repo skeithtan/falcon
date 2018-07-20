@@ -1,7 +1,7 @@
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
 import { OverviewCard } from "../cards/OverviewCard";
 import { wrap } from "./wrapper";
 import { ScheduleCard } from "../cards/ScheduleCard";
@@ -20,27 +20,16 @@ class BaseFacultyLoadingBody extends Component {
         });
 
     renderScheduleFaculties = (activeTermSchedule, meetingDays) => (
-        <Grid
-            container
-            className={this.props.classes.scheduleFacultiesContainer}
-            spacing={16}
-            direction="row"
-            alignItems="stretch"
-            wrap="nowrap"
-        >
-            <Grid item xs={3} >
-                <FacultiesCard
-                    termSchedule={activeTermSchedule}
-                    meetingDays={meetingDays}
-                />
-            </Grid>
-            <Grid item xs={9} lg={11} xl={12}>
-                <ScheduleCard
-                    activeTermSchedule={activeTermSchedule}
-                    meetingDays={meetingDays}
-                />
-            </Grid>
-        </Grid>
+        <div className={this.props.classes.scheduleFacultiesContainer}>
+            <FacultiesCard
+                termSchedule={activeTermSchedule}
+                meetingDays={meetingDays}
+            />
+            <ScheduleCard
+                activeTermSchedule={activeTermSchedule}
+                meetingDays={meetingDays}
+            />
+        </div>
     );
 
     render() {
@@ -57,7 +46,8 @@ class BaseFacultyLoadingBody extends Component {
 
         const shouldShowAddClassSchedule =
             user.permissions.POPULATE_TERM_SCHEDULES &&
-            activeTermSchedule.status === TERM_STATUSES.INITIALIZING.identifier &&
+            activeTermSchedule.status ===
+                TERM_STATUSES.INITIALIZING.identifier &&
             faculties !== null &&
             subjects !== null &&
             activeTermSchedule !== null;
@@ -66,10 +56,8 @@ class BaseFacultyLoadingBody extends Component {
             <div className={classes.facultyLoadingBody}>
                 <div className={classes.cardsContainer}>
                     <Grid
+                        className={classes.height100}
                         container
-                        className={
-                            this.props.classes.scheduleFacultiesContainer
-                        }
                         spacing={16}
                         alignItems="stretch"
                         direction="column"
