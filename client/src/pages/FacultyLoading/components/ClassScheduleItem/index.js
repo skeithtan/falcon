@@ -222,6 +222,7 @@ class BaseClassScheduleItem extends Component {
                     direction="column"
                     ref={ref => (this.gridRef = ref)}
                     onClick={this.handleclassSchedulePopperOpen}
+                    wrap="nowrap"
                 >
                     <Grid item>
                         <Typography variant="body2" color="inherit">
