@@ -1,6 +1,6 @@
 import compose from "recompose/compose";
 import { connect } from "react-redux";
-import { advanceTermScheduleStatus } from "../../../../../services/classes/term_schedule.service";
+import { returnTermScheduleStatus } from "../../../../../services/classes/term_schedule.service";
 import { termScheduleIsUpdated } from "../../../../../redux/actions/faculty_loading.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
 
@@ -9,9 +9,9 @@ const mapDispatchToProps = dispatch => ({
         dispatch(toastIsShowing(message));
     },
 
-    onConfirmAdvance(termSchedule) {
-        return advanceTermScheduleStatus(termSchedule._id)
-            .then(result => result.data.termSchedule.status.advance)
+    onConfirmReturn(termSchedule) {
+        return returnTermScheduleStatus(termSchedule._id)
+            .then(result => result.data.termSchedule.status.return)
             .then(newStatus => {
                 dispatch(
                     termScheduleIsUpdated({

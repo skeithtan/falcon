@@ -11,6 +11,7 @@ import { termScheduleToString } from "../../../../../utils/faculty_loading.util"
 import { TERM_STATUSES } from "../../../../../enums/class.enums";
 import { wrap } from "./wrapper";
 import { AdvanceTermModal } from "../../modals/AdvanceTermModal";
+import { ReturnTermModal } from "../../modals/ReturnTermModal";
 
 const steps = Object.values(TERM_STATUSES)
     // Remove archived
@@ -54,20 +55,20 @@ class BaseOverviewCard extends Component {
             returnTermModalIsShowing,
         } = this.state;
 
-        const canReturnToPreviousState = ![
-            TERM_STATUSES.INITIALIZING.identifier,
-            TERM_STATUSES.PUBLISHED.identifier,
-            TERM_STATUSES.ARCHIVED.identifier,
+        const canReturnTermSchedule = [
+            TERM_STATUSES.SCHEDULING.identifier,
+            TERM_STATUSES.FEEDBACK_GATHERING.identifier,
         ].includes(activeTermSchedule.status);
 
-        const canAdvanceTermSchedule = ![
-            TERM_STATUSES.PUBLISHED.identifier,
-            TERM_STATUSES.ARCHIVED.identifier,
+        const canAdvanceTermSchedule = [
+            TERM_STATUSES.INITIALIZING.identifier,
+            TERM_STATUSES.SCHEDULING.identifier,
+            TERM_STATUSES.FEEDBACK_GATHERING.identifier,
         ].includes(activeTermSchedule.status);
 
         return (
             <Grid container spacing={16} direction="row" alignItems="center">
-                {canReturnToPreviousState && (
+                {canReturnTermSchedule && (
                     <Grid item>
                         <Button
                             variant="outlined"
@@ -79,23 +80,29 @@ class BaseOverviewCard extends Component {
                     </Grid>
                 )}
 
-                <Grid item>
-                    <Button
-                        variant="raised"
-                        color="primary"
-                        onClick={() => this.toggleAdvanceTermModal(true)}
-                    >
-                        {getAdvanceButtonMessage(activeTermSchedule.status)}
-                    </Button>
-                </Grid>
-
                 {canAdvanceTermSchedule && (
-                    <AdvanceTermModal
-                        open={advanceTermModalIsShowing}
-                        onClose={() => this.toggleAdvanceTermModal(false)}
-                        termSchedule={activeTermSchedule}
-                    />
+                    <Grid item>
+                        <Button
+                            variant="raised"
+                            color="primary"
+                            onClick={() => this.toggleAdvanceTermModal(true)}
+                        >
+                            {getAdvanceButtonMessage(activeTermSchedule.status)}
+                        </Button>
+                    </Grid>
                 )}
+
+                <AdvanceTermModal
+                    open={advanceTermModalIsShowing}
+                    onClose={() => this.toggleAdvanceTermModal(false)}
+                    termSchedule={activeTermSchedule}
+                />
+
+                <ReturnTermModal
+                    open={returnTermModalIsShowing}
+                    onClose={() => this.toggleReturnTermModal(false)}
+                    termSchedule={activeTermSchedule}
+                />
             </Grid>
         );
     };
@@ -137,6 +144,7 @@ class BaseOverviewCard extends Component {
                         )}
                     </Grid>
                 </Toolbar>
+
                 {!isArchived && (
                     <Stepper activeStep={activeStepIndex}>
                         {steps.map(({ identifier, name }) => (

@@ -39,14 +39,17 @@ const MODAL_CONTENT_FOR_TERM_STATUS = {
 };
 
 class BaseAdvanceTermModal extends ConfirmActionModal {
-    get dialogTitle() {
+    get modalContent() {
         const { termSchedule } = this.props;
-        return MODAL_CONTENT_FOR_TERM_STATUS[termSchedule.status].dialogTitle;
+        return MODAL_CONTENT_FOR_TERM_STATUS[termSchedule.status];
+    }
+
+    get dialogTitle() {
+        return this.modalContent ? this.modalContent.dialogTitle : "";
     }
 
     get dialogContent() {
-        const { termSchedule } = this.props;
-        return MODAL_CONTENT_FOR_TERM_STATUS[termSchedule.status].dialogContent;
+        return this.modalContent ? this.modalContent.dialogContent : "";
     }
 
     get buttonName() {
