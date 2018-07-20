@@ -13,9 +13,9 @@ const termScheduleToFacultyFormat = (termSchedule, faculty) => {
 
     const classes = termSchedule.classes
         // Remove all classes without faculties
-        .filter(assignedFaculty => assignedFaculty !== null)
+        .filter(classSchedule => classSchedule.faculty !== null)
         // Get only classes whose faculty is the current user
-        .filter(assignedFaculty => assignedFaculty._id === faculty._id);
+        .filter(classSchedule => String(classSchedule.faculty) === String(faculty._id));
 
     return {
         _id: termSchedule._id,
