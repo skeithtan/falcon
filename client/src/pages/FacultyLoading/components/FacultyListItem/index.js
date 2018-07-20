@@ -87,7 +87,11 @@ class BaseFacultyListItem extends Component {
                     <ListItemText
                         disableTypography
                         primary={
-                            <Typography variant="body2" color="inherit">
+                            <Typography
+                                variant="body2"
+                                color="inherit"
+                                className={classes.facultyName}
+                            >
                                 {this.facultyFullname}
                             </Typography>
                         }

@@ -13,6 +13,11 @@ export const styles = theme => ({
             color: theme.palette.primary.main,
         },
     },
+    facultyName: {
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+    },
     dragDivWrapper: {
         position: "absolute",
         zIndex: -999
