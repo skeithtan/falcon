@@ -2,6 +2,7 @@ import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -76,18 +77,17 @@ class BaseFacultiesCard extends Component {
     }
 
     renderList = facultyResponses => (
-        <Grid container direction="column" alignItems="stretch" wrap="nowrap">
+        <List dense>
             {facultyResponses.map(facultyResponse => (
-                <Grid item key={facultyResponse.faculty}>
-                    <FacultyListItem
-                        facultyResponse={facultyResponse}
-                        faculty={this.getFacultyFromId(facultyResponse.faculty)}
-                        termSchedule={this.props.termSchedule}
-                        canSchedule={this.canSchedule}
-                    />
-                </Grid>
+                <FacultyListItem
+                    key={facultyResponse.faculty}
+                    facultyResponse={facultyResponse}
+                    faculty={this.getFacultyFromId(facultyResponse.faculty)}
+                    termSchedule={this.props.termSchedule}
+                    canSchedule={this.canSchedule}
+                />
             ))}
-        </Grid>
+        </List>
     );
 
     getFacultyFromId = _id => {

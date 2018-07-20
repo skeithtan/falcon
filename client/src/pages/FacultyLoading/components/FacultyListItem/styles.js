@@ -3,7 +3,8 @@ import { activeItem } from "../../../../components/styles";
 export const styles = theme => ({
     facultyListItemContainer: {
         transition: "200ms all",
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing.unit * 1.5,
+        paddingLeft: theme.spacing.unit * 3,
 
         "&.canDrag:hover": {
             ...activeItem(theme),

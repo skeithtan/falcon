@@ -1,156 +1,24 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Typography from "@material-ui/core/Typography";
 import { UserAvatar } from "../../../../components/UserAvatar";
 import { getFullName } from "../../../../utils/user.util";
 import { wrap } from "./wrapper";
-import { TERM_STATUSES, FACULTY_FEEDBACK } from "../../../../enums/class.enums";
-import { StatusChip } from "../StatusChip";
+import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { FacultyListItemMenu } from "../FacultyListItemMenu";
-import { EMPLOYMENT } from "../../../../enums/faculty.enums";
+import { InitializingInfo } from "./info/InitializingInfo";
+import { SchedulingInfo } from "./info/SchedulingInfo";
+import { FeedbackGatheringInfo } from "./info/FeedbackGatheringInfo";
 
 class BaseFacultyListItem extends Component {
     state = {
         anchorEl: null,
-    };
-
-    renderFeedbackGatheringInfo = ({ feedback }) => {
-        const isPending = feedback === null;
-        return (
-            <Grid
-                container
-                direction="column"
-                alignItems="stretch"
-                wrap="nowrap"
-            >
-                <Grid item>
-                    <Typography variant="body2" color="inherit">
-                        {this.facultyFullname}
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    {isPending && (
-                        <StatusChip color="yellow" label="Pending feedback" />
-                    )}
-
-                    {feedback &&
-                        feedback.status ===
-                            FACULTY_FEEDBACK.REJECTED.identifier(
-                                <StatusChip color="red" label="Rejected" />
-                            )}
-
-                    {feedback &&
-                        feedback.status ===
-                            FACULTY_FEEDBACK.ACCEPTED.identifier(
-                                <StatusChip color="green" label="Accepted" />
-                            )}
-                </Grid>
-            </Grid>
-        ); // TODO
-    };
-
-    renderSchedulingInfo = (faculty, termSchedule) => {
-        const assignedClassesCount = termSchedule.classes.filter(
-            classSchedule => classSchedule.faculty === faculty._id
-        ).length;
-
-        const { min, max } = EMPLOYMENT[faculty.employment].load;
-
-        const isUnassigned = assignedClassesCount === 0;
-        const isUnderloaded = assignedClassesCount < min;
-        const isOverloaded = assignedClassesCount > max;
-        const isMaximum = assignedClassesCount === max;
-        const isWithinRange = !isUnderloaded && !isOverloaded && !isMaximum;
-
-        const getLoadString = number => (number === 1 ? "load" : "loads");
-
-        return (
-            <Grid
-                container
-                direction="column"
-                alignItems="stretch"
-                wrap="nowrap"
-            >
-                <Grid item>
-                    <Typography variant="body2" color="inherit">
-                        {this.facultyFullname}
-                    </Typography>
-                </Grid>
-                <Grid item xs>
-                    {isUnassigned && (
-                        <StatusChip color="red" label="Unassigned" />
-                    )}
-
-                    {!isUnassigned &&
-                        isUnderloaded && (
-                            <StatusChip
-                                color="yellow"
-                                label={`
-                                ${min - assignedClassesCount} 
-                                ${getLoadString(min - assignedClassesCount)} 
-                                under
-                            `}
-                            />
-                        )}
-
-                    {isWithinRange && (
-                        <StatusChip
-                            color="green"
-                            label={`
-                        ${max - assignedClassesCount}
-                        ${getLoadString(max - assignedClassesCount)}
-                        to limit
-                    `}
-                        />
-                    )}
-
-                    {isMaximum && (
-                        <StatusChip color="green" label={`Full load`} />
-                    )}
-
-                    {isOverloaded && (
-                        <StatusChip
-                            color="red"
-                            label={`
-                   ${assignedClassesCount - max}
-                   ${getLoadString(assignedClassesCount - max)}
-                       over limit
-                `}
-                        />
-                    )}
-                </Grid>
-            </Grid>
-        );
-    };
-
-    renderInitializingInfo = (faculty, facultyResponse, termSchedule) => {
-        const pendingAvailability = facultyResponse.availability === null;
-
-        return (
-            <Grid container direction="column" wrap="nowrap">
-                <Grid item>
-                    <Typography variant="body2">
-                        {this.facultyFullname}
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    {pendingAvailability && (
-                        <StatusChip
-                            color="yellow"
-                            label="Pending availability"
-                        />
-                    )}
-                    {!pendingAvailability && (
-                        <StatusChip
-                            color="green"
-                            label="Availability submitted"
-                        />
-                    )}
-                </Grid>
-            </Grid>
-        );
     };
 
     get facultyFullname() {
@@ -165,21 +33,30 @@ class BaseFacultyListItem extends Component {
         this.setState({ anchorEl: null });
     };
 
-    renderInfo = () => {
+    renderSecondary = () => {
         const { faculty, facultyResponse, termSchedule } = this.props;
         const { INITIALIZING, FEEDBACK_GATHERING } = TERM_STATUSES;
 
         switch (termSchedule.status) {
             case INITIALIZING.identifier:
-                return this.renderInitializingInfo(
-                    faculty,
-                    facultyResponse,
-                    termSchedule
-                );
+                return <InitializingInfo facultyResponse={facultyResponse} />;
             case FEEDBACK_GATHERING.identifier:
-                return this.renderFeedbackGatheringInfo(facultyResponse);
+                return (
+                    <FeedbackGatheringInfo
+                        feedback={facultyResponse.feedback}
+                    />
+                );
             default:
-                return this.renderSchedulingInfo(faculty, termSchedule);
+                const assignedClasses = termSchedule.classes.filter(
+                    classSchedule => classSchedule.faculty === faculty._id
+                );
+
+                return (
+                    <SchedulingInfo
+                        faculty={faculty}
+                        assignedClasses={assignedClasses}
+                    />
+                );
         }
     };
 
@@ -201,36 +78,26 @@ class BaseFacultyListItem extends Component {
         }
 
         return connectDragSource(
-            <div className={rootClasses.join(" ")}>
-                <Grid
-                    container
-                    spacing={8}
-                    alignItems="center"
-                    justify="space-between"
-                    wrap="nowrap"
-                >
-                    <Grid item xs>
-                        <Grid
-                            container
-                            spacing={16}
-                            direction="row"
-                            wrap="nowrap"
-                            alignItems="center"
-                        >
-                            <Grid item>
-                                <UserAvatar user={faculty.user} />
-                            </Grid>
-                            <Grid item xs>
-                                {this.renderInfo()}
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item>
+            <div>
+                <ListItem className={rootClasses.join(" ")}>
+                    <ListItemAvatar>
+                        <UserAvatar user={faculty.user} />
+                    </ListItemAvatar>
+                    <ListItemText
+                        disableTypography
+                        primary={
+                            <Typography variant="body2" color="inherit">
+                                {this.facultyFullname}
+                            </Typography>
+                        }
+                        secondary={this.renderSecondary()}
+                    />
+                    <ListItemSecondaryAction>
                         <IconButton onClick={this.handleMoreVertClick}>
                             <MoreVertIcon color="action" />
                         </IconButton>
-                    </Grid>
-                </Grid>
+                    </ListItemSecondaryAction>
+                </ListItem>
 
                 <FacultyListItemMenu
                     anchorEl={anchorEl}
