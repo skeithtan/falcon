@@ -14,16 +14,23 @@ import { makeURL } from "../../../../utils/url.util";
 
 import { FacultyAvailabilityModal } from "../modals/FacultyAvailabilityModal";
 import { RemoveFacultyModal } from "../modals/RemoveFacultyModal";
+import { FacultyScheduleModal } from "../modals/FacultyScheduleModal";
 
 class BaseFacultyListItemMenu extends Component {
     state = {
         facultyAvailabilityModalIsShowing: false,
+        facultyScheduleModalIsShowing: false,
         removeFacultyModalIsShowing: false,
     };
 
     toggleFacultyAvailabilityModal = shouldShow =>
         this.setState({
             facultyAvailabilityModalIsShowing: shouldShow,
+        });
+
+    toggleFacultyScheduleModal = shouldShow =>
+        this.setState({
+            facultyScheduleModalIsShowing: shouldShow,
         });
 
     toggleRemoveFacultyModal = shouldShow =>
@@ -70,6 +77,22 @@ class BaseFacultyListItemMenu extends Component {
                 onClose={() => this.toggleFacultyAvailabilityModal(false)}
                 faculty={faculty}
                 availability={availability}
+            />
+        );
+    };
+
+    renderFacultyScheduleModal = () => {
+        const { faculty, termSchedule } = this.props;
+        const { facultyScheduleModalIsShowing } = this.state;
+        const assignedClasses = termSchedule.classes.filter(
+            classSchedule => classSchedule.faculty === faculty._id
+        );
+        return (
+            <FacultyScheduleModal
+                open={facultyScheduleModalIsShowing}
+                onClose={() => this.toggleFacultyScheduleModal(false)}
+                faculty={faculty}
+                assignedClasses={assignedClasses}
             />
         );
     };
@@ -131,10 +154,9 @@ class BaseFacultyListItemMenu extends Component {
                     />
                 </MenuItem>
 
-                {termSchedule.status !==
-                    TERM_STATUSES.INITIALIZING.identifier && (
+                {canViewIndividualSchedule && (
                     <MenuItem
-                        onClick={this.handleClose}
+                        onClick={() => this.toggleFacultyScheduleModal(true)}
                         disabled={!canViewIndividualSchedule}
                     >
                         View individual schedule
@@ -150,9 +172,13 @@ class BaseFacultyListItemMenu extends Component {
                         </MenuItem>
                     </Fragment>
                 )}
+
                 {this.renderRemoveFacultyModal()}
+
                 {facultyResponse.availability &&
                     this.renderFacultyAvailabilityModal()}
+
+                {canViewIndividualSchedule && this.renderFacultyScheduleModal()}
             </Menu>
         );
     }
