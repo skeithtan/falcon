@@ -3,14 +3,9 @@ import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { InitializingState } from "../InitializingState";
 import { UninvolvedState } from "../UninvolvedState";
 import { SchedulingState } from "../SchedulingState";
+import { FeedbackState } from "../FeedbackState";
 
 class PublishedState extends Component {
-    render() {
-        return null; // TODO
-    }
-}
-
-class FeedbackState extends Component {
     render() {
         return null; // TODO
     }

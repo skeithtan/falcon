@@ -8,6 +8,7 @@ export const styles = theme => ({
         height: "100%",
         display: "flex",
         alignItems: "center",
+        minHeight: 120,
 
         "&.occupied": {
             background: lighten(theme.palette.primary.light, 0.9),
