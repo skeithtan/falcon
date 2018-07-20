@@ -77,7 +77,7 @@ class BaseInitializingState extends Component {
 
     renderActions = () => {
         const { termSchedule } = this.props;
-
+        const { confirmSubmitAvailabilityModalIsShowing, form } = this.state;
         const pendingAvailability = termSchedule.availability === null;
 
         const message = pendingAvailability
@@ -111,15 +111,23 @@ class BaseInitializingState extends Component {
                         {buttonName}
                     </Button>
                 </Grid>
+
+                <ConfirmSubmitAvailabilityModal
+                    open={confirmSubmitAvailabilityModalIsShowing}
+                    onClose={() =>
+                        this.toggleConfirmSubmitAvailabilityModal(false)
+                    }
+                    availability={form}
+                    termSchedule={termSchedule}
+                />
             </Grid>
         );
     };
 
     render() {
-        const {
-            form,
-            confirmSubmitAvailabilityModalIsShowing,
-        } = this.state;
+        const { form, termSchedule } = this.state;
+        console.log("Term schedule", termSchedule);
+
         return (
             <Grid
                 spacing={16}
@@ -128,7 +136,7 @@ class BaseInitializingState extends Component {
                 justify="center"
                 wrap="nowrap"
             >
-                <Grid item> {this.renderMessage()}</Grid>
+                <Grid item>{this.renderMessage()}</Grid>
 
                 <Grid item>
                     <TimeAvailabilityCards
@@ -138,14 +146,6 @@ class BaseInitializingState extends Component {
                         }
                     />
                 </Grid>
-
-                <ConfirmSubmitAvailabilityModal
-                    open={confirmSubmitAvailabilityModalIsShowing}
-                    onClose={() =>
-                        this.toggleConfirmSubmitAvailabilityModal(false)
-                    }
-                    availability={form}
-                />
             </Grid>
         );
     }

@@ -22,8 +22,8 @@ class BaseConfirmSubmitAvailabilityModal extends ConfirmActionModal {
     }
 
     get submitAction() {
-        const { availability, onConfirmSubmitAvailability } = this.props;
-        return () => onConfirmSubmitAvailability(availability);
+        const { availability, termSchedule, onConfirmSubmitAvailability } = this.props;
+        return () => onConfirmSubmitAvailability(availability, termSchedule);
     }
 
     get toastSuccessMessage() {
