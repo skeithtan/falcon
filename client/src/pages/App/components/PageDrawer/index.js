@@ -44,8 +44,7 @@ class BasePageDrawer extends PureComponent {
         const {open, onClose, classes, user, match, history} = this.props;
         return (
             <Drawer open={open} onClose={onClose}>
-                <div className={classes.drawer}>
-
+                <div className={classes.drawerContent}>
                     <Grid
                         container
                         className={classes.drawerHeadWrapper}

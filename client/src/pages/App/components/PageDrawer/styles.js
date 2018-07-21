@@ -1,11 +1,11 @@
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 import { activeItem } from "../../../../components/styles";
 
-
 export const styles = theme => ({
-    drawer: {
+    drawerContent: {
         height: "100%",
         minWidth: 240,
+        overflowX: "hidden",
     },
     drawerHeadWrapper: {
         padding: theme.spacing.unit * 3,
