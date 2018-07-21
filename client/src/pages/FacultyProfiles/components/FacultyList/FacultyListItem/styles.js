@@ -18,4 +18,9 @@ export const styles = theme => ({
             color: theme.palette.primary.main,
         },
     },
+    listItemFacultyName: {
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+    }
 });

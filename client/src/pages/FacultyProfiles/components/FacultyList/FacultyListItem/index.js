@@ -9,7 +9,6 @@ import { FACULTY_PROFILES_PAGE } from "../../../..";
 import { OVERVIEW_TAB } from "../../faculty_detail_tabs";
 import { wrap } from "./wrapper";
 
-
 class BaseFacultyListItem extends PureComponent {
     render() {
         const {
@@ -17,18 +16,20 @@ class BaseFacultyListItem extends PureComponent {
             classes,
             faculty,
             active,
-            changeRequests: {
-                changeRequests: allChangeRequests
-            },
+            changeRequests: { changeRequests: allChangeRequests },
         } = this.props;
 
-        const { activeListItem, listItem } = classes;
-        const className = active ? [activeListItem, listItem].join(" ") : listItem;
+        const listItemClasses = [classes.listItem];
+
+        if (active) {
+            listItemClasses.push(classes.activeListItem);
+        }
 
         // Go to where the active tab is if any. If none, go to default overview tab
         const tabPath = activeTab ? activeTab : OVERVIEW_TAB.path;
 
-        const badge = allChangeRequests &&
+        const badge =
+            allChangeRequests &&
             allChangeRequests[faculty._id] &&
             allChangeRequests[faculty._id].length;
 
@@ -39,23 +40,27 @@ class BaseFacultyListItem extends PureComponent {
                 button
                 component={Link}
                 to={`/${FACULTY_PROFILES_PAGE.path}/${faculty._id}/${tabPath}`}
-                className={className}
+                className={listItemClasses.join(" ")}
             >
-                {withBadge ?
-                    <Badge badgeContent={badge} classes={{ badge: classes.badge }}>
+                {withBadge ? (
+                    <Badge
+                        badgeContent={badge}
+                        classes={{ badge: classes.badge }}
+                    >
                         <UserAvatar user={faculty.user} />
-                    </Badge> :
+                    </Badge>
+                ) : (
                     <UserAvatar user={faculty.user} />
-                }
+                )}
 
                 <ListItemText
                     primary={getFullName(faculty.user)}
+                    classes={{ primary: classes.listItemFacultyName }}
                     secondary={`T-${faculty.idNumber}`}
                 />
             </ListItem>
         );
     }
 }
-
 
 export const FacultyListItem = wrap(BaseFacultyListItem);
