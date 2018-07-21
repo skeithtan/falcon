@@ -1,27 +1,27 @@
 export const styles = theme => ({
     printPreviewModal: {
-        overflowY: "scroll",
         overflowX: "hidden",
         flex: 1,
         display: "flex",
         flexDirection: "column",
     },
     printPreviewModalBody: {
-        flex: 1,
         height: "100%",
-        overflowY: "scroll",
     },
     printPreviewTitle: {
         flex: 1,
         fontWeight: theme.typography.fontWeightLight,
     },
     settingsContainer: {
+        height: "100%",
+        width: 320,
+
         background: theme.palette.grey["100"],
         padding: theme.spacing.unit * 5,
-        borderRight: `1px solid ${theme.palette.grey["400"]}`,
         color: theme.palette.common.white,
-        overflowY: "scroll",
-        height: "100%",
+
+        overflow: "hidden",
+
         boxSizing: "border-box",
         boxShadow: theme.shadows[12],
     },
@@ -52,6 +52,7 @@ export const styles = theme => ({
     printPreviewPagesContainer: {
         overflowY: "scroll",
         height: "100%",
+        position: "relative",
     },
     pnuLogo: {
         height: 64,
@@ -60,5 +61,11 @@ export const styles = theme => ({
     printAvatar: {
         height: 80,
         width: 80,
+    },
+    printButton: {
+        position: "absolute",
+        bottom: 40,
+        // Offset by settingsContainer
+        right: 372,
     },
 });

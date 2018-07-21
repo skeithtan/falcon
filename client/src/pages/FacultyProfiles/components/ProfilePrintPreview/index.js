@@ -12,6 +12,7 @@ import Slide from "@material-ui/core/Slide";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
+import PrintIcon from "@material-ui/icons/Print";
 import moment from "moment";
 import React, { Component, PureComponent } from "react";
 import ReactToPrint from "react-to-print";
@@ -27,7 +28,6 @@ import { PresentationsPrintComponent } from "../print_components/PresentationsPr
 import { RecognitionsPrintComponent } from "../print_components/RecognitionsPrintComponent";
 import { TeachingSubjectsPrintComponent } from "../print_components/TeachingSubjectsPrintComponent";
 import { wrap } from "./wrapper";
-
 
 class PrintContent extends PureComponent {
     render() {
@@ -54,9 +54,18 @@ class PrintContent extends PureComponent {
                 wrap="nowrap"
             >
                 <Grid item>
-                    <Grid container spacing={8} direction="row" alignItems="center">
+                    <Grid
+                        container
+                        spacing={8}
+                        direction="row"
+                        alignItems="center"
+                    >
                         <Grid item>
-                            <img src={pnuLogo} className={classes.pnuLogo} alt="PNU Logo" />
+                            <img
+                                src={pnuLogo}
+                                className={classes.pnuLogo}
+                                alt="PNU Logo"
+                            />
                         </Grid>
                         <Grid item>
                             <Grid container spacing={0} direction="column">
@@ -66,7 +75,10 @@ class PrintContent extends PureComponent {
                                     </Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant="subheading" color="textSecondary">
+                                    <Typography
+                                        variant="subheading"
+                                        color="textSecondary"
+                                    >
                                         Faculty of Arts and Languages
                                     </Typography>
                                 </Grid>
@@ -79,7 +91,11 @@ class PrintContent extends PureComponent {
                     <Typography variant="title" component="h1" align="center">
                         {getFullName(faculty.user)}'s Profile
                     </Typography>
-                    <Typography variant="subheading" align="center" color="textSecondary">
+                    <Typography
+                        variant="subheading"
+                        align="center"
+                        color="textSecondary"
+                    >
                         Generated {dateNow}
                     </Typography>
                 </Grid>
@@ -88,64 +104,67 @@ class PrintContent extends PureComponent {
                     <OverviewPrintComponent faculty={faculty} />
                 </Grid>
 
-                {includeTeachingSubjects &&
-                <Grid item>
-                    <TeachingSubjectsPrintComponent faculty={faculty} subjects={subjects} />
-                </Grid>
-                }
+                {includeTeachingSubjects && (
+                    <Grid item>
+                        <TeachingSubjectsPrintComponent
+                            faculty={faculty}
+                            subjects={subjects}
+                        />
+                    </Grid>
+                )}
 
-                {includeDegrees &&
-                <Grid item>
-                    <DegreesPrintComponent faculty={faculty} />
-                </Grid>
-                }
+                {includeDegrees && (
+                    <Grid item>
+                        <DegreesPrintComponent faculty={faculty} />
+                    </Grid>
+                )}
 
-                {includeRecognitions &&
-                <Grid item>
-                    <RecognitionsPrintComponent faculty={faculty} />
-                </Grid>
-                }
+                {includeRecognitions && (
+                    <Grid item>
+                        <RecognitionsPrintComponent faculty={faculty} />
+                    </Grid>
+                )}
 
-                {includePresentations &&
-                <Grid item>
-                    <PresentationsPrintComponent faculty={faculty} />
-                </Grid>
-                }
+                {includePresentations && (
+                    <Grid item>
+                        <PresentationsPrintComponent faculty={faculty} />
+                    </Grid>
+                )}
 
-                {includeInstructionalMaterials &&
-                <Grid item>
-                    <InstructionalMaterialsPrintComponent faculty={faculty} />
-                </Grid>
-                }
+                {includeInstructionalMaterials && (
+                    <Grid item>
+                        <InstructionalMaterialsPrintComponent
+                            faculty={faculty}
+                        />
+                    </Grid>
+                )}
 
-                {includeExtensionWorks &&
-                <Grid item>
-                    <ExtensionWorksPrintComponent faculty={faculty} />
-                </Grid>
-                }
+                {includeExtensionWorks && (
+                    <Grid item>
+                        <ExtensionWorksPrintComponent faculty={faculty} />
+                    </Grid>
+                )}
             </Grid>
         );
     }
 }
 
-const Transition = props => (
-    <Slide direction="up" {...props} />
-);
+const Transition = props => <Slide direction="up" {...props} />;
 
 class BaseProfilePrintPreview extends Component {
     state = {
-        includeTeachingSubjects: false,
-        includeDegrees: false,
-        includeRecognitions: false,
-        includePresentations: false,
-        includeInstructionalMaterials: false,
-        includeExtensionWorks: false,
+        includeTeachingSubjects: true,
+        includeDegrees: true,
+        includeRecognitions: true,
+        includePresentations: true,
+        includeInstructionalMaterials: true,
+        includeExtensionWorks: true,
     };
 
     componentDidMount() {
         const {
             fetchSubjectList,
-            subjects: {isLoading, subjects},
+            subjects: { isLoading, subjects },
         } = this.props;
 
         if (!subjects && !isLoading) {
@@ -154,12 +173,10 @@ class BaseProfilePrintPreview extends Component {
     }
 
     handleChange = name => event => {
-        this.setState({[name]: event.target.checked});
+        this.setState({ [name]: event.target.checked });
     };
 
-    renderLoading = () => (
-        <FullPageLoadingIndicator size={100} />
-    );
+    renderLoading = () => <FullPageLoadingIndicator size={100} />;
 
     renderErrors = errors => (
         <ErrorState
@@ -170,118 +187,123 @@ class BaseProfilePrintPreview extends Component {
     );
 
     renderPrintSettings = () => (
-        <Grid container spacing={24} direction="column">
-            <Grid item>
-                <FormControl component="fieldset">
-                    <FormLabel component="legend">Print Settings</FormLabel>
-                    <FormGroup>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.includeTeachingSubjects}
-                                    onChange={this.handleChange("includeTeachingSubjects")}
-                                />
-                            }
-                            label="Include Subjects of Expertise"
+        <FormControl component="fieldset">
+            <FormLabel component="legend">Print Settings</FormLabel>
+            <FormGroup>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.includeTeachingSubjects}
+                            onChange={this.handleChange(
+                                "includeTeachingSubjects"
+                            )}
                         />
-
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.includeDegrees}
-                                    onChange={this.handleChange("includeDegrees")}
-                                />
-                            }
-                            label="Include Degrees"
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.includeRecognitions}
-                                    onChange={this.handleChange("includeRecognitions")}
-                                />
-                            }
-                            label="Include Recognitions"
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.includePresentations}
-                                    onChange={this.handleChange("includePresentations")}
-                                />
-                            }
-                            label="Include Presentations"
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.includeInstructionalMaterials}
-                                    onChange={this.handleChange("includeInstructionalMaterials")}
-                                />
-                            }
-                            label="Include Instructional Materials"
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.includeExtensionWorks}
-                                    onChange={this.handleChange("includeExtensionWorks")}
-                                />
-                            }
-                            label="Include Extension Works"
-                        />
-                    </FormGroup>
-                </FormControl>
-            </Grid>
-            <Grid item>
-                <ReactToPrint
-                    trigger={() => <Button variant="raised" color="primary">Print</Button>}
-                    content={() => this.componentRef}
+                    }
+                    label="Include Subjects of Expertise"
                 />
-            </Grid>
-        </Grid>
+
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.includeDegrees}
+                            onChange={this.handleChange("includeDegrees")}
+                        />
+                    }
+                    label="Include Degrees"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.includeRecognitions}
+                            onChange={this.handleChange("includeRecognitions")}
+                        />
+                    }
+                    label="Include Recognitions"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.includePresentations}
+                            onChange={this.handleChange("includePresentations")}
+                        />
+                    }
+                    label="Include Presentations"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.includeInstructionalMaterials}
+                            onChange={this.handleChange(
+                                "includeInstructionalMaterials"
+                            )}
+                        />
+                    }
+                    label="Include Instructional Materials"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.includeExtensionWorks}
+                            onChange={this.handleChange(
+                                "includeExtensionWorks"
+                            )}
+                        />
+                    }
+                    label="Include Extension Works"
+                />
+            </FormGroup>
+        </FormControl>
     );
 
     renderPrintPreview = () => {
-        const {faculty, subjects, classes} = this.props;
+        const { faculty, subjects, classes } = this.props;
 
         return (
-            <div className={classes.printPreviewModalBody}>
-                <Grid
-                    container
-                    direction="row"
-                    justify="space-between"
-                    alignItems="stretch"
-                    wrap="nowrap"
-                    style={{height: "100%"}}
-                >
-                    <Grid item sm={12}>
-                        <div className={classes.printPreviewPagesContainer}>
-                            <div className={classes.printPreviewBackdrop}>
-                                <div className={classes.printPage}>
-                                    <PrintContent
-                                        ref={el => this.componentRef = el}
-                                        classes={classes}
-                                        faculty={faculty}
-                                        subjects={subjects.subjects}
-                                        {...this.state}
-                                    />
-                                </div>
+            <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="stretch"
+                wrap="nowrap"
+            >
+                <Grid item xs>
+                    <div className={classes.printPreviewPagesContainer}>
+                        <div className={classes.printPreviewBackdrop}>
+                            <div className={classes.printPage}>
+                                <PrintContent
+                                    ref={el => (this.componentRef = el)}
+                                    classes={classes}
+                                    faculty={faculty}
+                                    subjects={subjects.subjects}
+                                    {...this.state}
+                                />
                             </div>
                         </div>
-                    </Grid>
-                    <Grid item style={{minWidth: 320}}>
-                        <div className={classes.settingsContainer}>
-                            {this.renderPrintSettings()}
-                        </div>
-                    </Grid>
+                    </div>
                 </Grid>
-            </div>
+                <Grid item>
+                    <div className={classes.settingsContainer}>
+                        {this.renderPrintSettings()}
+                        <ReactToPrint
+                            trigger={() => (
+                                <Button
+                                    variant="extendedFab"
+                                    color="primary"
+                                    className={classes.printButton}
+                                >
+                                    <PrintIcon /> Print
+                                </Button>
+                            )}
+                            content={() => this.componentRef}
+                        />
+                    </div>
+                </Grid>
+            </Grid>
         );
     };
 
     render() {
-        const {faculty, onClose, classes, open, subjects} = this.props;
+        const { faculty, onClose, classes, open, subjects } = this.props;
 
         return (
             <Dialog
@@ -291,22 +313,27 @@ class BaseProfilePrintPreview extends Component {
                 transitionDuration={300}
                 TransitionComponent={Transition}
             >
-                <div className={classes.printPreviewModal}>
-                    <AppBar position="static" color="primary">
-                        <Toolbar>
-                            <IconButton color="inherit" onClick={onClose} aria-label="Close">
-                                <CloseIcon />
-                            </IconButton>
-                            <Typography variant="title" color="inherit" className={classes.printPreviewTitle}>
-                                Faculty Profile Print Preview
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
-
-                    {subjects.isLoading && this.renderLoading()}
-                    {subjects.errors && this.renderErrors(subjects.errors)}
-                    {subjects.subjects !== null && this.renderPrintPreview(faculty)}
-                </div>
+                <AppBar color="primary" position="static">
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            onClick={onClose}
+                            aria-label="Close"
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                        <Typography
+                            variant="title"
+                            color="inherit"
+                            className={classes.printPreviewTitle}
+                        >
+                            Faculty Profile Print Preview
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                {subjects.isLoading && this.renderLoading()}
+                {subjects.errors && this.renderErrors(subjects.errors)}
+                {subjects.subjects !== null && this.renderPrintPreview(faculty)}
             </Dialog>
         );
     }
