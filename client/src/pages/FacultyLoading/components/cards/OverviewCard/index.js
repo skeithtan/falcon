@@ -38,6 +38,13 @@ class BaseOverviewCard extends Component {
         returnTermModalIsShowing: false,
     };
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const termScheduleDidChange =
+            this.props.activeTermSchedule !== nextProps.activeTermSchedule;
+        const stateDidChange = this.state !== nextState;
+        return termScheduleDidChange || stateDidChange;
+    }
+
     toggleAdvanceTermModal = shouldShow =>
         this.setState({
             advanceTermModalIsShowing: shouldShow,
@@ -121,7 +128,7 @@ class BaseOverviewCard extends Component {
             <Card>
                 <Toolbar>
                     <Grid container justify="space-between" alignItems="center">
-                        <Grid item>
+                        <Grid item xs>
                             <Typography variant="title">
                                 {termScheduleToString(activeTermSchedule)}
                             </Typography>

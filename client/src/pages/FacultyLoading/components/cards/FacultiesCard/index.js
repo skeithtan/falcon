@@ -28,6 +28,15 @@ class BaseFacultiesCard extends Component {
         this.fetchData();
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const facultiesDidChange = this.props.faculties !== nextProps.faculties;
+        const termScheduleDidChange =
+            this.props.termSchedule !== nextProps.termSchedule;
+        const stateDidChange = this.state !== nextState;
+
+        return facultiesDidChange || termScheduleDidChange || stateDidChange;
+    }
+
     fetchData = () => {
         const {
             faculties: { isLoading, errors, faculties },
