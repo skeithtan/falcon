@@ -3,34 +3,34 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import zxcvbn from "zxcvbn";
 import { ModalFormComponent } from "../../../../components/ModalFormComponent";
 import { changeCurrentUserPassword } from "../../../../services/user.service";
 import { validateForm } from "../../../../utils/forms.util";
 import { wrap } from "./wrapper";
 
-
 function getFormErrors(form) {
-    const result = zxcvbn(form.password);
-
     return validateForm({
         password: {
             value: form.password,
-            customValidators: [{
-                isValid(value) {
-                    return result.score > 2;
+            customValidators: [
+                {
+                    isValid(value) {
+                        return value.length > 8;
+                    },
+                    errorMessage: "This password is too short",
                 },
-                errorMessage: result.feedback.warning || "This password is too short / easy to guess",
-            }],
+            ],
         },
         confirmPassword: {
             value: form.confirmPassword,
-            customValidators: [{
-                isValid(value) {
-                    return value === form.password;
+            customValidators: [
+                {
+                    isValid(value) {
+                        return value === form.password;
+                    },
+                    errorMessage: "Confirm password does not match",
                 },
-                errorMessage: "Confirm password must match password",
-            }],
+            ],
         },
     });
 }
@@ -47,8 +47,9 @@ class BaseChangePasswordModal extends ModalFormComponent {
 
     get submitUpdateAction() {
         return () =>
-            changeCurrentUserPassword(this.state.form.password)
-                .then(this.props.onChangePasswordSuccess);
+            changeCurrentUserPassword(this.state.form.password).then(
+                this.props.onChangePasswordSuccess
+            );
     }
 
     get modalTitle() {
@@ -61,23 +62,30 @@ class BaseChangePasswordModal extends ModalFormComponent {
 
     get formErrors() {
         return getFormErrors(this.state.form);
-    };
+    }
 
     get dialogActionIsDisabled() {
         return this.formErrors.hasErrors;
     }
 
     renderDialogContent = () => {
-        const {classes} = this.props;
-        const {form, isSubmitting} = this.state;
-        const {fieldErrors} = this.formErrors;
+        const { classes } = this.props;
+        const { form, isSubmitting } = this.state;
+        const { fieldErrors } = this.formErrors;
 
         return (
             <form className={classes.container}>
-                <Grid container className={classes.form} spacing={24} direction="column">
-
+                <Grid
+                    container
+                    className={classes.form}
+                    spacing={24}
+                    direction="column"
+                >
                     <Grid item>
-                        <FormControl fullWidth error={fieldErrors.password.length > 0}>
+                        <FormControl
+                            fullWidth
+                            error={fieldErrors.password.length > 0}
+                        >
                             <TextField
                                 label="New Password"
                                 disabled={isSubmitting}
@@ -87,33 +95,41 @@ class BaseChangePasswordModal extends ModalFormComponent {
                                 value={form.password}
                             />
 
-                            {fieldErrors.password.length > 0 &&
-                            <FormHelperText>{fieldErrors.password[0]}</FormHelperText>
-                            }
+                            {fieldErrors.password.length > 0 && (
+                                <FormHelperText>
+                                    {fieldErrors.password[0]}
+                                </FormHelperText>
+                            )}
                         </FormControl>
                     </Grid>
 
                     <Grid item>
-                        <FormControl fullWidth error={fieldErrors.confirmPassword.length > 0}>
+                        <FormControl
+                            fullWidth
+                            error={fieldErrors.confirmPassword.length > 0}
+                        >
                             <TextField
                                 label="Confirm Password"
                                 disabled={isSubmitting}
                                 type="password"
                                 autoComplete="on"
-                                onChange={this.handleFormChange("confirmPassword")}
+                                onChange={this.handleFormChange(
+                                    "confirmPassword"
+                                )}
                                 value={form.confirmPassword}
                             />
 
-                            {fieldErrors.confirmPassword.length > 0 &&
-                            <FormHelperText>{fieldErrors.confirmPassword[0]}</FormHelperText>
-                            }
+                            {fieldErrors.confirmPassword.length > 0 && (
+                                <FormHelperText>
+                                    {fieldErrors.confirmPassword[0]}
+                                </FormHelperText>
+                            )}
                         </FormControl>
                     </Grid>
                 </Grid>
             </form>
         );
     };
-
 }
 
 export const ChangePasswordModal = wrap(BaseChangePasswordModal);
