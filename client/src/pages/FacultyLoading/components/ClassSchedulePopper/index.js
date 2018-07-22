@@ -11,9 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { ClassScheduleModal } from "../modals/ClassScheduleModal";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Collapse from "@material-ui/core/Collapse";
 import { CompatibilityDisplay } from "../CompatibilityDisplay";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { FacultyChip } from "../../../../components/FacultyChip";
 import Grid from "@material-ui/core/Grid";
 import Grow from "@material-ui/core/Grow";
@@ -30,13 +28,7 @@ class BaseClassSchedulePopper extends Component {
     state = {
         removeClassScheduleModalIsShowing: false,
         updateClassScheduleModalIsShowing: false,
-        expanded: false,
     };
-
-    handleExpandClick = shouldShow =>
-        this.setState({
-            expanded: shouldShow,
-        });
 
     toggleRemoveClassScheduleModal = shouldShow =>
         this.setState({
@@ -142,8 +134,6 @@ class BaseClassSchedulePopper extends Component {
             classSchedule,
         } = this.props;
 
-        const { expanded } = this.state;
-
         if (!faculty) {
             return (
                 <Typography color="textSecondary">
@@ -152,58 +142,23 @@ class BaseClassSchedulePopper extends Component {
             );
         }
 
-        const iconButtonClasses = [classes.expand];
-
-        if (expanded) {
-            iconButtonClasses.push(classes.expandOpen);
-        }
-
         return (
-            <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justify="space-between"
-            >
-                <Grid item xs>
-                    <div className={classes.facultyChipWrapper}>
-                        <FacultyChip
-                            clickable
-                            faculty={faculty}
-                            showDeleteButton={
-                                this.termStatusAllowsMutation &&
-                                user.permissions.MUTATE_TERM_SCHEDULES
-                            }
-                            handleDelete={() =>
-                                onRemoveFacultyFromClassSchedule(
-                                    termSchedule,
-                                    classSchedule
-                                )
-                            }
-                        />
-                    </div>
-                </Grid>
-                <Grid item>
-                    <IconButton
-                        className={iconButtonClasses.join(" ")}
-                        onClick={() => this.handleExpandClick(!expanded)}
-                        aria-expanded={expanded}
-                    >
-                        <ExpandMoreIcon />
-                    </IconButton>
-                </Grid>
-            </Grid>
-        );
-    };
-
-    renderCompatibility = () => {
-        const { compatibility } = this.props;
-        const { expanded } = this.state;
-
-        return (
-            <Collapse in={expanded} timeout="auto">
-                <CompatibilityDisplay compatibility={compatibility} />
-            </Collapse>
+            <div className={classes.facultyChipWrapper}>
+                <FacultyChip
+                    clickable
+                    faculty={faculty}
+                    showDeleteButton={
+                        this.termStatusAllowsMutation &&
+                        user.permissions.MUTATE_TERM_SCHEDULES
+                    }
+                    handleDelete={() =>
+                        onRemoveFacultyFromClassSchedule(
+                            termSchedule,
+                            classSchedule
+                        )
+                    }
+                />
+            </div>
         );
     };
 
@@ -250,7 +205,9 @@ class BaseClassSchedulePopper extends Component {
                     </Grid>
                 </CardContent>
 
-                {compatibility && this.renderCompatibility()}
+                {compatibility && (
+                    <CompatibilityDisplay compatibility={compatibility} />
+                )}
 
                 {this.termStatusAllowsMutation &&
                     user.permissions.POPULATE_TERM_SCHEDULES && (
