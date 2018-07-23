@@ -4,12 +4,7 @@ import { InitializingState } from "../InitializingState";
 import { UninvolvedState } from "../UninvolvedState";
 import { SchedulingState } from "../SchedulingState";
 import { FeedbackState } from "../FeedbackState";
-
-class PublishedState extends Component {
-    render() {
-        return null; // TODO
-    }
-}
+import { PublishedState } from "../PublishedState";
 
 export const MyScheduleBody = props => {
     const { termSchedule } = props;

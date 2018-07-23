@@ -1,7 +1,4 @@
 export const styles = theme => ({
-    initializingStateContainer: {
-        height: "100%",
-    },
     messageContainer: {
         paddingLeft: theme.spacing.unit * 3,
         paddingRight: theme.spacing.unit * 3,
