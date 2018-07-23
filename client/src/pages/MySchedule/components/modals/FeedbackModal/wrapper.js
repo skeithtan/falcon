@@ -11,8 +11,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(toastIsShowing(message));
     },
 
-    submitFeedback({ status, rejectionReason }, termSchedule) {
-        return setFacultyFeedback(status, rejectionReason)
+    submitFeedback({ status, rejectionReason, newAvailability }, termSchedule) {
+        return setFacultyFeedback(status, rejectionReason, newAvailability)
             .then(result => result.data.setFacultyFeedback)
             .then(feedback => {
                 dispatch(

@@ -116,6 +116,7 @@ class BaseFeedbackState extends Component {
                             }
                             status={feedbackStatus}
                             termSchedule={termSchedule}
+                            availability={termSchedule.availability}
                         />
                     </Grid>
                 )}

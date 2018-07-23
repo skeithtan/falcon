@@ -92,7 +92,7 @@ const setFacultyAvailability = async (object, { availability }, context) => {
 
 const setFacultyFeedback = async (
     object,
-    { status, rejectionReason },
+    { status, rejectionReason, newAvailability },
     context
 ) => {
     const user = await getUserFromContext(context);
@@ -121,6 +121,10 @@ const setFacultyFeedback = async (
         status: status,
         rejectionReason: status === "REJECTED" ? rejectionReason : null,
     };
+
+    if (newAvailability) {
+        facultyResponse.availability = newAvailability;
+    }
 
     await currentTermSchedule.save();
     return facultyResponse.feedback;

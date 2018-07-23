@@ -50,16 +50,18 @@ export const setFacultyAvailability = availability =>
         },
     });
 
-export const setFacultyFeedback = (status, rejectionReason) =>
+export const setFacultyFeedback = (status, rejectionReason, newAvailability) =>
     client.mutate({
         mutation: gql`
             mutation(
                 $status: FacultyFeedbackStatus!
                 $rejectionReason: String
+                $newAvailability: AvailabilityInput
             ) {
                 setFacultyFeedback(
                     status: $status
                     rejectionReason: $rejectionReason
+                    newAvailability: $newAvailability
                 ) {
                     submitted
                     status
@@ -70,5 +72,6 @@ export const setFacultyFeedback = (status, rejectionReason) =>
         variables: {
             status,
             rejectionReason,
+            newAvailability,
         },
     });

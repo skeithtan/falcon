@@ -55,5 +55,9 @@ extend type Mutation {
     addTermSchedule(startYear: Int!, term: Term!): TermSchedule!
 
     setFacultyAvailability(availability: AvailabilityInput!): Boolean!
-    setFacultyFeedback(status: FacultyFeedbackStatus!, rejectionReason: String): FacultyFeedback!
+    setFacultyFeedback(
+        status: FacultyFeedbackStatus!
+        rejectionReason: String
+        newAvailability: AvailabilityInput
+    ): FacultyFeedback!
 }
