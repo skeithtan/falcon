@@ -6,11 +6,23 @@ import Typography from "@material-ui/core/Typography";
 import { termScheduleToString } from "../../../../utils/faculty_loading.util";
 import { wrap } from "./wrapper";
 import { FacultyScheduleCards } from "../../../../components/FacultyScheduleCards";
+import { FACULTY_FEEDBACK } from "../../../../enums/class.enums";
+import { FeedbackModal } from "../modals/FeedbackModal";
 
 class BaseFeedbackState extends Component {
     state = {
         submitFeedbackModalIsShowing: false,
+        feedbackStatus: FACULTY_FEEDBACK.ACCEPTED.identifier,
     };
+
+    toggleSubmitFeedbackModal = (
+        shouldShow,
+        feedbackStatus = this.state.feedbackStatus
+    ) =>
+        this.setState({
+            submitFeedbackModalIsShowing: shouldShow,
+            feedbackStatus: feedbackStatus,
+        });
 
     renderMessage = () => {
         const { termSchedule, classes } = this.props;
@@ -36,8 +48,10 @@ class BaseFeedbackState extends Component {
 
     renderActions = () => {
         const { termSchedule } = this.props;
-        const { submitFeedbackModalIsShowing } = this.state;
+        const { submitFeedbackModalIsShowing, feedbackStatus } = this.state;
         const pendingFeedback = termSchedule.feedback === null;
+
+        const { ACCEPTED, REJECTED } = FACULTY_FEEDBACK;
 
         const message = pendingFeedback
             ? "You have not yet sent your feedback"
@@ -69,8 +83,9 @@ class BaseFeedbackState extends Component {
                                     variant="outlined"
                                     color="primary"
                                     onClick={() =>
-                                        this.toggleConfirmSubmitAvailabilityModal(
-                                            true
+                                        this.toggleSubmitFeedbackModal(
+                                            true,
+                                            REJECTED.identifier
                                         )
                                     }
                                 >
@@ -82,8 +97,9 @@ class BaseFeedbackState extends Component {
                                     variant="outlined"
                                     color="primary"
                                     onClick={() =>
-                                        this.toggleConfirmSubmitAvailabilityModal(
-                                            true
+                                        this.toggleSubmitFeedbackModal(
+                                            true,
+                                            ACCEPTED.identifier
                                         )
                                     }
                                 >
@@ -91,6 +107,16 @@ class BaseFeedbackState extends Component {
                                 </Button>
                             </Grid>
                         </Grid>
+
+                        <FeedbackModal
+                            action="update"
+                            open={submitFeedbackModalIsShowing}
+                            onClose={() =>
+                                this.toggleSubmitFeedbackModal(false)
+                            }
+                            status={feedbackStatus}
+                            termSchedule={termSchedule}
+                        />
                     </Grid>
                 )}
             </Grid>
@@ -110,7 +136,9 @@ class BaseFeedbackState extends Component {
                 <Grid item>{this.renderMessage()}</Grid>
 
                 <Grid item>
-                    <FacultyScheduleCards assignedClasses={termSchedule.classes} />
+                    <FacultyScheduleCards
+                        assignedClasses={termSchedule.classes}
+                    />
                 </Grid>
             </Grid>
         );

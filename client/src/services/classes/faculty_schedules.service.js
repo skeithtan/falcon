@@ -60,7 +60,11 @@ export const setFacultyFeedback = (status, rejectionReason) =>
                 setFacultyFeedback(
                     status: $status
                     rejectionReason: $rejectionReason
-                )
+                ) {
+                    submitted
+                    status
+                    rejectionReason
+                }
             }
         `,
         variables: {
