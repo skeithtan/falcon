@@ -114,6 +114,13 @@ class BaseFacultyListItemMenu extends Component {
         const canViewIndividualSchedule =
             termSchedule.status !== TERM_STATUSES.INITIALIZING.identifier;
 
+        const canRemoveFaculty =
+            user.permissions.POPULATE_TERM_SCHEDULES &&
+            ![
+                TERM_STATUSES.PUBLISHED.identifier,
+                TERM_STATUSES.ARCHIVED.identifier,
+            ].includes(termSchedule.status);
+
         return (
             <Menu
                 disableAutoFocusItem
@@ -162,7 +169,7 @@ class BaseFacultyListItemMenu extends Component {
                         View individual schedule
                     </MenuItem>
                 )}
-                {user.permissions.POPULATE_TERM_SCHEDULES && (
+                {canRemoveFaculty && (
                     <Fragment>
                         <Divider />
                         <MenuItem
@@ -173,7 +180,7 @@ class BaseFacultyListItemMenu extends Component {
                     </Fragment>
                 )}
 
-                {this.renderRemoveFacultyModal()}
+                {canRemoveFaculty && this.renderRemoveFacultyModal()}
 
                 {facultyResponse.availability &&
                     this.renderFacultyAvailabilityModal()}
