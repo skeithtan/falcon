@@ -6,12 +6,14 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Toolbar from "@material-ui/core/Toolbar";
+import PrintIcon from "@material-ui/icons/Print";
 import React, { Component } from "react";
 import { termScheduleToString } from "../../../../../utils/faculty_loading.util";
 import { TERM_STATUSES } from "../../../../../enums/class.enums";
 import { wrap } from "./wrapper";
 import { AdvanceTermModal } from "../../modals/AdvanceTermModal";
 import { ReturnTermModal } from "../../modals/ReturnTermModal";
+import { SchedulePrintPreview } from "../../SchedulePrintPreview";
 
 const steps = Object.values(TERM_STATUSES)
     // Remove archived
@@ -36,6 +38,7 @@ class BaseOverviewCard extends Component {
     state = {
         advanceTermModalIsShowing: false,
         returnTermModalIsShowing: false,
+        schedulePrintPreviewIsShowing: false,
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -55,23 +58,38 @@ class BaseOverviewCard extends Component {
             returnTermModalIsShowing: shouldShow,
         });
 
+    toggleSchedulePrintPreview = shouldShow =>
+        this.setState({
+            schedulePrintPreviewIsShowing: shouldShow,
+        });
+
     renderButtons = () => {
-        const { activeTermSchedule } = this.props;
+        const { classes, activeTermSchedule, user } = this.props;
         const {
             advanceTermModalIsShowing,
             returnTermModalIsShowing,
+            schedulePrintPreviewIsShowing,
         } = this.state;
 
-        const canReturnTermSchedule = [
-            TERM_STATUSES.SCHEDULING.identifier,
-            TERM_STATUSES.FEEDBACK_GATHERING.identifier,
-        ].includes(activeTermSchedule.status);
+        const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
 
-        const canAdvanceTermSchedule = [
-            TERM_STATUSES.INITIALIZING.identifier,
-            TERM_STATUSES.SCHEDULING.identifier,
-            TERM_STATUSES.FEEDBACK_GATHERING.identifier,
-        ].includes(activeTermSchedule.status);
+        const canReturnTermSchedule =
+            canMutateTermSchedule &&
+            [
+                TERM_STATUSES.SCHEDULING.identifier,
+                TERM_STATUSES.FEEDBACK_GATHERING.identifier,
+            ].includes(activeTermSchedule.status);
+
+        const canAdvanceTermSchedule =
+            canMutateTermSchedule &&
+            [
+                TERM_STATUSES.INITIALIZING.identifier,
+                TERM_STATUSES.SCHEDULING.identifier,
+                TERM_STATUSES.FEEDBACK_GATHERING.identifier,
+            ].includes(activeTermSchedule.status);
+
+        const canPrintSchedule =
+            activeTermSchedule.status === TERM_STATUSES.PUBLISHED.identifier;
 
         return (
             <Grid container spacing={16} direction="row" alignItems="center">
@@ -99,6 +117,19 @@ class BaseOverviewCard extends Component {
                     </Grid>
                 )}
 
+                {canPrintSchedule && (
+                    <Grid item>
+                        <Button
+                            variant="raised"
+                            color="primary"
+                            onClick={() => this.toggleSchedulePrintPreview(true)}
+                        >
+                            <PrintIcon className={classes.printIcon} />
+                            Print classes schedule
+                        </Button>
+                    </Grid>
+                )}
+
                 <AdvanceTermModal
                     open={advanceTermModalIsShowing}
                     onClose={() => this.toggleAdvanceTermModal(false)}
@@ -110,13 +141,18 @@ class BaseOverviewCard extends Component {
                     onClose={() => this.toggleReturnTermModal(false)}
                     termSchedule={activeTermSchedule}
                 />
+
+                <SchedulePrintPreview
+                    open={schedulePrintPreviewIsShowing}
+                    onClose={() => this.toggleSchedulePrintPreview(false)}
+                    termSchedule={activeTermSchedule}
+                />
             </Grid>
         );
     };
 
     render() {
-        const { activeTermSchedule, user } = this.props;
-        const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
+        const { activeTermSchedule } = this.props;
         const activeStepIndex = steps.findIndex(
             step => step.identifier === activeTermSchedule.status
         );
@@ -146,9 +182,7 @@ class BaseOverviewCard extends Component {
                             </Grid>
                         )}
 
-                        {canMutateTermSchedule && (
-                            <Grid item>{this.renderButtons()}</Grid>
-                        )}
+                        <Grid item>{this.renderButtons()}</Grid>
                     </Grid>
                 </Toolbar>
 
