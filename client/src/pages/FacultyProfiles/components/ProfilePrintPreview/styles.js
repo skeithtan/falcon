@@ -68,4 +68,7 @@ export const styles = theme => ({
         // Offset by settingsContainer
         right: 372,
     },
+    printIcon: {
+        marginRight: theme.spacing.unit,
+    },
 });

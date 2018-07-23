@@ -291,7 +291,8 @@ class BaseProfilePrintPreview extends Component {
                                     color="primary"
                                     className={classes.printButton}
                                 >
-                                    <PrintIcon /> Print
+                                    <PrintIcon className={classes.printIcon} />
+                                    Print Profile
                                 </Button>
                             )}
                             content={() => this.componentRef}
