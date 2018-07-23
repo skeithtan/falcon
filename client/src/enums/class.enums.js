@@ -60,11 +60,13 @@ export const MEETING_DAYS = {
         identifier: "M_TH",
         name: "Mondays and Thursdays",
         path: "monday-thursday",
+        shortName: "M/TH"
     },
     T_F: {
         identifier: "T_F",
         name: "Tuesdays and Fridays",
         path: "tuesday-friday",
+        shortName: "T/F"
     },
 };
 
