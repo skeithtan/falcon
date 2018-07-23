@@ -58,10 +58,6 @@ export const styles = theme => ({
         height: 64,
         width: 64,
     },
-    printAvatar: {
-        height: 80,
-        width: 80,
-    },
     printButton: {
         position: "absolute",
         bottom: 40,

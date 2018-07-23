@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import PrintIcon from "@material-ui/icons/Print";
 import moment from "moment";
-import React, { Component, PureComponent } from "react";
+import React, { Component, PureComponent, Fragment } from "react";
 import ReactToPrint from "react-to-print";
 import { FullPageLoadingIndicator } from "../../../../components/FullPageLoadingIndicator";
 import { ErrorState } from "../../../../components/states/ErrorState";
@@ -30,6 +30,58 @@ import { TeachingSubjectsPrintComponent } from "../print_components/TeachingSubj
 import { wrap } from "./wrapper";
 
 class PrintContent extends PureComponent {
+    renderReportHeader = () => {
+        const { classes } = this.props;
+        return (
+            <Grid container spacing={8} direction="row" alignItems="center">
+                <Grid item>
+                    <img
+                        src={pnuLogo}
+                        className={classes.pnuLogo}
+                        alt="PNU Logo"
+                    />
+                </Grid>
+                <Grid item>
+                    <Grid container spacing={0} direction="column">
+                        <Grid item>
+                            <Typography variant="title" component="h1">
+                                Philippine Normal University
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography
+                                variant="subheading"
+                                color="textSecondary"
+                            >
+                                Faculty of Arts and Languages
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        );
+    };
+
+    renderReportTitle = () => {
+        const { faculty } = this.props;
+        const dateNow = moment().format("LLL");
+
+        return (
+            <Fragment>
+                <Typography variant="title" component="h1" align="center">
+                    {getFullName(faculty.user)}'s Profile
+                </Typography>
+                <Typography
+                    variant="subheading"
+                    align="center"
+                    color="textSecondary"
+                >
+                    Generated {dateNow}
+                </Typography>
+            </Fragment>
+        );
+    };
+
     render() {
         const {
             classes,
@@ -43,8 +95,6 @@ class PrintContent extends PureComponent {
             includeExtensionWorks,
         } = this.props;
 
-        const dateNow = moment().format("LLL");
-
         return (
             <Grid
                 container
@@ -53,52 +103,9 @@ class PrintContent extends PureComponent {
                 className={classes.printPageContainer}
                 wrap="nowrap"
             >
-                <Grid item>
-                    <Grid
-                        container
-                        spacing={8}
-                        direction="row"
-                        alignItems="center"
-                    >
-                        <Grid item>
-                            <img
-                                src={pnuLogo}
-                                className={classes.pnuLogo}
-                                alt="PNU Logo"
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Grid container spacing={0} direction="column">
-                                <Grid item>
-                                    <Typography variant="title" component="h1">
-                                        Philippine Normal University
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography
-                                        variant="subheading"
-                                        color="textSecondary"
-                                    >
-                                        Faculty of Arts and Languages
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <Grid item>{this.renderReportHeader()}</Grid>
 
-                <Grid item>
-                    <Typography variant="title" component="h1" align="center">
-                        {getFullName(faculty.user)}'s Profile
-                    </Typography>
-                    <Typography
-                        variant="subheading"
-                        align="center"
-                        color="textSecondary"
-                    >
-                        Generated {dateNow}
-                    </Typography>
-                </Grid>
+                <Grid item>{this.renderReportTitle()}</Grid>
 
                 <Grid item>
                     <OverviewPrintComponent faculty={faculty} />
