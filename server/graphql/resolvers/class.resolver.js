@@ -117,8 +117,16 @@ const mutateStatus = termSchedule => ({
             );
         }
 
-        termSchedule.status =
+        const newStatus =
             TERM_STATUSES[TERM_STATUSES.indexOf(termSchedule.status) + 1];
+
+        termSchedule.status = newStatus;
+
+        if (newStatus === "FEEDBACK_GATHERING") {
+            // Clear out feedback before re-entering feedback gathering
+            termSchedule.facultyPool.forEach(response => response.feedback = null);
+        }
+
         await termSchedule.save();
         return termSchedule.status;
     },

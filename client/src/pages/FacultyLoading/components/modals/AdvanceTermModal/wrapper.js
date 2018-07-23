@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { advanceTermScheduleStatus } from "../../../../../services/classes/term_schedule.service";
 import { termScheduleIsUpdated } from "../../../../../redux/actions/faculty_loading.actions";
 import { toastIsShowing } from "../../../../../redux/actions/toast.actions";
+import { TERM_STATUSES } from "../../../../../enums/class.enums";
 
 const mapDispatchToProps = dispatch => ({
     showToast(message) {
@@ -13,12 +14,22 @@ const mapDispatchToProps = dispatch => ({
         return advanceTermScheduleStatus(termSchedule._id)
             .then(result => result.data.termSchedule.status.advance)
             .then(newStatus => {
-                dispatch(
-                    termScheduleIsUpdated({
-                        ...termSchedule,
-                        status: newStatus,
-                    })
-                );
+                const newTermSchedule = {
+                    ...termSchedule,
+                    status: newStatus,
+                };
+
+                if (newStatus === TERM_STATUSES.FEEDBACK_GATHERING.identifier) {
+                    // Reset feedback on feedback gathering
+                    newTermSchedule.facultyPool = newTermSchedule.facultyPool.map(
+                        response => ({
+                            ...response,
+                            feedback: null,
+                        })
+                    );
+                }
+
+                dispatch(termScheduleIsUpdated(newTermSchedule));
                 return newStatus;
             });
     },
