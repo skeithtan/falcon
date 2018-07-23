@@ -97,6 +97,7 @@ const FacultyResponseSchema = new Schema({
         type: {
             submitted: {
                 type: Date,
+                default: Date.now,
                 required: true,
             },
             status: {

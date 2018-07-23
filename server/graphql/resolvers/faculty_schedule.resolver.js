@@ -15,7 +15,10 @@ const termScheduleToFacultyFormat = (termSchedule, faculty) => {
         // Remove all classes without faculties
         .filter(classSchedule => classSchedule.faculty !== null)
         // Get only classes whose faculty is the current user
-        .filter(classSchedule => String(classSchedule.faculty) === String(faculty._id));
+        .filter(
+            classSchedule =>
+                String(classSchedule.faculty) === String(faculty._id)
+        );
 
     return {
         _id: termSchedule._id,
@@ -113,15 +116,14 @@ const setFacultyFeedback = async (
         );
     }
 
-    facultyResponse.feedback.submitted = Date.now();
-    facultyResponse.feedback.status = status;
-
-    if (status === "REJECTED") {
-        facultyResponse.feedback.rejectionReason = rejectionReason;
-    }
+    facultyResponse.feedback = {
+        submitted: new Date().toString(),
+        status: status,
+        rejectionReason: status === "REJECTED" ? rejectionReason : null,
+    };
 
     await currentTermSchedule.save();
-    return true;
+    return facultyResponse.feedback;
 };
 
 export const queryResolvers = {
