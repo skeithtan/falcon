@@ -25,6 +25,10 @@ const collect = (connect, monitor) => ({
     },
 });
 
+const mapStateToProps = state => ({
+    user: state.authentication.user,
+});
+
 const mapDispatchToProps = dispatch => ({
     onSetFaculty(faculty, oldClassSchedule, termSchedule) {
         const newClassSchedule = {
@@ -74,7 +78,7 @@ const mapDispatchToProps = dispatch => ({
 
 export const wrap = compose(
     connect(
-        null,
+        mapStateToProps,
         mapDispatchToProps
     ),
     DropTarget(DropTypes.FACULTY, classScheduleItemTarget, collect),

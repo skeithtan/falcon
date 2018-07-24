@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-
+import React, { Component, Fragment } from "react";
 import { ClassSchedulePopper } from "../ClassSchedulePopper";
 import { CompatibilityDisplay } from "../CompatibilityDisplay";
 import Grid from "@material-ui/core/Grid";
@@ -10,12 +9,30 @@ import { UserChip } from "../../../../components/UserChip";
 import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
 import { findDOMNode } from "react-dom";
 import { wrap } from "./wrapper";
+import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
+import { ClassScheduleModal } from "../modals/ClassScheduleModal";
+import { TERM_STATUSES } from "../../../../enums/class.enums";
 
 class BaseClassScheduleItem extends Component {
     state = {
         classSchedulePopperAnchorEl: null,
         coordinates: null,
+        removeClassScheduleModalIsShowing: false,
+        updateClassScheduleModalIsShowing: false,
     };
+
+    toggleRemoveClassScheduleModal = shouldShow =>
+        this.setState({
+            removeClassScheduleModalIsShowing: shouldShow,
+            // Hide popper when interacting with modal
+            classSchedulePopperAnchorEl: null,
+        });
+
+    toggleUpdateClassScheduleModal = shouldShow =>
+        this.setState({
+            updateClassScheduleModalIsShowing: shouldShow,
+            classSchedulePopperAnchorEl: null,
+        });
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const coordinates = findDOMNode(this.gridRef).getBoundingClientRect();
@@ -79,8 +96,14 @@ class BaseClassScheduleItem extends Component {
                 classSchedule={classSchedule}
                 faculty={faculty}
                 subject={subject}
-                termSchedule={termSchedule}
                 compatibility={compatibility}
+                termSchedule={termSchedule}
+                onRemoveClassScheduleClick={() =>
+                    this.toggleRemoveClassScheduleModal(true)
+                }
+                onUpdateClassScheduleClick={() =>
+                    this.toggleUpdateClassScheduleModal(true)
+                }
             />
         );
     };
@@ -187,6 +210,53 @@ class BaseClassScheduleItem extends Component {
         );
     };
 
+    renderModals = () => {
+        const { classSchedule, subject, termSchedule, user } = this.props;
+
+        const {
+            removeClassScheduleModalIsShowing,
+            updateClassScheduleModalIsShowing,
+        } = this.state;
+
+        const shouldShowRemoveTermSchedule =
+            termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
+
+        const shouldShowUpdateTermSchedule =
+            user.permissions.POPULATE_TERM_SCHEDULES &&
+            [
+                TERM_STATUSES.INITIALIZING.identifier,
+                TERM_STATUSES.SCHEDULING.identifier,
+            ].includes(termSchedule.status);
+
+        return (
+            <Fragment>
+                {shouldShowRemoveTermSchedule && (
+                    <RemoveClassScheduleModal
+                        open={removeClassScheduleModalIsShowing}
+                        onClose={() =>
+                            this.toggleRemoveClassScheduleModal(false)
+                        }
+                        classSchedule={classSchedule}
+                        termSchedule={termSchedule}
+                        subject={subject}
+                    />
+                )}
+
+                {shouldShowUpdateTermSchedule && (
+                    <ClassScheduleModal
+                        action="update"
+                        open={updateClassScheduleModalIsShowing}
+                        onClose={() =>
+                            this.toggleUpdateClassScheduleModal(false)
+                        }
+                        classSchedule={classSchedule}
+                        termSchedule={termSchedule}
+                    />
+                )}
+            </Fragment>
+        );
+    };
+
     render() {
         const { classSchedulePopperAnchorEl } = this.state;
         const {
@@ -240,6 +310,7 @@ class BaseClassScheduleItem extends Component {
 
                 {this.renderclassSchedulePopper()}
                 {this.renderCompatibilityPopover()}
+                {this.renderModals()}
             </div>
         );
     }

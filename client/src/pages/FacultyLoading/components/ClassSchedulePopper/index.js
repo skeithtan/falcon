@@ -3,13 +3,12 @@ import {
     MEETING_HOURS,
     TERM_STATUSES,
 } from "../../../../enums/class.enums";
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import { ClassScheduleModal } from "../modals/ClassScheduleModal";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import { CompatibilityDisplay } from "../CompatibilityDisplay";
 import { FacultyChip } from "../../../../components/FacultyChip";
@@ -18,34 +17,18 @@ import Grow from "@material-ui/core/Grow";
 import IconButton from "@material-ui/core/IconButton";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import Popper from "@material-ui/core/Popper";
-import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import { makeURL } from "../../../../utils/url.util";
 import { wrap } from "./wrapper";
 
-class BaseClassSchedulePopper extends Component {
-    state = {
-        removeClassScheduleModalIsShowing: false,
-        updateClassScheduleModalIsShowing: false,
-    };
-
-    toggleRemoveClassScheduleModal = shouldShow =>
-        this.setState({
-            removeClassScheduleModalIsShowing: shouldShow,
-        });
-
-    toggleUpdateClassScheduleModal = shouldShow =>
-        this.setState({
-            updateClassScheduleModalIsShowing: shouldShow,
-        });
-
+class BaseClassSchedulePopper extends PureComponent {
     renderButtons = () => (
         <Grid container justify="space-between" alignItems="flex-end">
             <Grid item>
                 <Button
                     color="primary"
-                    onClick={() => this.toggleUpdateClassScheduleModal(true)}
+                    onClick={this.props.onUpdateClassScheduleClick}
                 >
                     Update class
                 </Button>
@@ -54,9 +37,7 @@ class BaseClassSchedulePopper extends Component {
                 <Grid item>
                     <Button
                         color="primary"
-                        onClick={() =>
-                            this.toggleRemoveClassScheduleModal(true)
-                        }
+                        onClick={this.props.onRemoveClassScheduleClick}
                     >
                         Remove class
                     </Button>
@@ -176,19 +157,7 @@ class BaseClassSchedulePopper extends Component {
     }
 
     renderPopperContent = () => {
-        const {
-            classSchedule,
-            subject,
-            termSchedule,
-            compatibility,
-            user,
-        } = this.props;
-
-        const {
-            removeClassScheduleModalIsShowing,
-            updateClassScheduleModalIsShowing,
-        } = this.state;
-
+        const { compatibility, user } = this.props;
         return (
             <Fragment>
                 <CardContent>
@@ -213,31 +182,6 @@ class BaseClassSchedulePopper extends Component {
                     user.permissions.POPULATE_TERM_SCHEDULES && (
                         <CardActions>{this.renderButtons()}</CardActions>
                     )}
-
-                {this.shouldShowRemoveTermSchedule && (
-                    <RemoveClassScheduleModal
-                        open={removeClassScheduleModalIsShowing}
-                        onClose={() =>
-                            this.toggleRemoveClassScheduleModal(false)
-                        }
-                        classSchedule={classSchedule}
-                        termSchedule={termSchedule}
-                        subject={subject}
-                    />
-                )}
-
-                {this.termStatusAllowsMutation &&
-                    user.permissions.POPULATE_TERM_SCHEDULES && (
-                        <ClassScheduleModal
-                            action="update"
-                            open={updateClassScheduleModalIsShowing}
-                            onClose={() =>
-                                this.toggleUpdateClassScheduleModal(false)
-                            }
-                            classSchedule={classSchedule}
-                            termSchedule={termSchedule}
-                        />
-                    )}
             </Fragment>
         );
     };
@@ -253,16 +197,11 @@ class BaseClassSchedulePopper extends Component {
             >
                 {({ TransitionProps }) => (
                     <Grow {...TransitionProps} timeout={250}>
-                        <Card className={classes.popperContainer}>
-                            <ClickAwayListener
-                                onClickAway={() => {
-                                    console.log("Clicked away");
-                                    onClose();
-                                }}
-                            >
+                        <ClickAwayListener onClickAway={() => onClose()}>
+                            <Card className={classes.popperContainer}>
                                 {this.renderPopperContent()}
-                            </ClickAwayListener>
-                        </Card>
+                            </Card>
+                        </ClickAwayListener>
                     </Grow>
                 )}
             </Popper>
