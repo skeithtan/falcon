@@ -92,7 +92,14 @@ class BaseOverviewCard extends Component {
             activeTermSchedule.status === TERM_STATUSES.PUBLISHED.identifier;
 
         return (
-            <Grid container spacing={16} direction="row" alignItems="center">
+            <Grid
+                container
+                spacing={16}
+                direction="row"
+                alignItems="center"
+                justify="flex-end"
+                wrap="nowrap"
+            >
                 {canReturnTermSchedule && (
                     <Grid item>
                         <Button
@@ -122,7 +129,9 @@ class BaseOverviewCard extends Component {
                         <Button
                             variant="raised"
                             color="primary"
-                            onClick={() => this.toggleSchedulePrintPreview(true)}
+                            onClick={() =>
+                                this.toggleSchedulePrintPreview(true)
+                            }
                         >
                             <PrintIcon className={classes.printIcon} />
                             Print classes schedule
@@ -163,7 +172,12 @@ class BaseOverviewCard extends Component {
         return (
             <Card>
                 <Toolbar>
-                    <Grid container justify="space-between" alignItems="center">
+                    <Grid
+                        container
+                        justify="space-between"
+                        alignItems="center"
+                        wrap="nowrap"
+                    >
                         <Grid item xs>
                             <Typography variant="title">
                                 {termScheduleToString(activeTermSchedule)}
@@ -182,7 +196,9 @@ class BaseOverviewCard extends Component {
                             </Grid>
                         )}
 
-                        <Grid item>{this.renderButtons()}</Grid>
+                        <Grid item xs>
+                            {this.renderButtons()}
+                        </Grid>
                     </Grid>
                 </Toolbar>
 
