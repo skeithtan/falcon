@@ -191,7 +191,6 @@ class BaseFeedbackModal extends ModalFormComponent {
     };
 
     get dialogActionIsDisabled() {
-        console.log(this.formErrors);
         return this.formErrors.hasErrors;
     }
 

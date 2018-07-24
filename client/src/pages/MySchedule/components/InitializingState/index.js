@@ -126,8 +126,6 @@ class BaseInitializingState extends Component {
 
     render() {
         const { form, termSchedule } = this.state;
-        console.log("Term schedule", termSchedule);
-
         return (
             <Grid
                 spacing={16}

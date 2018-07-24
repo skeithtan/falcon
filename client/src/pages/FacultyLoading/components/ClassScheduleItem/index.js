@@ -76,12 +76,9 @@ class BaseClassScheduleItem extends Component {
             });
     };
 
-    handleCompatibilityDisplayClose = () => {
-        console.log("Close");
-        this.setState({
-            compatibilityDisplayAnchorEl: null,
-        });
-    };
+    handleCompatibilityDisplayClose = () => this.setState({
+        compatibilityDisplayAnchorEl: null,
+    });
 
     renderclassSchedulePopper = () => {
         const { classSchedulePopperAnchorEl } = this.state;
