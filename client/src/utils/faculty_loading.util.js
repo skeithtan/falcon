@@ -181,22 +181,48 @@ const getTwoMeetingHoursBefore = meetingHours => {
     ];
 };
 
+const AVAILABILITY_SORT = ["Pending Availability", "Availability submitted"];
+
+const FEEDBACK_SORT = [
+    "Pending Feedback",
+    `${FACULTY_FEEDBACK.REJECTED.name} Schedule`,
+    `${FACULTY_FEEDBACK.ACCEPTED.name} Schedule`,
+];
+
+const LOADING_SORT = [
+    "Unassigned",
+    "Underloaded",
+    "Overloaded",
+    "Within Range",
+];
+
 export const categorizeFaculties = (faculties, termScheduleStatus, classes) => {
     let categorized = {};
+    let sortArray = [];
 
     switch (termScheduleStatus) {
         case TERM_STATUSES.INITIALIZING.identifier:
             categorized = categorizeByAvailability(faculties);
+            sortArray = AVAILABILITY_SORT;
             break;
         case TERM_STATUSES.FEEDBACK_GATHERING.identifier:
             categorized = categorizeByFeedback(faculties);
+            sortArray = FEEDBACK_SORT;
             break;
         default:
             categorized = categorizeByLoading(faculties, classes);
+            sortArray = LOADING_SORT;
             break;
     }
 
-    return groupBy(categorized, "category");
+    const groupedByCategory = groupBy(categorized, "category");
+    return Object.entries(groupedByCategory).sort((a, b) => {
+        // Sort category with the same order as sortArray
+        const aCategory = a[0];
+        const bCategory = b[0];
+
+        return sortArray.indexOf(aCategory) - sortArray.indexOf(bCategory);
+    });
 };
 
 const categorizeByAvailability = faculties =>
@@ -260,6 +286,6 @@ const categorizeByLoading = (faculties, classes) =>
 
         return {
             ...faculty,
-            category: "Within range",
+            category: "Within Range",
         };
     });

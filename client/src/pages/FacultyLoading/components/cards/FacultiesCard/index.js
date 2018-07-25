@@ -104,7 +104,7 @@ class BaseFacultiesCard extends Component {
             dense
             subheader={<li />}
         >
-            {Object.entries(showingFaculties).map(([category, faculties]) => (
+            {showingFaculties.map(([category, faculties]) => (
                 <li
                     key={category}
                     className={this.props.classes.facultyListSection}
