@@ -11,6 +11,15 @@ export const styles = theme => ({
             paddingTop: theme.spacing.unit * 2,
             paddingBottom: theme.spacing.unit * 16,
             boxShadow: theme.shadows[8],
+            opacity: "1 !important",
+        },
+
+        "&.incompatibleWithHovering": {
+            opacity: 0.5,
+        },
+
+        "&.compatibleWithHovering": {
+            boxShadow: theme.shadows[5],
         },
     },
 
