@@ -191,11 +191,9 @@ class BaseFacultiesCard extends Component {
             const fullName = `${faculty.user.name.first} ${
                 faculty.user.name.last
             }`.toLowerCase();
-            const email = faculty.user.email.toLowerCase();
             const idNumber = `T-${faculty.idNumber}`.toLowerCase();
             return (
                 fullName.includes(searchKeyword) ||
-                email.includes(searchKeyword) ||
                 idNumber.includes(searchKeyword)
             );
         });
