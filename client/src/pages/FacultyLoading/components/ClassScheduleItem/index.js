@@ -324,13 +324,12 @@ class BaseClassScheduleItem extends Component {
             containerClasses.push("hoveringFaculty");
         }
 
-        const isCompatibleWithHovering =
-            compatibilityWithHovering !== null &&
-            compatibilityWithHovering.every(item => item.isCompatible);
-
         if (compatibilityWithHovering !== null) {
+            const compatible = compatibilityWithHovering.every(
+                item => item.isCompatible
+            );
             containerClasses.push(
-                isCompatibleWithHovering
+                compatible
                     ? "compatibleWithHovering"
                     : "incompatibleWithHovering"
             );

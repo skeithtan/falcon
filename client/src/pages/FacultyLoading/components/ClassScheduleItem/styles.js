@@ -33,6 +33,7 @@ export const styles = theme => ({
 
         "&.selected": {
             background: lighten(theme.palette.primary.main, 0.7),
+            opacity: "1 !important",
         },
 
         "&.hoveringFaculty": {
@@ -51,6 +52,7 @@ export const styles = theme => ({
 
         "&.selected": {
             background: lighten(BlueGrey["400"], 0.7),
+            opacity: "1 !important",
         },
 
         "&.hoveringFaculty": {
