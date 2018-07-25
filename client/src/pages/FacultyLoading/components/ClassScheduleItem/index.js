@@ -19,6 +19,7 @@ class BaseClassScheduleItem extends Component {
         coordinates: null,
         removeClassScheduleModalIsShowing: false,
         updateClassScheduleModalIsShowing: false,
+        compatibilityWithHovering: null,
     };
 
     toggleRemoveClassScheduleModal = shouldShow =>
@@ -35,6 +36,59 @@ class BaseClassScheduleItem extends Component {
         });
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        this.calculateCoordinates(prevState);
+        this.calculateCompatibilityWithHovering(prevProps, prevState);
+    }
+
+    calculateCompatibilityWithHovering = (prevProps, prevState) => {
+        const {
+            hovering: { faculty: previousHoveringFaculty },
+        } = prevProps;
+
+        const {
+            classSchedule,
+            termSchedule,
+            hovering: { faculty, availability },
+        } = this.props;
+
+        const { compatibilityWithHovering: compatibility } = this.state;
+
+        if (!faculty && compatibility !== null) {
+            this.setState({
+                compatibilityWithHovering: null,
+            });
+            return;
+        }
+
+        // No need to recalculate if the hovering faculty did not change
+        if (previousHoveringFaculty === faculty) {
+            return;
+        }
+
+        console.log(previousHoveringFaculty, faculty);
+
+        const { compatibilityWithHovering: previousCompatibility } = prevState;
+
+        // If previous compatibility is not null and hovering faculty changed
+        if (previousCompatibility !== null) {
+            return;
+        }
+
+        const assignedClasses = termSchedule.classes.filter(
+            item => item.faculty === faculty._id
+        );
+
+        this.setState({
+            compatibilityWithHovering: computeFacultyClassCompatibility(
+                faculty,
+                assignedClasses,
+                classSchedule,
+                availability
+            ),
+        });
+    };
+
+    calculateCoordinates = prevState => {
         const coordinates = findDOMNode(this.gridRef).getBoundingClientRect();
 
         if (!coordinates) {
@@ -56,7 +110,7 @@ class BaseClassScheduleItem extends Component {
         if (coordinatesChanged) {
             this.setState({ coordinates });
         }
-    }
+    };
 
     handleclassSchedulePopperOpen = event =>
         this.setState({
@@ -76,9 +130,10 @@ class BaseClassScheduleItem extends Component {
             });
     };
 
-    handleCompatibilityDisplayClose = () => this.setState({
-        compatibilityDisplayAnchorEl: null,
-    });
+    handleCompatibilityDisplayClose = () =>
+        this.setState({
+            compatibilityDisplayAnchorEl: null,
+        });
 
     renderclassSchedulePopper = () => {
         const { classSchedulePopperAnchorEl } = this.state;
@@ -130,28 +185,20 @@ class BaseClassScheduleItem extends Component {
 
     renderCompatibilityPopover = () => {
         const {
-            classSchedule,
-            termSchedule,
-            hovering: { faculty, availability },
+            hovering: { faculty },
             isOver,
         } = this.props;
 
-        const { coordinates } = this.state;
+        const { coordinates, compatibilityWithHovering } = this.state;
 
-        if (!faculty || !coordinates) {
+        if (
+            !faculty ||
+            !coordinates ||
+            !isOver ||
+            compatibilityWithHovering === null
+        ) {
             return null;
         }
-
-        const assignedClasses = termSchedule.classes.filter(
-            item => item.faculty === faculty._id
-        );
-
-        const compatibility = computeFacultyClassCompatibility(
-            faculty,
-            assignedClasses,
-            classSchedule,
-            availability
-        );
 
         const anchorPosition = {
             left: coordinates.x - 16, // Offset to box
@@ -172,7 +219,9 @@ class BaseClassScheduleItem extends Component {
                 transformOrigin={transformOrigin}
                 disableRestoreFocus
             >
-                <CompatibilityDisplay compatibility={compatibility} />
+                <CompatibilityDisplay
+                    compatibility={compatibilityWithHovering}
+                />
             </Popover>
         );
     };
@@ -255,7 +304,10 @@ class BaseClassScheduleItem extends Component {
     };
 
     render() {
-        const { classSchedulePopperAnchorEl } = this.state;
+        const {
+            classSchedulePopperAnchorEl,
+            compatibilityWithHovering,
+        } = this.state;
         const {
             classSchedule,
             faculty,
@@ -279,6 +331,18 @@ class BaseClassScheduleItem extends Component {
 
         if (isOver) {
             containerClasses.push("hoveringFaculty");
+        }
+
+        const isCompatibleWithHovering =
+            compatibilityWithHovering !== null &&
+            compatibilityWithHovering.every(item => item.isCompatible);
+
+        if (compatibilityWithHovering !== null) {
+            containerClasses.push(
+                isCompatibleWithHovering
+                    ? "compatibleWithHovering"
+                    : "incompatibleWithHovering"
+            );
         }
 
         return connectDropTarget(
