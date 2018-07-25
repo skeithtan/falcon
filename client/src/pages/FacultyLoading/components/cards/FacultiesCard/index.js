@@ -110,9 +110,7 @@ class BaseFacultiesCard extends Component {
                     className={this.props.classes.facultyListSection}
                 >
                     <ul className={this.props.classes.facultyUl}>
-                        <ListSubheader>
-                            {category}
-                        </ListSubheader>
+                        <ListSubheader>{category}</ListSubheader>
                         {faculties.map(({ facultyResponse, faculty }) => (
                             <FacultyListItem
                                 key={facultyResponse.faculty}
@@ -165,7 +163,7 @@ class BaseFacultiesCard extends Component {
         const showingFaculties = this.getShowingFaculties();
 
         // If facultyPool is not empty but showingFaculties is then the filter found nothing with searchKeyword
-        if (showingFaculties.length === 0) {
+        if (Object.keys(showingFaculties).length === 0) {
             return (
                 <EmptySearchResultsState
                     searchKeyword={this.state.searchKeyword}

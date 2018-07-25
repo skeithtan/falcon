@@ -182,7 +182,7 @@ const getTwoMeetingHoursBefore = meetingHours => {
 };
 
 export const categorizeFaculties = (faculties, termScheduleStatus, classes) => {
-    let categorized = [];
+    let categorized = {};
 
     switch (termScheduleStatus) {
         case TERM_STATUSES.INITIALIZING.identifier:
