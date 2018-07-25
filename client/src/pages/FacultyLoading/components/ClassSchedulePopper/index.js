@@ -159,7 +159,7 @@ class BaseClassSchedulePopper extends PureComponent {
     renderPopperContent = () => {
         const { compatibility, user } = this.props;
         return (
-            <Fragment>
+            <div>
                 <CardContent>
                     <Grid
                         container
@@ -182,7 +182,7 @@ class BaseClassSchedulePopper extends PureComponent {
                     user.permissions.POPULATE_TERM_SCHEDULES && (
                         <CardActions>{this.renderButtons()}</CardActions>
                     )}
-            </Fragment>
+            </div>
         );
     };
 
@@ -197,11 +197,11 @@ class BaseClassSchedulePopper extends PureComponent {
             >
                 {({ TransitionProps }) => (
                     <Grow {...TransitionProps} timeout={250}>
-                        <ClickAwayListener onClickAway={() => onClose()}>
-                            <Card className={classes.popperContainer}>
+                        <Card className={classes.popperContainer}>
+                            <ClickAwayListener onClickAway={() => onClose()}>
                                 {this.renderPopperContent()}
-                            </Card>
-                        </ClickAwayListener>
+                            </ClickAwayListener>
+                        </Card>
                     </Grow>
                 )}
             </Popper>
