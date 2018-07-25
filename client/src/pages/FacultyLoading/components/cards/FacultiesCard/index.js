@@ -187,7 +187,7 @@ class BaseFacultiesCard extends Component {
             return mappedPool;
         }
 
-        const { searchKeyword } = this.state;
+        const searchKeyword = this.state.searchKeyword.toLowerCase();
 
         return mappedPool.filter(({ faculty }) => {
             const fullName = `${faculty.user.name.first} ${
