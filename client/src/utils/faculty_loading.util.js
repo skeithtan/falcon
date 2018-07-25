@@ -183,7 +183,7 @@ const getTwoMeetingHoursBefore = meetingHours => {
 
 export const categorizeFaculties = (faculties, termScheduleStatus, classes) => {
     let categorized = [];
-    
+
     switch (termScheduleStatus) {
         case TERM_STATUSES.INITIALIZING.identifier:
             categorized = categorizeByAvailability(faculties);
@@ -207,7 +207,7 @@ const categorizeByAvailability = faculties =>
             category:
                 facultyResponse.availability === null
                     ? "Pending Availability"
-                    : "Availability received",
+                    : "Availability submitted",
         };
     });
 
