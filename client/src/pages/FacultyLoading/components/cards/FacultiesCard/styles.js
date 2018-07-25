@@ -5,7 +5,7 @@ export const styles = theme => ({
         height: "100%",
     },
     facultiesListContainer: {
-        overflowY: "scroll",
+        overflow: "hidden",
     },
     searchInput: {
         padding: 8,
@@ -21,9 +21,10 @@ export const styles = theme => ({
     },
     facultyList: {
         backgroundColor: theme.palette.background.paper,
-        position: 'relative',
-        overflow: 'auto',
-      },
+        position: "relative",
+        overflowY: "scroll",
+        height: "100%",
+    },
     facultyListSection: {
         backgroundColor: "inherit",
     },

@@ -22,7 +22,6 @@ import { TERM_STATUSES } from "../../../../../enums/class.enums";
 import { EmptySearchResultsState } from "../../../../../components/states/EmptySearchResultsState";
 import { categorizeFaculties } from "../../../../../utils/faculty_loading.util";
 
-
 class BaseFacultiesCard extends Component {
     state = {
         addFacultyModalIsShowing: false,
@@ -111,7 +110,9 @@ class BaseFacultiesCard extends Component {
                     className={this.props.classes.facultyListSection}
                 >
                     <ul className={this.props.classes.facultyUl}>
-                        <ListSubheader>{category}</ListSubheader>
+                        <ListSubheader>
+                            {category}
+                        </ListSubheader>
                         {faculties.map(({ facultyResponse, faculty }) => (
                             <FacultyListItem
                                 key={facultyResponse.faculty}
