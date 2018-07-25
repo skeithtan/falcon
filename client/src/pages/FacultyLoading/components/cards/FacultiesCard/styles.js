@@ -19,4 +19,16 @@ export const styles = theme => ({
     searchAdornment: {
         color: theme.palette.grey["600"],
     },
+    facultyList: {
+        backgroundColor: theme.palette.background.paper,
+        position: 'relative',
+        overflow: 'auto',
+      },
+    facultyListSection: {
+        backgroundColor: "inherit",
+    },
+    facultyUl: {
+        backgroundColor: "inherit",
+        padding: 0,
+    },
 });

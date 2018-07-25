@@ -1,5 +1,13 @@
 import moment from "moment";
-import { TERMS, MEETING_DAYS, MEETING_HOURS } from "../enums/class.enums";
+import {
+    TERMS,
+    MEETING_DAYS,
+    MEETING_HOURS,
+    TERM_STATUSES,
+    FACULTY_FEEDBACK,
+} from "../enums/class.enums";
+import { EMPLOYMENT } from "../enums/faculty.enums";
+import groupBy from "lodash/groupBy";
 
 const now = moment();
 
@@ -172,3 +180,86 @@ const getTwoMeetingHoursBefore = meetingHours => {
         allMeetingHours[candidateIndex - 2],
     ];
 };
+
+export const categorizeFaculties = (faculties, termScheduleStatus, classes) => {
+    let categorized = [];
+    
+    switch (termScheduleStatus) {
+        case TERM_STATUSES.INITIALIZING.identifier:
+            categorized = categorizeByAvailability(faculties);
+            break;
+        case TERM_STATUSES.FEEDBACK_GATHERING.identifier:
+            categorized = categorizeByFeedback(faculties);
+            break;
+        default:
+            categorized = categorizeByLoading(faculties, classes);
+            break;
+    }
+
+    return groupBy(categorized, "category");
+};
+
+const categorizeByAvailability = faculties =>
+    faculties.map(faculty => {
+        const { facultyResponse } = faculty;
+        return {
+            ...faculty,
+            category:
+                facultyResponse.availability === null
+                    ? "Pending Availability"
+                    : "Availability received",
+        };
+    });
+
+const categorizeByFeedback = faculties =>
+    faculties.map(faculty => {
+        const {
+            facultyResponse: { feedback },
+        } = faculty;
+
+        return {
+            ...faculty,
+            category:
+                feedback === null
+                    ? "Pending Feedback"
+                    : `${FACULTY_FEEDBACK[feedback].name} Schedule`,
+        };
+    });
+
+const categorizeByLoading = (faculties, classes) =>
+    faculties.map(faculty => {
+        const {
+            faculty: { _id, employment },
+        } = faculty;
+        const assignedClassesCount = classes.filter(
+            classSchedule => classSchedule.faculty === _id
+        ).length;
+
+        if (assignedClassesCount === 0) {
+            return {
+                ...faculty,
+                category: "Unassigned",
+            };
+        }
+
+        const { min, max } = EMPLOYMENT[employment].load;
+
+        if (assignedClassesCount < min) {
+            return {
+                ...faculty,
+                category: "Underloaded",
+            };
+        }
+
+        if (assignedClassesCount > max) {
+            return {
+                ...faculty,
+                category: "Overloaded",
+            };
+        }
+
+        return {
+            ...faculty,
+            category: "Within range",
+        };
+    });

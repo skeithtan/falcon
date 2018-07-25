@@ -3,8 +3,10 @@ import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
+import ListSubheader from "@material-ui/core/ListSubheader";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -18,7 +20,8 @@ import { ErrorState } from "../../../../../components/states/ErrorState";
 import { AddFacultyModal } from "../../modals/AddFacultyModal";
 import { TERM_STATUSES } from "../../../../../enums/class.enums";
 import { EmptySearchResultsState } from "../../../../../components/states/EmptySearchResultsState";
-import { Divider } from "../../../../../../node_modules/@material-ui/core";
+import { categorizeFaculties } from "../../../../../utils/faculty_loading.util";
+
 
 class BaseFacultiesCard extends Component {
     state = {
@@ -96,16 +99,30 @@ class BaseFacultiesCard extends Component {
         );
     }
 
-    renderList = mappedPool => (
-        <List dense>
-            {mappedPool.map(({ facultyResponse, faculty }) => (
-                <FacultyListItem
-                    key={facultyResponse.faculty}
-                    facultyResponse={facultyResponse}
-                    faculty={faculty}
-                    termSchedule={this.props.termSchedule}
-                    canSchedule={this.canSchedule}
-                />
+    renderList = showingFaculties => (
+        <List
+            className={this.props.classes.facultyList}
+            dense
+            subheader={<li />}
+        >
+            {Object.entries(showingFaculties).map(([category, faculties]) => (
+                <li
+                    key={category}
+                    className={this.props.classes.facultyListSection}
+                >
+                    <ul className={this.props.classes.facultyUl}>
+                        <ListSubheader>{category}</ListSubheader>
+                        {faculties.map(({ facultyResponse, faculty }) => (
+                            <FacultyListItem
+                                key={facultyResponse.faculty}
+                                facultyResponse={facultyResponse}
+                                faculty={faculty}
+                                termSchedule={this.props.termSchedule}
+                                canSchedule={this.canSchedule}
+                            />
+                        ))}
+                    </ul>
+                </li>
             ))}
         </List>
     );
@@ -158,7 +175,7 @@ class BaseFacultiesCard extends Component {
         return this.renderList(showingFaculties);
     };
 
-    getShowingFaculties = () => {
+    getSearchResults = () => {
         const {
             termSchedule: { facultyPool },
         } = this.props;
@@ -183,6 +200,14 @@ class BaseFacultiesCard extends Component {
                 idNumber.includes(searchKeyword)
             );
         });
+    };
+
+    getShowingFaculties = () => {
+        const {
+            termSchedule: { status, classes },
+        } = this.props;
+        const searchResults = this.getSearchResults();
+        return categorizeFaculties(searchResults, status, classes);
     };
 
     get isSearching() {
