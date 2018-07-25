@@ -1,4 +1,6 @@
 import AddIcon from "@material-ui/icons/Add";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +8,7 @@ import List from "@material-ui/core/List";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
+import SearchIcon from "@material-ui/icons/Search";
 import React, { Component } from "react";
 import { FacultyListItem } from "../../FacultyListItem";
 import { wrap } from "./wrapper";
@@ -14,10 +17,13 @@ import { FullPageLoadingIndicator } from "../../../../../components/FullPageLoad
 import { ErrorState } from "../../../../../components/states/ErrorState";
 import { AddFacultyModal } from "../../modals/AddFacultyModal";
 import { TERM_STATUSES } from "../../../../../enums/class.enums";
+import { EmptySearchResultsState } from "../../../../../components/states/EmptySearchResultsState";
+import { Divider } from "../../../../../../node_modules/@material-ui/core";
 
 class BaseFacultiesCard extends Component {
     state = {
         addFacultyModalIsShowing: false,
+        searchKeyword: "",
     };
 
     componentDidMount() {
@@ -53,6 +59,11 @@ class BaseFacultiesCard extends Component {
             addFacultyModalIsShowing: shouldShow,
         });
 
+    onSearchInputChange = event =>
+        this.setState({
+            searchKeyword: event.target.value,
+        });
+
     renderEmptyState = () => (
         <EmptyState
             bigMessage="No faculties found"
@@ -85,13 +96,13 @@ class BaseFacultiesCard extends Component {
         );
     }
 
-    renderList = facultyResponses => (
+    renderList = mappedPool => (
         <List dense>
-            {facultyResponses.map(facultyResponse => (
+            {mappedPool.map(({ facultyResponse, faculty }) => (
                 <FacultyListItem
                     key={facultyResponse.faculty}
                     facultyResponse={facultyResponse}
-                    faculty={this.getFacultyFromId(facultyResponse.faculty)}
+                    faculty={faculty}
                     termSchedule={this.props.termSchedule}
                     canSchedule={this.canSchedule}
                 />
@@ -105,6 +116,11 @@ class BaseFacultiesCard extends Component {
         } = this.props;
         return faculties.find(faculty => faculty._id === _id);
     };
+
+    mapResponseToFaculty = facultyResponse => ({
+        facultyResponse: facultyResponse,
+        faculty: this.getFacultyFromId(facultyResponse.faculty),
+    });
 
     renderCardContent = () => {
         const {
@@ -128,8 +144,50 @@ class BaseFacultiesCard extends Component {
             return null;
         }
 
-        return this.renderList(facultyPool);
+        const showingFaculties = this.getShowingFaculties();
+
+        // If facultyPool is not empty but showingFaculties is then the filter found nothing with searchKeyword
+        if (showingFaculties.length === 0) {
+            return (
+                <EmptySearchResultsState
+                    searchKeyword={this.state.searchKeyword}
+                />
+            );
+        }
+
+        return this.renderList(showingFaculties);
     };
+
+    getShowingFaculties = () => {
+        const {
+            termSchedule: { facultyPool },
+        } = this.props;
+
+        const mappedPool = facultyPool.map(this.mapResponseToFaculty);
+
+        if (!this.isSearching) {
+            return mappedPool;
+        }
+
+        const { searchKeyword } = this.state;
+
+        return mappedPool.filter(({ faculty }) => {
+            const fullName = `${faculty.user.name.first} ${
+                faculty.user.name.last
+            }`.toLowerCase();
+            const email = faculty.user.email.toLowerCase();
+            const idNumber = `T-${faculty.idNumber}`.toLowerCase();
+            return (
+                fullName.includes(searchKeyword) ||
+                email.includes(searchKeyword) ||
+                idNumber.includes(searchKeyword)
+            );
+        });
+    };
+
+    get isSearching() {
+        return this.state.searchKeyword.trim().length > 0;
+    }
 
     renderToolbar = () => {
         const {
@@ -179,8 +237,42 @@ class BaseFacultiesCard extends Component {
         );
     };
 
-    render() {
+    renderSearch = () => {
         const { classes } = this.props;
+        const { searchKeyword } = this.state;
+
+        return (
+            <div className={classes.searchContainer}>
+                <Input
+                    className={classes.searchInput}
+                    fullWidth
+                    disableUnderline
+                    type="search"
+                    value={searchKeyword}
+                    onChange={this.onSearchInputChange}
+                    startAdornment={
+                        <InputAdornment
+                            position="start"
+                            className={classes.searchAdornment}
+                        >
+                            <SearchIcon />
+                        </InputAdornment>
+                    }
+                    placeholder="Search faculties"
+                />
+            </div>
+        );
+    };
+
+    render() {
+        const {
+            classes,
+            faculties: { faculties },
+            termSchedule: { facultyPool },
+        } = this.props;
+
+        const shouldShowSearchBar =
+            faculties !== null && facultyPool.length > 0;
 
         return (
             <Card className={classes.facultiesCardContainer}>
@@ -191,6 +283,12 @@ class BaseFacultiesCard extends Component {
                     wrap="nowrap"
                 >
                     <Grid item>{this.renderToolbar()}</Grid>
+                    {shouldShowSearchBar && (
+                        <Grid item>
+                            {this.renderSearch()}
+                            <Divider />
+                        </Grid>
+                    )}
                     <Grid item xs className={classes.facultiesListContainer}>
                         {this.renderCardContent()}
                     </Grid>
