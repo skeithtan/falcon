@@ -55,7 +55,7 @@ class BaseCompatibilityDisplay extends PureComponent {
                     <Grid item key={item.criteria}>
                         <CompatibilityItem
                             classes={classes}
-                            label={item.criteria}
+                            label={item.message}
                             isCompatible={item.isCompatible}
                         />
                     </Grid>

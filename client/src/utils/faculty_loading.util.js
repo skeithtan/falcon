@@ -76,13 +76,18 @@ export const computeFacultyClassCompatibility = (
     availability
 ) => [
     {
-        criteria: "Subject is faculty's expertise",
+        criteria: "Faculty-subject compatibility",
         get isCompatible() {
             return faculty.teachingSubjects.includes(classSchedule.subject);
         },
+        get message() {
+            return this.isCompatible
+                ? "This subject is within this faculty's expertise"
+                : "This subject is not within this faculty's expertise";
+        },
     },
     {
-        criteria: "Faculty is available at this time",
+        criteria: "Faculty time availability",
         get isCompatible() {
             if (!availability) {
                 return false;
@@ -92,9 +97,14 @@ export const computeFacultyClassCompatibility = (
                 classSchedule.meetingHours
             );
         },
+        get message() {
+            return this.isCompatible
+                ? "This faculty is available at this time"
+                : "This faculty is not available during these hours";
+        },
     },
     {
-        criteria: "Class is not the third consecutive",
+        criteria: "Third consecutive class",
         get isCompatible() {
             const { meetingHours, meetingDays } = classSchedule;
             // The first two meeting hours means it is never the third consecutive
@@ -117,9 +127,14 @@ export const computeFacultyClassCompatibility = (
                 assignedHoursForDay.includes(hours)
             );
         },
+        get message() {
+            return this.isCompatible
+                ? "This class is not the third consecutive"
+                : "This class is the third consecutive class";
+        },
     },
     {
-        criteria: "Does not conflict with other classes",
+        criteria: "Class time conflict",
         get isCompatible() {
             const { meetingDays, meetingHours } = classSchedule;
 
@@ -132,6 +147,11 @@ export const computeFacultyClassCompatibility = (
                     // Ensure it's unique
                     .every(item => item.meetingHours !== meetingHours)
             );
+        },
+        get message() {
+            return this.isCompatible
+                ? "This class does not conflict with other classes"
+                : "This faculty has another class within these hours";
         },
     },
 ];

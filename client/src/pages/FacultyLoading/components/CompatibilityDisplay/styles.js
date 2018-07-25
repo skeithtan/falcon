@@ -8,8 +8,8 @@ export const styles = theme => ({
         height: 32,
     },
     item: {
-        paddingTop: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit,
+        paddingTop: theme.spacing.unit * 1.5,
+        paddingBottom: theme.spacing.unit * 1.5,
         paddingLeft: theme.spacing.unit * 3,
         paddingRight: theme.spacing.unit * 3,
     },
