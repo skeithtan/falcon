@@ -33,7 +33,7 @@ type StatusMutations {
 }
 
 type ClassMutations {
-    add(newClass: ClassInput!): Class!
+    add(newClasses: [ClassInput!]!): [Class!]!
     update(_id: ID!, newClass: ClassInput!): Class!
     remove(_id: ID!): Boolean!
 }

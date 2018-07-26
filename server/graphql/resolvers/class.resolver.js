@@ -72,11 +72,13 @@ const termSchedules = () => ({
 });
 
 const mutateClasses = termSchedule => ({
-    async add({ newClass: newClassInput }) {
-        const newClass = termSchedule.classes.create(newClassInput);
-        termSchedule.classes.push(newClass);
+    async add({ newClasses: newClassesInput }) {
+        const newClasses = newClassesInput.map(newClass =>
+            termSchedule.classes.create(newClass)
+        );
+        termSchedule.classes = [...termSchedule.classes, ...newClasses];
         await termSchedule.save();
-        return newClass;
+        return newClasses;
     },
 
     async update({ _id, newClass: newClassInput }) {
@@ -124,7 +126,9 @@ const mutateStatus = termSchedule => ({
 
         if (newStatus === "FEEDBACK_GATHERING") {
             // Clear out feedback before re-entering feedback gathering
-            termSchedule.facultyPool.forEach(response => response.feedback = null);
+            termSchedule.facultyPool.forEach(
+                response => (response.feedback = null)
+            );
         }
 
         await termSchedule.save();
