@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "1.4.0",
-    "@material-ui/icons": "^2.0.0-beta.1",
-    "apollo-cache-inmemory": "^1.2.5",
-    "apollo-client": "^2.3.5",
+    "@material-ui/icons": "^2.0.0",
+    "apollo-cache-inmemory": "^1.2.6",
+    "apollo-client": "^2.3.7",
     "apollo-link": "^1.2.2",
     "apollo-link-error": "^1.1.0",
     "apollo-link-http": "^1.5.4",
