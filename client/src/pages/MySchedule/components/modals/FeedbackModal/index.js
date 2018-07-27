@@ -49,10 +49,10 @@ class BaseFeedbackModal extends ModalFormComponent {
         };
     }
 
-    mapPropsToForm = props => ({
-        status: props.status,
+    mapPropsToForm = ({ status, availability: { M_TH, T_F } }) => ({
+        status: status,
         rejectionReason: "",
-        newAvailability: props.availability,
+        newAvailability: { M_TH, T_F },
     });
 
     get maxWidth() {
