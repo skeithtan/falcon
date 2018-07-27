@@ -7,7 +7,6 @@ import { addClassSchedule, updateClassSchedule } from "../../../../../services/c
 import { termScheduleIsUpdated } from "../../../../../redux/actions/faculty_loading.actions";
 
 const mapStateToProps = state => ({
-    faculties: state.faculty.faculties,
     subjects: state.subject.subjects,
 });
 

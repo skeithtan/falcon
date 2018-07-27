@@ -64,11 +64,6 @@ class BaseClassScheduleModal extends ModalFormComponent {
         section: classSchedule.section,
     });
 
-    get submitAddAction() {
-        const { submitAddClassSchedule, termSchedule } = this.props;
-        return () => submitAddClassSchedule(this.state.form, termSchedule);
-    }
-
     get submitUpdateAction() {
         const {
             submitUpdateClassSchedule,
@@ -82,20 +77,15 @@ class BaseClassScheduleModal extends ModalFormComponent {
     }
 
     get buttonName() {
-        const { action } = this.props;
-        return action === "add" ? "Add Class" : "Update Class";
+        return "Update Class";
     }
 
     get modalTitle() {
-        const { action } = this.props;
-        return action === "add" ? "Add a Class" : "Update Class";
+        return "Update Class";
     }
 
     get toastSuccessMessage() {
-        const { action } = this.props;
-        return action === "add"
-            ? "Class successfully added"
-            : "Class successfully updated";
+        return "Class successfully updated";
     }
 
     get formErrors() {

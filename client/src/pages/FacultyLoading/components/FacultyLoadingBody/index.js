@@ -1,13 +1,14 @@
-import AddIcon from "@material-ui/icons/Add";
+
 import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
+import AddIcon from "@material-ui/icons/Add";
 import { OverviewCard } from "../cards/OverviewCard";
 import { wrap } from "./wrapper";
 import { ScheduleCard } from "../cards/ScheduleCard";
 import { FacultiesCard } from "../cards/FacultiesCard";
-import { ClassScheduleModal } from "../modals/ClassScheduleModal";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
+import { AddClassesModal } from "../modals/AddClassesModal";
 
 class BaseFacultyLoadingBody extends Component {
     state = {
@@ -91,7 +92,7 @@ class BaseFacultyLoadingBody extends Component {
                 )}
 
                 {shouldShowAddClassSchedule && (
-                    <ClassScheduleModal
+                    <AddClassesModal
                         action="add"
                         open={addClassScheduleModalIsShowing}
                         termSchedule={activeTermSchedule}

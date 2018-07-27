@@ -13,13 +13,13 @@ export const fields = `
     section
 `;
 
-export const addClassSchedule = (termScheduleId, newClass) =>
+export const addClassSchedule = (termScheduleId, newClasses) =>
     client.mutate({
         mutation: gql`
-        mutation($termScheduleId: ID!, $newClass: ClassInput!) {
+        mutation($termScheduleId: ID!, $newClasses: [ClassInput!]!) {
             termSchedule(_id: $termScheduleId) {
                 classes {
-                    add(newClass: $newClass) {
+                    add(newClasses: $newClasses) {
                         ${fields}
                     }
                 }
@@ -28,7 +28,7 @@ export const addClassSchedule = (termScheduleId, newClass) =>
     `,
         variables: {
             termScheduleId,
-            newClass,
+            newClasses,
         },
     });
 
