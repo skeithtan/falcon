@@ -10,7 +10,6 @@ import {
 import { fetchAllTermSchedules } from "../../services/classes/term_schedule.service";
 import { styles } from "./styles";
 
-
 const mapStateToProps = state => ({
     ...state.facultyLoading,
     user: state.authentication.user,
@@ -20,7 +19,13 @@ const mapDispatchToProps = dispatch => ({
     fetchData() {
         dispatch(termSchedulesIsLoading());
         return fetchAllTermSchedules()
-            .then(result => result.data.termSchedules)
+            .then(({ data, errors }) => {
+                if (errors) {
+                    throw new Error(errors[0].message);
+                }
+
+                return data.termSchedules;
+            })
             .then(termSchedules => {
                 dispatch(termSchedulesIsFetched(termSchedules));
                 return termSchedules;
@@ -34,8 +39,8 @@ const mapDispatchToProps = dispatch => ({
 export const wrap = compose(
     connect(
         mapStateToProps,
-        mapDispatchToProps,
+        mapDispatchToProps
     ),
     withStyles(styles),
-    withRouter,
+    withRouter
 );
