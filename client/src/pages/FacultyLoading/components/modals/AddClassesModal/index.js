@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -215,9 +216,13 @@ class BaseAddClassesModal extends ModalFormComponent {
                             this.onClassSubjectAdd(meetingDayIdentifier)
                         }
                     >
-                        <Card className={classes.addClassCard}>
+                        <Button
+                            className={classes.addClassCard}
+                            variant="raised"
+                            size="large"
+                        >
                             <AddIcon />
-                        </Card>
+                        </Button>
                     </Grid>
                 </Grid>
             </div>

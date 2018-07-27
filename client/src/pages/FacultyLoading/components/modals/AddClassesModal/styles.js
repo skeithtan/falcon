@@ -17,6 +17,7 @@ export const styles = theme => ({
     addClassCard: {
         minHeight: 400,
         height: "100%",
+        transition: "300ms all",
 
         display: "flex",
         alignItems: "center",
@@ -27,12 +28,13 @@ export const styles = theme => ({
         fontSize: 16,
         boxSizing: "border-box",
         minWidth: 240,
+
+        "&:hover": {
+            cursor: "pointer",
+        },
     },
     classScheduleCard: {
-        padding: theme.spacing.unit * 2,
-        paddingTop: theme.spacing.unit * 3, 
-        padding: theme.spacing.unit * 3, 
-
+        padding: theme.spacing.unit * 3,
         height: "100%",
         boxSizing: "border-box",
         position: "relative",
