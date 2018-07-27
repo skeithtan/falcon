@@ -216,11 +216,7 @@ class BaseAddClassesModal extends ModalFormComponent {
                             this.onClassSubjectAdd(meetingDayIdentifier)
                         }
                     >
-                        <Button
-                            className={classes.addClassCard}
-                            variant="raised"
-                            size="large"
-                        >
+                        <Button className={classes.addClassCard} variant="raised" size="large">
                             <AddIcon />
                         </Button>
                     </Grid>

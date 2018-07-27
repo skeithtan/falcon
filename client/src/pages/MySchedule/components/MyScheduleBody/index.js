@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
 import { InitializingState } from "../InitializingState";
 import { UninvolvedState } from "../UninvolvedState";

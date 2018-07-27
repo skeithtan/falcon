@@ -1,5 +1,3 @@
-import { lighten } from "@material-ui/core/styles/colorManipulator";
-
 export const styles = theme => ({
     facultiesCardContainer: {
         height: "100%",
