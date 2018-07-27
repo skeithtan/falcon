@@ -248,7 +248,7 @@ const categorizeByFeedback = faculties =>
             category:
                 feedback === null
                     ? "Pending Feedback"
-                    : `${FACULTY_FEEDBACK[feedback].name} Schedule`,
+                    : `${FACULTY_FEEDBACK[feedback.status].name} Schedule`,
         };
     });
 
