@@ -1,10 +1,11 @@
 import { activeItem } from "../../../../components/styles";
-import {lighten} from "@material-ui/core/styles/colorManipulator";
+import { lighten } from "@material-ui/core/styles/colorManipulator";
 export const styles = theme => ({
     facultyListItemContainer: {
         transition: "200ms all",
         padding: theme.spacing.unit * 1.5,
         paddingLeft: theme.spacing.unit * 3,
+        background: theme.palette.common.white,
 
         "&.canDrag:hover": {
             ...activeItem(theme),
