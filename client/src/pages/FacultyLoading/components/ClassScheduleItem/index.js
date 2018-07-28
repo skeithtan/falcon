@@ -111,11 +111,6 @@ class BaseClassScheduleItem extends Component {
         setActiveClassSchedule(classSchedule._id, event.currentTarget);
     };
 
-    handleclassSchedulePopperClose = () =>
-        this.setState({
-            classSchedulePopperAnchorEl: null,
-        });
-
     handleCompatibilityDisplayOpen = event => {
         const { isOver } = this.props;
         if (isOver)
@@ -203,11 +198,9 @@ class BaseClassScheduleItem extends Component {
     };
 
     render() {
+        const { compatibilityWithHovering } = this.state;
         const {
-            classSchedulePopperAnchorEl,
-            compatibilityWithHovering,
-        } = this.state;
-        const {
+            active,
             classSchedule,
             faculty,
             subject,
@@ -224,7 +217,7 @@ class BaseClassScheduleItem extends Component {
                 : classes.classScheduleWithoutFaculty
         );
 
-        if (classSchedulePopperAnchorEl) {
+        if (active) {
             containerClasses.push("selected");
         }
 

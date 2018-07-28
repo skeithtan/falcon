@@ -175,6 +175,7 @@ class BaseScheduleCard extends Component {
             fetchAllFaculties,
             fetchAllSubjects,
             activeTermSchedule,
+            activeClassSchedule,
             setActiveClassSchedule,
             toggleUpdateClassScheduleModal,
             toggleRemoveClassScheduleModal,
@@ -217,6 +218,7 @@ class BaseScheduleCard extends Component {
                         faculties={faculties.faculties}
                         subjects={subjects.subjects}
                         termSchedule={activeTermSchedule}
+                        activeClassSchedule={activeClassSchedule}
                         setActiveClassSchedule={setActiveClassSchedule}
                         toggleUpdateClassScheduleModal={
                             toggleUpdateClassScheduleModal

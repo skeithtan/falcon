@@ -12,6 +12,7 @@ class CalendarClassesColumn extends PureComponent {
             faculties,
             subjects,
             termSchedule,
+            activeClassSchedule,
             setActiveClassSchedule,
             toggleUpdateClassScheduleModal,
             toggleRemoveClassScheduleModal,
@@ -33,6 +34,7 @@ class CalendarClassesColumn extends PureComponent {
                                 subject => subject._id === classSchedule.subject
                             )}
                             termSchedule={termSchedule}
+                            active={activeClassSchedule && activeClassSchedule._id === classSchedule._id}
                             setActiveClassSchedule={setActiveClassSchedule}
                             toggleUpdateClassScheduleModal={
                                 toggleUpdateClassScheduleModal
@@ -72,6 +74,7 @@ class BaseScheduleCalendar extends PureComponent {
             classSchedules,
             faculties,
             subjects,
+            activeClassSchedule,
             termSchedule,
             setActiveClassSchedule,
             toggleUpdateClassScheduleModal,
@@ -91,6 +94,7 @@ class BaseScheduleCalendar extends PureComponent {
                             faculties={faculties}
                             subjects={subjects}
                             termSchedule={termSchedule}
+                            activeClassSchedule={activeClassSchedule}
                             setActiveClassSchedule={setActiveClassSchedule}
                             toggleUpdateClassScheduleModal={
                                 toggleUpdateClassScheduleModal

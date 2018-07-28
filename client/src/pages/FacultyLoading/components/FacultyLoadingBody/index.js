@@ -79,7 +79,9 @@ class BaseFacultyLoadingBody extends Component {
         const faculty = faculties.find(
             ({ _id }) => _id === classSchedule.faculty
         );
-        const subject = subjects.find(({ _id }) => _id === classSchedule.subject);
+        const subject = subjects.find(
+            ({ _id }) => _id === classSchedule.subject
+        );
 
         return {
             classSchedule,
@@ -128,16 +130,22 @@ class BaseFacultyLoadingBody extends Component {
             addClassScheduleModalIsShowing: shouldShow,
         });
 
-    renderScheduleFaculties = (activeTermSchedule, meetingDays) => (
+    renderScheduleFaculties = (
+        activeTermSchedule,
+        meetingDays,
+        activeClassSchedule
+    ) => (
         <div className={this.props.classes.scheduleFacultiesContainer}>
             <FacultiesCard
                 termSchedule={activeTermSchedule}
                 meetingDays={meetingDays}
+                activeClassSchedule={activeClassSchedule}
             />
             <ScheduleCard
                 activeTermSchedule={activeTermSchedule}
                 meetingDays={meetingDays}
                 setActiveClassSchedule={this.setActiveClassSchedule}
+                activeClassSchedule={activeClassSchedule}
                 toggleUpdateClassScheduleModal={
                     this.toggleUpdateClassScheduleModal
                 }
@@ -232,6 +240,10 @@ class BaseFacultyLoadingBody extends Component {
 
     render() {
         const { classes, activeTermSchedule, meetingDays } = this.props;
+        const { activeClassScheduleAnchorEl } = this.state;
+
+        const { classSchedule } = this.activeClassSchedule;
+        const activeClassSchedule = activeClassScheduleAnchorEl !== null ? classSchedule : null;
 
         return (
             <div className={classes.facultyLoadingBody}>
@@ -253,7 +265,8 @@ class BaseFacultyLoadingBody extends Component {
                         <Grid item xs>
                             {this.renderScheduleFaculties(
                                 activeTermSchedule,
-                                meetingDays
+                                meetingDays,
+                                activeClassSchedule
                             )}
                         </Grid>
                     </Grid>
