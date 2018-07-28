@@ -1,5 +1,5 @@
 import { activeItem } from "../../../../components/styles";
-
+import {lighten} from "@material-ui/core/styles/colorManipulator";
 export const styles = theme => ({
     facultyListItemContainer: {
         transition: "200ms all",
@@ -12,6 +12,15 @@ export const styles = theme => ({
             boxShadow: theme.shadows[2],
             color: theme.palette.primary.main,
         },
+
+        "&.incompatible": {
+            opacity: 0.5,
+        },
+
+        "&.compatible": {
+            ...activeItem(theme),
+            background: lighten(theme.palette.primary.light, 0.95),
+        },
     },
     facultyName: {
         whiteSpace: "nowrap",
@@ -20,6 +29,6 @@ export const styles = theme => ({
     },
     dragDivWrapper: {
         position: "absolute",
-        zIndex: -999
+        zIndex: -999,
     },
 });

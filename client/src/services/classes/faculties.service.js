@@ -1,4 +1,4 @@
-import gql from "../../../node_modules/graphql-tag";
+import gql from "graphql-tag";
 import { client } from "../../client";
 
 export const fields = `

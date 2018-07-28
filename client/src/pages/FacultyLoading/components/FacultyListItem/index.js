@@ -15,10 +15,12 @@ import { InitializingInfo } from "./info/InitializingInfo";
 import { SchedulingInfo } from "./info/SchedulingInfo";
 import { FeedbackGatheringInfo } from "./info/FeedbackGatheringInfo";
 import { UserChip } from "../../../../components/UserChip";
+import { computeCompatibilityWorker } from "../../../../workers/compute_compatibility.worker";
 
 class BaseFacultyListItem extends Component {
     state = {
         anchorEl: null,
+        compatibilityWithActiveClassSchedule: null,
     };
 
     get facultyFullname() {
@@ -32,6 +34,71 @@ class BaseFacultyListItem extends Component {
     handleMenuClose = () => {
         this.setState({ anchorEl: null });
     };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.calculateCompatibilityWithActiveClassSchedule(prevProps);
+    }
+
+    calculateCompatibilityWithActiveClassSchedule = prevProps => {
+        const { activeClassSchedule: prevActiveClassSchedule } = prevProps;
+
+        const {
+            activeClassSchedule,
+            termSchedule,
+            faculty,
+            facultyResponse,
+        } = this.props;
+
+        const {
+            compatibilityWithActiveClassSchedule: compatibility,
+        } = this.state;
+
+        if (!activeClassSchedule) {
+            if (compatibility !== null) {
+                this.setState({
+                    compatibilityWithActiveClassSchedule: null,
+                });
+            }
+
+            return;
+        }
+
+        // No need to recalculate if the class schedule did not change
+        if (
+            prevActiveClassSchedule &&
+            activeClassSchedule &&
+            prevActiveClassSchedule._id === activeClassSchedule._id
+        ) {
+            return;
+        }
+
+        this.terminateWorker();
+        const worker = new Worker(computeCompatibilityWorker);
+        this.worker = worker;
+
+        worker.postMessage({
+            faculty,
+            classSchedule: activeClassSchedule,
+            facultyResponse,
+            termSchedule,
+        });
+
+        worker.addEventListener("message", ({ data }) => {
+            this.setState({
+                compatibilityWithActiveClassSchedule: data,
+            });
+        });
+    };
+
+    terminateWorker = () => {
+        if (this.worker) {
+            this.worker.terminate();
+        }
+    };
+
+    componentWillUnmount() {
+        this.terminateWorker();
+    }
 
     renderSecondary = () => {
         const { faculty, facultyResponse, termSchedule } = this.props;
@@ -72,9 +139,18 @@ class BaseFacultyListItem extends Component {
             termSchedule,
         } = this.props;
 
-        const { anchorEl } = this.state;
+        const { anchorEl, compatibilityWithActiveClassSchedule } = this.state;
 
         const rootClasses = [classes.facultyListItemContainer];
+
+        if (compatibilityWithActiveClassSchedule) {
+            const isCompatible = compatibilityWithActiveClassSchedule.every(
+                criteria => criteria.isCompatible
+            );
+
+            rootClasses.push(isCompatible ? "compatible" : "incompatible");
+        }
+
         if (canDrag) {
             rootClasses.push("canDrag");
         }
@@ -98,17 +174,18 @@ class BaseFacultyListItem extends Component {
                         }
                         secondary={this.renderSecondary()}
                     />
-                    {dragPreview(
-                        <div className={classes.dragDivWrapper}>
-                            <UserChip user={faculty.user} />
-                        </div>
-                    )}
                     <ListItemSecondaryAction>
                         <IconButton onClick={this.handleMoreVertClick}>
                             <MoreVertIcon color="action" />
                         </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>
+
+                {dragPreview(
+                    <div className={classes.dragDivWrapper}>
+                        <UserChip user={faculty.user} />
+                    </div>
+                )}
 
                 <FacultyListItemMenu
                     anchorEl={anchorEl}

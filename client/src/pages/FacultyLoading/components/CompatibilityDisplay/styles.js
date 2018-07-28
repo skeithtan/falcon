@@ -1,6 +1,6 @@
 import Green from "@material-ui/core/colors/green";
 import Red from "@material-ui/core/colors/red";
-import { lighten } from "../../../../../node_modules/@material-ui/core/styles/colorManipulator";
+import { lighten } from "@material-ui/core/styles/colorManipulator";
 
 export const styles = theme => ({
     icon: {
