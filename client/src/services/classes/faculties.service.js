@@ -11,6 +11,7 @@ export const fields = `
         submitted
         status
         rejectionReason
+        isDirty
     }
 `;
 

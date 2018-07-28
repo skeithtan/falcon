@@ -134,6 +134,7 @@ class BaseClassSchedulePopper extends PureComponent {
                     }
                     handleDelete={() =>
                         onRemoveFacultyFromClassSchedule(
+                            faculty,
                             termSchedule,
                             classSchedule
                         )

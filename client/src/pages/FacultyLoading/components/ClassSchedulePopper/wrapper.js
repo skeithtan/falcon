@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onRemoveFacultyFromClassSchedule(termSchedule, classSchedule) {
+    onRemoveFacultyFromClassSchedule(faculty, termSchedule, classSchedule) {
         const newClassSchedule = {
             ...classSchedule,
             faculty: null,
@@ -27,6 +27,23 @@ const mapDispatchToProps = dispatch => ({
                 }
 
                 return classSchedule;
+            }),
+
+            facultyPool: termSchedule.facultyPool.map(response => {
+                if (
+                    response.faculty === faculty._id &&
+                    response.feedback !== null
+                ) {
+                    return {
+                        ...response,
+                        feedback: {
+                            ...response.feedback,
+                            isDirty: true,
+                        },
+                    };
+                }
+
+                return response;
             }),
         };
 

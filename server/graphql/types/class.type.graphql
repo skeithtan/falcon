@@ -47,6 +47,7 @@ type FacultyFeedback {
     submitted: String!
     status: FacultyFeedbackStatus!
     rejectionReason: String
+    isDirty: Boolean!
 }
 
 type FacultyAvailability {

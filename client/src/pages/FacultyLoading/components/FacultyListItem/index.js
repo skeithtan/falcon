@@ -55,6 +55,7 @@ class BaseFacultyListItem extends Component {
                     <SchedulingInfo
                         faculty={faculty}
                         assignedClasses={assignedClasses}
+                        feedback={facultyResponse.feedback}
                     />
                 );
         }
