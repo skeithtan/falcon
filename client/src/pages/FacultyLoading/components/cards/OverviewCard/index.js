@@ -78,6 +78,7 @@ class BaseOverviewCard extends Component {
             [
                 TERM_STATUSES.SCHEDULING.identifier,
                 TERM_STATUSES.FEEDBACK_GATHERING.identifier,
+                TERM_STATUSES.PUBLISHED.identifier,
             ].includes(activeTermSchedule.status);
 
         const canAdvanceTermSchedule =

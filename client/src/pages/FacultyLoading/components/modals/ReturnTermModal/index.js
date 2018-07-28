@@ -26,6 +26,17 @@ const MODAL_CONTENT_FOR_TERM_STATUS = {
             </DialogContentText>
         ),
     },
+    PUBLISHED: {
+        dialogTitle: "Are you sure you want to return to feedback gathering?",
+        dialogContent: (
+            <DialogContentText>
+                You are about to <strong>return to feedback gathering</strong>.
+                If the term is on any other step that isn't published or
+                feedback gathering, the faculties' schedules won't appear on
+                their screens.
+            </DialogContentText>
+        ),
+    },
 };
 
 class BaseReturnTermModal extends ConfirmActionModal {
