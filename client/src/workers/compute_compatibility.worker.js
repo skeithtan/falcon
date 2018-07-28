@@ -3,7 +3,7 @@ import { toWorkerScript } from "../utils/worker.util";
 const computeCompatibility = () => {
     // eslint-disable-next-line
     self.onmessage = function({
-        data: { faculty, classSchedule, facultyResponse, termSchedule },
+        data: { faculty, classSchedule, availability, termSchedule },
     }) {
         const assignedClasses = termSchedule.classes.filter(
             item => item.faculty === faculty._id
@@ -53,8 +53,6 @@ const computeCompatibility = () => {
                 allMeetingHours[candidateIndex - 2],
             ];
         };
-
-        const availability = facultyResponse.availability;
 
         // eslint-disable-next-line
         self.postMessage([

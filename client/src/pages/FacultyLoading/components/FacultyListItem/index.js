@@ -79,7 +79,7 @@ class BaseFacultyListItem extends Component {
         worker.postMessage({
             faculty,
             classSchedule: activeClassSchedule,
-            facultyResponse,
+            availability: facultyResponse.availability,
             termSchedule,
         });
 

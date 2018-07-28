@@ -8,6 +8,7 @@ import { UserChip } from "../../../../components/UserChip";
 import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
 import { findDOMNode } from "react-dom";
 import { wrap } from "./wrapper";
+import { computeCompatibilityWorker } from "../../../../workers/compute_compatibility.worker";
 
 class BaseClassScheduleItem extends Component {
     state = {
@@ -43,6 +44,16 @@ class BaseClassScheduleItem extends Component {
         );
     }
 
+    terminateWorker = () => {
+        if (this.worker) {
+            this.worker.terminate();
+        }
+    };
+
+    componentWillUnmount() {
+        this.terminateWorker();
+    }
+
     calculateCompatibilityWithHovering = prevProps => {
         const {
             hovering: { faculty: previousHoveringFaculty },
@@ -68,17 +79,21 @@ class BaseClassScheduleItem extends Component {
             return;
         }
 
-        const assignedClasses = termSchedule.classes.filter(
-            item => item.faculty === faculty._id
-        );
+        this.terminateWorker();
+        const worker = new Worker(computeCompatibilityWorker);
+        this.worker = worker;
 
-        this.setState({
-            compatibilityWithHovering: computeFacultyClassCompatibility(
-                faculty,
-                assignedClasses,
-                classSchedule,
-                availability
-            ),
+        worker.postMessage({
+            faculty,
+            classSchedule,
+            availability,
+            termSchedule,
+        });
+
+        worker.addEventListener("message", ({ data }) => {
+            this.setState({
+                compatibilityWithHovering: data,
+            });
         });
     };
 
