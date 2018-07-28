@@ -12,6 +12,9 @@ class CalendarClassesColumn extends PureComponent {
             faculties,
             subjects,
             termSchedule,
+            setActiveClassSchedule,
+            toggleUpdateClassScheduleModal,
+            toggleRemoveClassScheduleModal,
         } = this.props;
         return (
             <Grid container spacing={8} direction="column" wrap="nowrap">
@@ -30,6 +33,13 @@ class CalendarClassesColumn extends PureComponent {
                                 subject => subject._id === classSchedule.subject
                             )}
                             termSchedule={termSchedule}
+                            setActiveClassSchedule={setActiveClassSchedule}
+                            toggleUpdateClassScheduleModal={
+                                toggleUpdateClassScheduleModal
+                            }
+                            toggleRemoveClassScheduleModal={
+                                toggleRemoveClassScheduleModal
+                            }
                         />
                     </Grid>
                 ))}
@@ -63,6 +73,9 @@ class BaseScheduleCalendar extends PureComponent {
             faculties,
             subjects,
             termSchedule,
+            setActiveClassSchedule,
+            toggleUpdateClassScheduleModal,
+            toggleRemoveClassScheduleModal,
         } = this.props;
         return (
             <Grid container spacing={8} direction="row" wrap="nowrap">
@@ -78,6 +91,13 @@ class BaseScheduleCalendar extends PureComponent {
                             faculties={faculties}
                             subjects={subjects}
                             termSchedule={termSchedule}
+                            setActiveClassSchedule={setActiveClassSchedule}
+                            toggleUpdateClassScheduleModal={
+                                toggleUpdateClassScheduleModal
+                            }
+                            toggleRemoveClassScheduleModal={
+                                toggleRemoveClassScheduleModal
+                            }
                         />
                     </Grid>
                 ))}

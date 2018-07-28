@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from "react";
-import { ClassSchedulePopper } from "../ClassSchedulePopper";
+import React, { Component } from "react";
 import { CompatibilityDisplay } from "../CompatibilityDisplay";
 import Grid from "@material-ui/core/Grid";
 import IncompatibleIcon from "@material-ui/icons/Error";
@@ -9,35 +8,39 @@ import { UserChip } from "../../../../components/UserChip";
 import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
 import { findDOMNode } from "react-dom";
 import { wrap } from "./wrapper";
-import { RemoveClassScheduleModal } from "../modals/RemoveClassScheduleModal";
-import { ClassScheduleModal } from "../modals/ClassScheduleModal";
-import { TERM_STATUSES } from "../../../../enums/class.enums";
 
 class BaseClassScheduleItem extends Component {
     state = {
-        classSchedulePopperAnchorEl: null,
         coordinates: null,
-        removeClassScheduleModalIsShowing: false,
-        updateClassScheduleModalIsShowing: false,
         compatibilityWithHovering: null,
     };
-
-    toggleRemoveClassScheduleModal = shouldShow =>
-        this.setState({
-            removeClassScheduleModalIsShowing: shouldShow,
-            // Hide popper when interacting with modal
-            classSchedulePopperAnchorEl: null,
-        });
-
-    toggleUpdateClassScheduleModal = shouldShow =>
-        this.setState({
-            updateClassScheduleModalIsShowing: shouldShow,
-            classSchedulePopperAnchorEl: null,
-        });
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.calculateCoordinates(prevState);
         this.calculateCompatibilityWithHovering(prevProps);
+    }
+
+    get compatibilityWithAssignedFaculty() {
+        const { faculty, classSchedule, termSchedule } = this.props;
+
+        if (!faculty) {
+            return null;
+        }
+
+        const assignedClasses = termSchedule.classes.filter(
+            item => item.faculty === faculty._id
+        );
+
+        const response = termSchedule.facultyPool.find(
+            response => response.faculty === faculty._id
+        );
+
+        return computeFacultyClassCompatibility(
+            faculty,
+            assignedClasses,
+            classSchedule,
+            response.availability
+        );
     }
 
     calculateCompatibilityWithHovering = prevProps => {
@@ -103,10 +106,10 @@ class BaseClassScheduleItem extends Component {
         }
     };
 
-    handleclassSchedulePopperOpen = event =>
-        this.setState({
-            classSchedulePopperAnchorEl: event.currentTarget,
-        });
+    handleclassSchedulePopperOpen = event => {
+        const { setActiveClassSchedule, classSchedule } = this.props;
+        setActiveClassSchedule(classSchedule._id, event.currentTarget);
+    };
 
     handleclassSchedulePopperClose = () =>
         this.setState({
@@ -125,54 +128,6 @@ class BaseClassScheduleItem extends Component {
         this.setState({
             compatibilityDisplayAnchorEl: null,
         });
-
-    renderclassSchedulePopper = () => {
-        const { classSchedulePopperAnchorEl } = this.state;
-        const { classSchedule, faculty, subject, termSchedule } = this.props;
-        const compatibility = this.compatibilityWithAssignedFaculty;
-
-        return (
-            <ClassSchedulePopper
-                open={Boolean(classSchedulePopperAnchorEl)}
-                anchorEl={classSchedulePopperAnchorEl}
-                onClose={this.handleclassSchedulePopperClose}
-                classSchedule={classSchedule}
-                faculty={faculty}
-                subject={subject}
-                compatibility={compatibility}
-                termSchedule={termSchedule}
-                onRemoveClassScheduleClick={() =>
-                    this.toggleRemoveClassScheduleModal(true)
-                }
-                onUpdateClassScheduleClick={() =>
-                    this.toggleUpdateClassScheduleModal(true)
-                }
-            />
-        );
-    };
-
-    get compatibilityWithAssignedFaculty() {
-        const { faculty, classSchedule, termSchedule } = this.props;
-
-        if (!faculty) {
-            return null;
-        }
-
-        const assignedClasses = termSchedule.classes.filter(
-            item => item.faculty === faculty._id
-        );
-
-        const response = termSchedule.facultyPool.find(
-            response => response.faculty === faculty._id
-        );
-
-        return computeFacultyClassCompatibility(
-            faculty,
-            assignedClasses,
-            classSchedule,
-            response.availability
-        );
-    }
 
     renderCompatibilityPopover = () => {
         const {
@@ -247,53 +202,6 @@ class BaseClassScheduleItem extends Component {
         );
     };
 
-    renderModals = () => {
-        const { classSchedule, subject, termSchedule, user } = this.props;
-
-        const {
-            removeClassScheduleModalIsShowing,
-            updateClassScheduleModalIsShowing,
-        } = this.state;
-
-        const shouldShowRemoveTermSchedule =
-            termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
-
-        const shouldShowUpdateTermSchedule =
-            user.permissions.POPULATE_TERM_SCHEDULES &&
-            [
-                TERM_STATUSES.INITIALIZING.identifier,
-                TERM_STATUSES.SCHEDULING.identifier,
-            ].includes(termSchedule.status);
-
-        return (
-            <Fragment>
-                {shouldShowRemoveTermSchedule && (
-                    <RemoveClassScheduleModal
-                        open={removeClassScheduleModalIsShowing}
-                        onClose={() =>
-                            this.toggleRemoveClassScheduleModal(false)
-                        }
-                        classSchedule={classSchedule}
-                        termSchedule={termSchedule}
-                        subject={subject}
-                    />
-                )}
-
-                {shouldShowUpdateTermSchedule && (
-                    <ClassScheduleModal
-                        action="update"
-                        open={updateClassScheduleModalIsShowing}
-                        onClose={() =>
-                            this.toggleUpdateClassScheduleModal(false)
-                        }
-                        classSchedule={classSchedule}
-                        termSchedule={termSchedule}
-                    />
-                )}
-            </Fragment>
-        );
-    };
-
     render() {
         const {
             classSchedulePopperAnchorEl,
@@ -359,9 +267,7 @@ class BaseClassScheduleItem extends Component {
                     )}
                 </Grid>
 
-                {this.renderclassSchedulePopper()}
                 {this.renderCompatibilityPopover()}
-                {this.renderModals()}
             </div>
         );
     }
