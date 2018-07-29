@@ -1,6 +1,6 @@
 export const styles = theme => ({
     popper: {
-        transition: "500ms all",
+        transition: "300ms all",
         opacity: "0",
         "&.open": {
             opacity: 1,
