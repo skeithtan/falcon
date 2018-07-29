@@ -24,7 +24,7 @@ import { wrap } from "./wrapper";
 import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
 
 class BaseClassSchedulePopper extends PureComponent {
-    get compatibility() {
+    calculateCompatibility = () => {
         const { faculty, classSchedule, termSchedule } = this.props;
 
         if (!faculty) {
@@ -45,20 +45,22 @@ class BaseClassSchedulePopper extends PureComponent {
             classSchedule,
             response.availability
         );
-    }
+    };
 
     handleButtonClick = callback => () => {
         const { onClose } = this.props;
         onClose();
         callback();
-    }
+    };
 
     renderButtons = () => (
         <Grid container justify="space-between" alignItems="flex-end">
             <Grid item>
                 <Button
                     color="primary"
-                    onClick={this.handleButtonClick(this.props.onUpdateClassScheduleClick)}
+                    onClick={this.handleButtonClick(
+                        this.props.onUpdateClassScheduleClick
+                    )}
                 >
                     Update class
                 </Button>
@@ -67,7 +69,9 @@ class BaseClassSchedulePopper extends PureComponent {
                 <Grid item>
                     <Button
                         color="primary"
-                        onClick={this.handleButtonClick(this.props.onRemoveClassScheduleClick)}
+                        onClick={this.handleButtonClick(
+                            this.props.onRemoveClassScheduleClick
+                        )}
                     >
                         Remove class
                     </Button>
@@ -189,6 +193,8 @@ class BaseClassSchedulePopper extends PureComponent {
 
     renderPopperContent = () => {
         const { user } = this.props;
+        const { compatibility } = this.calculateCompatibility();
+
         return (
             <div>
                 <CardContent>
@@ -205,8 +211,8 @@ class BaseClassSchedulePopper extends PureComponent {
                     </Grid>
                 </CardContent>
 
-                {this.compatibility && (
-                    <CompatibilityDisplay compatibility={this.compatibility} />
+                {compatibility && (
+                    <CompatibilityDisplay compatibility={compatibility} />
                 )}
 
                 {this.termStatusAllowsMutation &&

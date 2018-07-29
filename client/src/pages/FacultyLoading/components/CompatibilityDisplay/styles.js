@@ -1,6 +1,7 @@
+import Amber from "@material-ui/core/colors/amber";
 import Green from "@material-ui/core/colors/green";
 import Red from "@material-ui/core/colors/red";
-import { lighten } from "@material-ui/core/styles/colorManipulator";
+import { lighten, darken } from "@material-ui/core/styles/colorManipulator";
 
 export const styles = theme => ({
     icon: {
@@ -20,5 +21,9 @@ export const styles = theme => ({
     incompatibleItem: {
         background: lighten(Red["400"], 0.9),
         color: Red["800"],
+    },
+    unknownCompatibilityItem: {
+        background: lighten(Amber["400"], 0.9),
+        color: darken(Amber["900"], 0.3),
     },
 });

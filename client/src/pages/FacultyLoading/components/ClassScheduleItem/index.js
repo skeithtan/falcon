@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { CompatibilityDisplay } from "../CompatibilityDisplay";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import IncompatibleIcon from "@material-ui/icons/Error";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
+import { CompatibilityDisplay } from "../CompatibilityDisplay";
 import { UserChip } from "../../../../components/UserChip";
-import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
 import { findDOMNode } from "react-dom";
 import { wrap } from "./wrapper";
 import { computeCompatibilityWorker } from "../../../../workers/compute_compatibility.worker";
@@ -13,45 +13,78 @@ import { computeCompatibilityWorker } from "../../../../workers/compute_compatib
 class BaseClassScheduleItem extends Component {
     state = {
         coordinates: null,
+        isCompatibleWithAssignedFaculty: null,
         compatibilityWithHovering: null,
+        isCompatibleWithHovering: null,
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.calculateCoordinates(prevState);
         this.calculateCompatibilityWithHovering(prevProps);
+        this.calculateCompatibilityWithAssignedFaculty(prevProps);
     }
 
-    get compatibilityWithAssignedFaculty() {
+    calculateCompatibilityWithAssignedFaculty = prevProps => {
+        const { faculty: prevFaculty } = prevProps;
         const { faculty, classSchedule, termSchedule } = this.props;
 
+        const { isCompatibleWithAssignedFaculty: isCompatible } = this.state;
+
         if (!faculty) {
-            return null;
+            if (isCompatible !== null) {
+                this.setState({
+                    isCompatibleWithAssignedFaculty: null,
+                });
+            }
+
+            // Return because there's no compatibility to calculate if there's no faculty
+            return;
         }
 
-        const assignedClasses = termSchedule.classes.filter(
-            item => item.faculty === faculty._id
-        );
+        if (
+            prevFaculty &&
+            prevFaculty._id === faculty._id &&
+            isCompatible !== null
+        ) {
+            return;
+        }
+
+        if (this.assignedWorker) {
+            this.assignedWorker.terminate();
+        }
+
+        const worker = new Worker(computeCompatibilityWorker);
+        this.assignedWorker = worker;
 
         const response = termSchedule.facultyPool.find(
             response => response.faculty === faculty._id
         );
 
-        return computeFacultyClassCompatibility(
+        worker.postMessage({
             faculty,
-            assignedClasses,
             classSchedule,
-            response.availability
-        );
-    }
+            availability: response.availability,
+            termSchedule,
+        });
 
-    terminateWorker = () => {
-        if (this.worker) {
-            this.worker.terminate();
-        }
+        worker.addEventListener("message", ({ data: { isCompatible } }) => {
+            this.setState({
+                isCompatibleWithAssignedFaculty: isCompatible,
+            });
+
+            worker.terminate();
+            this.assignedWorker = undefined;
+        });
     };
 
     componentWillUnmount() {
-        this.terminateWorker();
+        if (this.hoveringWorker) {
+            this.hoveringWorker.terminate();
+        }
+
+        if (this.assignedWorker) {
+            this.assignedWorker.terminate();
+        }
     }
 
     calculateCompatibilityWithHovering = prevProps => {
@@ -67,10 +100,15 @@ class BaseClassScheduleItem extends Component {
 
         const { compatibilityWithHovering: compatibility } = this.state;
 
-        if (!faculty && compatibility !== null) {
-            this.setState({
-                compatibilityWithHovering: null,
-            });
+        if (!faculty) {
+            if (compatibility !== null) {
+                this.setState({
+                    compatibilityWithHovering: null,
+                    isCompatibleWithHovering: null,
+                });
+            }
+
+            // Return because there's no compatibility to calculate if there's no faculty
             return;
         }
 
@@ -79,9 +117,12 @@ class BaseClassScheduleItem extends Component {
             return;
         }
 
-        this.terminateWorker();
+        if (this.hoveringWorker) {
+            this.hoveringWorker.terminate();
+        }
+
         const worker = new Worker(computeCompatibilityWorker);
-        this.worker = worker;
+        this.hoveringWorker = worker;
 
         worker.postMessage({
             faculty,
@@ -90,13 +131,18 @@ class BaseClassScheduleItem extends Component {
             termSchedule,
         });
 
-        worker.addEventListener("message", ({ data }) => {
-            this.setState({
-                compatibilityWithHovering: data,
-            });
+        worker.addEventListener(
+            "message",
+            ({ data: { compatibility, isCompatible } }) => {
+                this.setState({
+                    compatibilityWithHovering: compatibility,
+                    isCompatibleWithHovering: isCompatible,
+                });
 
-            worker.terminate();
-        });
+                worker.terminate();
+                this.assignedWorker = undefined;
+            }
+        );
     };
 
     calculateCoordinates = prevState => {
@@ -188,11 +234,7 @@ class BaseClassScheduleItem extends Component {
 
     renderFacultyChip = () => {
         const { faculty } = this.props;
-
-        const compatibility = this.compatibilityWithAssignedFaculty;
-        const isCompatible =
-            compatibility !== null &&
-            compatibility.every(item => item.isCompatible);
+        const { isCompatibleWithAssignedFaculty: isCompatible } = this.state;
 
         return (
             <Grid
@@ -207,9 +249,15 @@ class BaseClassScheduleItem extends Component {
                     <UserChip user={faculty.user} />
                 </Grid>
 
-                {!isCompatible && (
+                {isCompatible === false && (
                     <Grid item>
                         <IncompatibleIcon color="error" />
+                    </Grid>
+                )}
+
+                {isCompatible === null && (
+                    <Grid item>
+                        <CircularProgress size={25} />
                     </Grid>
                 )}
             </Grid>
@@ -217,7 +265,11 @@ class BaseClassScheduleItem extends Component {
     };
 
     render() {
-        const { compatibilityWithHovering } = this.state;
+        const {
+            compatibilityWithHovering,
+            isCompatibleWithHovering,
+        } = this.state;
+
         const {
             active,
             classSchedule,
@@ -245,11 +297,8 @@ class BaseClassScheduleItem extends Component {
         }
 
         if (compatibilityWithHovering !== null) {
-            const compatible = compatibilityWithHovering.every(
-                item => item.isCompatible
-            );
             containerClasses.push(
-                compatible
+                isCompatibleWithHovering
                     ? "compatibleWithHovering"
                     : "incompatibleWithHovering"
             );

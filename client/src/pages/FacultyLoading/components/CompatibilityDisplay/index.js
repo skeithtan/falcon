@@ -2,25 +2,33 @@ import React, { PureComponent } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CompatibleIcon from "@material-ui/icons/Check";
+import UnknownCompatibilityIcon from "@material-ui/icons/Warning";
 import IncompatibleIcon from "@material-ui/icons/ErrorOutline";
 import { wrap } from "./wrapper";
 
 class CompatibilityItem extends PureComponent {
     renderIcon = () => {
         const { classes, isCompatible } = this.props;
-        return isCompatible ? (
-            <CompatibleIcon className={classes.icon} />
-        ) : (
-            <IncompatibleIcon className={classes.icon} />
-        );
+        if (isCompatible) {
+            return <CompatibleIcon className={classes.icon} />;
+        } else if (isCompatible === null) {
+            return <UnknownCompatibilityIcon className={classes.icon} />;
+        } else {
+            return <IncompatibleIcon className={classes.icon} />;
+        }
     };
 
     render() {
         const { classes, isCompatible, label } = this.props;
-        const rootClasses = [
-            classes.root,
-            isCompatible ? classes.compatibleItem : classes.incompatibleItem,
-        ];
+        const rootClasses = [classes.root];
+
+        if (isCompatible) {
+            rootClasses.push(classes.compatibleItem);
+        } else if (isCompatible === null) {
+            rootClasses.push(classes.unknownCompatibilityItem);
+        } else {
+            rootClasses.push(classes.incompatibleItem);
+        }
 
         return (
             <div className={rootClasses.join(" ")}>

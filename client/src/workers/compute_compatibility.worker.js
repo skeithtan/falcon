@@ -54,8 +54,7 @@ const computeCompatibility = () => {
             ];
         };
 
-        // eslint-disable-next-line
-        self.postMessage([
+        const compatibility = [
             {
                 criteria: "Faculty-subject compatibility",
                 get isCompatible() {
@@ -73,7 +72,7 @@ const computeCompatibility = () => {
                 criteria: "Faculty time availability",
                 get isCompatible() {
                     if (!availability) {
-                        return false;
+                        return null;
                     }
 
                     return availability[classSchedule.meetingDays].includes(
@@ -81,9 +80,13 @@ const computeCompatibility = () => {
                     );
                 },
                 get message() {
-                    return this.isCompatible
-                        ? "This faculty is available at this time"
-                        : "This faculty is not available during these hours";
+                    if (this.isCompatible) {
+                        return "This faculty is available at this time";
+                    } else if (this.isCompatible === null) {
+                        return "This faculty has not submitted their time availability";
+                    } else {
+                        return "This faculty is not available during these hours";
+                    }
                 },
             },
             {
@@ -137,7 +140,17 @@ const computeCompatibility = () => {
                         : "This faculty has another class within these hours";
                 },
             },
-        ]);
+        ];
+
+        // eslint-disable-next-line
+        self.postMessage({
+            compatibility,
+            isCompatible: compatibility.every(
+                criteria =>
+                    // Consider unknown (null) criterias as compatible
+                    criteria.isCompatible || criteria.isCompatible === null
+            ),
+        });
     };
 };
 

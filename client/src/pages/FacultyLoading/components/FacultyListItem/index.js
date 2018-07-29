@@ -21,6 +21,7 @@ class BaseFacultyListItem extends Component {
     state = {
         anchorEl: null,
         compatibilityWithActiveClassSchedule: null,
+        isCompatibleWithActiveClassSchedule: false,
     };
 
     get facultyFullname() {
@@ -57,6 +58,7 @@ class BaseFacultyListItem extends Component {
             if (compatibility !== null) {
                 this.setState({
                     compatibilityWithActiveClassSchedule: null,
+                    isCompatibleWithActiveClassSchedule: false,
                 });
             }
 
@@ -83,13 +85,18 @@ class BaseFacultyListItem extends Component {
             termSchedule,
         });
 
-        worker.addEventListener("message", ({ data }) => {
-            this.setState({
-                compatibilityWithActiveClassSchedule: data,
-            });
+        worker.addEventListener(
+            "message",
+            ({ data: { compatibility, isCompatible } }) => {
+                this.setState({
+                    compatibilityWithActiveClassSchedule: compatibility,
+                    isCompatibleWithActiveClassSchedule: isCompatible,
+                });
 
-            worker.terminate();
-        });
+                worker.terminate();
+                this.assignedWorker = undefined;
+            }
+        );
     };
 
     terminateWorker = () => {
@@ -141,16 +148,20 @@ class BaseFacultyListItem extends Component {
             termSchedule,
         } = this.props;
 
-        const { anchorEl, compatibilityWithActiveClassSchedule } = this.state;
+        const {
+            anchorEl,
+            compatibilityWithActiveClassSchedule,
+            isCompatibleWithActiveClassSchedule,
+        } = this.state;
 
         const rootClasses = [classes.facultyListItemContainer];
 
         if (compatibilityWithActiveClassSchedule) {
-            const isCompatible = compatibilityWithActiveClassSchedule.every(
-                criteria => criteria.isCompatible
+            rootClasses.push(
+                isCompatibleWithActiveClassSchedule
+                    ? "compatible"
+                    : "incompatible"
             );
-
-            rootClasses.push(isCompatible ? "compatible" : "incompatible");
         }
 
         if (canDrag) {
