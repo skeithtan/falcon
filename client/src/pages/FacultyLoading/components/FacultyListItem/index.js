@@ -87,6 +87,8 @@ class BaseFacultyListItem extends Component {
             this.setState({
                 compatibilityWithActiveClassSchedule: data,
             });
+
+            worker.terminate();
         });
     };
 

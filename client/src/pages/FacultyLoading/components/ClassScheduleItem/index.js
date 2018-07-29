@@ -94,6 +94,8 @@ class BaseClassScheduleItem extends Component {
             this.setState({
                 compatibilityWithHovering: data,
             });
+
+            worker.terminate();
         });
     };
 
