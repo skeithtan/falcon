@@ -239,7 +239,6 @@ class BaseClassSchedulePopper extends PureComponent {
                 anchorEl={anchorEl}
                 placement="right"
                 className={popperClasses.join(" ")}
-                keepMounted
                 modifiers={{
                     preventOverflow: {
                         enabled: true,
