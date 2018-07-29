@@ -304,7 +304,7 @@ export const queryResolvers = {
 
 export const mutationResolvers = {
     subject: limitAccess(mutateSubject, {
-        allowed: CLERK,
+        allowed: NO_FACULTY,
         action: "Mutate subject",
     }),
     addTermSchedule: limitAccess(addTermSchedule, {

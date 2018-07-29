@@ -14,6 +14,11 @@ class BaseFacultyCard extends Component {
         expertFacultiesModalIsShowing: false,
     };
 
+    get canMutate() {
+        const { user } = this.props;
+        return user.permissions.MUTATE_FACULTY_EXPERTISE;
+    }
+
     componentDidMount() {
         const {faculties, isLoading, fetchData} = this.props;
         if (!faculties && !isLoading) {
@@ -49,7 +54,7 @@ class BaseFacultyCard extends Component {
             smallMessage="Faculties that can teach this subject will be shown here"
             onAddButtonClick={this.onAddButtonClick}
             addButtonText="Add an expert faculty"
-            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+            showAddButton={this.canMutate}
         />
     );
 
@@ -67,7 +72,7 @@ class BaseFacultyCard extends Component {
                     tableTitle="Expert Faculties"
                     addButtonTooltipTitle="Add an expert faculty"
                     onAddButtonClick={this.onAddButtonClick}
-                    showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                    showAddButton={this.canMutate}
                 />
 
                 {faculties && this.renderBody(subject)}

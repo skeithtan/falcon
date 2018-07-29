@@ -20,13 +20,18 @@ class BaseTeachingSubjectsCard extends Component {
         teachingSubjectsModalIsShowing: false,
     };
 
+    get canMutate() {
+        const { user } = this.props;
+        return user.permissions.MUTATE_FACULTY_EXPERTISE;
+    }
+
     renderEmptyState = () => (
         <EmptyState
             bigMessage={`${getFullName(this.props.faculty.user)} does not have assigned teaching subjects.`}
             smallMessage="Teaching subjects assigned will be shown here."
             onAddButtonClick={this.onAddButtonClick}
             addButtonText="Assign a subject"
-            showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+            showAddButton={this.canMutate}
         />
     );
 
@@ -68,7 +73,7 @@ class BaseTeachingSubjectsCard extends Component {
                             <SubjectChip
                                 clickable={user.permissions.VIEW_SUBJECTS_PAGE}
                                 subject={subject}
-                                showDeleteButton={user.permissions.MUTATE_FACULTY_PROFILES}
+                                showDeleteButton={this.canMutate}
                                 handleDelete={() => this.setState({
                                     activeSubject: subject,
                                     removeSubjectModalIsShowing: true,
@@ -139,7 +144,7 @@ class BaseTeachingSubjectsCard extends Component {
                     tableTitle="Subjects of Expertise"
                     addButtonTooltipTitle="Assign a subject"
                     onAddButtonClick={this.onAddButtonClick}
-                    showAddButton={this.props.user.permissions.MUTATE_FACULTY_PROFILES}
+                    showAddButton={this.canMutate}
                 />
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
