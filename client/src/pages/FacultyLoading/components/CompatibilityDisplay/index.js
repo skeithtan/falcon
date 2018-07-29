@@ -18,7 +18,7 @@ class CompatibilityItem extends PureComponent {
     render() {
         const { classes, isCompatible, label } = this.props;
         const rootClasses = [
-            classes.item,
+            classes.root,
             isCompatible ? classes.compatibleItem : classes.incompatibleItem,
         ];
 

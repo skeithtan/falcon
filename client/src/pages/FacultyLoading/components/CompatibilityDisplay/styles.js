@@ -7,7 +7,7 @@ export const styles = theme => ({
         width: 32,
         height: 32,
     },
-    item: {
+    root: {
         paddingTop: theme.spacing.unit * 1.5,
         paddingBottom: theme.spacing.unit * 1.5,
         paddingLeft: theme.spacing.unit * 3,

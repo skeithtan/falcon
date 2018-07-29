@@ -143,6 +143,7 @@ class BaseClassScheduleItem extends Component {
 
     renderCompatibilityPopover = () => {
         const {
+            classes,
             hovering: { faculty },
             isOver,
         } = this.props;
@@ -175,6 +176,7 @@ class BaseClassScheduleItem extends Component {
                 anchorReference="anchorPosition"
                 style={{ pointerEvents: "none" }}
                 transformOrigin={transformOrigin}
+                classes={{ paper: classes.compatibilityPopoverPaper }}
                 disableRestoreFocus
             >
                 <CompatibilityDisplay
