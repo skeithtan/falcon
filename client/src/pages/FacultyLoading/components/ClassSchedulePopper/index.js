@@ -39,12 +39,14 @@ class BaseClassSchedulePopper extends PureComponent {
             response => response.faculty === faculty._id
         );
 
-        return computeFacultyClassCompatibility(
+        const { compatibility } = computeFacultyClassCompatibility(
             faculty,
             assignedClasses,
             classSchedule,
             response.availability
         );
+
+        return compatibility;
     };
 
     handleButtonClick = callback => () => {
@@ -193,7 +195,7 @@ class BaseClassSchedulePopper extends PureComponent {
 
     renderPopperContent = () => {
         const { user } = this.props;
-        const { compatibility } = this.calculateCompatibility();
+        const compatibility = this.calculateCompatibility();
 
         return (
             <div>
@@ -225,16 +227,30 @@ class BaseClassSchedulePopper extends PureComponent {
 
     render() {
         const { classes, open, anchorEl, onClose } = this.props;
+        let popperClasses = [classes.popper];
+
+        if (open) {
+            popperClasses.push("open");
+        }
+
         return (
             <Popper
                 open={open}
                 anchorEl={anchorEl}
                 placement="right"
+                className={popperClasses.join(" ")}
+                keepMounted
+                modifiers={{
+                    preventOverflow: {
+                        enabled: true,
+                        boundariesElement: "viewport",
+                    },
+                }}
                 transition
             >
                 {({ TransitionProps }) => (
                     <Grow {...TransitionProps} timeout={250}>
-                        <Card className={classes.popperContainer}>
+                        <Card className={classes.cardContainer}>
                             <ClickAwayListener onClickAway={() => onClose()}>
                                 {this.renderPopperContent()}
                             </ClickAwayListener>

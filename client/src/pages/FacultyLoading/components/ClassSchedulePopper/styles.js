@@ -1,8 +1,15 @@
 export const styles = theme => ({
-    popperContainer: {
+    popper: {
+        transition: "500ms all",
+        opacity: "0",
+        "&.open": {
+            opacity: 1,
+        },
+    },
+    cardContainer: {
         minWdith: 280,
         maxWidth: 320,
-        boxShadow: theme.shadows[10]
+        boxShadow: theme.shadows[10],
     },
     facultyChipWrapper: {
         display: "inline-block",
