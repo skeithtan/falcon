@@ -7,7 +7,7 @@ export const styles = theme => ({
         },
     },
     cardContainer: {
-        minWdith: 280,
+        minWidth: 280,
         maxWidth: 320,
         boxShadow: theme.shadows[10],
     },

@@ -96,6 +96,7 @@ class BaseClassSchedulePopper extends PureComponent {
         return (
             <Grid
                 container
+                spacing={8}
                 direction="row"
                 justify="space-between"
                 wrap="nowrap"
