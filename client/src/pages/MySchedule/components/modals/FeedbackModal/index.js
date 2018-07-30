@@ -71,7 +71,10 @@ class BaseFeedbackModal extends ModalFormComponent {
         ) {
             // Reset rejectionReason and newAvailability
             this.setState({
-                form: this.mapPropsToForm(this.props),
+                form: {
+                    ...this.mapPropsToForm(prevForm),
+                    status: FACULTY_FEEDBACK.ACCEPTED.identifier,
+                },
             });
         }
     }
