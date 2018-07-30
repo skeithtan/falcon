@@ -71,11 +71,7 @@ class BaseFeedbackModal extends ModalFormComponent {
         ) {
             // Reset rejectionReason and newAvailability
             this.setState({
-                form: {
-                    ...this.state.form,
-                    rejectionReason: "",
-                    newAvailability: this.props.availability,
-                },
+                form: this.mapPropsToForm(this.props),
             });
         }
     }
