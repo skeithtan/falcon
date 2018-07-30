@@ -162,8 +162,7 @@ class BaseFacultyLoadingBody extends Component {
                 TERM_STATUSES.INITIALIZING.identifier &&
             faculties !== null &&
             subjects !== null &&
-            activeTermSchedule !== null &&
-            this.activeClassSchedule.classSchedule !== null
+            activeTermSchedule !== null
         );
     }
 
