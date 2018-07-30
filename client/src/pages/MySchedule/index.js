@@ -140,12 +140,9 @@ class BaseMySchedulePage extends PureComponent {
 
         return (
             <div className={classes.myScheduleContainer}>
-                <div className={classes.cardsContainer}>
-                    {activeTermSchedule && (
-                        <MyScheduleBody termSchedule={activeTermSchedule} />
-                    )}
-                    {!activeTermSchedule && null}
-                </div>
+                {activeTermSchedule && (
+                    <MyScheduleBody termSchedule={activeTermSchedule} />
+                )}
             </div>
         );
     }

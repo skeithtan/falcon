@@ -126,25 +126,28 @@ class BaseInitializingState extends Component {
 
     render() {
         const { form } = this.state;
+        const { classes } = this.props;
         return (
-            <Grid
-                spacing={16}
-                container
-                direction="column"
-                justify="center"
-                wrap="nowrap"
-            >
-                <Grid item>{this.renderMessage()}</Grid>
+            <div className={classes.cardsContainer}>
+                <Grid
+                    spacing={16}
+                    container
+                    direction="column"
+                    justify="center"
+                    wrap="nowrap"
+                >
+                    <Grid item>{this.renderMessage()}</Grid>
 
-                <Grid item>
-                    <TimeAvailabilityCards
-                        availability={form}
-                        onChange={(day, hour) =>
-                            this.toggleAvailability(day, hour)
-                        }
-                    />
+                    <Grid item>
+                        <TimeAvailabilityCards
+                            availability={form}
+                            onChange={(day, hour) =>
+                                this.toggleAvailability(day, hour)
+                            }
+                        />
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         );
     }
 }

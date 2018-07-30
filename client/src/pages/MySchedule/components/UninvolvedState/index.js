@@ -16,8 +16,8 @@ class BaseUninvolvedState extends PureComponent {
                     <CardContent>
                         <Grid
                             container
-                            spacing={16}
-                            direction="column"
+                            spacing={32}
+                            direction="row"
                             alignItems="center"
                             wrap="nowrap"
                         >
@@ -27,21 +27,26 @@ class BaseUninvolvedState extends PureComponent {
                                     color="action"
                                 />
                             </Grid>
-                            <Grid item>
-                                <Typography
-                                    variant="title"
-                                    color="textSecondary"
-                                >
-                                    You were not selected to participate in{" "}
-                                    {termScheduleToString(termSchedule)}.
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography color="textSecondary">
-                                    When you are selected to participate in a
-                                    term, you can place your availability and
-                                    see your schedule here.
-                                </Typography>
+                            <Grid item container direction="column" spacing={8}>
+                                <Grid item>
+                                    <Typography
+                                        variant="headline"
+                                        color="textSecondary"
+                                    >
+                                        You were not selected to participate in{" "}
+                                        {termScheduleToString(termSchedule)}.
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography
+                                        variant="subheading"
+                                        color="textSecondary"
+                                    >
+                                        When you are selected to participate in
+                                        a term, you can place your availability
+                                        and see your schedule here.
+                                    </Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </CardContent>

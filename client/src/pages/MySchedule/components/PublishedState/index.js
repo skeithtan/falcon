@@ -36,23 +36,25 @@ class BasePublishedState extends Component {
     };
 
     render() {
-        const { termSchedule } = this.props;
+        const { classes, termSchedule } = this.props;
         return (
-            <Grid
-                spacing={16}
-                container
-                direction="column"
-                justify="center"
-                wrap="nowrap"
-            >
-                <Grid item>{this.renderToolbar()}</Grid>
+            <div className={classes.cardsContainer}>
+                <Grid
+                    spacing={16}
+                    container
+                    direction="column"
+                    justify="center"
+                    wrap="nowrap"
+                >
+                    <Grid item>{this.renderToolbar()}</Grid>
 
-                <Grid item>
-                    <FacultyScheduleCards
-                        assignedClasses={termSchedule.classes}
-                    />
+                    <Grid item>
+                        <FacultyScheduleCards
+                            assignedClasses={termSchedule.classes}
+                        />
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         );
     }
 }

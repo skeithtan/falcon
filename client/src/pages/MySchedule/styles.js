@@ -5,7 +5,4 @@ export const styles = theme => ({
         height: "100%",
         overflowY: "scroll",
     },
-    cardsContainer: {
-        ...pageContainer(theme),
-    },
 });

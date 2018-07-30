@@ -16,8 +16,8 @@ class BaseSchedulingState extends PureComponent {
                     <CardContent>
                         <Grid
                             container
-                            spacing={16}
-                            direction="column"
+                            spacing={24}
+                            direction="row"
                             alignItems="center"
                             wrap="nowrap"
                         >
@@ -27,21 +27,33 @@ class BaseSchedulingState extends PureComponent {
                                     color="action"
                                 />
                             </Grid>
-                            <Grid item>
-                                <Typography
-                                    variant="title"
-                                    color="textSecondary"
-                                >
-                                    Scheduling for{" "}
-                                    {termScheduleToString(termSchedule)} is
-                                    underway.
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography color="textSecondary">
-                                    When a schedule for you has been prepared,
-                                    you can view and give your feedback here.
-                                </Typography>
+                            <Grid
+                                item
+                                container
+                                spacing={8}
+                                direction="column"
+                                wrap="nowrap"
+                            >
+                                <Grid item>
+                                    <Typography
+                                        variant="headline"
+                                        color="textSecondary"
+                                    >
+                                        Scheduling for{" "}
+                                        {termScheduleToString(termSchedule)} is
+                                        underway.
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography
+                                        variant="subheading"
+                                        color="textSecondary"
+                                    >
+                                        When a schedule for you has been
+                                        prepared, you can view and give your
+                                        feedback here.
+                                    </Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </CardContent>
