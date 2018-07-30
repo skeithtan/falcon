@@ -10,6 +10,7 @@ import { TermsModal } from "../../../FacultyLoading/components/modals/TermsModal
 
 class BasePublishedState extends Component {
     state = {
+        termsModalIsShowing: false,
         confirmSubmitAvailabilityModalIsShowing: false,
     };
 
