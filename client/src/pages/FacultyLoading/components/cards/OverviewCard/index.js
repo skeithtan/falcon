@@ -235,9 +235,11 @@ class BaseOverviewCard extends Component {
                             </Grid>
                         )}
 
-                        <Grid item xs>
-                            {this.renderButtons()}
-                        </Grid>
+                        {!isArchived && (
+                            <Grid item xs>
+                                {this.renderButtons()}
+                            </Grid>
+                        )}
                     </Grid>
                 </Toolbar>
 
