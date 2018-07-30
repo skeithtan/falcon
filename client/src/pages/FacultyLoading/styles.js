@@ -5,4 +5,18 @@ export const styles = theme => ({
     facultyLoadingTermViewContainer: {
         height: "100%",
     },
+    planNextTermBanner: {
+        background: theme.palette.primary.dark,
+        color: theme.palette.common.white,
+    },
+    bannerContentContainer: {
+        maxWidth: 1600,
+        width: "90%",
+        padding: theme.spacing.unit * 2,
+        boxSizing: "border-box",
+        margin: "auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
 });

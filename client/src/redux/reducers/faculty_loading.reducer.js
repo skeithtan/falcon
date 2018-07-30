@@ -36,7 +36,7 @@ export function facultyLoading(state = initialState, action) {
             return {
                 ...state,
                 termSchedules: {
-                    current: action.termSchedules,
+                    current: action.termSchedule,
                     // Move previously current to archived
                     archived: [
                         state.termSchedules.current,

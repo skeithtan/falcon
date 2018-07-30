@@ -4,10 +4,9 @@ import compose from "recompose/compose";
 import { termScheduleIsAdded } from "../../../../../redux/actions/faculty_loading.actions";
 import { addTermSchedule } from "../../../../../services/classes/term_schedule.service";
 
-
 const mapDispatchToProps = dispatch => ({
-    onConfirmPlanNextTerm(startYear, term) {
-        return addTermSchedule(startYear, term.identifier)
+    onConfirmPlanNextTerm(nextTerm) {
+        return addTermSchedule(nextTerm.startYear, nextTerm.term)
             .then(result => result.data.addTermSchedule)
             .then(newTermSchedule => {
                 dispatch(termScheduleIsAdded(newTermSchedule));
@@ -19,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 export const wrap = compose(
     connect(
         null,
-        mapDispatchToProps,
+        mapDispatchToProps
     ),
-    withRouter,
+    withRouter
 );

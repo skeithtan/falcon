@@ -32,7 +32,7 @@ const getTermToPlan = () => {
     for (const { term, months } of PLANNING_MONTHS) {
         if (months.includes(monthNow)) {
             return {
-                term,
+                term: term.identifier,
                 // Third term's start year is always the year before
                 startYear: term === TERMS.THIRD ? yearNow - 1 : yearNow,
             };
