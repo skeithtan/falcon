@@ -56,10 +56,7 @@ class BaseFacultyLoadingPage extends Component {
 
         // We need termSchedules to determine how to deal with URL
         // If there are is no defaultTermSchedule, that means there are no term schedules at all
-        if (
-            termSchedules === null ||
-            !this.getDefaultTermSchedule()
-        ) {
+        if (termSchedules === null || !this.getDefaultTermSchedule()) {
             return;
         }
 
@@ -91,7 +88,9 @@ class BaseFacultyLoadingPage extends Component {
             termSchedules.push(current);
         }
 
-        return termSchedules.find(termSchedule => termSchedule._id === termScheduleId);
+        return termSchedules.find(
+            termSchedule => termSchedule._id === termScheduleId
+        );
     };
 
     fetchTermSchedules = () => {
@@ -169,16 +168,10 @@ class BaseFacultyLoadingPage extends Component {
             termSchedule
         )} - Faculty Loading - Falcon`;
         return (
-            <Fragment>
-                <FacultyLoadingHeader
-                    activeTermSchedule={termSchedule}
-                    meetingDays={meetingDays}
-                />
-                <FacultyLoadingBody
-                    activeTermSchedule={termSchedule}
-                    meetingDays={meetingDays}
-                />
-            </Fragment>
+            <FacultyLoadingBody
+                activeTermSchedule={termSchedule}
+                meetingDays={meetingDays}
+            />
         );
     };
 

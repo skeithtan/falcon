@@ -5,15 +5,17 @@ import Typography from "@material-ui/core/Typography";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
+import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
 import Toolbar from "@material-ui/core/Toolbar";
 import PrintIcon from "@material-ui/icons/Print";
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { termScheduleToString } from "../../../../../utils/faculty_loading.util";
 import { TERM_STATUSES } from "../../../../../enums/class.enums";
-import { wrap } from "./wrapper";
 import { AdvanceTermModal } from "../../modals/AdvanceTermModal";
 import { ReturnTermModal } from "../../modals/ReturnTermModal";
 import { SchedulePrintPreview } from "../../SchedulePrintPreview";
+import { TermsModal } from "../../modals/TermsModal";
+import { wrap } from "./wrapper";
 
 const steps = Object.values(TERM_STATUSES)
     // Remove archived
@@ -39,6 +41,7 @@ class BaseOverviewCard extends Component {
         advanceTermModalIsShowing: false,
         returnTermModalIsShowing: false,
         schedulePrintPreviewIsShowing: false,
+        termsModalIsShowing: false,
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -63,14 +66,13 @@ class BaseOverviewCard extends Component {
             schedulePrintPreviewIsShowing: shouldShow,
         });
 
+    toggleTermsModal = shouldShow =>
+        this.setState({
+            termsModalIsShowing: shouldShow,
+        });
+
     renderButtons = () => {
         const { classes, activeTermSchedule, user } = this.props;
-        const {
-            advanceTermModalIsShowing,
-            returnTermModalIsShowing,
-            schedulePrintPreviewIsShowing,
-        } = this.state;
-
         const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
 
         const canReturnTermSchedule =
@@ -139,7 +141,22 @@ class BaseOverviewCard extends Component {
                         </Button>
                     </Grid>
                 )}
+            </Grid>
+        );
+    };
 
+    renderModals = () => {
+        const {
+            advanceTermModalIsShowing,
+            returnTermModalIsShowing,
+            schedulePrintPreviewIsShowing,
+            termsModalIsShowing,
+        } = this.state;
+
+        const { activeTermSchedule } = this.props;
+
+        return (
+            <Fragment>
                 <AdvanceTermModal
                     open={advanceTermModalIsShowing}
                     onClose={() => this.toggleAdvanceTermModal(false)}
@@ -157,7 +174,30 @@ class BaseOverviewCard extends Component {
                     onClose={() => this.toggleSchedulePrintPreview(false)}
                     termSchedule={activeTermSchedule}
                 />
-            </Grid>
+
+                <TermsModal
+                    open={termsModalIsShowing}
+                    onClose={() => this.toggleTermsModal(false)}
+                    activeTermSchedule={activeTermSchedule}
+                />
+            </Fragment>
+        );
+    };
+
+    renderTermTitle = () => {
+        const { classes, activeTermSchedule } = this.props;
+        return (
+            <Button
+                className={classes.termTitleButton}
+                size="large"
+                variant="outlined"
+                onClick={() => this.toggleTermsModal(true)}
+            >
+                <Typography className={classes.termTitleText} variant="title">
+                    {termScheduleToString(activeTermSchedule)}
+                </Typography>
+                <ArrowDownIcon />
+            </Button>
         );
     };
 
@@ -180,9 +220,7 @@ class BaseOverviewCard extends Component {
                         wrap="nowrap"
                     >
                         <Grid item xs>
-                            <Typography variant="title">
-                                {termScheduleToString(activeTermSchedule)}
-                            </Typography>
+                            {this.renderTermTitle()}
                         </Grid>
 
                         {isArchived && (
@@ -212,6 +250,8 @@ class BaseOverviewCard extends Component {
                         ))}
                     </Stepper>
                 )}
+
+                {this.renderModals()}
             </Card>
         );
     }
