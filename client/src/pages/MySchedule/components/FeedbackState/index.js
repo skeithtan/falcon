@@ -8,12 +8,19 @@ import { wrap } from "./wrapper";
 import { FacultyScheduleCards } from "../../../../components/FacultyScheduleCards";
 import { FACULTY_FEEDBACK } from "../../../../enums/class.enums";
 import { FeedbackModal } from "../modals/FeedbackModal";
+import { TermsModal } from "../../../FacultyLoading/components/modals/TermsModal";
 
 class BaseFeedbackState extends Component {
     state = {
+        termsModalIsShowing: false,
         submitFeedbackModalIsShowing: false,
         feedbackStatus: FACULTY_FEEDBACK.ACCEPTED.identifier,
     };
+
+    toggleTermsModal = shouldShow =>
+        this.setState({
+            termsModalIsShowing: shouldShow,
+        });
 
     toggleSubmitFeedbackModal = (
         shouldShow,
@@ -30,6 +37,16 @@ class BaseFeedbackState extends Component {
         return (
             <Card className={classes.messageContainer}>
                 <Grid container direction="column" spacing={16} wrap="nowrap">
+                    <Grid item>
+                        <Button
+                            size="small"
+                            variant="outlined"
+                            color="primary"
+                            onClick={() => this.toggleTermsModal(true)}
+                        >
+                            View other terms
+                        </Button>
+                    </Grid>
                     <Grid item>
                         <Typography variant="subheading">
                             Your schedule for{" "}
@@ -125,6 +142,7 @@ class BaseFeedbackState extends Component {
     };
 
     render() {
+        const { termsModalIsShowing } = this.state;
         const { classes, termSchedule } = this.props;
         return (
             <div className={classes.cardsContainer}>
@@ -143,6 +161,12 @@ class BaseFeedbackState extends Component {
                         />
                     </Grid>
                 </Grid>
+
+                <TermsModal
+                    open={termsModalIsShowing}
+                    onClose={() => this.toggleTermsModal(false)}
+                    activeTermSchedule={termSchedule}
+                />
             </div>
         );
     }

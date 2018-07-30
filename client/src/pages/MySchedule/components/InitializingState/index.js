@@ -7,10 +7,12 @@ import { wrap } from "./wrapper";
 import { termScheduleToString } from "../../../../utils/faculty_loading.util";
 import { ConfirmSubmitAvailabilityModal } from "../modals/ConfirmSubmitAvailabilityModal";
 import { TimeAvailabilityCards } from "../../../../components/TimeAvailabilityCards";
+import { TermsModal } from "../../../FacultyLoading/components/modals/TermsModal";
 
 class BaseInitializingState extends Component {
     state = {
         confirmSubmitAvailabilityModalIsShowing: false,
+        termsModalIsShowing: false,
         form: {
             M_TH: [],
             T_F: [],
@@ -31,6 +33,11 @@ class BaseInitializingState extends Component {
             });
         }
     }
+
+    toggleTermsModal = shouldShow =>
+        this.setState({
+            termsModalIsShowing: shouldShow,
+        });
 
     toggleConfirmSubmitAvailabilityModal = shouldShow =>
         this.setState({
@@ -58,16 +65,34 @@ class BaseInitializingState extends Component {
         return (
             <Card className={classes.messageContainer}>
                 <Grid container direction="column" spacing={16} wrap="nowrap">
-                    <Grid item>
-                        <Typography variant="subheading">
-                            Planning for{" "}
-                            <strong>
-                                {termScheduleToString(termSchedule)}
-                            </strong>{" "}
-                            has begun and we're collecting everyone's time
-                            availability. While collection is still going on,
-                            you can still update your time preferences.
-                        </Typography>
+                    <Grid
+                        item
+                        container
+                        direction="column"
+                        spacing={16}
+                        wrap="nowrap"
+                    >
+                        <Grid item>
+                            <Button
+                                size="small"
+                                variant="outlined"
+                                color="primary"
+                                onClick={() => this.toggleTermsModal(true)}
+                            >
+                                View other terms
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="subheading">
+                                Planning for{" "}
+                                <strong>
+                                    {termScheduleToString(termSchedule)}
+                                </strong>{" "}
+                                has begun and we're collecting everyone's time
+                                availability. While collection is still going
+                                on, you can still update your time preferences.
+                            </Typography>
+                        </Grid>
                     </Grid>
                     <Grid item>{this.renderActions()}</Grid>
                 </Grid>
@@ -125,8 +150,8 @@ class BaseInitializingState extends Component {
     };
 
     render() {
-        const { form } = this.state;
-        const { classes } = this.props;
+        const { form, termsModalIsShowing } = this.state;
+        const { classes, termSchedule } = this.props;
         return (
             <div className={classes.cardsContainer}>
                 <Grid
@@ -147,6 +172,12 @@ class BaseInitializingState extends Component {
                         />
                     </Grid>
                 </Grid>
+
+                <TermsModal
+                    open={termsModalIsShowing}
+                    onClose={() => this.toggleTermsModal(false)}
+                    activeTermSchedule={termSchedule}
+                />
             </div>
         );
     }
