@@ -18,6 +18,15 @@ class BaseClassScheduleItem extends Component {
         isCompatibleWithHovering: null,
     };
 
+    componentDidMount() {
+        // There are no actual prevProps when mounted, so pass a dummy
+        this.calculateCompatibilityWithAssignedFaculty({
+            faculty: null,
+            classSchedule: null,
+            termSchedule: null,
+        });
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.calculateCoordinates(prevState);
         this.calculateCompatibilityWithHovering(prevProps);
