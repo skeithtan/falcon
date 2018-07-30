@@ -1,8 +1,6 @@
 import Button from "@material-ui/core/Button";
 import React, { Component, Fragment } from "react";
-import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
-import { OverviewCard } from "../cards/OverviewCard";
 import { ScheduleCard } from "../cards/ScheduleCard";
 import { FacultiesCard } from "../cards/FacultiesCard";
 import { TERM_STATUSES } from "../../../../enums/class.enums";
@@ -243,33 +241,17 @@ class BaseFacultyLoadingBody extends Component {
         const { activeClassScheduleAnchorEl } = this.state;
 
         const { classSchedule } = this.activeClassSchedule;
-        const activeClassSchedule = activeClassScheduleAnchorEl !== null ? classSchedule : null;
+        const activeClassSchedule =
+            activeClassScheduleAnchorEl !== null ? classSchedule : null;
 
         return (
             <div className={classes.facultyLoadingBody}>
                 <div className={classes.cardsContainer}>
-                    <Grid
-                        className={classes.height100}
-                        container
-                        spacing={16}
-                        alignItems="stretch"
-                        direction="column"
-                        wrap="nowrap"
-                    >
-                        <Grid item>
-                            <OverviewCard
-                                activeTermSchedule={activeTermSchedule}
-                                meetingDays={meetingDays}
-                            />
-                        </Grid>
-                        <Grid item xs>
-                            {this.renderScheduleFaculties(
-                                activeTermSchedule,
-                                meetingDays,
-                                activeClassSchedule
-                            )}
-                        </Grid>
-                    </Grid>
+                    {this.renderScheduleFaculties(
+                        activeTermSchedule,
+                        meetingDays,
+                        activeClassSchedule
+                    )}
                 </div>
 
                 {this.shouldShowAddClassSchedule && (

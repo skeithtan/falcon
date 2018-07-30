@@ -1,5 +1,5 @@
 import Grid from "@material-ui/core/Grid";
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../components/states/EmptyState";
 import { ErrorState } from "../../components/states/ErrorState";
@@ -10,9 +10,9 @@ import {
 } from "../../utils/faculty_loading.util";
 import { makeURL } from "../../utils/url.util";
 import { FacultyLoadingBody } from "./components/FacultyLoadingBody";
-import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 import { PlanNextTermModal } from "./components/modals/PlanNextTermModal";
 import { wrap } from "./wrapper";
+import { TermHeader } from "./components/TermHeader";
 
 class BaseFacultyLoadingPage extends Component {
     state = {
@@ -164,14 +164,29 @@ class BaseFacultyLoadingPage extends Component {
     }
 
     renderFacultyLoading = (termSchedule, meetingDays) => {
+        const { classes } = this.props;
+
         document.title = `${termScheduleToString(
             termSchedule
         )} - Faculty Loading - Falcon`;
+
         return (
-            <FacultyLoadingBody
-                activeTermSchedule={termSchedule}
-                meetingDays={meetingDays}
-            />
+            <Grid
+                container
+                className={classes.facultyLoadingTermViewContainer}
+                direction="column"
+                wrap="nowrap"
+            >
+                <Grid item>
+                    <TermHeader activeTermSchedule={termSchedule} />
+                </Grid>
+                <Grid item xs>
+                    <FacultyLoadingBody
+                        activeTermSchedule={termSchedule}
+                        meetingDays={meetingDays}
+                    />
+                </Grid>
+            </Grid>
         );
     };
 
