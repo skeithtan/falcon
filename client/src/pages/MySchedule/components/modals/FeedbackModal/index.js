@@ -49,10 +49,13 @@ class BaseFeedbackModal extends ModalFormComponent {
         };
     }
 
-    mapPropsToForm = ({ status, availability: { M_TH, T_F } }) => ({
+    mapPropsToForm = ({ status, availability }) => ({
         status: status,
         rejectionReason: "",
-        newAvailability: { M_TH, T_F },
+        newAvailability: {
+            M_TH: availability ? availability.M_TH : [],
+            T_F: availability ? availability.T_F : [],
+        },
     });
 
     get maxWidth() {
@@ -124,7 +127,7 @@ class BaseFeedbackModal extends ModalFormComponent {
     }
 
     renderRejectionForm = () => {
-        const { classes } = this.props;
+        const { classes, availability } = this.props;
         const { form, isSubmitting } = this.state;
         const { fieldErrors } = this.formErrors;
 
@@ -167,12 +170,22 @@ class BaseFeedbackModal extends ModalFormComponent {
                             wrap="nowrap"
                         >
                             <Grid item>
-                                <Typography>
-                                    <strong>
-                                        You can also update your availability
-                                    </strong>{" "}
-                                    or leave it unchanged if it looks right
-                                </Typography>
+                                {availability !== null && (
+                                    <Typography>
+                                        <strong>
+                                            You can also update your
+                                            availability
+                                        </strong>{" "}
+                                        or leave it unchanged if it looks right
+                                    </Typography>
+                                )}
+
+                                {availability === null && (
+                                    <Typography variant="subheading">
+                                        Check the boxes at times when you are
+                                        available
+                                    </Typography>
+                                )}
                             </Grid>
 
                             <Grid item>
