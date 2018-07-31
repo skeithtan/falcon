@@ -15,11 +15,11 @@ Date.prototype.toString = function () {
 };
 
 const {
-    DB_USERNAME,
-    DB_PASSWORD,
-    DB_NAME,
-    DB_URL,
-    DB_PORT,
+    DEMO_DB_USERNAME : DB_USERNAME,
+    DEMO_DB_PASSWORD : DB_PASSWORD,
+    DEMO_DB_NAME : DB_NAME,
+    DEMO_DB_URL : DB_URL,
+    DEMO_DB_PORT : DB_PORT,
     APP_PORT,
 } = process.env;
 
