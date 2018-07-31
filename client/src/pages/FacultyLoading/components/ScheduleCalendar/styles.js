@@ -3,7 +3,7 @@ export const styles = theme => ({
         height: "100%",
     },
     scheduleCalendarBodyContainer: {
-        overflowY: "scroll",
+        overflowY: "auto",
         overflowX: "hidden",
         paddingTop: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
@@ -14,7 +14,7 @@ export const styles = theme => ({
     },
     calendarColumnClassesContainer: {
         minHeight: 400,
-        overflowY: "scroll",
+        overflowY: "auto",
 
         "& > div": {
             minHeight: 1200,

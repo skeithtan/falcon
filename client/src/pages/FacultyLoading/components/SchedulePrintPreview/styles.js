@@ -37,7 +37,7 @@ export const styles = theme => ({
         justifyContent: "center",
     },
     printPreviewPagesContainer: {
-        overflowY: "scroll",
+        overflowY: "auto",
         height: "100%",
         position: "relative",
     },

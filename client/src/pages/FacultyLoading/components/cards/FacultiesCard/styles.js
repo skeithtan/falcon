@@ -27,7 +27,7 @@ export const styles = theme => ({
     facultyList: {
         backgroundColor: theme.palette.background.paper,
         position: "relative",
-        overflowY: "scroll",
+        overflowY: "auto",
         height: "100%",
     },
     facultyListSection: {

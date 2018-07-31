@@ -3,7 +3,7 @@ export const styles = theme => ({
         background: theme.palette.background.paper,
         borderRight: "1px solid",
         borderColor: theme.palette.grey["300"],
-        overflowY: "scroll",
+        overflowY: "auto",
         position: "relative",
     },
     facultyList: {

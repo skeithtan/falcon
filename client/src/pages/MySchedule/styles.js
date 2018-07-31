@@ -1,6 +1,6 @@
 export const styles = theme => ({
     myScheduleContainer: {
         height: "100%",
-        overflowY: "scroll",
+        overflowY: "auto",
     },
 });

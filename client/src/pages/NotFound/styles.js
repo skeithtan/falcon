@@ -6,7 +6,7 @@ export const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         background: theme.palette.primary.main,
-        overflowY: "scroll",
+        overflowY: "auto",
     },
 
     messageGrid: {

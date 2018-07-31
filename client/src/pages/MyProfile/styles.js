@@ -4,7 +4,7 @@ import { page, pageContainer } from "../../components/styles";
 export const styles = theme => ({
     myProfileContainer: page(theme),
     myProfileBodyContainer: {
-        overflowY: "scroll",
+        overflowY: "auto",
         flex: 1,
     },
     stateContainer: {

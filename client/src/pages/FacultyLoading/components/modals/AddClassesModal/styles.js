@@ -3,7 +3,7 @@ import { genericModalStyle } from "../../../../../components/styles";
 export const styles = theme => ({
     ...genericModalStyle,
     cardsContainer: {
-        overflowY: "scroll",
+        overflowY: "auto",
         padding: theme.spacing.unit * 4,
         background: theme.palette.grey["100"],
 
