@@ -143,7 +143,7 @@ class BaseFacultyLoadingPage extends Component {
         const termSchedules = [current, ...archived];
 
         // Ensure termToPlan does not already exist in termSchedules
-        for (const {startYear, term} of termSchedules) {
+        for (const { startYear, term } of termSchedules) {
             if (startYear !== termToPlan.startYear) {
                 continue;
             }
@@ -174,7 +174,11 @@ class BaseFacultyLoadingPage extends Component {
         return (
             <Paper square className={classes.planNextTermBanner}>
                 <div className={classes.bannerContentContainer}>
-                    <Typography variant="title" color="inherit">
+                    <Typography
+                        className={classes.bannerText}
+                        variant="title"
+                        color="inherit"
+                    >
                         {termScheduleToString(termToPlan)} is coming.
                     </Typography>
                     <Button

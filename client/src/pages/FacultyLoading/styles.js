@@ -17,6 +17,8 @@ export const styles = theme => ({
         margin: "auto",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
+    },
+    bannerText: {
+        marginRight: theme.spacing.unit * 4,
     },
 });
