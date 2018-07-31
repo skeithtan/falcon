@@ -1,6 +1,9 @@
 export const styles = theme => ({
     popper: {
         transition: "300ms all",
+
+        // Popper animation looks off in firefox; Disable it
+        "-moz-transition": "none",
         opacity: "0",
         "&.open": {
             opacity: 1,
