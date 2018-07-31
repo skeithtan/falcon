@@ -7,17 +7,18 @@ import { SubjectsHeader } from "./components/SubjectsHeader";
 import { SubjectsList } from "./components/SubjectsList";
 import { wrap } from "./wrapper";
 
-
 class BaseSubjectsPage extends PureComponent {
     componentDidMount() {
-        const {subjects, isLoading, fetchData} = this.props;
+        document.title = "Subjects - Falcon";
+
+        const { subjects, isLoading, fetchData } = this.props;
         if (!subjects && !isLoading) {
             fetchData();
         }
     }
 
     renderLoading = () => (
-        <Grid container style={{height: "100%"}}>
+        <Grid container style={{ height: "100%" }}>
             <FullPageLoadingIndicator size={100} />
         </Grid>
     );
@@ -34,9 +35,7 @@ class BaseSubjectsPage extends PureComponent {
         const {
             classes,
             match: {
-                params: {
-                    subjectId,
-                },
+                params: { subjectId },
             },
             isLoading,
             errors,

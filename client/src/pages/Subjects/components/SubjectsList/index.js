@@ -29,7 +29,7 @@ class SubjectItem extends PureComponent {
                 button
                 component={Link}
                 className={className}
-                onClick={() => document.title = `${subject.code} (${subject.name}) - Falcon`}
+                onClick={() => document.title = `${subject.code} (${subject.name}) - Subjects - Falcon`}
                 to={subjectPageURL}
             >
                 <ListItemText
