@@ -44,13 +44,6 @@ class BaseTermHeader extends Component {
         termsModalIsShowing: false,
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-        const termScheduleDidChange =
-            this.props.activeTermSchedule !== nextProps.activeTermSchedule;
-        const stateDidChange = this.state !== nextState;
-        return termScheduleDidChange || stateDidChange;
-    }
-
     toggleAdvanceTermModal = shouldShow =>
         this.setState({
             advanceTermModalIsShowing: shouldShow,
