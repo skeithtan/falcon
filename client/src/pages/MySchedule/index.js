@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { wrap } from "./wrapper";
 import { ErrorState } from "../../components/states/ErrorState";
@@ -113,6 +114,39 @@ class BaseMySchedulePage extends PureComponent {
         />
     );
 
+    renderNoTermSchedules = () => {
+        return (
+            <Grid
+                container
+                style={{ height: "100%" }}
+                alignItems="center"
+                justify="center"
+            >
+                <Grid item container direction="column" spacing={8}>
+                    <Grid item>
+                        <Typography
+                            variant="display1"
+                            color="textSecondary"
+                            align="center"
+                        >
+                            There are no schedules yet.
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography
+                            variant="subheading"
+                            color="textSecondary"
+                            align="center"
+                        >
+                            You can see your schedule here when they have been
+                            assigned.
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+        );
+    };
+
     render() {
         const {
             classes,
@@ -138,11 +172,18 @@ class BaseMySchedulePage extends PureComponent {
             termSchedules.termSchedules !== null &&
             this.getTermScheduleFromId(termScheduleId);
 
+        const noTermSchedules =
+            termSchedules.termSchedules !== null &&
+            termSchedules.termSchedules.current === null &&
+            termSchedules.termSchedules.archived.length === 0;
+
         return (
             <div className={classes.myScheduleContainer}>
                 {activeTermSchedule && (
                     <MyScheduleBody termSchedule={activeTermSchedule} />
                 )}
+
+                {noTermSchedules && this.renderNoTermSchedules()}
             </div>
         );
     }
