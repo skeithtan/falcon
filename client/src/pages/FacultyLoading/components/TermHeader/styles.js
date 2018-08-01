@@ -20,4 +20,11 @@ export const styles = theme => ({
         margin: "auto",
         boxSizing: "border-box",
     },
+
+    stepper: {
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+    },
 });
