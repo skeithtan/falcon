@@ -1,4 +1,4 @@
-import red from "@material-ui/core/colors/red";
+import Red from "@material-ui/core/colors/red";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 
 export const page = theme => ({
@@ -83,7 +83,7 @@ export const falconLogo = theme => ({
 });
 
 export const badge = theme => ({
-    background: red["600"],
+    background: Red["600"],
     color: "white !important",
 });
 
