@@ -233,7 +233,7 @@ class BaseFacultiesCard extends Component {
                         <Typography variant="title" color="inherit">
                             {compatibleFacultiesView
                                 ? "Compatible Faculties"
-                                : "Faculties"}
+                                : "Faculty Members"}
                         </Typography>
                     </Grid>
                     {!compatibleFacultiesView && (

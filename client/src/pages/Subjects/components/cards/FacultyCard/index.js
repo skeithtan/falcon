@@ -50,7 +50,7 @@ class BaseFacultyCard extends Component {
 
     renderEmptyState = () => (
         <EmptyState
-            bigMessage={`This subject does not have expert faculties`}
+            bigMessage={`This subject does not have expert faculty members`}
             smallMessage="Faculties that can teach this subject will be shown here"
             onAddButtonClick={this.onAddButtonClick}
             addButtonText="Add an expert faculty"
@@ -69,8 +69,8 @@ class BaseFacultyCard extends Component {
         return (
             <Card>
                 <TableToolbar
-                    tableTitle="Expert Faculties"
-                    addButtonTooltipTitle="Add an expert faculty"
+                    tableTitle="Expert faculty members"
+                    addButtonTooltipTitle="Add an expert faculty member"
                     onAddButtonClick={this.onAddButtonClick}
                     showAddButton={this.canMutate}
                 />
