@@ -10,11 +10,15 @@ export class FeedbackGatheringInfo extends PureComponent {
         }
 
         const { status } = feedback;
-        
+
         if (status === FACULTY_FEEDBACK.REJECTED.identifier) {
-            return <StatusChip color="red" label="Rejected" />;
+            return (
+                <StatusChip feedback={feedback} color="red" label="Rejected" />
+            );
         }
 
-        return <StatusChip color="green" label="Accepted" />;
+        return (
+            <StatusChip feedback={feedback} color="green" label="Accepted" />
+        );
     }
 }

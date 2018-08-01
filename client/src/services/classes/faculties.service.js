@@ -1,4 +1,4 @@
-import gql from "../../../node_modules/graphql-tag";
+import gql from "graphql-tag";
 import { client } from "../../client";
 
 export const fields = `
@@ -11,6 +11,7 @@ export const fields = `
         submitted
         status
         rejectionReason
+        isDirty
     }
 `;
 

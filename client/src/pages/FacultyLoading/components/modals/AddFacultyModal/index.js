@@ -114,7 +114,7 @@ class BaseAddFacultyModal extends ModalFormComponent {
                 >
                     <Grid item>
                         <FormControl className={classes.formControl} fullWidth>
-                            <InputLabel>Expert Faculties</InputLabel>
+                            <InputLabel>Expert Faculty Members</InputLabel>
                             <Select
                                 disabled={isSubmitting}
                                 multiple

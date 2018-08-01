@@ -13,6 +13,6 @@ export const styles = theme => ({
         flexDirection: "column",
     },
     notificationsTrayBody: {
-        overflowY: "scroll"
+        overflowY: "auto"
     }
 });

@@ -1,8 +1,18 @@
 export const styles = theme => ({
-    popperContainer: {
-        minWdith: 280,
+    popper: {
+        transition: "300ms all",
+
+        // Popper animation looks off in firefox; Disable it
+        "-moz-transition": "none",
+        opacity: "0",
+        "&.open": {
+            opacity: 1,
+        },
+    },
+    cardContainer: {
+        minWidth: 280,
         maxWidth: 320,
-        boxShadow: theme.shadows[10]
+        boxShadow: theme.shadows[10],
     },
     facultyChipWrapper: {
         display: "inline-block",

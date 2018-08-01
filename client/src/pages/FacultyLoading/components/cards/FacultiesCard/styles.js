@@ -5,6 +5,14 @@ export const styles = theme => ({
     facultiesListContainer: {
         overflow: "hidden",
     },
+    toolbar: {
+        background: theme.palette.common.white,
+        transition: "300ms all",
+
+        "&.compatibleFacultiesView": {
+            color: theme.palette.primary.main,
+        },
+    },
     searchInput: {
         padding: 8,
         boxSizing: "border-box",
@@ -12,7 +20,6 @@ export const styles = theme => ({
     searchContainer: {
         paddingLeft: 16,
         paddingRight: 16,
-        // background: theme.palette.grey["100"],
     },
     searchAdornment: {
         color: theme.palette.grey["600"],
@@ -20,7 +27,7 @@ export const styles = theme => ({
     facultyList: {
         backgroundColor: theme.palette.background.paper,
         position: "relative",
-        overflowY: "scroll",
+        overflowY: "auto",
         height: "100%",
     },
     facultyListSection: {

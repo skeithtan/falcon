@@ -61,6 +61,10 @@ export const styles = theme => ({
         },
     },
 
+    compatibilityPopoverPaper: {
+        maxWidth: 320,
+    },
+
     classScheduleAvatar: {
         height: 32,
         width: 32,

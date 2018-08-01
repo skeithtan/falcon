@@ -1,18 +1,20 @@
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import React, { Component, Fragment } from "react";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import React, { Component } from "react";
 import { FullPageLoadingIndicator } from "../../components/FullPageLoadingIndicator";
 import { EmptyState } from "../../components/states/EmptyState";
 import { ErrorState } from "../../components/states/ErrorState";
 import {
-    formatAcademicYear,
     termScheduleToString,
     termToPlan,
 } from "../../utils/faculty_loading.util";
 import { makeURL } from "../../utils/url.util";
 import { FacultyLoadingBody } from "./components/FacultyLoadingBody";
-import { FacultyLoadingHeader } from "./components/FacultyLoadingHeader";
 import { PlanNextTermModal } from "./components/modals/PlanNextTermModal";
 import { wrap } from "./wrapper";
+import { TermHeader } from "./components/TermHeader";
 
 class BaseFacultyLoadingPage extends Component {
     state = {
@@ -56,10 +58,7 @@ class BaseFacultyLoadingPage extends Component {
 
         // We need termSchedules to determine how to deal with URL
         // If there are is no defaultTermSchedule, that means there are no term schedules at all
-        if (
-            termSchedules === null ||
-            !this.getDefaultTermSchedule()
-        ) {
+        if (termSchedules === null || !this.getDefaultTermSchedule()) {
             return;
         }
 
@@ -91,7 +90,9 @@ class BaseFacultyLoadingPage extends Component {
             termSchedules.push(current);
         }
 
-        return termSchedules.find(termSchedule => termSchedule._id === termScheduleId);
+        return termSchedules.find(
+            termSchedule => termSchedule._id === termScheduleId
+        );
     };
 
     fetchTermSchedules = () => {
@@ -114,9 +115,7 @@ class BaseFacultyLoadingPage extends Component {
         let addButtonText = null;
 
         if (termToPlan) {
-            addButtonText = `Plan ${
-                termToPlan.term.name
-            } Term of ${formatAcademicYear(termToPlan.startYear)}`;
+            addButtonText = `Plan ${termScheduleToString(termToPlan)}`;
         }
 
         return (
@@ -140,17 +139,27 @@ class BaseFacultyLoadingPage extends Component {
         />
     );
 
-    nextTermExists = termSchedules => {
+    nextTermExists = ({ current, archived }) => {
+        const termSchedules = [...archived];
+
+        if (current) {
+            termSchedules.push(current);
+        }
+
         // Ensure termToPlan does not already exist in termSchedules
-        return termSchedules.every(({ startYear, term }) => {
-            return (
-                startYear !== termToPlan.startYear &&
-                term !== termToPlan.term.identifier
-            );
-        });
+        for (const { startYear, term } of termSchedules) {
+            if (startYear !== termToPlan.startYear) {
+                continue;
+            }
+
+            if (term === termToPlan.term) {
+                return true;
+            }
+        }
+        return false;
     };
 
-    get shouldShowPlanNextTermModal() {
+    get shouldShowPlanNextTerm() {
         const { termSchedules } = this.props;
 
         if (!termSchedules) {
@@ -161,24 +170,60 @@ class BaseFacultyLoadingPage extends Component {
             return false;
         }
 
-        return this.nextTermExists(termSchedules);
+        return !this.nextTermExists(termSchedules);
     }
 
+    renderPlanNextTermBanner = () => {
+        const { classes } = this.props;
+        return (
+            <Paper square className={classes.planNextTermBanner}>
+                <div className={classes.bannerContentContainer}>
+                    <Typography
+                        className={classes.bannerText}
+                        variant="title"
+                        color="inherit"
+                    >
+                        {termScheduleToString(termToPlan)} is coming.
+                    </Typography>
+                    <Button
+                        variant="raised"
+                        color="primary"
+                        onClick={() => this.togglePlanNextTermModal(true)}
+                    >
+                        Begin planning next term
+                    </Button>
+                </div>
+            </Paper>
+        );
+    };
+
     renderFacultyLoading = (termSchedule, meetingDays) => {
+        const { classes } = this.props;
+
         document.title = `${termScheduleToString(
             termSchedule
         )} - Faculty Loading - Falcon`;
+
         return (
-            <Fragment>
-                <FacultyLoadingHeader
-                    activeTermSchedule={termSchedule}
-                    meetingDays={meetingDays}
-                />
-                <FacultyLoadingBody
-                    activeTermSchedule={termSchedule}
-                    meetingDays={meetingDays}
-                />
-            </Fragment>
+            <Grid
+                container
+                className={classes.facultyLoadingTermViewContainer}
+                direction="column"
+                wrap="nowrap"
+            >
+                {this.shouldShowPlanNextTerm && (
+                    <Grid item>{this.renderPlanNextTermBanner()}</Grid>
+                )}
+                <Grid item>
+                    <TermHeader activeTermSchedule={termSchedule} />
+                </Grid>
+                <Grid item xs>
+                    <FacultyLoadingBody
+                        activeTermSchedule={termSchedule}
+                        meetingDays={meetingDays}
+                    />
+                </Grid>
+            </Grid>
         );
     };
 
@@ -206,15 +251,14 @@ class BaseFacultyLoadingPage extends Component {
                 {isLoading && this.renderLoading()}
                 {errors && this.renderErrors(errors)}
                 {noTermSchedules && this.renderEmptyState()}
+
                 {termSchedule &&
                     this.renderFacultyLoading(termSchedule, meetingDay)}
 
-                {this.shouldShowPlanNextTermModal && (
+                {this.shouldShowPlanNextTerm && (
                     <PlanNextTermModal
                         open={planNextTermModalIsShowing}
                         onClose={() => this.togglePlanNextTermModal(false)}
-                        term={termToPlan.term}
-                        startYear={termToPlan.startYear}
                     />
                 )}
             </div>

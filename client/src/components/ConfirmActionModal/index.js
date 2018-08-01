@@ -45,6 +45,11 @@ export class ConfirmActionModal extends Component {
 
     }
 
+    // Can be overriden by subclass
+    get submitButtonIsEnabled() {
+        return true;
+    }
+
     onConfirmAction = () => {
         const {showToast} = this.props;
         this.setState({isSubmitting: true, error: null});
@@ -98,7 +103,7 @@ export class ConfirmActionModal extends Component {
                         <Grid item>
                             <Button
                                 color="primary"
-                                disabled={isSubmitting}
+                                disabled={isSubmitting || !this.submitButtonIsEnabled}
                                 onClick={this.onConfirmAction}
                             >
                                 {this.buttonName}

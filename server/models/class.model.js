@@ -111,6 +111,10 @@ const FacultyResponseSchema = new Schema({
                     return this.feedback.status === "REJECTED";
                 },
             },
+            isDirty: {
+                type: Boolean,
+                required: true,
+            },
         },
     },
 });

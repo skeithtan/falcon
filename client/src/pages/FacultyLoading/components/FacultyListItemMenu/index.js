@@ -116,10 +116,7 @@ class BaseFacultyListItemMenu extends Component {
 
         const canRemoveFaculty =
             user.permissions.POPULATE_TERM_SCHEDULES &&
-            ![
-                TERM_STATUSES.PUBLISHED.identifier,
-                TERM_STATUSES.ARCHIVED.identifier,
-            ].includes(termSchedule.status);
+            termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
 
         return (
             <Menu

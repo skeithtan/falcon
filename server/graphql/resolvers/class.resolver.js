@@ -87,18 +87,47 @@ const mutateClasses = termSchedule => ({
             throw new DoesNotExistError(`Class of ID ${_id} does not exist`);
         }
 
+        classSchedule.set(newClassInput);
+
         if (newClassInput.faculty) {
             const faculty = await Faculty.findById(
                 newClassInput.faculty
             ).exec();
             if (!faculty) {
                 throw new DoesNotExistError(
-                    `Faculty of ID ${facultyId} does not exist`
+                    `Faculty of ID ${newClassInput.faculty} does not exist`
                 );
+            }
+
+            let facultyResponse = termSchedule.facultyPool.find(
+                response =>
+                    String(response.faculty) === String(newClassInput.faculty)
+            );
+
+            if (!facultyResponse) {
+                throw new ValidationError(
+                    `Faculty of ID ${
+                        newClassInput.faculty
+                    } is not part of the faculty pool`
+                );
+            }
+
+            const _id = facultyResponse._id;
+            facultyResponse = termSchedule.facultyPool.id(_id);
+
+            if (facultyResponse.feedback !== null) {
+                facultyResponse.set({
+                    ...facultyResponse,
+                    feedback: {
+                        ...facultyResponse.feedback,
+                        // Dirty because we just changed a class and this feedback is no longer valid - to be removed on feedback gathering
+                        isDirty: true,
+                    },
+                });
+
             }
         }
 
-        classSchedule.set(newClassInput);
         await termSchedule.save();
         return classSchedule;
     },
@@ -126,9 +155,11 @@ const mutateStatus = termSchedule => ({
 
         if (newStatus === "FEEDBACK_GATHERING") {
             // Clear out feedback before re-entering feedback gathering
-            termSchedule.facultyPool.forEach(
-                response => (response.feedback = null)
-            );
+            termSchedule.facultyPool
+                .filter(response => response.feedback !== null)
+                .filter(response => response.feedback.isDirty)
+                // Reset the feedback of dirty feedbacks
+                .forEach(response => (response.feedback = null));
         }
 
         await termSchedule.save();
@@ -273,7 +304,7 @@ export const queryResolvers = {
 
 export const mutationResolvers = {
     subject: limitAccess(mutateSubject, {
-        allowed: CLERK,
+        allowed: NO_FACULTY,
         action: "Mutate subject",
     }),
     addTermSchedule: limitAccess(addTermSchedule, {

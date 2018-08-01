@@ -8,6 +8,10 @@ import moment from "moment";
 import { getFullName } from "../../../../utils/user.util";
 import { wrap } from "./wrapper";
 import { FACULTY_FEEDBACK } from "../../../../enums/class.enums";
+import {
+    getPersonalPronoun,
+    getPossessivePronoun,
+} from "../../../../utils/faculty.util";
 
 class BaseFeedbackDisplay extends PureComponent {
     get submissionString() {
@@ -18,11 +22,10 @@ class BaseFeedbackDisplay extends PureComponent {
     }
 
     renderRejectionMessage = () => {
-        const {
-            classes,
-            feedback: { rejectionReason },
-            faculty,
-        } = this.props;
+        const { classes, feedback, faculty } = this.props;
+        const fullName = getFullName(faculty.user);
+        const pronoun = getPersonalPronoun(faculty);
+
         return (
             <CardContent>
                 <Grid container spacing={16} direction="column" wrap="nowrap">
@@ -30,7 +33,7 @@ class BaseFeedbackDisplay extends PureComponent {
                         <RejectionIcon className={classes.rejectedColor} />
                     </Grid>
                     <Grid item>
-                        <Typography color="textSecondary" >
+                        <Typography color="textSecondary">
                             {getFullName(faculty.user)}{" "}
                             <strong>rejected</strong> the proposed schedule{" "}
                             {this.submissionString} because of the following
@@ -38,28 +41,54 @@ class BaseFeedbackDisplay extends PureComponent {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography>{rejectionReason}</Typography>
+                        <Typography>{feedback.rejectionReason}</Typography>
                     </Grid>
+                    {feedback.isDirty && (
+                        <Grid item>
+                            <Typography color="textSecondary">
+                                {fullName}'s schedule{" "}
+                                <strong>has been modified</strong>. Because this
+                                schedule is no longer what {fullName} rejected,{" "}
+                                {pronoun} <strong>will be asked again</strong>{" "}
+                                for their feedback on Feedback gathering stage.
+                            </Typography>
+                        </Grid>
+                    )}
                 </Grid>
             </CardContent>
         );
     };
 
     renderAcceptanceMessage = () => {
-        const { classes, faculty } = this.props;
+        const { classes, faculty, feedback } = this.props;
+        const fullName = getFullName(faculty.user);
+        const personalPronoun = getPersonalPronoun(faculty);
+        const possessivePronoun = getPossessivePronoun(faculty);
         return (
             <CardContent>
-                <Grid container spacing={8} direction="column" wrap="nowrap">
+                <Grid container spacing={16} direction="column" wrap="nowrap">
                     <Grid item>
-                        <AcceptedIcon className={classes.acceptedColor}  />
+                        <AcceptedIcon className={classes.acceptedColor} />
                     </Grid>
                     <Grid item>
-                        <Typography color="textSecondary" >
-                            {getFullName(faculty.user)}{" "}
-                            <strong>accepted</strong> the proposed schedule{" "}
-                            {this.submissionString}.
+                        <Typography color="textSecondary">
+                            {fullName} <strong>accepted</strong> the proposed
+                            schedule {this.submissionString}.
                         </Typography>
                     </Grid>
+                    {feedback.isDirty && (
+                        <Grid item>
+                            <Typography color="textSecondary">
+                                {fullName}'s schedule{" "}
+                                <strong>has been modified</strong>. Because this
+                                schedule is no longer what {fullName} agreed to,{" "}
+                                {personalPronoun}{" "}
+                                <strong>will be asked again</strong> for{" "}
+                                {possessivePronoun} feedback on feedback
+                                gathering stage.
+                            </Typography>
+                        </Grid>
+                    )}
                 </Grid>
             </CardContent>
         );

@@ -361,7 +361,7 @@ export const mutationResolvers = {
         action: "Mutate degrees",
     }),
     teachingSubject: limitAccess(mutateTeachingSubject, {
-        allowed: CLERK,
+        allowed: NO_FACULTY,
         action: "Mutate teaching subject",
     }),
 };

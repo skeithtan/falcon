@@ -1,19 +1,21 @@
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
+import ArrowDownIcon from "@material-ui/icons/ArrowDropDown";
 import Toolbar from "@material-ui/core/Toolbar";
 import PrintIcon from "@material-ui/icons/Print";
-import React, { Component } from "react";
-import { termScheduleToString } from "../../../../../utils/faculty_loading.util";
-import { TERM_STATUSES } from "../../../../../enums/class.enums";
+import React, { Component, Fragment } from "react";
+import { termScheduleToString } from "../../../../utils/faculty_loading.util";
+import { TERM_STATUSES } from "../../../../enums/class.enums";
+import { AdvanceTermModal } from "../modals/AdvanceTermModal";
+import { ReturnTermModal } from "../modals/ReturnTermModal";
+import { SchedulePrintPreview } from "../SchedulePrintPreview";
+import { TermsModal } from "../modals/TermsModal";
 import { wrap } from "./wrapper";
-import { AdvanceTermModal } from "../../modals/AdvanceTermModal";
-import { ReturnTermModal } from "../../modals/ReturnTermModal";
-import { SchedulePrintPreview } from "../../SchedulePrintPreview";
 
 const steps = Object.values(TERM_STATUSES)
     // Remove archived
@@ -34,19 +36,13 @@ const getAdvanceButtonMessage = activeTermStatus => {
     }
 };
 
-class BaseOverviewCard extends Component {
+class BaseTermHeader extends Component {
     state = {
         advanceTermModalIsShowing: false,
         returnTermModalIsShowing: false,
         schedulePrintPreviewIsShowing: false,
+        termsModalIsShowing: false,
     };
-
-    shouldComponentUpdate(nextProps, nextState) {
-        const termScheduleDidChange =
-            this.props.activeTermSchedule !== nextProps.activeTermSchedule;
-        const stateDidChange = this.state !== nextState;
-        return termScheduleDidChange || stateDidChange;
-    }
 
     toggleAdvanceTermModal = shouldShow =>
         this.setState({
@@ -63,14 +59,13 @@ class BaseOverviewCard extends Component {
             schedulePrintPreviewIsShowing: shouldShow,
         });
 
+    toggleTermsModal = shouldShow =>
+        this.setState({
+            termsModalIsShowing: shouldShow,
+        });
+
     renderButtons = () => {
         const { classes, activeTermSchedule, user } = this.props;
-        const {
-            advanceTermModalIsShowing,
-            returnTermModalIsShowing,
-            schedulePrintPreviewIsShowing,
-        } = this.state;
-
         const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
 
         const canReturnTermSchedule =
@@ -78,6 +73,7 @@ class BaseOverviewCard extends Component {
             [
                 TERM_STATUSES.SCHEDULING.identifier,
                 TERM_STATUSES.FEEDBACK_GATHERING.identifier,
+                TERM_STATUSES.PUBLISHED.identifier,
             ].includes(activeTermSchedule.status);
 
         const canAdvanceTermSchedule =
@@ -138,7 +134,22 @@ class BaseOverviewCard extends Component {
                         </Button>
                     </Grid>
                 )}
+            </Grid>
+        );
+    };
 
+    renderModals = () => {
+        const {
+            advanceTermModalIsShowing,
+            returnTermModalIsShowing,
+            schedulePrintPreviewIsShowing,
+            termsModalIsShowing,
+        } = this.state;
+
+        const { activeTermSchedule } = this.props;
+
+        return (
+            <Fragment>
                 <AdvanceTermModal
                     open={advanceTermModalIsShowing}
                     onClose={() => this.toggleAdvanceTermModal(false)}
@@ -156,12 +167,35 @@ class BaseOverviewCard extends Component {
                     onClose={() => this.toggleSchedulePrintPreview(false)}
                     termSchedule={activeTermSchedule}
                 />
-            </Grid>
+
+                <TermsModal
+                    open={termsModalIsShowing}
+                    onClose={() => this.toggleTermsModal(false)}
+                    activeTermSchedule={activeTermSchedule}
+                />
+            </Fragment>
+        );
+    };
+
+    renderTermTitle = () => {
+        const { classes, activeTermSchedule } = this.props;
+        return (
+            <Button
+                className={classes.termTitleButton}
+                size="large"
+                variant="outlined"
+                onClick={() => this.toggleTermsModal(true)}
+            >
+                <Typography className={classes.termTitleText} variant="title">
+                    {termScheduleToString(activeTermSchedule)}
+                </Typography>
+                <ArrowDownIcon />
+            </Button>
         );
     };
 
     render() {
-        const { activeTermSchedule } = this.props;
+        const { classes, activeTermSchedule } = this.props;
         const activeStepIndex = steps.findIndex(
             step => step.identifier === activeTermSchedule.status
         );
@@ -170,50 +204,54 @@ class BaseOverviewCard extends Component {
             activeTermSchedule.status === TERM_STATUSES.ARCHIVED.identifier;
 
         return (
-            <Card>
-                <Toolbar>
-                    <Grid
-                        container
-                        justify="space-between"
-                        alignItems="center"
-                        wrap="nowrap"
-                    >
-                        <Grid item xs>
-                            <Typography variant="title">
-                                {termScheduleToString(activeTermSchedule)}
-                            </Typography>
-                        </Grid>
-
-                        {isArchived && (
-                            <Grid item>
-                                <Typography
-                                    variant="subheading"
-                                    color="textSecondary"
-                                >
-                                    This term has been archived and is only
-                                    available for viewing
-                                </Typography>
+            <Paper square elevation={1}>
+                <div className={classes.termHeaderContentWrapper}>
+                    <Toolbar disableGutters>
+                        <Grid
+                            container
+                            justify="space-between"
+                            alignItems="center"
+                            wrap="nowrap"
+                        >
+                            <Grid item xs>
+                                {this.renderTermTitle()}
                             </Grid>
-                        )}
 
-                        <Grid item xs>
-                            {this.renderButtons()}
+                            {isArchived && (
+                                <Grid item>
+                                    <Typography
+                                        variant="subheading"
+                                        color="textSecondary"
+                                    >
+                                        This term has been archived and is only
+                                        available for viewing
+                                    </Typography>
+                                </Grid>
+                            )}
+
+                            {!isArchived && (
+                                <Grid item xs>
+                                    {this.renderButtons()}
+                                </Grid>
+                            )}
                         </Grid>
-                    </Grid>
-                </Toolbar>
+                    </Toolbar>
 
-                {!isArchived && (
-                    <Stepper activeStep={activeStepIndex}>
-                        {steps.map(({ identifier, name }) => (
-                            <Step key={identifier}>
-                                <StepLabel>{name}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                )}
-            </Card>
+                    {!isArchived && (
+                        <Stepper activeStep={activeStepIndex}>
+                            {steps.map(({ identifier, name }) => (
+                                <Step key={identifier}>
+                                    <StepLabel>{name}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                    )}
+                </div>
+
+                {this.renderModals()}
+            </Paper>
         );
     }
 }
 
-export const OverviewCard = wrap(BaseOverviewCard);
+export const TermHeader = wrap(BaseTermHeader);

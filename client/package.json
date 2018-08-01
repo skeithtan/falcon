@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "1.4.0",
+    "@material-ui/core": "^1.4.2",
     "@material-ui/icons": "^2.0.0",
     "apollo-cache-inmemory": "^1.2.6",
     "apollo-client": "^2.3.7",
@@ -58,7 +58,7 @@
     "resolve": "1.6.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
-    "uploadcare-widget": "^3.5.1",
+    "uploadcare-widget": "^3.6.0",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",

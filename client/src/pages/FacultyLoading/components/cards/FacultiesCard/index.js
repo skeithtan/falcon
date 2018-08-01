@@ -36,15 +36,6 @@ class BaseFacultiesCard extends Component {
         this.fetchData();
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        const facultiesDidChange = this.props.faculties !== nextProps.faculties;
-        const termScheduleDidChange =
-            this.props.termSchedule !== nextProps.termSchedule;
-        const stateDidChange = this.state !== nextState;
-
-        return facultiesDidChange || termScheduleDidChange || stateDidChange;
-    }
-
     fetchData = () => {
         const {
             faculties: { isLoading, errors, faculties },
@@ -117,6 +108,9 @@ class BaseFacultiesCard extends Component {
                                 facultyResponse={facultyResponse}
                                 faculty={faculty}
                                 termSchedule={this.props.termSchedule}
+                                activeClassSchedule={
+                                    this.props.activeClassSchedule
+                                }
                                 canSchedule={this.canSchedule}
                             />
                         ))}
@@ -213,38 +207,54 @@ class BaseFacultiesCard extends Component {
 
     renderToolbar = () => {
         const {
+            classes,
             faculties: { faculties },
             termSchedule,
+            activeClassSchedule,
         } = this.props;
         const { addFacultyModalIsShowing } = this.state;
+
+        const compatibleFacultiesView = activeClassSchedule !== null;
 
         const shouldShowAddFacultiesButton =
             faculties !== null &&
             termSchedule.status === TERM_STATUSES.INITIALIZING.identifier;
 
+        let toolbarClasses = [classes.toolbar];
+
+        if (compatibleFacultiesView) {
+            toolbarClasses.push("compatibleFacultiesView");
+        }
+
         return (
-            <Toolbar>
+            <Toolbar className={toolbarClasses.join(" ")}>
                 <Grid container alignItems="center" justify="space-between">
                     <Grid item>
-                        <Typography variant="title">Faculties</Typography>
+                        <Typography variant="title" color="inherit">
+                            {compatibleFacultiesView
+                                ? "Compatible Faculties"
+                                : "Faculties"}
+                        </Typography>
                     </Grid>
-                    <Grid item>
-                        {shouldShowAddFacultiesButton && (
-                            <Tooltip
-                                disableFocusListener
-                                title="Add faculty to term schedule"
-                            >
-                                <IconButton
-                                    color="primary"
-                                    onClick={() =>
-                                        this.toggleAddFacultyModal(true)
-                                    }
+                    {!compatibleFacultiesView && (
+                        <Grid item>
+                            {shouldShowAddFacultiesButton && (
+                                <Tooltip
+                                    disableFocusListener
+                                    title="Add faculty to term schedule"
                                 >
-                                    <AddIcon />
-                                </IconButton>
-                            </Tooltip>
-                        )}
-                    </Grid>
+                                    <IconButton
+                                        color="primary"
+                                        onClick={() =>
+                                            this.toggleAddFacultyModal(true)
+                                        }
+                                    >
+                                        <AddIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                        </Grid>
+                    )}
                 </Grid>
                 {faculties !== null && (
                     <AddFacultyModal
@@ -294,8 +304,8 @@ class BaseFacultiesCard extends Component {
         } = this.props;
 
         const shouldShowSearchBar =
-            faculties !== null && facultyPool.length > 0;
-
+            faculties !== null &&
+            facultyPool.length > 0;
         return (
             <Card className={classes.facultiesCardContainer}>
                 <Grid

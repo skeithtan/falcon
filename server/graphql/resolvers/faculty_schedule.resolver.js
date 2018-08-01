@@ -120,6 +120,7 @@ const setFacultyFeedback = async (
         submitted: new Date().toString(),
         status: status,
         rejectionReason: status === "REJECTED" ? rejectionReason : null,
+        isDirty: false,
     };
 
     if (newAvailability) {

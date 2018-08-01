@@ -33,15 +33,20 @@ export function facultyLoading(state = initialState, action) {
                 errors: action.errors,
             };
         case FACULTY_LOADING_TERM_SCHEDULE_IS_ADDED:
+            const newArchived = [...state.termSchedules.archived];
+            const current = state.termSchedules.current;
+
+            // Move previously current to archived
+            // Only if non-null, current is null if there are no termSchedules yet
+            if (current) {
+                newArchived.push(current);
+            }
+
             return {
                 ...state,
                 termSchedules: {
-                    current: action.termSchedules,
-                    // Move previously current to archived
-                    archived: [
-                        state.termSchedules.current,
-                        ...state.termSchedules.archived,
-                    ],
+                    current: action.termSchedule,
+                    archived: newArchived,
                 },
             };
         case FACULTY_LOADING_TERM_SCHEDULE_IS_UPDATED:

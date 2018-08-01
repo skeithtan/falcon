@@ -3,7 +3,7 @@ import { pageContainer } from "../../../../components/styles";
 
 export const styles = theme => ({
     subjectsDetail: {
-        overflowY: "scroll",
+        overflowY: "auto",
     },
     selectSubjectState: {
         display: "flex",

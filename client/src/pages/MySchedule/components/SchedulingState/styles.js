@@ -8,11 +8,11 @@ export const styles = theme => ({
     },
 
     card: {
-        padding: theme.spacing.unit * 10,
+        padding: theme.spacing.unit * 20,
     },
 
     icon: {
-        width: 80,
-        height: 80,
+        width: 96,
+        height: 96,
     },
 });

@@ -21,14 +21,48 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import { makeURL } from "../../../../utils/url.util";
 import { wrap } from "./wrapper";
+import { computeFacultyClassCompatibility } from "../../../../utils/faculty_loading.util";
 
 class BaseClassSchedulePopper extends PureComponent {
+    calculateCompatibility = () => {
+        const { faculty, classSchedule, termSchedule } = this.props;
+
+        if (!faculty) {
+            return null;
+        }
+
+        const assignedClasses = termSchedule.classes.filter(
+            item => item.faculty === faculty._id
+        );
+
+        const response = termSchedule.facultyPool.find(
+            response => response.faculty === faculty._id
+        );
+
+        const { compatibility } = computeFacultyClassCompatibility(
+            faculty,
+            assignedClasses,
+            classSchedule,
+            response.availability
+        );
+
+        return compatibility;
+    };
+
+    handleButtonClick = callback => () => {
+        const { onClose } = this.props;
+        onClose();
+        callback();
+    };
+
     renderButtons = () => (
         <Grid container justify="space-between" alignItems="flex-end">
             <Grid item>
                 <Button
                     color="primary"
-                    onClick={this.props.onUpdateClassScheduleClick}
+                    onClick={this.handleButtonClick(
+                        this.props.onUpdateClassScheduleClick
+                    )}
                 >
                     Update class
                 </Button>
@@ -37,7 +71,9 @@ class BaseClassSchedulePopper extends PureComponent {
                 <Grid item>
                     <Button
                         color="primary"
-                        onClick={this.props.onRemoveClassScheduleClick}
+                        onClick={this.handleButtonClick(
+                            this.props.onRemoveClassScheduleClick
+                        )}
                     >
                         Remove class
                     </Button>
@@ -60,6 +96,7 @@ class BaseClassSchedulePopper extends PureComponent {
         return (
             <Grid
                 container
+                spacing={8}
                 direction="row"
                 justify="space-between"
                 wrap="nowrap"
@@ -134,6 +171,7 @@ class BaseClassSchedulePopper extends PureComponent {
                     }
                     handleDelete={() =>
                         onRemoveFacultyFromClassSchedule(
+                            faculty,
                             termSchedule,
                             classSchedule
                         )
@@ -157,7 +195,9 @@ class BaseClassSchedulePopper extends PureComponent {
     }
 
     renderPopperContent = () => {
-        const { compatibility, user } = this.props;
+        const { user } = this.props;
+        const compatibility = this.calculateCompatibility();
+
         return (
             <div>
                 <CardContent>
@@ -188,16 +228,29 @@ class BaseClassSchedulePopper extends PureComponent {
 
     render() {
         const { classes, open, anchorEl, onClose } = this.props;
+        let popperClasses = [classes.popper];
+
+        if (open) {
+            popperClasses.push("open");
+        }
+
         return (
             <Popper
                 open={open}
                 anchorEl={anchorEl}
                 placement="right"
+                className={popperClasses.join(" ")}
+                modifiers={{
+                    preventOverflow: {
+                        enabled: true,
+                        boundariesElement: "viewport",
+                    },
+                }}
                 transition
             >
                 {({ TransitionProps }) => (
                     <Grow {...TransitionProps} timeout={250}>
-                        <Card className={classes.popperContainer}>
+                        <Card className={classes.cardContainer}>
                             <ClickAwayListener onClickAway={() => onClose()}>
                                 {this.renderPopperContent()}
                             </ClickAwayListener>

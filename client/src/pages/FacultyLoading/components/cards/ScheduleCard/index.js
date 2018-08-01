@@ -175,6 +175,10 @@ class BaseScheduleCard extends Component {
             fetchAllFaculties,
             fetchAllSubjects,
             activeTermSchedule,
+            activeClassSchedule,
+            setActiveClassSchedule,
+            toggleUpdateClassScheduleModal,
+            toggleRemoveClassScheduleModal,
         } = this.props;
 
         const isLoading = faculties.isLoading || subjects.isLoading;
@@ -214,6 +218,14 @@ class BaseScheduleCard extends Component {
                         faculties={faculties.faculties}
                         subjects={subjects.subjects}
                         termSchedule={activeTermSchedule}
+                        activeClassSchedule={activeClassSchedule}
+                        setActiveClassSchedule={setActiveClassSchedule}
+                        toggleUpdateClassScheduleModal={
+                            toggleUpdateClassScheduleModal
+                        }
+                        toggleRemoveClassScheduleModal={
+                            toggleRemoveClassScheduleModal
+                        }
                     />
                 </Grid>
             </Grid>

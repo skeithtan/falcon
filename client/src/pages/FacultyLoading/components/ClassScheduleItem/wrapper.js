@@ -45,6 +45,24 @@ const mapDispatchToProps = dispatch => ({
 
                 return classSchedule;
             }),
+
+            // Mark feedback as dirty if feedback is present
+            facultyPool: termSchedule.facultyPool.map(response => {
+                if (
+                    response.faculty === faculty._id &&
+                    response.feedback !== null
+                ) {
+                    return {
+                        ...response,
+                        feedback: {
+                            ...response.feedback,
+                            isDirty: true,
+                        },
+                    };
+                }
+
+                return response;
+            }),
         };
 
         const revertToOldSchedule = errors => {

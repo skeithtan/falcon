@@ -21,12 +21,21 @@ const mapDispatchToProps = dispatch => ({
 
                 if (newStatus === TERM_STATUSES.FEEDBACK_GATHERING.identifier) {
                     // Reset feedback on feedback gathering
-                    newTermSchedule.facultyPool = newTermSchedule.facultyPool.map(
-                        response => ({
-                            ...response,
-                            feedback: null,
-                        })
-                    );
+                    newTermSchedule.facultyPool = newTermSchedule.facultyPool
+                        // Set dirty responses to null
+                        .map(response => {
+                            if (
+                                response.feedback &&
+                                response.feedback.isDirty
+                            ) {
+                                return {
+                                    ...response,
+                                    feedback: null,
+                                };
+                            }
+
+                            return response;
+                        });
                 }
 
                 dispatch(termScheduleIsUpdated(newTermSchedule));
