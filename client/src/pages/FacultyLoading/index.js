@@ -140,7 +140,11 @@ class BaseFacultyLoadingPage extends Component {
     );
 
     nextTermExists = ({ current, archived }) => {
-        const termSchedules = [current, ...archived];
+        const termSchedules = [...archived];
+
+        if (current) {
+            termSchedules.push(current);
+        }
 
         // Ensure termToPlan does not already exist in termSchedules
         for (const { startYear, term } of termSchedules) {
