@@ -9,12 +9,19 @@ import { wrap } from "./wrapper";
 
 class WarningItem extends PureComponent {
     render() {
-        const { classes, children } = this.props;
+        const { classes, children, severe } = this.props;
+        const iconClasses = [classes.warningIcon];
+        const rootClasses = [classes.warningItemContainer];
+
+        if (severe) {
+            iconClasses.push("severe");
+            rootClasses.push("severe");
+        }
 
         return (
-            <ListItem className={classes.warningItemContainer}>
+            <ListItem className={rootClasses.join(" ")}>
                 <ListItemIcon>
-                    <WarningIcon className={classes.warningIcon} />
+                    <WarningIcon className={iconClasses.join(" ")} />
                 </ListItemIcon>
                 <ListItemText
                     disableTypography
@@ -34,9 +41,13 @@ class BaseWarningList extends PureComponent {
         const { warnings, classes } = this.props;
         return (
             <List disablePadding>
-                {warnings.map(warning => (
-                    <WarningItem classes={classes} key={warning}>
-                        {warning}
+                {warnings.map(({ message, isSevere }) => (
+                    <WarningItem
+                        classes={classes}
+                        key={message}
+                        severe={isSevere}
+                    >
+                        {message}
                     </WarningItem>
                 ))}
             </List>
