@@ -9,10 +9,10 @@ const MODAL_CONTENT_FOR_TERM_STATUS = {
         dialogContent: (
             <DialogContentText>
                 You are about to move to <strong>scheduling</strong>. It is
-                ideal to have collected every faculties' availability at this
+                ideal to have collected everyone's availability at this
                 point. You will{" "}
-                <strong>no longer be able to add faculties or classes</strong>{" "}
-                in this stage, so ensure that all faculties and classes in this
+                <strong>no longer be able to add faculty members or classes</strong>{" "}
+                in this stage, so ensure that all faculty members and classes in this
                 involved in this term has been added.
             </DialogContentText>
         ),
@@ -22,7 +22,7 @@ const MODAL_CONTENT_FOR_TERM_STATUS = {
         dialogContent: (
             <DialogContentText>
                 You are about to move to <strong>feedback gathering</strong>. At
-                this point, all classes should have the right faculties.
+                this point, all classes should have the appropriate faculty.
             </DialogContentText>
         ),
     },
@@ -31,7 +31,7 @@ const MODAL_CONTENT_FOR_TERM_STATUS = {
         dialogContent: (
             <DialogContentText>
                 You are about to <strong>publish the schedule</strong>. The
-                schedule will appear in every faculty's page and marked as
+                schedule will appear in every faculty member's page and marked as
                 final.
             </DialogContentText>
         ),

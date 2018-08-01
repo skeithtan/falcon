@@ -24,7 +24,7 @@ export const SUBJECT_CATEGORIES = {
 export const TERM_STATUSES = {
     INITIALIZING: {
         identifier: "INITIALIZING",
-        name: "Add classes and faculties",
+        name: "Add classes and faculty",
     },
     SCHEDULING: {
         identifier: "SCHEDULING",

@@ -26,7 +26,7 @@ class BaseSubjectsPage extends PureComponent {
     renderErrors = errors => (
         <ErrorState
             onRetryButtonClick={this.props.fetchData}
-            message="An error occurred while trying to fetch list of faculties."
+            message="An error occurred while trying to fetch list of faculty."
             debug={errors[0]}
         />
     );
