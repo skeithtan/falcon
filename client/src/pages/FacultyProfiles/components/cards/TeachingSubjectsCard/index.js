@@ -12,7 +12,6 @@ import { getFullName } from "../../../../../utils/user.util";
 import { TeachingSubjectModal } from "../../modals/TeachingSubjectModal";
 import { wrap } from "./wrapper";
 
-
 class BaseTeachingSubjectsCard extends Component {
     state = {
         activeSubject: null,
@@ -27,7 +26,9 @@ class BaseTeachingSubjectsCard extends Component {
 
     renderEmptyState = () => (
         <EmptyState
-            bigMessage={`${getFullName(this.props.faculty.user)} does not have assigned teaching subjects.`}
+            bigMessage={`${getFullName(
+                this.props.faculty.user
+            )} does not have assigned teaching subjects.`}
             smallMessage="Teaching subjects assigned will be shown here."
             onAddButtonClick={this.onAddButtonClick}
             addButtonText="Assign a subject"
@@ -35,9 +36,7 @@ class BaseTeachingSubjectsCard extends Component {
         />
     );
 
-    renderLoading = () => (
-        <FullPageLoadingIndicator size={100} />
-    );
+    renderLoading = () => <FullPageLoadingIndicator size={100} />;
 
     renderErrors = errors => (
         <ErrorState
@@ -47,54 +46,71 @@ class BaseTeachingSubjectsCard extends Component {
         />
     );
 
-    toggleRemoveSubjectModal = shouldShow => this.setState({
-        removeSubjectModalIsShowing: shouldShow,
-    });
+    toggleRemoveSubjectModal = shouldShow =>
+        this.setState({
+            removeSubjectModalIsShowing: shouldShow,
+        });
 
-    toggleTeachingSubjectsModal = shouldShow => this.setState({
-        teachingSubjectsModalIsShowing: shouldShow,
-    });
+    toggleTeachingSubjectsModal = shouldShow =>
+        this.setState({
+            teachingSubjectsModalIsShowing: shouldShow,
+        });
 
     renderTeachingSubjects = faculty => {
         const teachingSubjectsIds = faculty.teachingSubjects;
         const teachingSubjectsIsEmpty = teachingSubjectsIds.length === 0;
-        const {activeSubject, removeSubjectModalIsShowing, teachingSubjectsModalIsShowing} = this.state;
-        const {classes, subjects: {subjects: subjectList}, user} = this.props;
+        const {
+            activeSubject,
+            removeSubjectModalIsShowing,
+            teachingSubjectsModalIsShowing,
+        } = this.state;
+        const {
+            classes,
+            subjects: { subjects: subjectList },
+            user,
+        } = this.props;
 
         // Transform faculty teaching subject ID to actual subject using subjectList from redux
-        const teachingSubjects = teachingSubjectsIds.map(id => subjectList.find(subject => subject._id === id));
+        const teachingSubjects = teachingSubjectsIds.map(id =>
+            subjectList.find(subject => subject._id === id)
+        );
+
+        console.log(teachingSubjectsIds, teachingSubjects);
 
         return (
             <ListItem>
-                {!teachingSubjectsIsEmpty &&
-                <Grid container spacing={8} className={classes.subjectList}>
-                    {teachingSubjects.map(subject => (
-                        <Grid item key={subject._id}>
-                            <SubjectChip
-                                clickable={user.permissions.VIEW_SUBJECTS_PAGE}
-                                subject={subject}
-                                showDeleteButton={this.canMutate}
-                                handleDelete={() => this.setState({
-                                    activeSubject: subject,
-                                    removeSubjectModalIsShowing: true,
-                                })}
-                            />
-                        </Grid>
-                    ))}
-                </Grid>
-
-                }
+                {!teachingSubjectsIsEmpty && (
+                    <Grid container spacing={8} className={classes.subjectList}>
+                        {teachingSubjects.map(subject => (
+                            <Grid item key={subject._id}>
+                                <SubjectChip
+                                    clickable={
+                                        user.permissions.VIEW_SUBJECTS_PAGE
+                                    }
+                                    subject={subject}
+                                    showDeleteButton={this.canMutate}
+                                    handleDelete={() =>
+                                        this.setState({
+                                            activeSubject: subject,
+                                            removeSubjectModalIsShowing: true,
+                                        })
+                                    }
+                                />
+                            </Grid>
+                        ))}
+                    </Grid>
+                )}
 
                 {teachingSubjectsIsEmpty && this.renderEmptyState()}
-                {activeSubject &&
-                <UnassignSubjectModal
-                    perspective="faculty"
-                    open={removeSubjectModalIsShowing}
-                    onClose={() => this.toggleRemoveSubjectModal(false)}
-                    subject={activeSubject}
-                    faculty={faculty}
-                />
-                }
+                {activeSubject && (
+                    <UnassignSubjectModal
+                        perspective="faculty"
+                        open={removeSubjectModalIsShowing}
+                        onClose={() => this.toggleRemoveSubjectModal(false)}
+                        subject={activeSubject}
+                        faculty={faculty}
+                    />
+                )}
 
                 <TeachingSubjectModal
                     action="update"
@@ -109,7 +125,9 @@ class BaseTeachingSubjectsCard extends Component {
     };
 
     onAddButtonClick = () => {
-        const {subjects: {subjects}} = this.props;
+        const {
+            subjects: { subjects },
+        } = this.props;
 
         if (subjects) {
             // Do not show modal if neither is ready
@@ -120,7 +138,7 @@ class BaseTeachingSubjectsCard extends Component {
     componentDidMount() {
         const {
             fetchSubjectList,
-            subjects: {isLoading, subjects},
+            subjects: { isLoading, subjects },
         } = this.props;
 
         if (!subjects && !isLoading) {
@@ -130,11 +148,7 @@ class BaseTeachingSubjectsCard extends Component {
 
     render() {
         const {
-            subjects: {
-                isLoading,
-                errors,
-                subjects,
-            },
+            subjects: { isLoading, errors, subjects },
             faculty,
         } = this.props;
 

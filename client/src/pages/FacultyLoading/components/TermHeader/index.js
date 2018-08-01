@@ -238,7 +238,10 @@ class BaseTermHeader extends Component {
                     </Toolbar>
 
                     {!isArchived && (
-                        <Stepper activeStep={activeStepIndex}>
+                        <Stepper
+                            className={classes.stepper}
+                            activeStep={activeStepIndex}
+                        >
                             {steps.map(({ identifier, name }) => (
                                 <Step key={identifier}>
                                     <StepLabel>{name}</StepLabel>

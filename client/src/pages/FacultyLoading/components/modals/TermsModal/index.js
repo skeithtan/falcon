@@ -9,6 +9,7 @@ import { wrap } from "./wrapper";
 import { termScheduleToString } from "../../../../../utils/faculty_loading.util";
 import { makeURL } from "../../../../../utils/url.util";
 import { FACULTY } from "../../../../../enums/user.enums";
+import { EmptyState } from "../../../../../components/states/EmptyState";
 
 class TermItem extends PureComponent {
     render() {
@@ -83,6 +84,10 @@ class BaseTermsModal extends PureComponent {
                             active={activeTermSchedule._id === termSchedule._id}
                         />
                     ))}
+
+                    {archived.length === 0 && (
+                        <EmptyState bigMessage="There are no archived terms" />
+                    )}
                 </List>
             </Dialog>
         );

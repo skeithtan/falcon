@@ -68,7 +68,7 @@ class BaseExpertFacultiesModal extends ModalFormComponent {
     }
 
     get modalTitle() {
-        return "Set Expert Faculties";
+        return "Set Expert Faculty Members";
     }
 
     get toastSuccessMessage() {
@@ -76,7 +76,7 @@ class BaseExpertFacultiesModal extends ModalFormComponent {
     }
 
     get buttonName() {
-        return "Set Expert Faculties";
+        return "Set Expert Faculty Members";
     }
 
     get dialogActionIsDisabled() {
