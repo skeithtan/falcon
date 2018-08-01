@@ -80,8 +80,6 @@ class BaseAdvanceTermModal extends ConfirmActionModal {
         const hasSevere =
             warnings.filter(warning => warning.isSevere).length > 0;
 
-        console.log(warnings);
-
         return (
             <Grid container spacing={16} direction="column" wrap="nowrap">
                 {warnings && (
