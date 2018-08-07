@@ -64,6 +64,23 @@ class BaseTermHeader extends Component {
             termsModalIsShowing: shouldShow,
         });
 
+    get canMutateTermSchedule() {
+        const { user } = this.props;
+        return user.permissions.MUTATE_TERM_SCHEDULES;
+    }
+
+    get canAdvanceTermSchedule() {
+        const { activeTermSchedule } = this.props;
+        return (
+            this.canMutateTermSchedule &&
+            [
+                TERM_STATUSES.INITIALIZING.identifier,
+                TERM_STATUSES.SCHEDULING.identifier,
+                TERM_STATUSES.FEEDBACK_GATHERING.identifier,
+            ].includes(activeTermSchedule.status)
+        );
+    }
+
     renderButtons = () => {
         const { classes, activeTermSchedule, user } = this.props;
         const canMutateTermSchedule = user.permissions.MUTATE_TERM_SCHEDULES;
@@ -74,14 +91,6 @@ class BaseTermHeader extends Component {
                 TERM_STATUSES.SCHEDULING.identifier,
                 TERM_STATUSES.FEEDBACK_GATHERING.identifier,
                 TERM_STATUSES.PUBLISHED.identifier,
-            ].includes(activeTermSchedule.status);
-
-        const canAdvanceTermSchedule =
-            canMutateTermSchedule &&
-            [
-                TERM_STATUSES.INITIALIZING.identifier,
-                TERM_STATUSES.SCHEDULING.identifier,
-                TERM_STATUSES.FEEDBACK_GATHERING.identifier,
             ].includes(activeTermSchedule.status);
 
         const canPrintSchedule =
@@ -108,7 +117,7 @@ class BaseTermHeader extends Component {
                     </Grid>
                 )}
 
-                {canAdvanceTermSchedule && (
+                {this.canAdvanceTermSchedule && (
                     <Grid item>
                         <Button
                             variant="raised"
@@ -150,11 +159,13 @@ class BaseTermHeader extends Component {
 
         return (
             <Fragment>
-                <AdvanceTermModal
-                    open={advanceTermModalIsShowing}
-                    onClose={() => this.toggleAdvanceTermModal(false)}
-                    termSchedule={activeTermSchedule}
-                />
+                {this.canAdvanceTermSchedule && (
+                    <AdvanceTermModal
+                        open={advanceTermModalIsShowing}
+                        onClose={() => this.toggleAdvanceTermModal(false)}
+                        termSchedule={activeTermSchedule}
+                    />
+                )}
 
                 <ReturnTermModal
                     open={returnTermModalIsShowing}
